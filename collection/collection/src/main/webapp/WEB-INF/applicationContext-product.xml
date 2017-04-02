@@ -19,5 +19,11 @@
 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
 		<property name="jndiName" value="java:comp/env/jdbc/speed_db_mysql" />
 	</bean>
-
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>/WEB-INF/ftp.properties</value>
+		</property>
+		<property name="fileEncoding" value="utf-8" />
+	</bean>
 </beans>
