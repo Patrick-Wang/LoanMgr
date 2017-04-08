@@ -16,6 +16,17 @@
         </authentication-provider>  
     </authentication-manager>  
 	
+	<!-- 配置 验证过滤器, 此过滤器取代系统的XML权限过滤 , 此过滤器配置完毕之后存放到 系统缺省的过滤链中-->
+	<beans:bean id="filterSecurityInterceptor" class="org.springframework.security.web.access.intercept.FilterSecurityInterceptor">
+	    <!-- 需要认证管理器, 通过它可以获取 管理员已经拥有的角色信息  ，
+	        由于id已经被org.springframework.security.authenticationManager默认了。不能更改，所以用别名-->
+	    <beans:property name="authenticationManager" ref="authenticationManager"></beans:property>
+	    <!-- 决策器 -->
+	    <beans:property name="accessDecisionManager" ref="roleAccessDecisionManager" />         
+	    <!-- 配置urlService ，security可以通过url得到角色名称 -->
+	     <beans:property name="securityMetadataSource" ref="urlService" />
+	</beans:bean>  
+	
 	<!-- 自定义权限不足处理程序 -->  
 	<beans:bean id="accessDeniedHandler" class="com.spring.session.AjaxAccessDeniedHandler">  
 	    <beans:property name="errorPage" value="/home/index.do"></beans:property>  
@@ -26,8 +37,10 @@
 		<session-management invalid-session-url="/session/timeout.do?redirect=/jsp/login"></session-management>
 <!-- 		<intercept-url pattern="/admin**" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/app.jsp" access="hasRole('ROLE_SERVICE')"/>  -->
-	    <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>   
+	<!--     <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>    -->
 
+		<!-- 增加权限过滤器,采用数据库方式获取权限 -->
+        <custom-filter ref="filterSecurityInterceptor" before="FILTER_SECURITY_INTERCEPTOR"/>
 	    <logout logout-url="/logout.do" logout-success-url="/jsp/login.jsp"/>
 	    
 	    <form-login login-page="/jsp/login.jsp" authentication-failure-url="/jsp/loginError.jsp?"

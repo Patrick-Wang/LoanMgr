@@ -22,9 +22,9 @@ create table `entrusted_case_manager`(
 	`owner` int NOT NULL,
 	`assignee` int,
 	`type` int,
-	`entrusted_case` int not null,
-	`created_time` datetime,
-	`last_modified_time` datetime,
+	`entrustedCase` int not null,
+	`createdTime` datetime,
+	`lastModifiedTime` datetime,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
@@ -33,11 +33,12 @@ create table `entrusted_case_report`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`creator` int NOT NULL,
 	`date`	date  NOT NULL,
-	`entrusted_case_manager` int not null,
+	`entrustedCaseManager` int not null,
+	`title`	text,
 	`content`	text,
 	`attachements`	text,
-	`created_time` datetime,
-	`last_modified_time` datetime,
+	`createdTime` datetime,
+	`lastModifiedTime` datetime,
 	`modifier` int,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
@@ -47,7 +48,7 @@ create table `message`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`from` int NOT NULL,
 	`to` int NOT NULL,
-	`entrusted_case_manager` int not null,
+	`entrustedCaseManager` int not null,
 	`content`	text,
 	`attachements`	text,
 	`send_time` datetime,
@@ -79,7 +80,7 @@ create table `user_role`(
 create table `authority`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`role` int NOT NULL,
-	`interface` int NOT NULL,
+	`intf` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
@@ -119,7 +120,7 @@ insert into `interface` (id, address, description) values
 (27, '/phone/upload.do', '上传呼入电话');
 
 
-insert into `authority` (interface, role) values 
+insert into `authority` (intf, role) values 
 ((select id from interface where address='/account/org/search.do'), (select id from role where name='ROLE_ADMIN')),
 ((select id from interface where address='/account/org/search.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/account/search.do'), (select id from role where name='ROLE_ADMIN')),

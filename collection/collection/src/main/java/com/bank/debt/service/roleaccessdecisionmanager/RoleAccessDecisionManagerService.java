@@ -23,13 +23,9 @@ public class RoleAccessDecisionManagerService implements AccessDecisionManager  
         Collection<? extends GrantedAuthority> myRoles = authentication.getAuthorities();
         // 如果前面的 getAttributes() 返回非空,则返回的数据做为形参传入, 如果返回为null 则不会进入decide() 直接放行
 
-        // System.out.println("myRole:" + myRoles);
-        // System.out.println("sysRole:" + configAttributes);
-
         for (GrantedAuthority myRole : myRoles) {// 当前登录的角色
             for (ConfigAttribute urlRoles : configAttributes) {// 前台传入的url的角色，UrlDaoImpl.getAttributes获得的
                 if (myRole.getAuthority().equals(urlRoles.getAttribute())) {
-                    // 说明此URL地址符合权限,可以放行
                     return;
                 }
             }

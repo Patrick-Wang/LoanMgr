@@ -37,7 +37,7 @@ module collection.protocol{
 
     export interface IF {
         id:number;
-        name:string;
+        address:string;
         description:string;
     }
 
