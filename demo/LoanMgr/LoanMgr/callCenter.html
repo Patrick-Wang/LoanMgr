@@ -239,7 +239,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
                         </a>
                     </li>
 
-                    <!--委案管理-->
                     <li class="active open">
                         <a href="#" class="menu-dropdown">
                             <i class="menu-icon fa fa-table"></i>
@@ -250,17 +249,17 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 
                         <ul class="submenu">
                             <li>
-                                <a href="indexBusiness.html">
+                                <a href="reportTask.html">
                                     <span class="menu-text">委案工作汇报</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="indexBusiness.html">
+                                <a href="askSth.html">
                                     <span class="menu-text">委案咨询</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="indexBusiness.html">
+                                <a href="callCenter.html">
                                     <span class="menu-text">呼叫中心</span>
                                 </a>
                             </li>
@@ -316,6 +315,60 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
                 <!-- /Page Header -->
                 <!-- Page Body -->
                 <div class="page-body">
+                    <div class="row">
+                        <div class="col-lg-12 col-sm-12 col-xs-12">
+                            <div class="tabbable">
+                                <ul class="nav nav-tabs nav-justified" id="myTab10">
+                                    <li class="active">
+                                        <a data-toggle="tab" href="#call-out">
+                                            呼出电话
+                                        </a>
+                                    </li>
+
+                                    <li class="tab-red">
+                                        <a data-toggle="tab" href="#missing-call">
+                                            未接来电
+                                        </a>
+                                    </li>
+
+                                    <li class="dropdown">
+                                        <a data-toggle="dropdown" class="dropdown-toggle" href="call-in">
+                                            呼入电话
+                                            <b class="caret"></b>
+                                        </a>
+
+                                        <ul class="dropdown-menu dropdown-info">
+                                            <li>
+                                                <a data-toggle="tab" href="#dropdown10">全部</a>
+                                            </li>
+
+                                            <li>
+                                                <a data-toggle="tab" href="#dropdown20">未关联委案</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div id="call-out" class="tab-pane in active">
+                                        <p>呼出电话列表</p>
+                                    </div>
+
+                                    <div id="missing-call" class="tab-pane">
+                                        <p>未接来电列表</p>
+                                    </div>
+
+                                    <div id="dropdown10" class="tab-pane">
+                                        <p>全部呼入电话列表</p>
+                                    </div>
+
+                                    <div id="dropdown20" class="tab-pane">
+                                        <p>未关联委案的呼入电话列表</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <!-- /Page Body -->
             </div>
