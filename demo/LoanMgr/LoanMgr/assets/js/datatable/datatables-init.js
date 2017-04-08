@@ -232,11 +232,16 @@ var InitiateExpandableDataTable = function() {
             function fnFormatDetails(oTable, nTr) {
                 var aData = oTable.fnGetData(nTr);
                 var sOut = '<table>';
-                sOut += '<tr><td rowspan="5" style="padding:0 10px 0 0;"><img src="assets/img/avatars/' + aData[6] + '"/></td><td>Name:</td><td>' + aData[1] + '</td></tr>';
-                sOut += '<tr><td>Family:</td><td>' + aData[2] + '</td></tr>';
-                sOut += '<tr><td>Age:</td><td>' + aData[3] + '</td></tr>';
-                sOut += '<tr><td>Positon:</td><td>' + aData[4] + '</td></tr>';
-                sOut += '<tr><td>Others:</td><td><a href="">Personal WebSite</a></td></tr>';
+                sOut += '<tr><td><h5>工作记录1：</h5></td></tr>';
+                sOut += '<tr><td>标题：</td><td>电话催收</td></tr>';
+                sOut += '<tr><td>内容：</td><td>对客户进行电话催收，形成电话录音已保存在系统内。</td></tr>';
+                sOut += '<tr><td>附件1</td><td><a href="">20170403100830_13894932343_00000ER001.mp3</a></td><td><a href="">修改上传时间</a></td></tr>';
+                sOut += '<tr><td>附件2</td><td><a href="">外访表.doc</a></td><td><a href="">修改上传时间</a></td></tr>';
+                sOut += '<tr><td><h5>工作记录2：</h5></td></tr>';
+                sOut += '<tr><td>标题：</td><td>电话催收</td></tr>';
+                sOut += '<tr><td>内容：</td><td>对客户进行电话催收，形成电话录音已保存在系统内。</td></tr>';
+                sOut += '<tr><td>附件1</td><td><a href="">20170405111835_13894932343_00000ER001.mp3</a></td><td><a href="">修改上传时间</a></td></tr>';
+                sOut += '<tr><td>附件2</td><td><a href="">外访表.doc</a></td><td><a href="">修改上传时间</a></td></tr>';
                 sOut += '</table>';
                 return sOut;
             }
