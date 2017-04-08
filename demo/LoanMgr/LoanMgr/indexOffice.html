@@ -73,12 +73,72 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
                     <div class="navbar-account">
                         <ul class="account-area">
                             <li>
+                                <a class="dropdown-toggle" data-toggle="dropdown" title="Tasks" href="#">
+                                    <i class="icon fa fa-tasks"></i>
+                                    <span class="badge">2</span>
+                                </a>
+                                <!--Tasks Dropdown-->
+                                <ul class="pull-right dropdown-menu dropdown-messages dropdown-arrow ">
+                                    <li class="dropdown-header bordered-darkorange">
+                                        <i class="fa fa-tasks"></i>
+                                        2 条未处理的委案咨询
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <img src="assets/img/avatars/bing.png" class="message-avatar" alt="Microsoft Bing">
+                                            <div class="message">
+                                                    <span class="message-sender">
+                                                        业务员：张三
+                                                    </span>
+                                                    <span class="message-time">
+                                                        今天
+                                                    </span>
+                                                    <span class="message-subject">
+                                                        委案单号001：缺少身份证信息
+                                                    </span>
+                                                    <span class="message-body">
+                                                        编号为001的委案缺少身份证的有效信息，需要内勤协调与客户方索取并尽快回复。
+                                                    </span>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li>
+                                        <a href="#">
+                                            <img src="assets/img/avatars/bing.png" class="message-avatar" alt="Microsoft Bing">
+                                            <div class="message">
+                                                    <span class="message-sender">
+                                                        业务员：李四
+                                                    </span>
+                                                    <span class="message-time">
+                                                        昨天
+                                                    </span>
+                                                    <span class="message-subject">
+                                                        委案单号025：联系人电话号码错误
+                                                    </span>
+                                                    <span class="message-body">
+                                                        编号为025的委案信息中，首要联系人预留的电话号码拨叫为空号，请确认后反馈最新的电话号码。
+                                                    </span>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                    <li class="dropdown-footer">
+                                        <a href="#">
+                                            查看全部咨询信息
+                                        </a>
+                                    </li>
+                                </ul>
+                                <!--/Tasks Dropdown-->
+                            </li>
+
+                            <li>
                                 <a class="login-area dropdown-toggle" data-toggle="dropdown">
                                     <div class="avatar" title="View your public profile">
                                         <img src="assets/img/avatars/adam-jansen.jpg">
                                     </div>
                                     <section>
-                                        <h2><span class="profile"><span>管理层：  石 鑫</span></span></h2>
+                                        <h2><span class="profile"><span>内勤人员：  王  五</span></span></h2>
                                     </section>
                                 </a>
                                 <!--Login Area Dropdown-->
@@ -205,88 +265,19 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
                                 </a>
                             </li>
                             <li>
-                                <a href="reportTask.html">
-                                    <span class="menu-text">委案工作汇报</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="askSth.html">
+                                <a href="replySth.html">
                                     <span class="menu-text">委案咨询</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="replySth.html">
-                                    <span class="menu-text">委案咨询答复</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="exportLoans.html">
+                                <a href="backup.html">
                                     <span class="menu-text">委案备份</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="callCenter.html">
-                                    <span class="menu-text">呼叫中心</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <!--系统管理-->
-                    <li>
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon glyphicon glyphicon-link"></i>
-
-                                <span class="menu-text">
-                                    系统管理
-                                </span>
-
-                            <i class="menu-expand"></i>
-                        </a>
-
-                        <ul class="submenu">
-                            <li>
-                                <a href="userMgr.html">
-                                    <span class="menu-text">用户管理</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="propertyMgr.html">
-                                    <span class="menu-text">权限配置</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="backup.html">
-                                    <span class="menu-text">数据备份</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="menu-dropdown">
-                                        <span class="menu-text">
-                                            人员调配
-                                        </span>
-                                    <i class="menu-expand"></i>
-                                </a>
-
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="rearangeOffice.html">
-                                            <i class="menu-icon fa fa-user-md"></i>
-                                            <span class="menu-text">调整内勤人员</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="rearangeBusiness.html">
-                                            <i class="menu-icon fa fa-user"></i>
-                                            <span class="menu-text">调整业务人员</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
                         </ul>
                     </li>
                     <li>
-                        <a href="index.html">
+                        <a href="indexOffice.html">
                             <i class="menu-icon glyphicon glyphicon-gift themesecondary"></i>
                                 <span class="menu-text">
                                     贷款委案管理平台 v1.0
@@ -343,24 +334,24 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
                                         <img src="assets/img/avatars/adam-jansen.jpg" alt="" class="header-avatar" />
                                     </div>
                                     <div class="col-lg-5 col-md-8 col-sm-12 profile-info">
-                                        <div class="header-fullname">石鑫</div>
+                                        <div class="header-fullname">王五</div>
                                         <div class="header-information">
-                                            管理层石鑫，主要负责系统的整体把控，监督和督促内勤及业务人员工作，隶属于 沈阳鑫久利商务代理服务有限公司。
+                                            内勤人员王五，主要负责对委案数据的导入和更新维护工作，隶属于 沈阳鑫久利商务代理服务有限公司 内勤部。
                                         </div>
                                     </div>
                                     <div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 profile-stats">
                                         <div class="row">
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
-                                                <div class="stats-value pink">8888万元</div>
-                                                <div class="stats-title">累计委案金额</div>
+                                                <div class="stats-value pink">28450</div>
+                                                <div class="stats-title">已导入委案</div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
-                                                <div class="stats-value pink">100万元</div>
-                                                <div class="stats-title">未完成委案金额</div>
+                                                <div class="stats-value pink">36</div>
+                                                <div class="stats-title">未分配委案</div>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
-                                                <div class="stats-value pink">10</div>
-                                                <div class="stats-title">员工数</div>
+                                                <div class="stats-value pink">2</div>
+                                                <div class="stats-title">未处理委案咨询</div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -371,7 +362,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
                                                 综合完成率: <strong>95%</strong>
                                             </div>
                                             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
-                                                部门： <strong>总经理</strong>
+                                                部门： <strong>内勤部</strong>
                                             </div>
                                         </div>
                                     </div>

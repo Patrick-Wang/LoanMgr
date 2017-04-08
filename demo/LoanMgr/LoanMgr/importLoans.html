@@ -36,6 +36,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
     <link id="skin-link" href="" rel="stylesheet" type="text/css" />
 
     <!--Page Related styles-->
+    <link href="assets/css/datatables.bootstrap.css" rel="stylesheet" />
 
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="assets/js/skins.min.js"></script>
@@ -249,93 +250,34 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 
                         <ul class="submenu">
                             <li>
-                                <a href="index.html">
+                                <a href="importLoans.html">
                                     <span class="menu-text">导入委案</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="index.html">
+                                <a href="assignLoans.html">
                                     <span class="menu-text">分配委案</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="index.html">
+                                <a href="loansMgr.html">
                                     <span class="menu-text">委案信息查询和维护</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="index.html">
-                                    <span class="menu-text">委案工作汇报</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="index.html">
+                                <a href="replySth.html">
                                     <span class="menu-text">委案咨询</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="index.html">
+                                <a href="backup.html">
                                     <span class="menu-text">委案备份</span>
                                 </a>
                             </li>
                         </ul>
                     </li>
-                    <!--系统管理-->
                     <li>
-                        <a href="#" class="menu-dropdown">
-                            <i class="menu-icon glyphicon glyphicon-link"></i>
-
-                                <span class="menu-text">
-                                    系统管理
-                                </span>
-
-                            <i class="menu-expand"></i>
-                        </a>
-
-                        <ul class="submenu">
-                            <li>
-                                <a href="index.html">
-                                    <span class="menu-text">用户管理</span>
-                                </a>
-                            </li>
-
-                            <li>
-                                <a href="index.html">
-                                    <span class="menu-text">权限配置</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="index.html">
-                                    <span class="menu-text">数据备份</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" class="menu-dropdown">
-                                        <span class="menu-text">
-                                            人员调配
-                                        </span>
-                                    <i class="menu-expand"></i>
-                                </a>
-
-                                <ul class="submenu">
-                                    <li>
-                                        <a href="#">
-                                            <i class="menu-icon fa fa-user-md"></i>
-                                            <span class="menu-text">调整内勤人员</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <i class="menu-icon fa fa-user"></i>
-                                            <span class="menu-text">调整业务人员</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="index.html">
+                        <a href="indexOffice.html">
                             <i class="menu-icon glyphicon glyphicon-gift themesecondary"></i>
                                 <span class="menu-text">
                                     贷款委案管理平台 v1.0
@@ -399,52 +341,363 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
                             <div class="step-pane active" id="wiredstep1">
                                 <div class="row pricing-container">
                                     <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <div class="plan">
+                                        <div class="plan popular-plan animated bounce">
                                             <div class="header bordered-yellow">车贷</div>
                                             <a class="signup bg-yellow" href="#">选择</a>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <div class="plan popular-plan animated bounce">
+                                        <div class="plan">
                                             <div class="header bordered-palegreen">信贷</div>
                                             <a class="signup bg-palegreen" href="#">选择</a>
                                         </div>
                                     </div>
                                     <div class="col-xs-12 col-sm-6 col-md-3">
                                         <div class="plan">
-                                            <div class="header bordered-orange">Standard</div>
-                                            <div class="price orange">$19</div>
-                                            <div class="monthly">per month</div>
-                                            <ul>
-                                                <li><b>3GB</b> Disk Space</li>
-                                                <li><b>25GB</b> Monthly Bandwidth</li>
-                                                <li><b>5</b> Email Accounts</li>
-                                                <li><b>Unlimited</b> subdomains</li>
-                                            </ul>
-                                            <a class="signup bg-orange" href="default.htm">Sign up</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-xs-12 col-sm-6 col-md-3">
-                                        <div class="plan">
-                                            <div class="header bordered-azure">Basic</div>
-                                            <div class="price azure">$9</div>
-                                            <div class="monthly">per month</div>
-                                            <ul>
-                                                <li><b>1GB</b> Disk Space</li>
-                                                <li><b>10GB</b> Monthly Bandwidth</li>
-                                                <li><b>2</b> Email Accounts</li>
-                                                <li><b>Unlimited</b> subdomains</li>
-                                            </ul>
-                                            <a class="signup bg-azure" href="default.htm">Sign up</a>
+                                            <div class="header bordered-orange">信用卡</div>
+                                            <a class="signup bg-orange" href="#">选择</a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="step-pane" id="wiredstep2">
-
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="well with-header">
+                                            <div class="header bordered-darkpink">选择文件或拖拽文件到此处</div>
+                                            <form action="/upload" class="dropzone"></form>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="step-pane" id="wiredstep3">
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="alert alert-info fade in">
+                                            <i class="fa-fw fa fa-info"></i>
+                                            <strong>请确认！</strong> 共计导入如下 88 条委案。
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-12">
+                                        <div class="widget">
+                                            <div class="widget-body">
+                                                <table class="table table-striped table-bordered table-hover" id="simpledatatable">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>
+                                                                <label>
+                                                                    <input type="checkbox">
+                                                                    <span class="text"></span>
+                                                                </label>
+                                                            </th>
+                                                            <th>
+                                                                客户号
+                                                            </th>
+                                                            <th>
+                                                                客户姓名
+                                                            </th>
+                                                            <th>
+                                                                账户号
+                                                            </th>
+                                                            <th>
+                                                                性别
+                                                            </th>
+                                                            <th>
+                                                                身份证号
+                                                            </th>
+                                                            <th>
+                                                                放款机构
+                                                            </th>
+                                                            <th>
+                                                                放款时间
+                                                            </th>
+                                                            <th>
+                                                                提前结清金额
+                                                            </th>
+                                                            <th>
+                                                                剩余本金
+                                                            </th>
+                                                            <th>
+                                                                逾期利息
+                                                            </th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <label>
+                                                                    <input type="checkbox">
+                                                                    <span class="text"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">XD00001226</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">孙七</a>
+                                                            </td>
+                                                            <td>
+                                                                2220001119998230
+                                                            </td>
+                                                            <td>
+                                                                男
+                                                            </td>
+                                                            <td>
+                                                                210103198001203322
+                                                            </td>
+                                                            <td>
+                                                                中国农业银行
+                                                            </td>
+                                                            <td>
+                                                                2017-01-01
+                                                            </td>
+                                                            <td>
+                                                                200000
+                                                            </td>
+                                                            <td>
+                                                                108000
+                                                            </td>
+                                                            <td>
+                                                                12000
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label>
+                                                                    <input type="checkbox">
+                                                                    <span class="text"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">XD00001226</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">孙七</a>
+                                                            </td>
+                                                            <td>
+                                                                2220001119998230
+                                                            </td>
+                                                            <td>
+                                                                男
+                                                            </td>
+                                                            <td>
+                                                                210103198001203322
+                                                            </td>
+                                                            <td>
+                                                                中国农业银行
+                                                            </td>
+                                                            <td>
+                                                                2017-01-01
+                                                            </td>
+                                                            <td>
+                                                                200000
+                                                            </td>
+                                                            <td>
+                                                                108000
+                                                            </td>
+                                                            <td>
+                                                                12000
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label>
+                                                                    <input type="checkbox">
+                                                                    <span class="text"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">XD00001226</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">孙七</a>
+                                                            </td>
+                                                            <td>
+                                                                2220001119998230
+                                                            </td>
+                                                            <td>
+                                                                男
+                                                            </td>
+                                                            <td>
+                                                                210103198001203322
+                                                            </td>
+                                                            <td>
+                                                                中国农业银行
+                                                            </td>
+                                                            <td>
+                                                                2017-01-01
+                                                            </td>
+                                                            <td>
+                                                                200000
+                                                            </td>
+                                                            <td>
+                                                                108000
+                                                            </td>
+                                                            <td>
+                                                                12000
+                                                            </td>
+                                                        </tr>
+                                                        <tr class="odd gradeX">
+                                                            <td>
+                                                                <label>
+                                                                    <input type="checkbox">
+                                                                    <span class="text"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">XD00001226</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">孙七</a>
+                                                            </td>
+                                                            <td>
+                                                                2220001119998230
+                                                            </td>
+                                                            <td>
+                                                                男
+                                                            </td>
+                                                            <td>
+                                                                210103198001203322
+                                                            </td>
+                                                            <td>
+                                                                中国农业银行
+                                                            </td>
+                                                            <td>
+                                                                2017-01-01
+                                                            </td>
+                                                            <td>
+                                                                200000
+                                                            </td>
+                                                            <td>
+                                                                108000
+                                                            </td>
+                                                            <td>
+                                                                12000
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label>
+                                                                    <input type="checkbox">
+                                                                    <span class="text"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">XD00001226</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">孙七</a>
+                                                            </td>
+                                                            <td>
+                                                                2220001119998230
+                                                            </td>
+                                                            <td>
+                                                                男
+                                                            </td>
+                                                            <td>
+                                                                210103198001203322
+                                                            </td>
+                                                            <td>
+                                                                中国农业银行
+                                                            </td>
+                                                            <td>
+                                                                2017-01-01
+                                                            </td>
+                                                            <td>
+                                                                200000
+                                                            </td>
+                                                            <td>
+                                                                108000
+                                                            </td>
+                                                            <td>
+                                                                12000
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label>
+                                                                    <input type="checkbox">
+                                                                    <span class="text"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">XD00001226</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">孙七</a>
+                                                            </td>
+                                                            <td>
+                                                                2220001119998230
+                                                            </td>
+                                                            <td>
+                                                                男
+                                                            </td>
+                                                            <td>
+                                                                210103198001203322
+                                                            </td>
+                                                            <td>
+                                                                中国农业银行
+                                                            </td>
+                                                            <td>
+                                                                2017-01-01
+                                                            </td>
+                                                            <td>
+                                                                200000
+                                                            </td>
+                                                            <td>
+                                                                108000
+                                                            </td>
+                                                            <td>
+                                                                12000
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>
+                                                                <label>
+                                                                    <input type="checkbox">
+                                                                    <span class="text"></span>
+                                                                </label>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">XD00001226</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="index.html">孙七</a>
+                                                            </td>
+                                                            <td>
+                                                                2220001119998230
+                                                            </td>
+                                                            <td>
+                                                                男
+                                                            </td>
+                                                            <td>
+                                                                210103198001203322
+                                                            </td>
+                                                            <td>
+                                                                中国农业银行
+                                                            </td>
+                                                            <td>
+                                                                2017-01-01
+                                                            </td>
+                                                            <td>
+                                                                200000
+                                                            </td>
+                                                            <td>
+                                                                108000
+                                                            </td>
+                                                            <td>
+                                                                12000
+                                                            </td>
+                                                        </tr>
 
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="actions actions-footer" id="WiredWizard-actions">
@@ -476,12 +729,27 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
     <script src="assets/js/fuelux/wizard/wizard-custom.js"></script>
     <script src="assets/js/toastr/toastr.js"></script>
 
+    <!--Dropzone-->
+    <script src="assets/js/dropzone/dropzone.min.js"></script>
+
     <script type="text/javascript">
         jQuery(function ($) {
             $('#WiredWizard').wizard().on('finished', function (e) {
                 Notify('委案导入成功', 'bottom-right', '5000', 'blue', 'fa-check', true);
             });
         });
+    </script>
+
+    <script src="assets/js/datatable/jquery.datatables.min.js"></script>
+    <script src="assets/js/datatable/zeroclipboard.js"></script>
+    <script src="assets/js/datatable/datatables.tabletools.min.js"></script>
+    <script src="assets/js/datatable/datatables.bootstrap.min.js"></script>
+    <script src="assets/js/datatable/datatables-init.js"></script>
+    <script>
+        InitiateSimpleDataTable.init();
+        InitiateEditableDataTable.init();
+        InitiateExpandableDataTable.init();
+        InitiateSearchableDataTable.init();
     </script>
 
 </body>
