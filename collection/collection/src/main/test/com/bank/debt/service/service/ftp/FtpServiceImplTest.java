@@ -1,6 +1,5 @@
 package com.bank.debt.service.service.ftp;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -45,18 +44,17 @@ public class FtpServiceImplTest {
 	@Test
 	public final void testUpdoadFile() throws IOException {
 		File f = new File("d:/test.zip");
-		FileOutputStream fr = new FileOutputStream(f);
-		ftpService.downloadFile("/192.168.7.22", "operating_management201612172138log.zip", fr);
-		fr.flush();
+		FileInputStream fr = new FileInputStream(f);
+		ftpService.updoadFile("/ffew/abc/few", "test.zip", fr);
 		fr.close();
 	}
 
 	@Test
 	public final void testDownloadFile() throws IOException {
 		File f = new File("d:/test.zip");
-		FileInputStream fr = new FileInputStream(f);
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		ftpService.updoadFile("/192.168.7.22", "test.zip", fr);
+		FileOutputStream fr = new FileOutputStream(f);
+		ftpService.downloadFile("/192.168.7.22", "operating_management201612172138log.zip", fr);
+		fr.flush();
 		fr.close();
 	}
 

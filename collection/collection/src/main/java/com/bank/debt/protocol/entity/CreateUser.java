@@ -1,10 +1,10 @@
 package com.bank.debt.protocol.entity;
 
-public class CreateUser {
+public class CreateUser extends ProtocolEntity{
 	String name;
 	String password;
 	Integer orgId;
-	Integer[] role;
+	Integer[] roles;
 	public String getName() {
 		return name;
 	}
@@ -23,11 +23,11 @@ public class CreateUser {
 	public void setOrgId(Integer orgId) {
 		this.orgId = orgId;
 	}
-	public Integer[] getRole() {
-		return role;
+	public Integer[] getRoles() {
+		return roles;
 	}
-	public void setRole(Integer[] role) {
-		this.role = role;
+	public void setRoles(Integer[] role) {
+		this.roles = role;
 	}
 	
 }

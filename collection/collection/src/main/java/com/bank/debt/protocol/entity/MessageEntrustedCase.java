@@ -1,8 +1,10 @@
 package com.bank.debt.protocol.entity;
 
-public class MessageEntrustedCase {
+import java.util.List;
+
+public class MessageEntrustedCase  extends ProtocolEntity{
 	Integer entrustedCaseId;
-	MessageSummary[] msgSummary;
+	List<MessageSummary> msgSummary;
 
 	public Integer getEntrustedCaseId() {
 		return entrustedCaseId;
@@ -12,11 +14,11 @@ public class MessageEntrustedCase {
 		this.entrustedCaseId = entrustedCaseId;
 	}
 
-	public MessageSummary[] getMsgSummary() {
+	public List<MessageSummary> getMsgSummary() {
 		return msgSummary;
 	}
 
-	public void setMsgSummary(MessageSummary[] msgSummary) {
+	public void setMsgSummary(List<MessageSummary> msgSummary) {
 		this.msgSummary = msgSummary;
 	}
 }

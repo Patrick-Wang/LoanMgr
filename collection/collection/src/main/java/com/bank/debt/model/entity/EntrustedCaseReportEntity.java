@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.speed.frame.model.entity.AbstractReadWriteEntity;
@@ -100,7 +101,7 @@ public class EntrustedCaseReportEntity extends AbstractReadWriteEntity implement
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "creator")	
+	@JoinColumn(name = "modifier")	
 	public UserEntity getModifier() {
 		return modifier;
 	}

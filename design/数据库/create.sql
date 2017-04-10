@@ -84,6 +84,12 @@ create table `authority`(
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+insert into organization (parent, name, status) values
+(null, 'testorg', 0);
+
+insert into user (username, password, org, status) values
+('test', 'test', '0', 0);
+
 insert into `role` (name) values 
 ('ROLE_ADMIN'),
 ('ROLE_MANAGER'),

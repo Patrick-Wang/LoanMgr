@@ -10,4 +10,10 @@ public interface AuthorityDao extends AbstractReadWriteDao<AuthorityEntity> {
 
 	List<String> getRoleByUrl(String url);
 
+	List<Integer> getIfsByRoleId(Integer roleId);
+
+	void deleteAuthority(Integer roleId, List<Integer> ifs);
+
+	AuthorityEntity getAuthority(Integer roleId, Integer id);
+
 }

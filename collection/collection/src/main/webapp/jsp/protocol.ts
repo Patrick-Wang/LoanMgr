@@ -13,6 +13,8 @@ module collection.protocol{
         name:string;
         orgId:number;
         orgName?:string;
+        passwrod?:string;
+        rol?:number[];
         status:UseStatus;
     }
 
@@ -20,7 +22,7 @@ module collection.protocol{
         name:string;
         password:string;
         orgId:number;
-        role:number[];
+        roles:number[];
     }
 
     export interface Organization {

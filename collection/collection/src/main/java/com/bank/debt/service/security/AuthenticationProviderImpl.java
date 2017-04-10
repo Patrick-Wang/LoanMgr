@@ -1,6 +1,7 @@
 package com.bank.debt.service.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.AbstractUserDetailsAuthenticationProvider;
 import org.springframework.security.core.AuthenticationException;
@@ -14,17 +15,25 @@ public class AuthenticationProviderImpl extends AbstractUserDetailsAuthenticatio
 	@Autowired
 	UserDetailsService uds;
 	
-	@Override
-	protected void additionalAuthenticationChecks(UserDetails userDetail, UsernamePasswordAuthenticationToken authentication)
-			throws AuthenticationException {
-		System.out.println("additionalAuthenticationChecks");
-	}
+
 
 	@Override
 	protected UserDetails retrieveUser(String username, UsernamePasswordAuthenticationToken authentication)
 			throws AuthenticationException {
 		System.out.println("retrieveUser");
 		return (UserDetails) uds.loadUserByUsername(username);
+	}
+
+
+
+	@Override
+	protected void additionalAuthenticationChecks(UserDetails userDetails,
+			UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
+		String psw = (String) authentication.getCredentials();
+		if (!userDetails.getPassword().equals(psw)){
+			throw new BadCredentialsException(userDetails.getUsername());
+		}
+		
 	}
 
 

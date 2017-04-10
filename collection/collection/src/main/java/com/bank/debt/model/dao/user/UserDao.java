@@ -6,4 +6,6 @@ import com.speed.frame.model.dao.AbstractReadWriteDao;
 
 public interface UserDao extends AbstractReadWriteDao<UserEntity> {
 
+	UserEntity getUserByName(String name);
+
 }

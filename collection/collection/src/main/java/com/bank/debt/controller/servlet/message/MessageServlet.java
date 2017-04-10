@@ -1,16 +1,32 @@
 package com.bank.debt.controller.servlet.message;
 
-import com.bank.debt.service.message.MessageServiceImpl;
-import com.bank.debt.service.message.MessageService;
-import javax.annotation.Resource;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import com.bank.debt.protocol.entity.Message;
+import com.bank.debt.protocol.entity.MessageEntrustedCase;
+import com.bank.debt.protocol.entity.Result;
+import com.bank.debt.protocol.error.ErrorCode;
+import com.bank.debt.protocol.tools.Checking;
+import com.bank.debt.protocol.tools.JsonUtil;
+import com.bank.debt.protocol.tools.PathUtil;
+import com.bank.debt.service.message.MessageService;
+import com.bank.debt.service.message.MessageServiceImpl;
+import com.bank.debt.service.service.ftp.FtpService;
 
 @Controller
 @RequestMapping(value = "message")
@@ -18,52 +34,78 @@ public class MessageServlet {
 	@Resource(name=MessageServiceImpl.NAME)
 	MessageService messageService;
 
+	@Autowired
+	FtpService ftpService;
+	
 	@RequestMapping(value = "send.do")
 	public @ResponseBody byte[] send(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-
-		
-		return null;
+			HttpServletResponse response,
+			@RequestParam("entrusted_case") Integer entrustedCase,
+			@RequestParam("to") Integer to,
+			@RequestParam("message") String message,
+			@RequestParam("attachements") CommonsMultipartFile[] attachements) throws IOException {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
+		Result r = ErrorCode.MESSAGE_SEND_FALIED;
+		if (Checking.isExist(entrustedCase) && Checking.isExist(to)){
+			r = messageService.sendMessage(entrustedCase, userName, to, message, attachements);
+		}
+		return r.toUtf8Json();
 	}
 	
 	@RequestMapping(value = "unread.do")
 	public @ResponseBody Integer unread(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-
-		
-		return null;
+			HttpServletResponse response,
+			@RequestParam("entrusted_case") Integer entrustedCase) throws UnsupportedEncodingException {
+		return messageService.getUnreadCount(entrustedCase);
 	}
 	
 	@RequestMapping(value = "read_message.do")
 	public @ResponseBody byte[] readMessage(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-
+			HttpServletResponse response) throws IOException {
+		List<Integer> msgIds = (List<Integer>) JsonUtil.getObjects(request, "mids", Integer.class);
 		
-		return null;
+		messageService.readMessages(msgIds);
+		
+		return ErrorCode.OK.toUtf8Json();
 	}
 	
 	@RequestMapping(value = "entrusted_case.do")
 	public @ResponseBody byte[] entrustedCase(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
 		
-		return null;
+		List<MessageEntrustedCase> mecs = messageService.getMessageEntrustedCases(userName);
+		
+		return JsonUtil.toUtf8Json(mecs);
 	}
 	
 	@RequestMapping(value = "receive.do")
 	public @ResponseBody byte[] receive(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-
+			HttpServletResponse response,
+			@RequestParam("entrusted_case") Integer entrustedCase,
+			@RequestParam("with") Integer with) throws UnsupportedEncodingException {
+		List<Message> msgs = messageService.getMsgsWith(entrustedCase, with);
 		
-		return null;
+		return JsonUtil.toUtf8Json(msgs);
 	}
 	
 	@RequestMapping(value = "download.do")
-	public @ResponseBody byte[] download(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-
-		
-		return null;
+	public void download(
+			HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam("entrusted_case") Integer entrustedCase,
+			@RequestParam("from") Integer from,
+			@RequestParam("to") Integer to,
+			@RequestParam("attachement") String attachement) throws IOException {
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(attachement, "UTF-8")  +"\"");
+		ftpService.downloadFile(PathUtil.msgAttachementPath(entrustedCase, from, to), attachement, response.getOutputStream());
 	}
 
 }

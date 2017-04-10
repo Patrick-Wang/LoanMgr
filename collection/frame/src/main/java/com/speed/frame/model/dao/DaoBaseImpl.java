@@ -1,6 +1,7 @@
 package com.speed.frame.model.dao;
 
 import java.lang.reflect.ParameterizedType;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 
@@ -34,5 +35,10 @@ public class DaoBaseImpl<T extends AbstractEntity> implements DaoBase<T> {
 	@Override
 	public T getById(int id) {
 		return getEntityManager().find(getEntityClass(), id);
+	}
+	
+	@Override
+	public List<T> getAll() {
+		return getEntityManager().createQuery("from " + getEntityClass().getName()).getResultList();
 	}
 }

@@ -11,7 +11,7 @@
     <http pattern="/session/timeout.do*" security="none" /> 
 	<http pattern="/jsp/login.jsp" security="none" /> 
 	
-	<authentication-manager>  
+	<authentication-manager alias="authenticationManager">  
         <authentication-provider ref="authenticationProvider">  
         </authentication-provider>  
     </authentication-manager>  
@@ -25,7 +25,7 @@
 	    <beans:property name="accessDecisionManager" ref="roleAccessDecisionManager" />         
 	    <!-- 配置urlService ，security可以通过url得到角色名称 -->
 	     <beans:property name="securityMetadataSource" ref="urlService" />
-	</beans:bean>  
+	</beans:bean>
 	
 	<!-- 自定义权限不足处理程序 -->  
 	<beans:bean id="accessDeniedHandler" class="com.spring.session.AjaxAccessDeniedHandler">  
@@ -34,7 +34,7 @@
 	
 	<http auto-config="true">
 		<access-denied-handler ref="accessDeniedHandler"/>
-		<session-management invalid-session-url="/session/timeout.do?redirect=/jsp/login"></session-management>
+		<session-management invalid-session-url="/session/timeout.do?redirect=/jsp/login.jsp"></session-management>
 <!-- 		<intercept-url pattern="/admin**" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/app.jsp" access="hasRole('ROLE_SERVICE')"/>  -->
 	<!--     <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/>    -->

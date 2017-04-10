@@ -1,12 +1,14 @@
 package com.bank.debt.protocol.entity;
 
-public class Message {
+import java.util.List;
+
+public class Message  extends ProtocolEntity{
 	Integer fromId;
 	String fromName;
 	Integer toId;
 	String toName;
 	String content;
-	String[] attachements[];
+	List<String> attachements;
 
 	public Integer getFromId() {
 		return fromId;
@@ -48,11 +50,11 @@ public class Message {
 		this.content = content;
 	}
 
-	public String[][] getAttachements() {
+	public List<String> getAttachements() {
 		return attachements;
 	}
 
-	public void setAttachements(String[][] attachements) {
+	public void setAttachements(List<String> attachements) {
 		this.attachements = attachements;
 	}
 

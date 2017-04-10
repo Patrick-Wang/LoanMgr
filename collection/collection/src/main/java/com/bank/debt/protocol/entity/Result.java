@@ -1,6 +1,18 @@
 package com.bank.debt.protocol.entity;
 
-public class Result {
+public class Result  extends ProtocolEntity{
+	
+	public Result() {
+		
+	}
+
+	public Result(Integer code, String msg) {
+		super();
+		this.code = code;
+		this.msg = msg;
+	}
+
+
 	Integer code;
 	String msg;
 	public Integer getCode() {

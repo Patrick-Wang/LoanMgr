@@ -34,7 +34,14 @@ public class FtpServiceImpl implements FtpService {
 	@Override
 	public boolean updoadFile(String path, String fileName, InputStream is) throws IOException {
 		FTPClient ftpClient = getFtpConnection();
-		ftpClient.changeWorkingDirectory(path);
+		ftpClient.changeWorkingDirectory("/");
+		String[] dirs = path.split("/");
+		for(String dir : dirs){
+			if (!dir.isEmpty()){
+				ftpClient.makeDirectory(dir);
+				ftpClient.changeWorkingDirectory(dir);
+			}
+		}
 		ftpClient.enterLocalPassiveMode();
 		boolean result = ftpClient.storeFile(fileName, is);
 		ftpClient.logout();
@@ -45,8 +52,14 @@ public class FtpServiceImpl implements FtpService {
 	@Override
 	public boolean downloadFile(String path, String fileName, OutputStream os) throws IOException {
 		FTPClient ftpClient = getFtpConnection();
-		ftpClient.makeDirectory("abc/adf/dds");
-		ftpClient.changeWorkingDirectory(path);
+		ftpClient.changeWorkingDirectory("/");
+		String[] paths = path.split("/");
+		for(String dir : paths){
+			if (!dir.isEmpty()){
+				ftpClient.makeDirectory(dir);
+				ftpClient.changeWorkingDirectory(dir);
+			}
+		}
 		ftpClient.enterLocalPassiveMode();
 		boolean result = ftpClient.retrieveFile(fileName, os);
 		ftpClient.logout();

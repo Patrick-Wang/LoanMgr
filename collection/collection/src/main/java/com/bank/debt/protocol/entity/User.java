@@ -1,11 +1,26 @@
 package com.bank.debt.protocol.entity;
 
-public class User {
+public class User  extends ProtocolEntity{
 	Integer id;
 	String name;
 	Integer orgId;
 	String orgName;
 	Integer status;
+	String password;
+	Integer[] roles;
+	
+	public Integer[] getRoles() {
+		return roles;
+	}
+	public void setRoles(Integer[] roles) {
+		this.roles = roles;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public Integer getId() {
 		return id;
 	}

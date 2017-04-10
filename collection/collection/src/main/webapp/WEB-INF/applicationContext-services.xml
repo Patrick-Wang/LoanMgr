@@ -44,7 +44,7 @@
 
 	<aop:aspectj-autoproxy />
 
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	<bean id="transaction" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 		<property name="dataSource" ref="dataSource" />
 	</bean>

@@ -1,6 +1,6 @@
 package com.bank.debt.protocol.entity;
 
-public class EntrustedCaseReport {
+public class EntrustedCaseReport  extends ProtocolEntity{
 	Integer id;
 	Integer entrustedCaseId;
 	String date;

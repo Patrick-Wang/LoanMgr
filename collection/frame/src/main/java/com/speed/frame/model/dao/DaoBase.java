@@ -1,5 +1,7 @@
 package com.speed.frame.model.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 
 import com.speed.frame.model.entity.AbstractEntity;
@@ -15,4 +17,6 @@ public interface DaoBase<T extends AbstractEntity> {
 	public T read(T entity);
 
 	public T getById(int id);
+
+	List<T> getAll();
 }

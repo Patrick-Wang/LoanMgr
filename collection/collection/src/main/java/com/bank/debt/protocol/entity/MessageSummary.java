@@ -1,6 +1,6 @@
 package com.bank.debt.protocol.entity;
 
-public class MessageSummary {
+public class MessageSummary  extends ProtocolEntity{
 	Integer fromId;
 	String fromName;
 	Integer msgCount;

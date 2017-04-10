@@ -1,6 +1,6 @@
 package com.bank.debt.protocol.entity;
 
-public class EntrustedCaseManageInfo {
+public class EntrustedCaseManageInfo  extends ProtocolEntity{
 	Integer id;
 	Integer ownerId;
 	String ownerName;
