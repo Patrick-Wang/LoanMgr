@@ -12,4 +12,6 @@ public class ErrorCode {
 	public final static Result ACCOUNT_ROLE_NOT_EXIST = new Result(baseCode++, "角色不存在");
 	public final static Result ACCOUNT_UPDATE_FALIED = new Result(baseCode++, "更新用户信息失败");
 	public final static Result MESSAGE_SEND_FALIED = new Result(baseCode++, "消息发送失败");
+	public final static Result EC_IMPORTED_FAILED = new Result(baseCode++, "委案导入失败");
+	public final static Result EC_UPDATE_FAILED = new Result(baseCode++, "修改委案失败");
 }

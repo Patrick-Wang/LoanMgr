@@ -5,6 +5,7 @@ public class Result  extends ProtocolEntity{
 	public Result() {
 		
 	}
+	
 
 	public Result(Integer code, String msg) {
 		super();
@@ -26,5 +27,9 @@ public class Result  extends ProtocolEntity{
 	}
 	public void setMsg(String msg) {
 		this.msg = msg;
+	}
+	
+	public Result clone(){
+		return new Result(code, msg);
 	}
 }

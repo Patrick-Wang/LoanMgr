@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bank.debt.model.entity.AuthorityEntity;
+import com.bank.debt.model.entity.RoleEntity;
 import com.speed.frame.model.dao.AbstractReadWriteDaoImpl;
 
 
@@ -49,14 +50,23 @@ public class AuthorityDaoImpl extends AbstractReadWriteDaoImpl<AuthorityEntity> 
 	}
 
 	@Override
-	public AuthorityEntity getAuthority(Integer roleId, Integer id) {
+	public AuthorityEntity getAuthority(Integer roleId, Integer ifid) {
 		Query q = this.getEntityManager().createQuery("from AuthorityEntity where role.id = :role and intf.id in :id");
 		q.setParameter("role", roleId);
-		q.setParameter("id", id);
+		q.setParameter("id", ifid);
 		List r = q.getResultList();
 		if (r.isEmpty()){
 			return null;
 		}
 		return (AuthorityEntity) r.get(0);
+	}
+
+	@Override
+	public List<String> getAuthAddrs(List<RoleEntity> roles, Integer idFrom, Integer idTo) {
+		Query q = this.getEntityManager().createQuery("select intf.address from AuthorityEntity where id >= :from and id < :to and role in :roles");
+		q.setParameter("roles", roles);
+		q.setParameter("from", idFrom);
+		q.setParameter("to", idTo);
+		return q.getResultList();
 	}
 }
