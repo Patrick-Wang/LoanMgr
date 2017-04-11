@@ -16,9 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.bank.debt.model.entity.ECCarLoanEntity;
+import com.bank.debt.model.entity.ECCreditCardEntity;
+import com.bank.debt.model.entity.ECCreditLoanEntity;
+import com.bank.debt.protocol.entity.EntrustedCaseManageInfo;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
+import com.bank.debt.protocol.tools.JsonUtil;
 import com.bank.debt.protocol.type.EntrustedCaseType;
 import com.bank.debt.service.ecmanager.ECManagerService;
 import com.bank.debt.service.ecmanager.ECManagerServiceImpl;
@@ -120,18 +125,41 @@ public class EntrustedCaseServlet {
 	
 	@RequestMapping(value = "update.do")
 	public @ResponseBody byte[] upload(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-
+			HttpServletResponse response, 
+			@RequestParam("type") Integer type, 
+			@RequestParam("data") String data) throws IOException {
+		Result r = ErrorCode.EC_UPDATE_FAILED;
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
+		JSONArray jdata = JSONArray.fromObject(data);
+		switch(type){
+		case EntrustedCaseType.CAR_LOAN:
+			r = entrustedCaseService.updateCarLoan(userName, jdata);
+			break;
+		case EntrustedCaseType.CREDIT_CARD:
+			r = entrustedCaseService.updateCreditCard(userName, jdata);
+			break;
+		case EntrustedCaseType.CREDIT_LOAN:
+			r = entrustedCaseService.updateCreditLoan(userName, jdata);
+			break;
+		}
 		
-		return null;
+
+		return r.toUtf8Json();
 	}
 	
 	@RequestMapping(value = "manager/search.do")
 	public @ResponseBody byte[] managerSearch(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
+		List<EntrustedCaseManageInfo> ecmis = eCManagerService.getManageInfos(userName);
 		
-		return null;
+		return JsonUtil.toUtf8Json(ecmis);
 	}
 	
 	@RequestMapping(value = "manager/update.do")
@@ -147,7 +175,7 @@ public class EntrustedCaseServlet {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam("attachements") CommonsMultipartFile file) throws UnsupportedEncodingException {
-
+		
 		
 		return null;
 	}

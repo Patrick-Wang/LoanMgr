@@ -1,3 +1,4 @@
+SET SQL_SAFE_UPDATES=0;
 create table `organization`(
 	 `id` int NOT NULL AUTO_INCREMENT,
 	 `parent` int default NULL,
@@ -21,6 +22,7 @@ create table `entrusted_case_manager`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`owner` int NOT NULL,
 	`assignee` int,
+	`modifier` int,
 	`type` int,
 	`entrustedCase` int not null,
 	`createdTime` datetime,
@@ -765,7 +767,9 @@ insert into `interface` (id, address, description) values
 (1568, 'entrusted_case_credit_card.cjh', '车架号'),
 (1569, 'entrusted_case_credit_card.jg', '警告'),
 (1570, 'entrusted_case_credit_card.zdyxx', '自定义信息'),
-(1571, 'entrusted_case_credit_card.zxcj', '最新催记');
+(1571, 'entrusted_case_credit_card.zxcj', '最新催记'),
+(1600, 'entrusted_case_manager.all', '获取所有管理信息'),
+(1601, 'entrusted_case_manager.owner', '根据owner获取管理信息');
 
 
 insert into `authority` (intf, role) values 
@@ -856,3 +860,8 @@ DELIMITER ;
 call initDataIf();
 
 DROP procedure IF EXISTS `initDataIf`;
+
+delete from authority where intf = 1600 and role = (select id from role where name='ROLE_OUTSIDE_STAFF');
+delete from authority where intf = 1600 and role = (select id from role where name='ROLE_INSIDE_STAFF');
+delete from authority where intf = 1601 and role = (select id from role where name='ROLE_ADMIN');
+delete from authority where intf = 1601 and role = (select id from role where name='ROLE_MANAGER');

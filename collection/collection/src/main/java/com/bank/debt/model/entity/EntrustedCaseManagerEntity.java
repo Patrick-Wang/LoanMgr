@@ -33,11 +33,21 @@ public class EntrustedCaseManagerEntity extends AbstractReadWriteEntity implemen
 	private static final long serialVersionUID = 1L;
 	UserEntity owner;
 	UserEntity assignee;
+	UserEntity modifier;
 	Integer type;
 	Integer entrustedCase;
 	Timestamp createdTime;
 	Timestamp lastModifiedTime;
 	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "modifier")
+	public UserEntity getModifier() {
+		return modifier;
+	}
+	public void setModifier(UserEntity modifier) {
+		this.modifier = modifier;
+	}
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "owner")
 	public UserEntity getOwner() {

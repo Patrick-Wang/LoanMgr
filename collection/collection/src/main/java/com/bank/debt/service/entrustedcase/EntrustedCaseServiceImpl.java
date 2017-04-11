@@ -35,6 +35,7 @@ import com.bank.debt.protocol.tools.JsonUtil;
 import com.bank.debt.protocol.tools.ValidationException;
 import com.bank.debt.protocol.tools.XLS2JsonMapper;
 import com.bank.debt.protocol.tools.XLSX2JsonMapper;
+import com.bank.debt.protocol.type.EntrustedCaseType;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -88,6 +89,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 					entity = eCCarLoanDao.merge(entity);
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
+					ecm.setModifier(usr);
 					ecm.setCreatedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 					ecm.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 					ecm.setEntrustedCase(entity.getId());
@@ -126,6 +128,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 					entity = eCCreditCardDao.merge(entity);
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
+					ecm.setModifier(usr);
 					ecm.setCreatedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 					ecm.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 					ecm.setEntrustedCase(entity.getId());
@@ -164,6 +167,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 					entity = eCCreditLoanDao.merge(entity);
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
+					ecm.setModifier(usr);
 					ecm.setCreatedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 					ecm.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 					ecm.setEntrustedCase(entity.getId());
@@ -270,6 +274,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			for (int i = 0; i < jdata.size(); ++i){
 				JSONObject jec = jdata.getJSONObject(i);
 				if (jec.containsKey("id")){
+					EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getByECId(EntrustedCaseType.CREDIT_LOAN, jec.getInt("id"));
 					ECCarLoanEntity entity = eCCarLoanDao.getById(jec.getInt("id"));
 					if (entity != null){
 						JsonUtil.toObject(jec, entity);
@@ -289,10 +294,14 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			for (int i = 0; i < jdata.size(); ++i){
 				JSONObject jec = jdata.getJSONObject(i);
 				if (jec.containsKey("id")){
+					EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getByECId(EntrustedCaseType.CREDIT_CARD, jec.getInt("id"));
 					ECCreditCardEntity entity = eCCreditCardDao.getById(jec.getInt("id"));
 					if (entity != null){
 						JsonUtil.toObject(jec, entity);
 						eCCreditCardDao.merge(entity);
+						ecme.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+						ecme.setModifier(usr);
+						entrustedCaseManagerDao.merge(ecme);
 					}
 				}
 			}
@@ -308,10 +317,14 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			for (int i = 0; i < jdata.size(); ++i){
 				JSONObject jec = jdata.getJSONObject(i);
 				if (jec.containsKey("id")){
+					EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getByECId(EntrustedCaseType.CAR_LOAN, jec.getInt("id"));
 					ECCreditLoanEntity entity = eCCreditLoanDao.getById(jec.getInt("id"));
-					if (entity != null){
+					if (entity != null && ecme != null){
 						JsonUtil.toObject(jec, entity);
 						eCCreditLoanDao.merge(entity);
+						ecme.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+						ecme.setModifier(usr);
+						entrustedCaseManagerDao.merge(ecme);
 					}
 				}
 			}
