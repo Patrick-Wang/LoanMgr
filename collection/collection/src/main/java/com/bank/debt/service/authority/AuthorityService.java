@@ -17,5 +17,7 @@ public interface AuthorityService {
 
 	void addRoleIfs(Integer roleId, List<Integer> ifs);
 
+	List<IF> getDataIfs();
+
 
 }

@@ -49,7 +49,9 @@ module collection.protocol{
     }
 
     export enum EntrustedCaseType{
-
+        carLoan,
+        creditLoan,
+        creditCard
     }
 
     export interface EntrustedCaseManageInfo{
@@ -64,6 +66,7 @@ module collection.protocol{
         id:number;
         entrustedCaseId:number;
         date:string;//2012-3-4
+        title:string;
         content:string;
         attachements:string[];
     }

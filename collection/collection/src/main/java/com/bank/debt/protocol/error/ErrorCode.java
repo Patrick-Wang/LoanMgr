@@ -14,4 +14,7 @@ public class ErrorCode {
 	public final static Result MESSAGE_SEND_FALIED = new Result(baseCode++, "消息发送失败");
 	public final static Result EC_IMPORTED_FAILED = new Result(baseCode++, "委案导入失败");
 	public final static Result EC_UPDATE_FAILED = new Result(baseCode++, "修改委案失败");
+	public final static Result ECM_UPDATE_FAILED = new Result(baseCode++, "委案管理信息修改失败");
+	public final static Result ECR_NOT_EXIST = new Result(baseCode++, "报告不存在");
+	public final static Result ECR_SUBMIT_FAILED = new Result(baseCode++, "报告提交失败");
 }

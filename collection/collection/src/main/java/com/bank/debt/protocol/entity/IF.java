@@ -1,6 +1,6 @@
 package com.bank.debt.protocol.entity;
 
-public class IF  extends ProtocolEntity{
+public class IF extends ProtocolEntity{
     Integer id;
     String address;
     String description;

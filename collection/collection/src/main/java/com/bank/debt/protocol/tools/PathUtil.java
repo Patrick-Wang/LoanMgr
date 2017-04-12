@@ -5,4 +5,8 @@ public class PathUtil {
 		return "/MSG/" + entrustedCase + "/" + from + "-" + to + "/";
 	}
 	
+	public static String reportAttachementPath(Integer entrustedCase, Integer creator, Integer report){
+		return "/REPORT/" + entrustedCase + "/" + creator + "/" + report + "/";
+	}
+	
 }

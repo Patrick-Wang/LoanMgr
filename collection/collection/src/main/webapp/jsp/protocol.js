@@ -11,6 +11,9 @@ var collection;
         })(protocol.UseStatus || (protocol.UseStatus = {}));
         var UseStatus = protocol.UseStatus;
         (function (EntrustedCaseType) {
+            EntrustedCaseType[EntrustedCaseType["carLoan"] = 0] = "carLoan";
+            EntrustedCaseType[EntrustedCaseType["creditLoan"] = 1] = "creditLoan";
+            EntrustedCaseType[EntrustedCaseType["creditCard"] = 2] = "creditCard";
         })(protocol.EntrustedCaseType || (protocol.EntrustedCaseType = {}));
         var EntrustedCaseType = protocol.EntrustedCaseType;
         (function (MessageStatus) {

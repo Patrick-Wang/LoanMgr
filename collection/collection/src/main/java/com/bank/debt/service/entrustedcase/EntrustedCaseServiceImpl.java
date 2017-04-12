@@ -1,6 +1,7 @@
 package com.bank.debt.service.entrustedcase;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -32,9 +33,10 @@ import com.bank.debt.model.entity.UserEntity;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.JsonUtil;
-import com.bank.debt.protocol.tools.ValidationException;
-import com.bank.debt.protocol.tools.XLS2JsonMapper;
-import com.bank.debt.protocol.tools.XLSX2JsonMapper;
+import com.bank.debt.protocol.tools.map.Mapper;
+import com.bank.debt.protocol.tools.map.MappingFailedException;
+import com.bank.debt.protocol.tools.map.Xls2JsonMapping;
+import com.bank.debt.protocol.tools.map.Xlsx2JsonMapping;
 import com.bank.debt.protocol.type.EntrustedCaseType;
 
 import net.sf.json.JSONArray;
@@ -71,14 +73,19 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			JSONArray data = null;
 			try {
 				if (file.getName().endsWith("xls")){
-					data = XLS2JsonMapper.xls2Json(file.getInputStream(), ECCarLoanEntity.class);
+					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
+					mapper.setMapping(new Xls2JsonMapping(ECCarLoanEntity.class));
+					data = mapper.map(file.getInputStream());
 				}else if (file.getName().endsWith("xlsx")){
-					data = XLSX2JsonMapper.xls2Json(file.getInputStream(), ECCarLoanEntity.class);
+					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
+					mapper.setMapping(new Xlsx2JsonMapping(ECCarLoanEntity.class));
+					data = mapper.map(file.getInputStream());
 				}
+
 			} catch (IOException e) {
 				r.setMsg(e.getMessage());
 				e.printStackTrace();
-			} catch (ValidationException e) {
+			} catch (MappingFailedException e) {
 				r.setMsg(e.getMessage());
 				e.printStackTrace();
 			}
@@ -87,6 +94,9 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 				List<ECCarLoanEntity> eccls = JsonUtil.toObjects(data, ECCarLoanEntity.class);
 				for (ECCarLoanEntity entity : eccls){
 					entity = eCCarLoanDao.merge(entity);
+					entity.updateCode();
+					eCCarLoanDao.merge(entity);
+					
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
 					ecm.setModifier(usr);
@@ -110,14 +120,18 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			JSONArray data = null;
 			try {
 				if (file.getName().endsWith("xls")){
-					data = XLS2JsonMapper.xls2Json(file.getInputStream(), ECCreditCardEntity.class);
+					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
+					mapper.setMapping(new Xls2JsonMapping(ECCreditCardEntity.class));
+					data = mapper.map(file.getInputStream());
 				}else if (file.getName().endsWith("xlsx")){
-					data = XLSX2JsonMapper.xls2Json(file.getInputStream(), ECCreditCardEntity.class);
+					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
+					mapper.setMapping(new Xlsx2JsonMapping(ECCreditCardEntity.class));
+					data = mapper.map(file.getInputStream());
 				}
 			} catch (IOException e) {
 				r.setMsg(e.getMessage());
 				e.printStackTrace();
-			} catch (ValidationException e) {
+			} catch (MappingFailedException e) {
 				r.setMsg(e.getMessage());
 				e.printStackTrace();
 			}
@@ -126,6 +140,8 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 				List<ECCreditCardEntity> eccls = JsonUtil.toObjects(data, ECCreditCardEntity.class);
 				for (ECCreditCardEntity entity : eccls){
 					entity = eCCreditCardDao.merge(entity);
+					entity.updateCode();
+					eCCreditCardDao.merge(entity);
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
 					ecm.setModifier(usr);
@@ -149,14 +165,18 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			JSONArray data = null;
 			try {
 				if (file.getName().endsWith("xls")){
-					data = XLS2JsonMapper.xls2Json(file.getInputStream(), ECCreditLoanEntity.class);
+					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
+					mapper.setMapping(new Xls2JsonMapping(ECCreditLoanEntity.class));
+					data = mapper.map(file.getInputStream());
 				}else if (file.getName().endsWith("xlsx")){
-					data = XLSX2JsonMapper.xls2Json(file.getInputStream(), ECCreditLoanEntity.class);
+					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
+					mapper.setMapping(new Xlsx2JsonMapping(ECCreditLoanEntity.class));
+					data = mapper.map(file.getInputStream());
 				}
 			} catch (IOException e) {
 				r.setMsg(e.getMessage());
 				e.printStackTrace();
-			} catch (ValidationException e) {
+			} catch (MappingFailedException e) {
 				r.setMsg(e.getMessage());
 				e.printStackTrace();
 			}
@@ -165,6 +185,8 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 				List<ECCreditLoanEntity> eccls = JsonUtil.toObjects(data, ECCreditLoanEntity.class);
 				for (ECCreditLoanEntity entity : eccls){
 					entity = eCCreditLoanDao.merge(entity);
+					entity.updateCode();
+					eCCreditLoanDao.merge(entity);
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
 					ecm.setModifier(usr);

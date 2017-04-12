@@ -14,6 +14,8 @@ public class JsonUtilTest {
 
 	@Test
 	public void testToJson() {
+		String s = String.format("00%08d", 123);
+		
 		User usr = new User();
 		usr.setId(1);
 		usr.setName("123");

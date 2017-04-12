@@ -1,5 +1,7 @@
 package com.speed.frame.model.dao;
 
+import java.util.List;
+
 import com.speed.frame.model.entity.AbstractReadWriteEntity;
 
 public class AbstractReadWriteDaoImpl<T extends AbstractReadWriteEntity>
@@ -29,5 +31,13 @@ public class AbstractReadWriteDaoImpl<T extends AbstractReadWriteEntity>
 	public void deleteById(int id) {
 		T entity = getEntityManager().find(getEntityClass(), id);
 		getEntityManager().remove(entity);
+	}
+
+	@Override
+	public void merge(List<T> entities) {
+		for (T entity : entities){
+			getEntityManager().merge(entity);
+		}
+		
 	}
 }

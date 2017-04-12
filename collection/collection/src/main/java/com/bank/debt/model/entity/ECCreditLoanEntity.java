@@ -27,6 +27,7 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	String code;
 	String	khh		;
 	String	khxm		;
 	String	zhh		;
@@ -502,6 +503,15 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void setLlr10dh(String llr10dh) {
 		this.llr10dh = llr10dh;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public void updateCode() {
+		this.code = String.format("00%08d", this.getId());
 	}
 
 }

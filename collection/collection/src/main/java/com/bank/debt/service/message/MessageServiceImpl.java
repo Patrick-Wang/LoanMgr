@@ -33,6 +33,7 @@ import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
 import com.bank.debt.protocol.tools.PathUtil;
+import com.bank.debt.protocol.type.MessageStatus;
 import com.bank.debt.service.service.ftp.FtpService;
 
 import net.sf.json.JSONArray;
@@ -65,7 +66,7 @@ public class MessageServiceImpl implements MessageService {
 		for(Integer id : msgIds){
 			MessageEntity msg = messageDao.getById(id);
 			if (msg != null){
-				msg.setRead(1);
+				msg.setRead(MessageStatus.read);
 				messageDao.merge(msg);
 			}
 		}
@@ -107,7 +108,7 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	private Message mse2ms(MessageEntity entity) {
-		 SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		Message msg = new Message();
 		msg.setFromId(entity.getFrom().getId());
@@ -156,7 +157,7 @@ public class MessageServiceImpl implements MessageService {
 			}
 		}
 		me.setAttachements(attachs.toString());
-		me.setRead(0);
+		me.setRead(MessageStatus.unread);
 		me.setSendTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 		messageDao.merge(me);
 		return ErrorCode.OK;

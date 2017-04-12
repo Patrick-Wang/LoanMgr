@@ -12,10 +12,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.bank.debt.protocol.tools.Checking;
 import com.speed.frame.model.entity.AbstractReadWriteEntity;
+
+import net.sf.json.JSONArray;
 
 
 @Entity
@@ -107,6 +109,17 @@ public class EntrustedCaseReportEntity extends AbstractReadWriteEntity implement
 	}
 	public void setModifier(UserEntity modifier) {
 		this.modifier = modifier;
+	}
+	
+	public JSONArray jsonAttachements(){
+		String attachs = this.getAttachements();
+		JSONArray jattachs = null;
+		if (Checking.isExist(attachs)){
+			jattachs = JSONArray.fromObject(attachs);
+		}else{
+			jattachs = new JSONArray();
+		}
+		return jattachs;
 	}
 
 }

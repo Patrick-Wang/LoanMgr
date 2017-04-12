@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.bank.debt.protocol.entity.IF;
 import com.bank.debt.protocol.entity.Role;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.JsonUtil;
@@ -34,10 +35,8 @@ public class AuthorityServlet {
 	@RequestMapping(value = "interface.do")
 	public @ResponseBody byte[] getInterface(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-
-//		List<IF> ifs = authorityService.getUIIfs();
-//		return JsonUtil.toUtf8Json(ifs);
-		return ErrorCode.UNIMPLEMENTED.toUtf8Json();
+		List<IF> ifs = authorityService.getDataIfs();
+		return JsonUtil.toUtf8Json(ifs);
 	}
 	
 	@RequestMapping(value = "search.do")

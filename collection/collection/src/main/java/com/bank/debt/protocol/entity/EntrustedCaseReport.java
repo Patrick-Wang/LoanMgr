@@ -4,6 +4,7 @@ public class EntrustedCaseReport  extends ProtocolEntity{
 	Integer id;
 	Integer entrustedCaseId;
 	String date;
+	String title;
 	String content;
 	String[] attachements;
 
@@ -45,5 +46,13 @@ public class EntrustedCaseReport  extends ProtocolEntity{
 
 	public void setAttachements(String[] attachements) {
 		this.attachements = attachements;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 }

@@ -7,19 +7,19 @@ public class Result  extends ProtocolEntity{
 	}
 	
 
-	public Result(Integer code, String msg) {
+	public Result(int code, String msg) {
 		super();
 		this.code = code;
 		this.msg = msg;
 	}
 
 
-	Integer code;
+	int code;
 	String msg;
-	public Integer getCode() {
+	public int getCode() {
 		return code;
 	}
-	public void setCode(Integer code) {
+	public void setCode(int code) {
 		this.code = code;
 	}
 	public String getMsg() {

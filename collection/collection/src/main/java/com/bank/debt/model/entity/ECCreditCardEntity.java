@@ -28,6 +28,7 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	String code;
 	Integer	cid		;
 	String	gaxlh		;
 	String	xm		;
@@ -991,5 +992,14 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void setSh(String sh) {
 		this.sh = sh;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public void updateCode() {
+		this.code = String.format("00%08d", this.getId());
 	}
 }

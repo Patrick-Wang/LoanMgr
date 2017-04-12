@@ -1,5 +1,7 @@
 package com.bank.debt.protocol.tools;
 
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class Checking {
 	public static boolean isExist(String s){
 		return s != null && !s.isEmpty();
@@ -10,6 +12,10 @@ public class Checking {
 	}
 	
 	public static boolean isExist(Integer[] ia){
+		return ia != null && ia.length > 0;
+	}
+	
+	public static boolean isExist(CommonsMultipartFile[] ia){
 		return ia != null && ia.length > 0;
 	}
 }

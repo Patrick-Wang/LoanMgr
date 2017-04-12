@@ -19,6 +19,10 @@ import com.bank.debt.model.entity.IntfEntity;
 import com.bank.debt.model.entity.RoleEntity;
 import com.bank.debt.protocol.entity.IF;
 import com.bank.debt.protocol.entity.Role;
+import com.bank.debt.protocol.tools.map.Mapper;
+import com.bank.debt.protocol.tools.map.Mapping;
+import com.bank.debt.protocol.tools.map.MappingFailedException;
+import com.bank.debt.protocol.tools.map.MappingSkipException;
 
 @Service(AuthorityServiceImpl.NAME)
 @Transactional("transaction")
@@ -53,12 +57,16 @@ public class AuthorityServiceImpl implements AuthorityService {
 
 	@Override
 	public List<IF> getUIIfs() {
-		List<IntfEntity> allifs = intfDao.getUIIfs();
-		List<IF> ret = new ArrayList<IF>();
-		for (IntfEntity entity : allifs){
-			ret.add(ife2if(entity));
-		}
-		return ret;
+		Mapper<IntfEntity, IF> mapper = new Mapper<IntfEntity, IF>();
+
+		mapper.setMapping(new Mapping<IntfEntity, IF>(){
+			@Override
+			public IF onMap(IntfEntity from) throws MappingSkipException, MappingFailedException {
+				return ife2if(from);
+			}
+		});
+		
+		return mapper.forceMap(intfDao.getUIIfs());
 	}
 
 	private IF ife2if(IntfEntity entity) {
@@ -95,6 +103,21 @@ public class AuthorityServiceImpl implements AuthorityService {
 				authorityDao.merge(auth);
 			}
 		}
+	}
+
+	@Override
+	public List<IF> getDataIfs() {
+
+		Mapper<IntfEntity, IF> mapper = new Mapper<IntfEntity, IF>();
+
+		mapper.setMapping(new Mapping<IntfEntity, IF>(){
+			@Override
+			public IF onMap(IntfEntity from) throws MappingSkipException, MappingFailedException {
+				return ife2if(from);
+			}
+		});
+		
+		return mapper.forceMap(intfDao.getDataIfs());
 	}
 
 }

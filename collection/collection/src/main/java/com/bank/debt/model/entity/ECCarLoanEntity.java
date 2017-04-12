@@ -27,7 +27,7 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	String code;
 	Integer	xh	;
 	Date	wwrq	;
 	Date	wwdqr	;
@@ -532,5 +532,13 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	public void setCcode(String ccode) {
 		this.ccode = ccode;
 	}
-
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
+	}
+	public void updateCode() {
+		this.code = String.format("00%08d", this.getId());
+	}
 }

@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import com.bank.debt.model.entity.ECCarLoanEntity;
-import com.bank.debt.model.entity.ECCreditCardEntity;
-import com.bank.debt.model.entity.ECCreditLoanEntity;
 import com.bank.debt.protocol.entity.EntrustedCaseManageInfo;
+import com.bank.debt.protocol.entity.EntrustedCaseReport;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
+import com.bank.debt.protocol.tools.map.MappingFailedException;
 import com.bank.debt.protocol.type.EntrustedCaseType;
 import com.bank.debt.service.ecmanager.ECManagerService;
 import com.bank.debt.service.ecmanager.ECManagerServiceImpl;
@@ -38,6 +37,7 @@ import net.sf.json.JSONObject;
 @Controller
 @RequestMapping(value = "entrusted_case")
 public class EntrustedCaseServlet {
+
 	@Resource(name=ECReportServiceImpl.NAME)
 	ECReportService eCReportService;
 
@@ -158,41 +158,57 @@ public class EntrustedCaseServlet {
 			    .getPrincipal();
 		String userName = userDetails.getUsername();
 		List<EntrustedCaseManageInfo> ecmis = eCManagerService.getManageInfos(userName);
-		
 		return JsonUtil.toUtf8Json(ecmis);
 	}
 	
 	@RequestMapping(value = "manager/update.do")
 	public @ResponseBody byte[] managerUpdate(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-
-		
-		return null;
+			HttpServletResponse response, 
+			@RequestParam("data") String data) throws UnsupportedEncodingException {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
+		List<EntrustedCaseManageInfo> ecmis = JsonUtil.toObjects(JSONArray.fromObject(data), EntrustedCaseManageInfo.class);
+		Result r = eCManagerService.updateManageInfo(userName, ecmis);
+		return r.toUtf8Json();
 	}
 	
 	@RequestMapping(value = "report/submit.do")
 	public @ResponseBody byte[] reportSubmit(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("attachements") CommonsMultipartFile file) throws UnsupportedEncodingException {
-		
-		
-		return null;
+			@RequestParam("report") String report,
+			@RequestParam("attachements") CommonsMultipartFile[] attachements) throws IOException {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
+		Result r = ErrorCode.ECR_SUBMIT_FAILED;
+		EntrustedCaseReport ecr = (EntrustedCaseReport) JsonUtil.toObject(JSONObject.fromObject(report), EntrustedCaseReport.class);
+		if (Checking.isExist(ecr.getId())){
+			r = eCReportService.updateReport(userName, ecr, attachements);
+		}else if (Checking.isExist(ecr.getEntrustedCaseId())){
+			r = eCReportService.createReport(userName, ecr, attachements);
+		}
+		return r.toUtf8Json();
 	}
 	
 	@RequestMapping(value = "report/search.do")
 	public @ResponseBody byte[] reportSearch(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-
-		
-		return null;
+			HttpServletResponse response, 
+			@RequestParam("entrusted_case") Integer entrustedCase) throws UnsupportedEncodingException, MappingFailedException {
+		List<EntrustedCaseReport> ecrs = eCReportService.getECReports(entrustedCase);
+		return JsonUtil.toUtf8Json(ecrs);
 	}
 	
 	@RequestMapping(value = "report/download.do")
-	public @ResponseBody byte[] reportDownload(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-
-		
-		return null;
+	public void reportDownload(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam("report") Integer report, 
+			@RequestParam("attachement") String attachement) throws IOException {
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(attachement, "UTF-8")  +"\"");
+		eCReportService.downloadAttachement(report, attachement, response.getOutputStream());
 	}
 }
