@@ -36,6 +36,7 @@ public class EntrustedCaseManagerEntity extends AbstractReadWriteEntity implemen
 	UserEntity modifier;
 	Integer type;
 	Integer entrustedCase;
+	Integer batchNo;
 	Timestamp createdTime;
 	Timestamp lastModifiedTime;
 	
@@ -88,6 +89,12 @@ public class EntrustedCaseManagerEntity extends AbstractReadWriteEntity implemen
 	}
 	public void setLastModifiedTime(Timestamp lastModifiedTime) {
 		this.lastModifiedTime = lastModifiedTime;
+	}
+	public Integer getBatchNo() {
+		return batchNo;
+	}
+	public void setBatchNo(Integer batchNo) {
+		this.batchNo = batchNo;
 	}
 
 

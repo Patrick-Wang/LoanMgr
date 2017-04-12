@@ -15,6 +15,8 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.bank.debt.model.dao.authority.AuthorityDao;
 import com.bank.debt.model.dao.authority.AuthorityDaoImpl;
+import com.bank.debt.model.dao.ecbatchcreator.ECBatchCreatorDao;
+import com.bank.debt.model.dao.ecbatchcreator.ECBatchCreatorDaoImpl;
 import com.bank.debt.model.dao.eccarloan.ECCarLoanDao;
 import com.bank.debt.model.dao.eccarloan.ECCarLoanDaoImpl;
 import com.bank.debt.model.dao.eccreditcard.ECCreditCardDao;
@@ -45,6 +47,9 @@ import net.sf.json.JSONObject;
 @Service(EntrustedCaseServiceImpl.NAME)
 @Transactional("transaction")
 public class EntrustedCaseServiceImpl implements EntrustedCaseService {
+	@Resource(name=ECBatchCreatorDaoImpl.NAME)
+	ECBatchCreatorDao eCBatchCreatorDao;
+
 	@Resource(name=AuthorityDaoImpl.NAME)
 	AuthorityDao authorityDao;
 
@@ -91,17 +96,23 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			}
 			
 			if (null != data){
+				Timestamp current = new Timestamp(Calendar.getInstance().getTimeInMillis());
 				List<ECCarLoanEntity> eccls = JsonUtil.toObjects(data, ECCarLoanEntity.class);
+				Integer batchNo = null;
+				if (!eccls.isEmpty()){
+					batchNo = eCBatchCreatorDao.createBatchNo(current);
+				}
 				for (ECCarLoanEntity entity : eccls){
 					entity = eCCarLoanDao.merge(entity);
 					entity.updateCode();
 					eCCarLoanDao.merge(entity);
-					
+
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
+					ecm.setBatchNo(batchNo);
 					ecm.setModifier(usr);
-					ecm.setCreatedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-					ecm.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+					ecm.setCreatedTime(current);
+					ecm.setLastModifiedTime(current);
 					ecm.setEntrustedCase(entity.getId());
 					ecm.setType(type);
 					entrustedCaseManagerDao.merge(ecm);
@@ -137,16 +148,23 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			}
 			
 			if (null != data){
+				Timestamp current = new Timestamp(Calendar.getInstance().getTimeInMillis());
 				List<ECCreditCardEntity> eccls = JsonUtil.toObjects(data, ECCreditCardEntity.class);
+				Integer batchNo = null;
+				if (!eccls.isEmpty()){
+					batchNo = eCBatchCreatorDao.createBatchNo(current);
+				}
 				for (ECCreditCardEntity entity : eccls){
 					entity = eCCreditCardDao.merge(entity);
 					entity.updateCode();
 					eCCreditCardDao.merge(entity);
+					
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
+					ecm.setBatchNo(batchNo);
 					ecm.setModifier(usr);
-					ecm.setCreatedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-					ecm.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+					ecm.setCreatedTime(current);
+					ecm.setLastModifiedTime(current);
 					ecm.setEntrustedCase(entity.getId());
 					ecm.setType(type);
 					entrustedCaseManagerDao.merge(ecm);
@@ -182,16 +200,23 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			}
 			
 			if (null != data){
+				Timestamp current = new Timestamp(Calendar.getInstance().getTimeInMillis());
 				List<ECCreditLoanEntity> eccls = JsonUtil.toObjects(data, ECCreditLoanEntity.class);
+				Integer batchNo = null;
+				if (!eccls.isEmpty()){
+					batchNo = eCBatchCreatorDao.createBatchNo(current);
+				}
 				for (ECCreditLoanEntity entity : eccls){
 					entity = eCCreditLoanDao.merge(entity);
 					entity.updateCode();
 					eCCreditLoanDao.merge(entity);
+					
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
+					ecm.setBatchNo(batchNo);
 					ecm.setModifier(usr);
-					ecm.setCreatedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
-					ecm.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+					ecm.setCreatedTime(current);
+					ecm.setLastModifiedTime(current);
 					ecm.setEntrustedCase(entity.getId());
 					ecm.setType(type);
 					entrustedCaseManagerDao.merge(ecm);
