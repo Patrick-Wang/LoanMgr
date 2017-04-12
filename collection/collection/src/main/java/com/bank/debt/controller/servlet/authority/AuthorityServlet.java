@@ -19,6 +19,7 @@ import com.bank.debt.protocol.tools.JsonUtil;
 import com.bank.debt.service.authority.AuthorityService;
 import com.bank.debt.service.authority.AuthorityServiceImpl;
 
+@SuppressWarnings("unchecked")
 @Controller
 @RequestMapping(value = "authority")
 public class AuthorityServlet {
