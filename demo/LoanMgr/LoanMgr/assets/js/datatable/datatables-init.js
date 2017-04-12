@@ -231,7 +231,8 @@ var InitiateExpandableDataTable = function() {
             /* Formatting function for row details */
             function fnFormatDetails(oTable, nTr) {
                 var aData = oTable.fnGetData(nTr);
-                var sOut = '<table>';
+                var sOut = '<div class="row"><div class="col-xs-12 col-md-6">';
+                sOut += '<table>';
                 sOut += '<tr><td><h5>工作记录1：</h5></td></tr>';
                 sOut += '<tr><td>标题：</td><td>电话催收</td></tr>';
                 sOut += '<tr><td>内容：</td><td>对客户进行电话催收，形成电话录音已保存在系统内。</td></tr>';
@@ -243,6 +244,17 @@ var InitiateExpandableDataTable = function() {
                 sOut += '<tr><td>附件1</td><td><a href="">20170405111835_13894932343_00000ER001.mp3</a></td><td><a href="">修改上传时间</a></td></tr>';
                 sOut += '<tr><td>附件2</td><td><a href="">外访表.doc</a></td><td><a href="">修改上传时间</a></td></tr>';
                 sOut += '</table>';
+                sOut += '</div><div class="col-xs-12 col-md-6">';
+                sOut += '<table>';
+                sOut += '<tr><td><h5>咨询记录1：</h5></td></tr>';
+                sOut += '<tr><td>标题：</td><td>身份证号不正确</td></tr>';
+                sOut += '<tr><td>内容：</td><td>身份证号码有误。</td></tr>';
+                sOut += '<tr><td>附件2</td><td><a href="">身份证扫描件.doc</a></td></tr>';
+                sOut += '<tr><td><h5>咨询记录2：</h5></td></tr>';
+                sOut += '<tr><td>标题：</td><td>身份证号不正确</td></tr>';
+                sOut += '<tr><td>内容：</td><td>身份证号码有误。</td></tr>';
+                sOut += '<tr><td>附件2</td><td><a href="">身份证扫描件.doc</a></td></tr>';
+                sOut += '</table></div></div>';
                 return sOut;
             }
 
