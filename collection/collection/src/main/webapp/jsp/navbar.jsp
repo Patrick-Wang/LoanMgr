@@ -77,7 +77,7 @@
                                         0 条委消息
                                     </li>
                                        <li class="dropdown-footer">
-                                        <a href="#">
+                                        <a id="queryAllMsgs" href="#">
                                             	查看全部咨询信息
                                         </a>
                                     </li>

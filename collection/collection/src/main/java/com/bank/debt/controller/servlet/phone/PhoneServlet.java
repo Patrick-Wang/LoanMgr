@@ -34,4 +34,12 @@ public class PhoneServlet {
 		
 		return null;
 	}
+	
+	@RequestMapping(value = "missed_call.do")
+	public @ResponseBody byte[] getMissedCall(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+
+		
+		return null;
+	}
 }

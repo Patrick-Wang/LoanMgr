@@ -122,4 +122,9 @@ module collection.protocol{
         done(sFn : (sResult : S)=>void):Promise<S>;
         fail(fFn : (fResult : any)=>void):Promise<S>;
     }
+
+    export interface MissedCall{
+        call:string;//2013-12-11 58:11:23
+        phoneNum:string;
+    }
 }

@@ -3,7 +3,7 @@ module navbar{
     import Message = collection.Message;
     import Net = collection.Net;
     import UnreadMessage = collection.protocol.UnreadMessage;
-    class NavBar{
+    export class NavBar{
         static ins = new NavBar();
 
         constructor(){
@@ -11,6 +11,14 @@ module navbar{
             .done((mecs : UnreadMessage[])=>{
                 this.onLoadMEC(mecs);
             });
+
+            $("#queryAllMsgs").click(()=>{
+                this.onClickQueryAllMessage();
+            });
+        }
+
+        onClickQueryAllMessage(){
+
         }
 
 
@@ -43,7 +51,7 @@ module navbar{
         buildMessageDetail(detailli : any, um : UnreadMessage){
             let detail = detailli.after(
                 "<li> " +
-                    "<a onclick='navbar.NavBar.ins.clickMessage(' + um.msgId + ')' href='#'>" +
+                    "<a onclick='navbar.NavBar.ins.clickMessage(" + um.msgId + ")' href='#'>" +
                     '<img src="' + Net.BASE_URL + '/jsp/assets/img/avatars/bing.png" class="message-avatar" alt="Microsoft Bing">' +
                     '<div class="message">'+
                         '<span class="message-sender">' +

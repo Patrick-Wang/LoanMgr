@@ -10,7 +10,12 @@ var navbar;
                 .done(function (mecs) {
                 _this.onLoadMEC(mecs);
             });
+            $("#queryAllMsgs").click(function () {
+                _this.onClickQueryAllMessage();
+            });
         }
+        NavBar.prototype.onClickQueryAllMessage = function () {
+        };
         NavBar.prototype.getDateFromTime = function (time) {
             var dt = new Date(Date.parse(time));
             var now = new Date(Date.now());
@@ -36,7 +41,7 @@ var navbar;
         };
         NavBar.prototype.buildMessageDetail = function (detailli, um) {
             var detail = detailli.after("<li> " +
-                "<a onclick='navbar.NavBar.ins.clickMessage(' + um.msgId + ')' href='#'>" +
+                "<a onclick='navbar.NavBar.ins.clickMessage(" + um.msgId + ")' href='#'>" +
                 '<img src="' + Net.BASE_URL + '/jsp/assets/img/avatars/bing.png" class="message-avatar" alt="Microsoft Bing">' +
                 '<div class="message">' +
                 '<span class="message-sender">' +
@@ -65,4 +70,5 @@ var navbar;
         NavBar.ins = new NavBar();
         return NavBar;
     })();
+    navbar.NavBar = NavBar;
 })(navbar || (navbar = {}));
