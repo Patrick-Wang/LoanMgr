@@ -12,6 +12,8 @@ var pages;
         function CallCenter(page) {
             _super.call(this, page);
         }
+        CallCenter.prototype.onRefresh = function () {
+        };
         CallCenter.ins = new CallCenter(pages.PageType.callCenter);
         return CallCenter;
     })(pages.PageImpl);

@@ -86,9 +86,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<%@include file="navbar.jsp"%>
 	<!-- /Navbar -->
 	
-	<!--Basic Scripts-->
-	<%@include file="basicScript.jsp"%>
-
 	<!-- Main Container -->
 	<div class="main-container container-fluid">
 		<!-- Page Container -->
@@ -97,19 +94,19 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 
 			<!-- Page Content -->
 			<div class="page-content">
-				<div id="consolePage">
+				<%-- <div id="consolePage">
 					<%@include file="pages/console.jsp"%>
 				</div>
 				<div id="importLoansPage" style="display: none">
 					<%@include file="pages/importLoans.jsp"%>
-				</div>
+				</div>--%>
 				<div id="assignLoansPage" style="display: none">
 					<%@include file="pages/assignLoans.jsp"%>
-				</div>
+				</div> 
 				<div id="loansMgrPage" style="display: none">
 					<%@include file="pages/loansMgr.jsp"%>
 				</div>
-				<div id="exportLoansPage" style="display: none">
+				<%--<div id="exportLoansPage" style="display: none">
 					<%@include file="pages/exportLoans.jsp"%>
 				</div>
 				<div id="callCenterPage" style="display: none">
@@ -135,7 +132,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				</div>
 				<div id="reportTaskPage" style="display: none">
 					<%@include file="pages/reportTask.jsp"%>
-				</div> 
+				</div>  --%>
 			</div>
 			<!-- /Page Content -->
 		</div>
@@ -144,5 +141,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	</div>
 	<!-- Main Container -->
 </body>
+
+<!--Basic Scripts-->
+	<%@include file="basicScript.jsp"%>
 </html>
 

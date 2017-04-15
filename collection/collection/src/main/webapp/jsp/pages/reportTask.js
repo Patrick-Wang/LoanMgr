@@ -12,6 +12,8 @@ var pages;
         function ReportTask(page) {
             _super.call(this, page);
         }
+        ReportTask.prototype.onRefresh = function () {
+        };
         ReportTask.ins = new ReportTask(pages.PageType.reportTask);
         return ReportTask;
     })(pages.PageImpl);

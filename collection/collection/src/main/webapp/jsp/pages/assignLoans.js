@@ -12,6 +12,8 @@ var pages;
         function AssignLoans(page) {
             _super.call(this, page);
         }
+        AssignLoans.prototype.onRefresh = function () {
+        };
         AssignLoans.ins = new AssignLoans(pages.PageType.assignLoans);
         return AssignLoans;
     })(pages.PageImpl);

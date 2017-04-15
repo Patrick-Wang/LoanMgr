@@ -12,6 +12,8 @@ var pages;
         function ImportLoans(page) {
             _super.call(this, page);
         }
+        ImportLoans.prototype.onRefresh = function () {
+        };
         ImportLoans.ins = new ImportLoans(pages.PageType.importLoans);
         return ImportLoans;
     })(pages.PageImpl);

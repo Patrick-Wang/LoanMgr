@@ -12,6 +12,8 @@ var pages;
         function PropertyMgr(page) {
             _super.call(this, page);
         }
+        PropertyMgr.prototype.onRefresh = function () {
+        };
         PropertyMgr.ins = new PropertyMgr(pages.PageType.propertyMgr);
         return PropertyMgr;
     })(pages.PageImpl);

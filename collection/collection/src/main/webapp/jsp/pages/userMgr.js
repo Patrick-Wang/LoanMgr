@@ -12,6 +12,8 @@ var pages;
         function UserMgr(page) {
             _super.call(this, page);
         }
+        UserMgr.prototype.onRefresh = function () {
+        };
         UserMgr.ins = new UserMgr(pages.PageType.userMgr);
         return UserMgr;
     })(pages.PageImpl);

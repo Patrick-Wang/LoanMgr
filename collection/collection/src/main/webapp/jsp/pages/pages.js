@@ -32,14 +32,34 @@ var pages;
     pages.PageUtil = PageUtil;
     var PageImpl = (function () {
         function PageImpl(page) {
+            var _this = this;
             this.page = page;
             sidebar.registerPage(page, this);
+            //PageUtil.jqPage(this.page).css("display", "none");
+            //$("script").remove();
+            //this.html = PageUtil.jqPage(this.page).html();
+            //PageUtil.jqPage(this.page).empty();
+            $("#" + PageUtil.getPageId(this.page) + " #refresh-toggler").click(function () {
+                _this.refresh();
+                return false;
+            });
         }
+        PageImpl.prototype.refresh = function () {
+            if (this.isShown()) {
+                this.onRefresh();
+            }
+        };
         PageImpl.prototype.show = function () {
-            PageUtil.jqPage(this.page).css("display", "");
+            if (!this.isShown()) {
+                //PageUtil.jqPage(this.page).append(this.html);
+                //init();
+                PageUtil.jqPage(this.page).css("display", "");
+            }
         };
         PageImpl.prototype.hide = function () {
-            PageUtil.jqPage(this.page).css("display", "none");
+            if (this.isShown()) {
+                PageUtil.jqPage(this.page).css("display", "none");
+            }
         };
         PageImpl.prototype.isShown = function () {
             return "none" != PageUtil.jqPage(this.page).css("display");

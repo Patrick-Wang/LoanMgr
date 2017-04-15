@@ -12,6 +12,8 @@ var pages;
         function ExportLoans(page) {
             _super.call(this, page);
         }
+        ExportLoans.prototype.onRefresh = function () {
+        };
         ExportLoans.ins = new ExportLoans(pages.PageType.exportLoans);
         return ExportLoans;
     })(pages.PageImpl);

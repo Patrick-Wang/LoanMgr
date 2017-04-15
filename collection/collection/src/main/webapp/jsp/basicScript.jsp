@@ -9,7 +9,7 @@
 
 <!--Page Related Scripts-->
 <script
-	src="${pageContext.request.contextPath}/jsp/assets/js/datatable/jquery.datatables.min.js"></script>
+	src="${pageContext.request.contextPath}/jsp/assets/js/datatable/jquery.datatables.full.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/assets/js/datatable/zeroclipboard.js"></script>
 <script

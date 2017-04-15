@@ -12,6 +12,8 @@ var pages;
         function LoansMgr(page) {
             _super.call(this, page);
         }
+        LoansMgr.prototype.onRefresh = function () {
+        };
         LoansMgr.ins = new LoansMgr(pages.PageType.loansMgr);
         return LoansMgr;
     })(pages.PageImpl);

@@ -12,6 +12,8 @@ var pages;
         function RearangeBussiness(page) {
             _super.call(this, page);
         }
+        RearangeBussiness.prototype.onRefresh = function () {
+        };
         RearangeBussiness.ins = new RearangeBussiness(pages.PageType.rearangeBussiness);
         return RearangeBussiness;
     })(pages.PageImpl);

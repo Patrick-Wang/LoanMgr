@@ -12,6 +12,9 @@ var pages;
         function Console(page) {
             _super.call(this, page);
         }
+        Console.prototype.onRefresh = function () {
+            alert("refresh");
+        };
         Console.ins = new Console(pages.PageType.console);
         return Console;
     })(pages.PageImpl);

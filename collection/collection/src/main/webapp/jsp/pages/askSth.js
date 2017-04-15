@@ -12,6 +12,8 @@ var pages;
         function AskSth(page) {
             _super.call(this, page);
         }
+        AskSth.prototype.onRefresh = function () {
+        };
         AskSth.ins = new AskSth(pages.PageType.askSth);
         return AskSth;
     })(pages.PageImpl);

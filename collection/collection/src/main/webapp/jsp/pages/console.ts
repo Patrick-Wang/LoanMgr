@@ -3,9 +3,12 @@
 module pages{
     class Console extends PageImpl{
         static ins = new Console(PageType.console);
-
         constructor(page:pages.PageType) {
             super(page);
         }
+        protected onRefresh():void {
+            alert("refresh");
+        }
+
     }
 }

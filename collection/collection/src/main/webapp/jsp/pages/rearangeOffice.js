@@ -12,6 +12,8 @@ var pages;
         function RearangeOffice(page) {
             _super.call(this, page);
         }
+        RearangeOffice.prototype.onRefresh = function () {
+        };
         RearangeOffice.ins = new RearangeOffice(pages.PageType.rearangeOffice);
         return RearangeOffice;
     })(pages.PageImpl);

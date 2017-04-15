@@ -12,6 +12,8 @@ var pages;
         function Backup(page) {
             _super.call(this, page);
         }
+        Backup.prototype.onRefresh = function () {
+        };
         Backup.ins = new Backup(pages.PageType.backup);
         return Backup;
     })(pages.PageImpl);

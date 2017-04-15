@@ -8,5 +8,9 @@ module pages{
         constructor(page:pages.PageType) {
             super(page);
         }
+
+        protected onRefresh():void {
+
+        }
     }
 }
