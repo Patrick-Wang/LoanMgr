@@ -5,9 +5,7 @@ import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -26,13 +24,16 @@ import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
 import com.bank.debt.model.entity.MessageEntity;
 import com.bank.debt.model.entity.UserEntity;
 import com.bank.debt.protocol.entity.Message;
-import com.bank.debt.protocol.entity.MessageEntrustedCase;
-import com.bank.debt.protocol.entity.MessageSummary;
 import com.bank.debt.protocol.entity.Result;
+import com.bank.debt.protocol.entity.UnreadMessage;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
 import com.bank.debt.protocol.tools.PathUtil;
+import com.bank.debt.protocol.tools.map.Mapper;
+import com.bank.debt.protocol.tools.map.Mapping;
+import com.bank.debt.protocol.tools.map.MappingFailedException;
+import com.bank.debt.protocol.tools.map.MappingSkipException;
 import com.bank.debt.protocol.type.MessageStatus;
 import com.bank.debt.service.service.ftp.FtpService;
 
@@ -56,10 +57,10 @@ public class MessageServiceImpl implements MessageService {
 	
 	public final static String NAME = "MessageServiceImpl";
 
-	@Override
-	public Integer getUnreadCount(Integer entrustedCase) {
-		return messageDao.getUnreadCount(entrustedCase);
-	}
+//	@Override
+//	public Integer getUnreadCount(Integer entrustedCase) {
+//		return messageDao.getUnreadCount(entrustedCase);
+//	}
 
 	@Override
 	public void readMessages(List<Integer> msgIds) {
@@ -75,26 +76,27 @@ public class MessageServiceImpl implements MessageService {
 	
 	
 	@Override
-	public List<MessageEntrustedCase> getMessageEntrustedCases(String userName) {
+	public List<UnreadMessage> getUnressages(String userName) {
 		UserEntity user = userDao.getUserByName(userName);
-		List<Object[]> mss = messageDao.getMsgSummaryToUser(user);
-		Map<Integer, MessageEntrustedCase> mecByEc = new HashMap<Integer, MessageEntrustedCase>();
-		for (Object[] summary : mss){
-			if (!mecByEc.containsKey(summary[0])){
-				MessageEntrustedCase mec = new MessageEntrustedCase();
-				mec.setEntrustedCaseId((Integer) summary[0]);
-				mec.setMsgSummary(new ArrayList<MessageSummary>());
-				mecByEc.put((Integer) summary[0], mec);
+		List<MessageEntity> mes = messageDao.getUnreadMsgToUser(user);
+		Mapper<MessageEntity, UnreadMessage> mapper = new Mapper<MessageEntity, UnreadMessage>();
+		mapper.setMapping(new Mapping<MessageEntity, UnreadMessage>(){
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
+			@Override
+			public UnreadMessage onMap(MessageEntity from) throws MappingSkipException, MappingFailedException {
+				UnreadMessage ms = new UnreadMessage();
+				ms.setFromId(from.getCome().getId());
+				ms.setFromName(from.getCome().getUsername());
+				ms.setContent(from.getContent());
+				ms.setMsgId(from.getId());
+				ms.setSendTime(formatter.format(from.getSendTime()));
+				ms.setTitle(from.getTitle());
+				return ms;
 			}
-			MessageSummary ms = new MessageSummary();
-			ms.setFromId((Integer) summary[1]);
-			ms.setFromName((String) summary[2]);
-			ms.setMsgCount(((Long) summary[2]).intValue());
-			mecByEc.get((Integer) summary[0]).getMsgSummary().add(ms);
-		}
-		List<MessageEntrustedCase> mecs = new ArrayList<MessageEntrustedCase>();
-		mecs.addAll(mecByEc.values());
-		return mecs;
+			
+		});
+		return mapper.forceMap(mes);
 	}
 
 	@Override
@@ -111,8 +113,8 @@ public class MessageServiceImpl implements MessageService {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		Message msg = new Message();
-		msg.setFromId(entity.getFrom().getId());
-		msg.setFromName(entity.getFrom().getUsername());
+		msg.setFromId(entity.getCome().getId());
+		msg.setFromName(entity.getCome().getUsername());
 		msg.setToId(entity.getTo().getId());
 		msg.setToName(entity.getTo().getUsername());
 		msg.setContent(entity.getContent());
@@ -143,7 +145,7 @@ public class MessageServiceImpl implements MessageService {
 		}
 		
 		MessageEntity me = new MessageEntity();
-		me.setFrom(from);
+		me.setCome(from);
 		me.setTo(toUser);
 		me.setEntrustedCaseManager(entrustedCaseManager);
 		me.setContent(message);

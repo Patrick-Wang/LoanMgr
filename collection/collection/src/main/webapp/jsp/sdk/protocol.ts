@@ -1,6 +1,4 @@
-/**
- * Created by Floyd on 2017/4/7.
- */
+
 module collection.protocol{
 
     export enum UseStatus{
@@ -77,6 +75,7 @@ module collection.protocol{
     }
 
     export interface Message{
+        msgId:number
         fromId:number;
         fromName:string;
         toId:number;
@@ -87,14 +86,40 @@ module collection.protocol{
         read:MessageStatus;
     }
 
-    export interface MessageSummary{
+    export interface UnreadMessage{
+        msgId:number;
         fromId:number;
         fromName:string;
-        msgCount:number;
+        title:string;
+        content:string;
+        sendTime:string;//2013-12-11 58:11:23
     }
 
-    export interface MessageEntrustedCase{
-        entrustedCaseId:number;
-        msgSummary:MessageSummary[];
+    export interface ECCarLoan{
+
+    }
+
+    export interface ECCreditCard{
+
+    }
+
+    export interface ECCreditLoan{
+
+    }
+
+    export interface QueryOption{
+
+    }
+
+    export interface ECQueryInfo{
+        ifs:IF[];
+        carLoan?:ECCarLoan[];
+        creditLoan?:ECCreditLoan[];
+        creditCard?:ECCreditCard[];
+    }
+
+    export interface Promise<S>{
+        done(sFn : (sResult : S)=>void):Promise<S>;
+        fail(fFn : (fResult : any)=>void):Promise<S>;
     }
 }

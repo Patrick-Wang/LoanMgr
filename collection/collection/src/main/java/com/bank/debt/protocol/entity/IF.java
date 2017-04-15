@@ -1,6 +1,6 @@
 package com.bank.debt.protocol.entity;
 
-public class IF extends ProtocolEntity{
+public class IF extends ProtocolEntityImpl{
     Integer id;
     String address;
     String description;
@@ -21,6 +21,10 @@ public class IF extends ProtocolEntity{
 	}
 	public void setDescription(String description) {
 		this.description = description;
+	}
+	public String getFieldFromAddr(){
+		int index = address.indexOf(".");
+		return address.substring(index + 1);
 	}
     
 }

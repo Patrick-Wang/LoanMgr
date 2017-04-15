@@ -1,6 +1,6 @@
 package com.bank.debt.protocol.entity;
 
-public class Result  extends ProtocolEntity{
+public class Result  extends ProtocolEntityImpl{
 	
 	public Result() {
 		

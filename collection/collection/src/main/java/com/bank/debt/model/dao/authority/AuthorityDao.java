@@ -2,6 +2,7 @@ package com.bank.debt.model.dao.authority;
 import java.util.List;
 
 import com.bank.debt.model.entity.AuthorityEntity;
+import com.bank.debt.model.entity.IntfEntity;
 import com.bank.debt.model.entity.RoleEntity;
 import com.speed.frame.model.dao.AbstractReadWriteDao;
 
@@ -17,6 +18,8 @@ public interface AuthorityDao extends AbstractReadWriteDao<AuthorityEntity> {
 
 	AuthorityEntity getAuthority(Integer roleId, Integer ifid);
 
-	List<String> getAuthAddrs(List<RoleEntity> roles, Integer idFrom, Integer idTo);
+	List<IntfEntity> getAuthAddrs(List<RoleEntity> roles, Integer idFrom, Integer idTo);
+
+	boolean existAuthAddr(List<RoleEntity> roles, int i, int j, String addr);
 
 }

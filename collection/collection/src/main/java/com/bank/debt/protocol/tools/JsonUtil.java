@@ -7,6 +7,8 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.bank.debt.protocol.entity.ProtocolEntity;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -48,6 +50,10 @@ public class JsonUtil {
 	public static Object getObject(HttpServletRequest request, String param, Class<?> cls) throws IOException{
 		String json = request.getParameter(param);
 		return JSONObject.toBean(JSONObject.fromObject(json), cls);
+	}
+	
+	public static byte[] nullOrJson(ProtocolEntity pe) throws UnsupportedEncodingException{
+		return null == pe ? null : pe.toUtf8Json();
 	}
 
 }

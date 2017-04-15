@@ -4,6 +4,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.speed.frame.model.entity.AbstractEntity;
 
@@ -39,6 +40,8 @@ public class DaoBaseImpl<T extends AbstractEntity> implements DaoBase<T> {
 	
 	@Override
 	public List<T> getAll() {
-		return getEntityManager().createQuery("from " + getEntityClass().getName()).getResultList();
+		String sql = "from " + getEntityClass().getSimpleName();
+		Query q = getEntityManager().createQuery(sql);
+		return q.getResultList();
 	}
 }

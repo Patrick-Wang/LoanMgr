@@ -2,14 +2,15 @@ package com.bank.debt.service.entrustedcase;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.bank.debt.protocol.entity.ECQueryInfo;
+import com.bank.debt.protocol.entity.QueryOption;
 import com.bank.debt.protocol.entity.Result;
+import com.bank.debt.protocol.tools.map.MappingFailedException;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 public interface EntrustedCaseService {
 
@@ -19,23 +20,17 @@ public interface EntrustedCaseService {
 
 	Result importCreditLoan(String owner, Integer type, CommonsMultipartFile file);
 
-	List<String> getAllowIfsCarLoan(String userName);
+	void getDownloadCarLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException;
 
-	List<String> getAllowIfsCreditLoan(String userName);
+	void getDownloadCreditCard(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException;
 
-	List<String> getAllowIfsCreditCard(String userName);
+	void getDownloadCreditLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException;
 
-	void getDownloadCarLoan(String userName, JSONObject queryParam, OutputStream outputStream);
+	ECQueryInfo searchCarLoan(String userName, QueryOption qOpt);
 
-	void getDownloadCreditCard(String userName, JSONObject queryParam, OutputStream outputStream);
+	ECQueryInfo searchCreditCard(String userName, QueryOption qOpt);
 
-	void getDownloadCreditLoan(String userName, JSONObject queryParam, OutputStream outputStream);
-
-	JSONArray searchCarLoan(String userName, JSONObject queryParam);
-
-	JSONArray searchCreditCard(String userName, JSONObject queryParam);
-
-	JSONArray searchCreditLoan(String userName, JSONObject queryParam);
+	ECQueryInfo searchCreditLoan(String userName, QueryOption qOpt);
 
 	Result updateCreditLoan(String userName, JSONArray jdata) throws IOException;
 

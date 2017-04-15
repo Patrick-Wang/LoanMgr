@@ -31,23 +31,24 @@ public class MessageEntity extends AbstractReadWriteEntity implements Serializab
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	UserEntity from;
+	UserEntity come;
 	UserEntity to;
 	EntrustedCaseManagerEntity entrustedCaseManager;
 	String content;
+	String title;
 	String attachements;
 	Timestamp sendTime;
 	Integer read;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "from")
-	public UserEntity getFrom() {
-		return from;
+	@JoinColumn(name = "come")
+	public UserEntity getCome() {
+		return come;
 	}
 	
 	
-	public void setFrom(UserEntity from) {
-		this.from = from;
+	public void setCome(UserEntity from) {
+		this.come = from;
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -90,6 +91,16 @@ public class MessageEntity extends AbstractReadWriteEntity implements Serializab
 	}
 	public void setRead(Integer read) {
 		this.read = read;
+	}
+
+
+	public String getTitle() {
+		return title;
+	}
+
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 

@@ -2,7 +2,8 @@ package com.bank.debt.protocol.entity;
 
 import java.util.List;
 
-public class Message  extends ProtocolEntity{
+public class Message  extends ProtocolEntityImpl{
+	Integer msgId;
 	Integer fromId;
 	String fromName;
 	Integer toId;
@@ -76,4 +77,12 @@ public class Message  extends ProtocolEntity{
 
 	String sendTime;// 2013-12-11 58:11:23
 	Integer read;
+
+	public Integer getMsgId() {
+		return msgId;
+	}
+
+	public void setMsgId(Integer msgId) {
+		this.msgId = msgId;
+	}
 }

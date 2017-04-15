@@ -2,6 +2,7 @@ package com.bank.debt.controller.servlet.entrustedcase;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.sql.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.bank.debt.protocol.entity.ECQueryInfo;
 import com.bank.debt.protocol.entity.EntrustedCaseManageInfo;
 import com.bank.debt.protocol.entity.EntrustedCaseReport;
+import com.bank.debt.protocol.entity.QueryOption;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
@@ -78,53 +81,52 @@ public class EntrustedCaseServlet {
 	public @ResponseBody byte[] search(HttpServletRequest request,
 			HttpServletResponse response, 
 			@RequestParam("type") Integer type,
-			@RequestParam("query") String query) throws UnsupportedEncodingException {
+			@RequestParam("query") String query) throws IOException {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
 		String userName = userDetails.getUsername();
-		JSONArray result = null;
-		JSONObject queryParam = JSONObject.fromObject(query);
+		ECQueryInfo ecqi = null;
+		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), QueryOption.class);
 		switch(type){
 		case EntrustedCaseType.CAR_LOAN:
-			result = entrustedCaseService.searchCarLoan(userName, queryParam);
+			ecqi = entrustedCaseService.searchCarLoan(userName, qOpt);
 			break;
 		case EntrustedCaseType.CREDIT_CARD:
-			result = entrustedCaseService.searchCreditCard(userName, queryParam);
+			ecqi = entrustedCaseService.searchCreditCard(userName, qOpt);
 			break;
 		case EntrustedCaseType.CREDIT_LOAN:
-			result = entrustedCaseService.searchCreditLoan(userName, queryParam);
+			ecqi = entrustedCaseService.searchCreditLoan(userName, qOpt);
 			break;
 		}		
-		return result.toString().getBytes("utf-8");
+		return JsonUtil.nullOrJson(ecqi);
 	}
 	
 	@RequestMapping(value = "download.do")
 	public void download(HttpServletRequest request,
 			HttpServletResponse response, 
 			@RequestParam("type") Integer type,
-			@RequestParam("query") String query) throws IOException {
+			@RequestParam("query") String query) throws IOException, MappingFailedException {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
 		String usr = userDetails.getUsername();
-		JSONObject queryParam = JSONObject.fromObject(query);
-
+		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), QueryOption.class);
 		switch(type){
 		case EntrustedCaseType.CAR_LOAN:
-			entrustedCaseService.getDownloadCarLoan(usr, queryParam, response.getOutputStream());
+			entrustedCaseService.getDownloadCarLoan(usr, qOpt, response.getOutputStream());
 			break;
 		case EntrustedCaseType.CREDIT_CARD:
-			entrustedCaseService.getDownloadCreditCard(usr, queryParam, response.getOutputStream());
+			entrustedCaseService.getDownloadCreditCard(usr, qOpt, response.getOutputStream());
 			break;
 		case EntrustedCaseType.CREDIT_LOAN:
-			entrustedCaseService.getDownloadCreditLoan(usr, queryParam, response.getOutputStream());
+			entrustedCaseService.getDownloadCreditLoan(usr, qOpt, response.getOutputStream());
 			break;
 		}
 	}
 	
 	@RequestMapping(value = "update.do")
-	public @ResponseBody byte[] upload(HttpServletRequest request,
+	public @ResponseBody byte[] update(HttpServletRequest request,
 			HttpServletResponse response, 
 			@RequestParam("type") Integer type, 
 			@RequestParam("data") String data) throws IOException {
@@ -197,8 +199,14 @@ public class EntrustedCaseServlet {
 	@RequestMapping(value = "report/search.do")
 	public @ResponseBody byte[] reportSearch(HttpServletRequest request,
 			HttpServletResponse response, 
-			@RequestParam("entrusted_case") Integer entrustedCase) throws UnsupportedEncodingException, MappingFailedException {
-		List<EntrustedCaseReport> ecrs = eCReportService.getECReports(entrustedCase);
+			@RequestParam("entrusted_case") Integer entrustedCase,
+			@RequestParam("date") String date) throws UnsupportedEncodingException, MappingFailedException {
+		List<EntrustedCaseReport> ecrs = null;
+		if (Checking.isExist(date)){
+			ecrs = eCReportService.getECReports(entrustedCase, Date.valueOf(date));
+		}else{
+			ecrs = eCReportService.getECReports(entrustedCase);
+		}
 		return JsonUtil.toUtf8Json(ecrs);
 	}
 	

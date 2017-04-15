@@ -1,14 +1,18 @@
 package com.bank.debt.service.entrustedcase;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -31,15 +35,31 @@ import com.bank.debt.model.entity.ECCarLoanEntity;
 import com.bank.debt.model.entity.ECCreditCardEntity;
 import com.bank.debt.model.entity.ECCreditLoanEntity;
 import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
+import com.bank.debt.model.entity.IntfEntity;
 import com.bank.debt.model.entity.UserEntity;
+import com.bank.debt.protocol.entity.BaseEC;
+import com.bank.debt.protocol.entity.ECCarLoan;
+import com.bank.debt.protocol.entity.ECCreditCard;
+import com.bank.debt.protocol.entity.ECCreditLoan;
+import com.bank.debt.protocol.entity.ECQueryInfo;
+import com.bank.debt.protocol.entity.EntrustedCaseReport;
+import com.bank.debt.protocol.entity.IF;
+import com.bank.debt.protocol.entity.QueryOption;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
+import com.bank.debt.protocol.tools.AuthUtil;
+import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
+import com.bank.debt.protocol.tools.PathUtil;
+import com.bank.debt.protocol.tools.map.ECQI2XlsMapping;
 import com.bank.debt.protocol.tools.map.Mapper;
+import com.bank.debt.protocol.tools.map.Mapping;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
+import com.bank.debt.protocol.tools.map.MappingSkipException;
 import com.bank.debt.protocol.tools.map.Xls2JsonMapping;
 import com.bank.debt.protocol.tools.map.Xlsx2JsonMapping;
 import com.bank.debt.protocol.type.EntrustedCaseType;
+import com.bank.debt.service.ecreport.ECReportService;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -68,6 +88,21 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 	@Resource(name=ECCreditCardDaoImpl.NAME)
 	ECCreditCardDao eCCreditCardDao;
 
+	@Autowired
+	ECReportService eCReportService;
+	
+	
+	Mapping<IntfEntity, IF> ifMapping = new Mapping<IntfEntity, IF>(){
+
+		@Override
+		public IF onMap(IntfEntity from) throws MappingSkipException, MappingFailedException {
+			IF inif = new IF();
+			inif.setAddress(from.getAddress());
+			inif.setDescription(from.getDescription());
+			return inif;
+		}
+	};
+	
 	public final static String NAME = "EntrustedCaseServiceImpl";
 
 	@Override
@@ -227,89 +262,153 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 		return r;
 	}
 
-	@Override
-	public List<String> getAllowIfsCarLoan(String user) {
+
+	List<IntfEntity> getAllowIfsCarLoan(String user) {
 		UserEntity usr = userDao.getUserByName(user);
 		if (null != usr){
-			List<String> auths = authorityDao.getAuthAddrs(usr.getRoles(), 1000, 1200);
+			List<IntfEntity> auths = authorityDao.getAuthAddrs(usr.getRoles(), 1000, 1200);
 			return auths;
 		}
 		return null;
 	}
 
-	@Override
-	public List<String> getAllowIfsCreditLoan(String user) {
+
+	List<IntfEntity> getAllowIfsCreditLoan(String user) {
 		UserEntity usr = userDao.getUserByName(user);
 		if (null != usr){
-			List<String> auths = authorityDao.getAuthAddrs(usr.getRoles(), 1200, 1400);
+			List<IntfEntity> auths = authorityDao.getAuthAddrs(usr.getRoles(), 1200, 1400);
 			return auths;
 		}
 		return null;
 	}
 
-	@Override
-	public List<String> getAllowIfsCreditCard(String user) {
+
+	List<IntfEntity> getAllowIfsCreditCard(String user) {
 		UserEntity usr = userDao.getUserByName(user);
 		if (null != usr){
-			List<String> auths = authorityDao.getAuthAddrs(usr.getRoles(), 1400, 1600);
+			List<IntfEntity> auths = authorityDao.getAuthAddrs(usr.getRoles(), 1400, 1600);
 			return auths;
 		}
 		return null;
 	}
 
+	private void zipAttachement(ZipOutputStream zipOut, BaseEC baseEc) throws IOException{
+		for (EntrustedCaseReport ecr : baseEc.getReports()){
+			if (Checking.isExist(ecr.getAttachements())){
+				for (String attach : ecr.getAttachements()){
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					eCReportService.downloadAttachement(ecr.getId(), attach, baos);
+					zipOut.putNextEntry(new ZipEntry(PathUtil.zipReportAttachementPath(
+							ecr.getDate(), ecr.getId(), ecr.getTitle(), attach)));
+					zipOut.write(baos.toByteArray());
+				}
+			}
+		}
+	}
+	
+	private void zipECQI(ZipOutputStream zipOut, String name, ECQueryInfo ecqi) throws MappingFailedException, IOException{
+		Mapper<ECQueryInfo, OutputStream> mapper2 = new Mapper<ECQueryInfo, OutputStream>(new ECQI2XlsMapping());
+		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper2.map(ecqi);
+		zipOut.putNextEntry(new ZipEntry(name));
+		zipOut.write(os.toByteArray());
+	}
+	
+	
 	@Override
-	public void getDownloadCarLoan(String userName, JSONObject queryParam, OutputStream outputStream) {
-		List<String> auths = getAllowIfsCarLoan(userName);
+	public void getDownloadCarLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException {
+		List<IntfEntity> auths = getAllowIfsCarLoan(userName);
 		if (null != auths && !auths.isEmpty()){
-			
-
+			List<ECCarLoan> eccls = eCCarLoanDao.search(qOpt);
+			Mapper<IntfEntity, IF> mapper = new Mapper<IntfEntity, IF>(ifMapping);
+			List<IF> ifs = mapper.forceMap(auths);
+			ECQueryInfo ecqi = new ECQueryInfo();
+			ecqi.setCarLoan(eccls);
+			ecqi.setIfs(ifs);
+			ZipOutputStream zipOut = new ZipOutputStream(outputStream);
+			zipECQI(zipOut, "委案信息.xls", ecqi);
+			for (int i = 0; i < eccls.size(); ++i){
+				zipAttachement(zipOut, eccls.get(i));				
+			}
 		}
 	}
 
 	@Override
-	public void getDownloadCreditCard(String userName, JSONObject queryParam, OutputStream outputStream) {
-		List<String> auths = getAllowIfsCreditCard(userName);
+	public void getDownloadCreditCard(String userName, QueryOption qOpt, OutputStream outputStream) throws IOException, MappingFailedException {
+		List<IntfEntity> auths = getAllowIfsCreditCard(userName);
 		if (null != auths && !auths.isEmpty()){
-
-
+			List<ECCreditCard> ecccs = eCCreditCardDao.search(qOpt);
+			Mapper<IntfEntity, IF> mapper = new Mapper<IntfEntity, IF>(ifMapping);
+			List<IF> ifs = mapper.forceMap(auths);
+			ECQueryInfo ecqi = new ECQueryInfo();
+			ecqi.setCreditCard(ecccs);
+			ecqi.setIfs(ifs);
+			ZipOutputStream zipOut = new ZipOutputStream(outputStream);
+			zipECQI(zipOut, "委案信息.xls", ecqi);
+			for (int i = 0; i < ecccs.size(); ++i){
+				zipAttachement(zipOut, ecccs.get(i));				
+			}
 		}
 	}
 
 	@Override
-	public void getDownloadCreditLoan(String userName, JSONObject queryParam, OutputStream outputStream) {
-		List<String> auths = getAllowIfsCreditLoan(userName);
+	public void getDownloadCreditLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException {
+		List<IntfEntity> auths = getAllowIfsCreditLoan(userName);
 		if (null != auths && !auths.isEmpty()){
-			
-
+			List<ECCreditLoan> eccls = eCCreditLoanDao.search(qOpt);
+			Mapper<IntfEntity, IF> mapper = new Mapper<IntfEntity, IF>(ifMapping);
+			List<IF> ifs = mapper.forceMap(auths);
+			ECQueryInfo ecqi = new ECQueryInfo();
+			ecqi.setCreditLoan(eccls);
+			ecqi.setIfs(ifs);
+			ZipOutputStream zipOut = new ZipOutputStream(outputStream);
+			zipECQI(zipOut, "委案信息.xls", ecqi);
+			for (int i = 0; i < eccls.size(); ++i){
+				zipAttachement(zipOut, eccls.get(i));				
+			}
 		}
 	}
 
 	@Override
-	public JSONArray searchCarLoan(String userName, JSONObject queryParam) {
-		List<String> auths = getAllowIfsCarLoan(userName);
+	public ECQueryInfo searchCarLoan(String userName, QueryOption qOpt) {
+		List<IntfEntity> auths = getAllowIfsCarLoan(userName);
 		if (null != auths && !auths.isEmpty()){
-			
-
+			Mapper<IntfEntity, IF> mapper = new Mapper<IntfEntity, IF>(ifMapping);
+			List<IF> ifs = mapper.forceMap(auths);
+			List<ECCarLoan> eccls = eCCarLoanDao.search(qOpt);
+			ECQueryInfo ecqi = new ECQueryInfo();
+			ecqi.setCarLoan(eccls);
+			ecqi.setIfs(ifs);
+			return AuthUtil.filterECQI(ecqi);
 		}
 		return null;
 	}
 
 	@Override
-	public JSONArray searchCreditCard(String userName, JSONObject queryParam) {
-		List<String> auths = getAllowIfsCreditCard(userName);
+	public ECQueryInfo searchCreditCard(String userName, QueryOption qOpt) {
+		List<IntfEntity> auths = getAllowIfsCreditCard(userName);
 		if (null != auths && !auths.isEmpty()){
-			
-
+			Mapper<IntfEntity, IF> mapper = new Mapper<IntfEntity, IF>(ifMapping);
+			List<IF> ifs = mapper.forceMap(auths);
+			List<ECCreditCard> ecccs = eCCreditCardDao.search(qOpt);
+			ECQueryInfo ecqi = new ECQueryInfo();
+			ecqi.setCreditCard(ecccs);
+			ecqi.setIfs(ifs);
+			return AuthUtil.filterECQI(ecqi);
 		}
 		return null;
 	}
 
 	@Override
-	public JSONArray searchCreditLoan(String userName, JSONObject queryParam) {
-		List<String> auths = getAllowIfsCreditLoan(userName);
+	public ECQueryInfo searchCreditLoan(String userName, QueryOption qOpt) {
+		List<IntfEntity> auths = getAllowIfsCreditLoan(userName);
 		if (null != auths && !auths.isEmpty()){
-			
-
+			Mapper<IntfEntity, IF> mapper = new Mapper<IntfEntity, IF>(ifMapping);
+			List<IF> ifs = mapper.forceMap(auths);
+			List<ECCreditLoan> eccls = eCCreditLoanDao.search(qOpt);
+			ECQueryInfo ecqi = new ECQueryInfo();
+			ecqi.setCreditLoan(eccls);
+			ecqi.setIfs(ifs);
+			return AuthUtil.filterECQI(ecqi);
 		}
 		return null;
 	}

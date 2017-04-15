@@ -38,11 +38,10 @@ public class ECManagerServiceImpl implements ECManagerService {
 	@Override
 	public List<EntrustedCaseManageInfo> getManageInfos(String userName) {
 		UserEntity usr = userDao.getUserByName(userName);
-		List<String> addrs = authorityDao.getAuthAddrs(usr.getRoles(), 1600, 1800);
 		List<EntrustedCaseManagerEntity> ecmes = null;
-		if (addrs.contains(AuthAddress.ECM_ALL)){
+		if (authorityDao.existAuthAddr(usr.getRoles(), 1600, 1800, AuthAddress.ECM_ALL)){
 			ecmes = entrustedCaseManagerDao.getAll();
-		} else if (addrs.contains(AuthAddress.ECM_OWNER)){
+		} else if (authorityDao.existAuthAddr(usr.getRoles(), 1600, 1800, AuthAddress.ECM_OWNER)){
 			ecmes = entrustedCaseManagerDao.getByOwner(usr.getId());
 		}
 		return ecme2ecmi(ecmes);

@@ -1,6 +1,6 @@
 package com.bank.debt.protocol.entity;
 
-public class Role  extends ProtocolEntity{
+public class Role  extends ProtocolEntityImpl{
 	Integer id;
 	String name;
 	public Integer getId() {

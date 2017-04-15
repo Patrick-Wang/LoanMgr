@@ -18,4 +18,8 @@ public class Checking {
 	public static boolean isExist(CommonsMultipartFile[] ia){
 		return ia != null && ia.length > 0;
 	}
+
+	public static boolean isExist(String[] ia) {
+		return ia != null && ia.length > 0;
+	}
 }

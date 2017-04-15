@@ -1,6 +1,3 @@
-/**
- * Created by Floyd on 2017/4/7.
- */
 var collection;
 (function (collection) {
     var protocol;
@@ -23,4 +20,3 @@ var collection;
         var MessageStatus = protocol.MessageStatus;
     })(protocol = collection.protocol || (collection.protocol = {}));
 })(collection || (collection = {}));
-//# sourceMappingURL=protocol.js.map

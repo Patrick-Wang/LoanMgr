@@ -2,6 +2,7 @@ package com.bank.debt.service.ecreport;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -20,6 +21,8 @@ public interface ECReportService {
 	Result createReport(String userName, EntrustedCaseReport ecr, CommonsMultipartFile[] attachements) throws IOException;
 
 	Result updateReport(String userName, EntrustedCaseReport ecr, CommonsMultipartFile[] attachements) throws IOException;
+
+	List<EntrustedCaseReport> getECReports(Integer entrustedCase, Date date) throws MappingFailedException;
 
 
 }

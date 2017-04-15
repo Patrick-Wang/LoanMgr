@@ -2,6 +2,7 @@ package com.bank.debt.service.account;
 
 import java.util.List;
 
+import com.bank.debt.model.entity.UserEntity;
 import com.bank.debt.protocol.entity.CreateUser;
 import com.bank.debt.protocol.entity.Organization;
 import com.bank.debt.protocol.entity.Result;
@@ -16,6 +17,8 @@ public interface AccountService {
 	Result createUser(CreateUser usr);
 
 	List<User> getAllUsers();
+
+	UserEntity getUser(String userName);
 
 
 }

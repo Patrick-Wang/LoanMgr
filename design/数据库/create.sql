@@ -48,12 +48,13 @@ create table `entrusted_case_report`(
 
 create table `message`(
 	`id` int NOT NULL AUTO_INCREMENT,
-	`from` int NOT NULL,
+	`come` int NOT NULL,
 	`to` int NOT NULL,
 	`entrustedCaseManager` int not null,
+	`title`	text,
 	`content`	text,
 	`attachements`	text,
-	`send_time` datetime,
+	`sendTime` datetime,
 	`read` int default 0,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
@@ -413,18 +414,14 @@ create table `entrusted_case_credit_card`(
 	PRIMARY KEY(`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-
-insert into organization (parent, name, status) values
-(null, 'testorg', 0);
-
-insert into user (username, password, org, status) values
-('test', 'test', '0', 0);
-
 insert into `role` (name) values 
 ('ROLE_ADMIN'),
 ('ROLE_MANAGER'),
 ('ROLE_INSIDE_STAFF'),
 ('ROLE_OUTSIDE_STAFF');
+
+
+
 
 insert into `interface` (id, address, description) values 
 (1, '/login', '登录'),
@@ -447,9 +444,8 @@ insert into `interface` (id, address, description) values
 (18, '/entrusted_case/report/search.do', '提交汇报查询'),
 (19, '/entrusted_case/report/download.do', '提交汇报附件下载'),
 (20, '/message/send.do', '发送消息'),
-(21, '/message/unread.do', '获取未读消息'),
-(22, '/message/readmessage.do', '标记消息已读'),
-(23, '/message/entrusted_case.do', '获取消息委案'),
+(22, '/message/read_message.do', '标记消息已读'),
+(23, '/message/unread_messages.do', '获取消息委案'),
 (24, '/message/receive.do', '获取消息内容'),
 (25, '/message/download.do', '附件下载'),
 (26, '/phone/records.do', '呼入电话列表'),
@@ -805,12 +801,10 @@ insert into `authority` (intf, role) values
 ((select id from interface where address='/entrusted_case/report/download.do'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
 ((select id from interface where address='/message/send.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/message/send.do'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
-((select id from interface where address='/message/unread.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
-((select id from interface where address='/message/unread.do'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
-((select id from interface where address='/message/readmessage.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
-((select id from interface where address='/message/readmessage.do'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
-((select id from interface where address='/message/entrusted_case.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
-((select id from interface where address='/message/entrusted_case.do'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
+((select id from interface where address='/message/read_message.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
+((select id from interface where address='/message/read_message.do'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
+((select id from interface where address='/message/unread_messages.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
+((select id from interface where address='/message/unread_messages.do'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
 ((select id from interface where address='/message/receive.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/message/receive.do'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
 ((select id from interface where address='/message/download.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
@@ -868,3 +862,36 @@ delete from authority where intf = 1600 and role = (select id from role where na
 delete from authority where intf = 1600 and role = (select id from role where name='ROLE_INSIDE_STAFF');
 delete from authority where intf = 1601 and role = (select id from role where name='ROLE_ADMIN');
 delete from authority where intf = 1601 and role = (select id from role where name='ROLE_MANAGER');
+
+
+
+
+insert into organization (parent, name, status) values
+(null, 'testorg', 0);
+
+insert into user (username, password, org, status) values
+('test', '1', 1, 0),
+('test1', '1', 1, 0);
+
+insert into `message` (come, `to`, entrustedCaseManager, title, content, sendTime)
+values
+(2, 1, 1, 'test', 'test detail', current_time());
+
+insert into `entrusted_case_manager` (owner, assignee, modifier, type, entrustedCase, createdTime, lastModifiedTime)
+values
+(1, 2, 1, 0, 1, current_time(), current_time());
+
+
+insert into `entrusted_case_car_loan` (khxm)
+values
+('test');
+
+insert into user_role (user, role) values
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 4);

@@ -52,29 +52,39 @@ public class ECReportServiceImpl implements ECReportService {
 	@Autowired
 	FtpService ftpService;
 	
+	Mapping<EntrustedCaseReportEntity, EntrustedCaseReport> reportMapping = new Mapping<EntrustedCaseReportEntity, EntrustedCaseReport>(){
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		
+		@Override
+		public EntrustedCaseReport onMap(EntrustedCaseReportEntity from)
+				throws MappingSkipException, MappingFailedException {
+			EntrustedCaseReport ecr = new EntrustedCaseReport();
+			ecr.setId(from.getId());
+			ecr.setContent(from.getContent());
+			ecr.setDate(formatter.format(from.getDate()));
+			ecr.setEntrustedCaseId(from.getEntrustedCaseManager().getId());
+			ecr.setAttachements((String[]) from.jsonAttachements().toArray());
+			ecr.setTitle(from.getTitle());
+			return ecr;
+		}
+	};
+	
 	public final static String NAME = "ECReportServiceImpl";
 
 	@Override
 	public List<EntrustedCaseReport> getECReports(Integer entrustedCase) throws MappingFailedException {
 		List<EntrustedCaseReportEntity> ecres = entrustedCaseReportDao.getByECId(entrustedCase);		
 		Mapper<EntrustedCaseReportEntity, EntrustedCaseReport> mapper = new Mapper<EntrustedCaseReportEntity, EntrustedCaseReport>();
-		mapper.setMapping(new Mapping<EntrustedCaseReportEntity, EntrustedCaseReport>(){
-
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			
-			@Override
-			public EntrustedCaseReport onMap(EntrustedCaseReportEntity from)
-					throws MappingSkipException, MappingFailedException {
-				EntrustedCaseReport ecr = new EntrustedCaseReport();
-				ecr.setId(from.getId());
-				ecr.setContent(from.getContent());
-				ecr.setDate(formatter.format(from.getDate()));
-				ecr.setEntrustedCaseId(from.getEntrustedCaseManager().getId());
-				ecr.setAttachements((String[]) from.jsonAttachements().toArray());
-				ecr.setTitle(from.getTitle());
-				return ecr;
-			}
-		});
+		mapper.setMapping(reportMapping);
+		return mapper.map(ecres);
+	}
+	
+	@Override
+	public List<EntrustedCaseReport> getECReports(Integer entrustedCase, Date date) throws MappingFailedException {
+		List<EntrustedCaseReportEntity> ecres = entrustedCaseReportDao.getByECId(entrustedCase, date);		
+		Mapper<EntrustedCaseReportEntity, EntrustedCaseReport> mapper = new Mapper<EntrustedCaseReportEntity, EntrustedCaseReport>();
+		mapper.setMapping(reportMapping);
 		return mapper.map(ecres);
 	}
 
@@ -165,4 +175,6 @@ public class ECReportServiceImpl implements ECReportService {
 		}
 		return ErrorCode.ECR_SUBMIT_FAILED;
 	}
+
+
 }

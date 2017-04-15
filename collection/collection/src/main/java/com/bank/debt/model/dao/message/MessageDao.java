@@ -9,9 +9,9 @@ import com.speed.frame.model.dao.AbstractReadWriteDao;
 
 public interface MessageDao extends AbstractReadWriteDao<MessageEntity> {
 
-	Integer getUnreadCount(Integer entrustedCase);
+	Integer getUnreadCount(Integer entrustedCase, Integer from);
 
-	List<Object[]> getMsgSummaryToUser(UserEntity user);
+	List<MessageEntity> getUnreadMsgToUser(UserEntity user);
 
 	List<MessageEntity> getMsgWithUser(Integer entrustedCase, Integer with);
 

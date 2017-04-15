@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import com.bank.debt.model.dao.user.UserDao;
 import com.bank.debt.model.entity.RoleEntity;
 import com.bank.debt.model.entity.UserEntity;
+import com.bank.debt.protocol.type.UseStatus;
 
 @Service(value="userDetailsServiceImpl")
 public class UserDetailsServiceImpl implements UserDetailsService {
@@ -24,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
 		UserEntity user = userDao.getUserByName(userName);
-		if (null != user){
+		if (null != user && user.getStatus() == UseStatus.inuse){
 			List<GrantedAuthority> gas = new ArrayList<GrantedAuthority>();
 			for (RoleEntity role : user.getRoles()){
 				gas.add(new GrantedAuthorityImpl(role.getName()));

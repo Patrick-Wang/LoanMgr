@@ -1,6 +1,6 @@
 package com.bank.debt.protocol.entity;
 
-public class CreateUser extends ProtocolEntity{
+public class CreateUser extends ProtocolEntityImpl{
 	String name;
 	String password;
 	Integer orgId;

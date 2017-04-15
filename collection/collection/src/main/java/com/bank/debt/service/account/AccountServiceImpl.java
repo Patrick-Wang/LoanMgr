@@ -184,5 +184,10 @@ public class AccountServiceImpl implements AccountService {
 		usr.setStatus(ue.getStatus());		
 		return usr;
 	}
+
+	@Override
+	public UserEntity getUser(String userName) {
+		return userDao.getUserByName(userName);
+	}
  
 }

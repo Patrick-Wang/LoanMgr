@@ -7,6 +7,16 @@ public class Mapper<FROM, TO> {
 
 	private Mapping<FROM, TO> mapping;
 
+	public Mapper() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Mapper(Mapping<FROM, TO> mapping) {
+		super();
+		this.mapping = mapping;
+	}
+
 	public void setMapping(Mapping<FROM, TO> mapping) {
 		this.mapping = mapping;
 	}
@@ -55,4 +65,5 @@ public class Mapper<FROM, TO> {
 		}
 		return dests;
 	}
+
 }

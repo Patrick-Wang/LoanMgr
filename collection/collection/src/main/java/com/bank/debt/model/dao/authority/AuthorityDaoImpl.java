@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bank.debt.model.entity.AuthorityEntity;
+import com.bank.debt.model.entity.IntfEntity;
 import com.bank.debt.model.entity.RoleEntity;
 import com.speed.frame.model.dao.AbstractReadWriteDaoImpl;
 
@@ -62,11 +63,21 @@ public class AuthorityDaoImpl extends AbstractReadWriteDaoImpl<AuthorityEntity> 
 	}
 
 	@Override
-	public List<String> getAuthAddrs(List<RoleEntity> roles, Integer idFrom, Integer idTo) {
-		Query q = this.getEntityManager().createQuery("select intf.address from AuthorityEntity where id >= :from and id < :to and role in :roles");
+	public List<IntfEntity> getAuthAddrs(List<RoleEntity> roles, Integer idFrom, Integer idTo) {
+		Query q = this.getEntityManager().createQuery("select inif from AuthorityEntity where id >= :from and id < :to and role in :roles");
 		q.setParameter("roles", roles);
 		q.setParameter("from", idFrom);
 		q.setParameter("to", idTo);
 		return q.getResultList();
+	}
+
+	@Override
+	public boolean existAuthAddr(List<RoleEntity> roles, int idFrom, int idTo, String addr) {
+		Query q = this.getEntityManager().createQuery("select count(*) from AuthorityEntity where id >= :from and id < :to and role in :roles and intf.address = :addr");
+		q.setParameter("roles", roles);
+		q.setParameter("from", idFrom);
+		q.setParameter("to", idTo);
+		q.setParameter("addr", addr);
+		return ((Long)q.getResultList().get(0)).intValue() > 0;
 	}
 }

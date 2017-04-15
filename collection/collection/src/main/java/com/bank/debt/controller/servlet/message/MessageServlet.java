@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.bank.debt.protocol.entity.Message;
-import com.bank.debt.protocol.entity.MessageEntrustedCase;
 import com.bank.debt.protocol.entity.Result;
+import com.bank.debt.protocol.entity.UnreadMessage;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
@@ -55,12 +55,16 @@ public class MessageServlet {
 		return r.toUtf8Json();
 	}
 	
-	@RequestMapping(value = "unread.do")
-	public @ResponseBody Integer unread(HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam("entrusted_case") Integer entrustedCase) throws UnsupportedEncodingException {
-		return messageService.getUnreadCount(entrustedCase);
-	}
+//	@RequestMapping(value = "unread.do")
+//	public @ResponseBody Integer unread(HttpServletRequest request,
+//			HttpServletResponse response,
+//			@RequestParam("entrusted_case") Integer entrustedCase) throws UnsupportedEncodingException {
+//		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+//			    .getAuthentication()
+//			    .getPrincipal();
+//		String userName = userDetails.getUsername();
+//		return messageService.getUnreadCount(entrustedCase, userName);
+//	}
 	
 	@RequestMapping(value = "read_message.do")
 	public @ResponseBody byte[] readMessage(HttpServletRequest request,
@@ -72,17 +76,17 @@ public class MessageServlet {
 		return ErrorCode.OK.toUtf8Json();
 	}
 	
-	@RequestMapping(value = "entrusted_case.do")
-	public @ResponseBody byte[] entrustedCase(HttpServletRequest request,
+	@RequestMapping(value = "unread_messages.do")
+	public @ResponseBody byte[] unreadMessages(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
 		String userName = userDetails.getUsername();
 		
-		List<MessageEntrustedCase> mecs = messageService.getMessageEntrustedCases(userName);
+		List<UnreadMessage> ums = messageService.getUnressages(userName);
 		
-		return JsonUtil.toUtf8Json(mecs);
+		return JsonUtil.toUtf8Json(ums);
 	}
 	
 	@RequestMapping(value = "receive.do")

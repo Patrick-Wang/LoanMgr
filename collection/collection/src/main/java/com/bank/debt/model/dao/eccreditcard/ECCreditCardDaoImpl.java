@@ -2,8 +2,13 @@ package com.bank.debt.model.dao.eccreditcard;
 
 
 import com.bank.debt.model.entity.ECCreditCardEntity;
+import com.bank.debt.protocol.entity.ECCreditCard;
+import com.bank.debt.protocol.entity.QueryOption;
 import com.speed.frame.model.dao.AbstractReadWriteDaoImpl;
 import com.bank.debt.model.dao.eccreditcard.ECCreditCardDao;
+
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -20,5 +25,11 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 	@PersistenceContext(unitName = "localDB")
 	public void setEntityManager(EntityManager entityManager) {
 		super.setEntityManager(entityManager);
+	}
+
+	@Override
+	public List<ECCreditCard> search(QueryOption qOpt) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

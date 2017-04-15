@@ -26,27 +26,32 @@ public class MessageDaoImpl extends AbstractReadWriteDaoImpl<MessageEntity> impl
 		super.setEntityManager(entityManager);
 	}
 
-	@Override
-	public Integer getUnreadCount(Integer entrustedCase) {
-		Query q = this.getEntityManager().createQuery("select count(*) from MessageEntity where read = 0");
-		return ((Long)q.getResultList().get(0)).intValue();
-	}
+//	@Override
+//	public Integer getUnreadCount(Integer entrustedCase) {
+//		Query q = this.getEntityManager().createQuery("select count(*) from MessageEntity where read = 0");
+//		return ((Long)q.getResultList().get(0)).intValue();
+//	}
 
 	@Override
-	public List<Object[]> getMsgSummaryToUser(UserEntity user) {
-		Query q = this.getEntityManager().createQuery("select entrustedCaseManager.id, from.id, from.name, count(*) "
-				+ "from MessageEntity where to.id = :id "
-				+ "group by entrustedCaseManager.id, from.id");
-		q.setParameter("id", user.getId());
+	public List<MessageEntity> getUnreadMsgToUser(UserEntity user) {
+		Query q = this.getEntityManager().createQuery("from MessageEntity where to.id =  :uid and read = 0");
+		q.setParameter("uid", user.getId());
 		return q.getResultList();
 	}
 
 	@Override
 	public List<MessageEntity> getMsgWithUser(Integer entrustedCase, Integer with) {
-		Query q = this.getEntityManager().createQuery("from MessageEntity where entrustedCaseManager.id = :entrustedCase and to.id = :with or from.id = :with "
+		Query q = this.getEntityManager().createQuery("from MessageEntity where entrustedCaseManager.id = :entrustedCase and to.id = :with or come.id = :with "
 				+ " order by sendTime");
 		q.setParameter("with", with);
 		q.setParameter("entrustedCase", entrustedCase);
 		return q.getResultList();
+	}
+
+	@Override
+	public Integer getUnreadCount(Integer entrustedCase, Integer from) {
+		Query q = this.getEntityManager().createQuery("select count(*) from MessageEntity where read = 0 and from.id=:from");
+		q.setParameter("from", from);
+		return ((Long)q.getResultList().get(0)).intValue();
 	}
 }

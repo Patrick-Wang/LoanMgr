@@ -2,7 +2,7 @@ package com.bank.debt.protocol.entity;
 
 import java.util.List;
 
-public class Organization  extends ProtocolEntity{
+public class Organization  extends ProtocolEntityImpl{
 	Integer id;
 	String name;
 	Integer status;

@@ -17,8 +17,8 @@ import net.sf.json.JSONObject;
 @Controller
 @RequestMapping(value = "/session")
 public class Session {
-	@RequestMapping(value = "/timeout.do")
-    public void sessionTimeout(HttpServletRequest request, HttpServletResponse response) throws IOException {  
+	@RequestMapping(value = "/invalidSession.do")
+    public void invalidSession(HttpServletRequest request, HttpServletResponse response) throws IOException {  
 		String redirPage = request.getParameter("redirect"); 
 		String path = request.getContextPath();
 		if (redirPage.substring(0, 1).equals("/")){
