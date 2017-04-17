@@ -64,7 +64,7 @@ public class AuthorityDaoImpl extends AbstractReadWriteDaoImpl<AuthorityEntity> 
 
 	@Override
 	public List<IntfEntity> getAuthAddrs(List<RoleEntity> roles, Integer idFrom, Integer idTo) {
-		Query q = this.getEntityManager().createQuery("select inif from AuthorityEntity where id >= :from and id < :to and role in :roles");
+		Query q = this.getEntityManager().createQuery("select intf from AuthorityEntity auth where auth.intf.id >= :from and auth.intf.id < :to and role in :roles");
 		q.setParameter("roles", roles);
 		q.setParameter("from", idFrom);
 		q.setParameter("to", idTo);
@@ -73,7 +73,7 @@ public class AuthorityDaoImpl extends AbstractReadWriteDaoImpl<AuthorityEntity> 
 
 	@Override
 	public boolean existAuthAddr(List<RoleEntity> roles, int idFrom, int idTo, String addr) {
-		Query q = this.getEntityManager().createQuery("select count(*) from AuthorityEntity where id >= :from and id < :to and role in :roles and intf.address = :addr");
+		Query q = this.getEntityManager().createQuery("select count(*) from AuthorityEntity auth  where auth.intf。id >= :from and auth.intf。id < :to and role in :roles and intf.address = :addr");
 		q.setParameter("roles", roles);
 		q.setParameter("from", idFrom);
 		q.setParameter("to", idTo);

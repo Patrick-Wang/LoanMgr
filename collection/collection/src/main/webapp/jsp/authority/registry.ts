@@ -23,6 +23,12 @@ module authority{
 
     class Registry implements route.Endpoint{
 
+        static ins = new Registry();
+        constructor(){
+            route.router.register(this);
+        }
+
+
         private reg : any = {};
 
         getAddr():string {

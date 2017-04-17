@@ -18,6 +18,7 @@ var authority;
     var Registry = (function () {
         function Registry() {
             this.reg = {};
+            route.router.register(this);
         }
         Registry.prototype.getAddr = function () {
             return REG_ADDR;
@@ -36,6 +37,7 @@ var authority;
                     break;
             }
         };
+        Registry.ins = new Registry();
         return Registry;
     })();
 })(authority || (authority = {}));

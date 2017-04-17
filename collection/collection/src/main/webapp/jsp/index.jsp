@@ -38,6 +38,9 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	href="${pageContext.request.contextPath}/jsp/assets/css/weather-icons.min.css"
 	rel="stylesheet" />
 
+<script src="${pageContext.request.contextPath}/jsp/react/react.min.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/react/react-dom.min.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/react/react-dom-server.min.js"></script>
 
 <!--Fonts-->
 <!--  <link href="../fonts.googleapis.com/css@family=open+sans_3a300italic,400italic,600italic,700italic,400,600,700,300.css"
@@ -77,7 +80,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <script src="${pageContext.request.contextPath}/jsp/sdk/entrustedCaseManager.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/entrustedCaseReport.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/message.js"></script>
-<%@include file="authority/authFns.jsp" %>
+
 </head>
 <body>
 	<!-- Loading Container -->
@@ -147,6 +150,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 </body>
 
 <!--Basic Scripts-->
-	<%@include file="basicScript.jsp"%>
+	<%@include file="authority/authFns.jsp" %>
+	
+	 <%@include file="basicScript.jsp"%> 
 </html>
 

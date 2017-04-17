@@ -1,29 +1,23 @@
-function missed_call() {
-    $("#accountarea").children(":last").before("<li></li>");
-    ReactDOM.render(
-        <div>
-            <li>
-                <a class="dropdown-toggle" data-toggle="dropdown" title="Tasks" href="#">
-                    <i class="icon fa fa-tasks"></i>
-                    <span id="msgCount" class="badge">0</span>
-                </a>
-                <!--Tasks Dropdown-->
-                <ul class="pull-right dropdown-menu dropdown-messages dropdown-arrow ">
-                    <li id="msgCountDetail" class="dropdown-header bordered-darkorange">
-                        <i class="fa fa-tasks"></i>
-                        0 条委消息
-                    </li>
-                    <li class="dropdown-footer">
-                        <a id="queryAllMsgs" href="#">
-                            查看全部咨询信息
-                        </a>
-                    </li>
-                </ul>
-                <!--/Tasks Dropdown-->
-            </li>
-        </div>,
-        $("#accountarea").children(":first")[0]
-    );
+authority.register("/nav/tips/messages", function() {
+    $("#accountarea").children(":last").before(ReactDOMServer.renderToStaticMarkup(
+        React.createElement("li", null, 
+            React.createElement("a", {className: "dropdown-toggle", "data-toggle": "dropdown", title: "Tasks", href: "#"}, 
+                React.createElement("i", {className: "icon fa fa-tasks"}), 
+                React.createElement("span", {id: "msgCount", className: "badge"}, "0")
+            ), 
+            React.createElement("ul", {className: "pull-right dropdown-menu dropdown-messages dropdown-arrow "}, 
+                React.createElement("li", {id: "msgCountDetail", className: "dropdown-header bordered-darkorange"}, 
+                    React.createElement("i", {className: "fa fa-tasks"}), 
+                    "0 条委消息"
+                ), 
+                React.createElement("li", {className: "dropdown-footer"}, 
+                    React.createElement("a", {id: "queryAllMsgs", href: "#"}, 
+                        "查看全部咨询信息"
+                    )
+                )
+            )
+        )
+    ));
     navbar.NavBar.openMessageTips();
-}
-authority.register("/nav/tips/missed_call", missed_call);
+
+});

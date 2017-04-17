@@ -22,17 +22,15 @@
                 <div class="navbar-header pull-right">
                     <div class="navbar-account">
                         <ul id="accountarea" class="account-area">
-                            <li>
+			
+                                
+                               <li>
                                 <a class="login-area dropdown-toggle" data-toggle="dropdown">
                                     <div class="avatar" title="View your public profile">
-                                        <img src="${pageContext.request.contextPath}/jsp/assets/img/avatars/bing.png">
+                                        <img src="${pageContext.request.contextPath}/jsp/assets/img/avatars/adam-jansen.jpg">
                                     </div>
                                     <section>
-                                        <h2><span class="profile"><span>
-												${roles.contains("ROLE_ADMIN") ? "管理员 " : ""}
-												${roles.contains("ROLE_MANAGER") ? "管理层 " : ""}
-												${roles.contains("ROLE_INSIDE_STAFF") ? "内勤 " : ""}
-												${roles.contains("ROLE_OUTSIDE_STAFF") ? "外勤 " : ""} ：${userName} </span></span></h2>
+                                        <h2><span class="profile"><span>内勤人员：  王  五</span></span></h2>
                                     </section>
                                 </a>
                                 <!--Login Area Dropdown-->
@@ -40,35 +38,30 @@
                                     <!--Avatar Area-->
                                     <li>
                                         <div class="avatar-area">
-                                            <img src="${pageContext.request.contextPath}/jsp/assets/img/avatars/bing.png" class="avatar">
+                                            <img src="${pageContext.request.contextPath}/jsp/assets/img/avatars/adam-jansen.jpg" class="avatar">
                                             <span class="caption">修改头像</span>
                                         </div>
-                                    </li>
-                                    <!--Avatar Area-->
-                                    <li class="edit">
-                                        <a href="profile.html" class="pull-left">账户信息</a>
-                                        <a href="#" class="pull-right">设置</a>
                                     </li>
                                     <!--Theme Selector Area-->
                                     <li class="theme-area">
                                         <ul class="colorpicker" id="skin-changer">
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/blue.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/azure.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/teal.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/green.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/orange.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/pink.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/darkred.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/purple.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/darkblue.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/gray.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/black.min.css"></a></li>
-                                            <li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="${pageContext.request.contextPath}/jsp/assets/css/skins/deepblue.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#5DB2FF;" rel="assets/css/skins/blue.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#2dc3e8;" rel="assets/css/skins/azure.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#03B3B2;" rel="assets/css/skins/teal.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#53a93f;" rel="assets/css/skins/green.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#FF8F32;" rel="assets/css/skins/orange.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#cc324b;" rel="assets/css/skins/pink.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#AC193D;" rel="assets/css/skins/darkred.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#8C0095;" rel="assets/css/skins/purple.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#0072C6;" rel="assets/css/skins/darkblue.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#585858;" rel="assets/css/skins/gray.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#474544;" rel="assets/css/skins/black.min.css"></a></li>
+                                            <li><a class="colorpick-btn" href="#" style="background-color:#001940;" rel="assets/css/skins/deepblue.min.css"></a></li>
                                         </ul>
                                     </li>
                                     <!--/Theme Selector Area-->
                                     <li class="dropdown-footer">
-                                        <a href="${pageContext.request.contextPath}/logout.do">
+                                        <a href="login.html">
                                             退出登录
                                         </a>
                                     </li>

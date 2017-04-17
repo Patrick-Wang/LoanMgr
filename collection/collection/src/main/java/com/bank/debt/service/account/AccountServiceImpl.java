@@ -206,7 +206,9 @@ public class AccountServiceImpl implements AccountService {
 		List<IntfEntity> intfs = authority.getAuthAddrs(userDao.getUserByName(userName).getRoles(), 2000, 3000);
 		List<String> addrs = new ArrayList<String>();
 		for(IntfEntity intf : intfs){
-			addrs.add(intf.getAddress());
+			if (!addrs.contains(intf.getAddress())){
+				addrs.add(intf.getAddress());
+			}
 		}
 		return addrs;
 	}
