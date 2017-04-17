@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" session="false"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <!--
 BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
@@ -73,7 +77,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <script src="${pageContext.request.contextPath}/jsp/sdk/entrustedCaseManager.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/entrustedCaseReport.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/message.js"></script>
-
+<%@include file="authority/authFns.jsp" %>
 </head>
 <body>
 	<!-- Loading Container -->
@@ -94,19 +98,19 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 
 			<!-- Page Content -->
 			<div class="page-content">
-				<%-- <div id="consolePage">
+				<div id="consolePage">
 					<%@include file="pages/console.jsp"%>
 				</div>
 				<div id="importLoansPage" style="display: none">
 					<%@include file="pages/importLoans.jsp"%>
-				</div>--%>
+				</div>
 				<div id="assignLoansPage" style="display: none">
 					<%@include file="pages/assignLoans.jsp"%>
 				</div> 
 				<div id="loansMgrPage" style="display: none">
 					<%@include file="pages/loansMgr.jsp"%>
 				</div>
-				<%--<div id="exportLoansPage" style="display: none">
+				<div id="exportLoansPage" style="display: none">
 					<%@include file="pages/exportLoans.jsp"%>
 				</div>
 				<div id="callCenterPage" style="display: none">
@@ -132,7 +136,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				</div>
 				<div id="reportTaskPage" style="display: none">
 					<%@include file="pages/reportTask.jsp"%>
-				</div>  --%>
+				</div> 
 			</div>
 			<!-- /Page Content -->
 		</div>

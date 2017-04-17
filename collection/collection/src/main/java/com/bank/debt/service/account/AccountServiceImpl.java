@@ -5,15 +5,18 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bank.debt.model.dao.authority.AuthorityDao;
 import com.bank.debt.model.dao.organization.OrganizationDao;
 import com.bank.debt.model.dao.organization.OrganizationDaoImpl;
 import com.bank.debt.model.dao.role.RoleDao;
 import com.bank.debt.model.dao.role.RoleDaoImpl;
 import com.bank.debt.model.dao.user.UserDao;
 import com.bank.debt.model.dao.user.UserDaoImpl;
+import com.bank.debt.model.entity.IntfEntity;
 import com.bank.debt.model.entity.OrganizationEntity;
 import com.bank.debt.model.entity.RoleEntity;
 import com.bank.debt.model.entity.UserEntity;
@@ -36,6 +39,9 @@ public class AccountServiceImpl implements AccountService {
 	@Resource(name=OrganizationDaoImpl.NAME)
 	OrganizationDao organizationDao;
 
+	@Autowired
+	AuthorityDao authority;
+	
 	public final static String NAME = "AccountServiceImpl";
 
 	
@@ -87,6 +93,10 @@ public class AccountServiceImpl implements AccountService {
 		
 		if (Checking.isExist(usr.getStatus())){
 			ue.setStatus(usr.getStatus());
+		}
+		
+		if (Checking.isExist(usr.getPosition())){
+			ue.setPosition(usr.getPosition());
 		}
 		
 		if (Checking.isExist(usr.getRoles())){
@@ -142,6 +152,7 @@ public class AccountServiceImpl implements AccountService {
 		ue = new UserEntity();
 		ue.setPassword(usr.getPassword());
 		ue.setUsername(usr.getName());
+		ue.setPosition(usr.getPosition());
 		ue.setOrg(org);
 		List<RoleEntity> roles = new ArrayList<RoleEntity>();
 		ue.setRoles(roles);
@@ -188,6 +199,16 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public UserEntity getUser(String userName) {
 		return userDao.getUserByName(userName);
+	}
+
+	@Override
+	public List<String> getUIAuthAddress(String userName) {
+		List<IntfEntity> intfs = authority.getAuthAddrs(userDao.getUserByName(userName).getRoles(), 2000, 3000);
+		List<String> addrs = new ArrayList<String>();
+		for(IntfEntity intf : intfs){
+			addrs.add(intf.getAddress());
+		}
+		return addrs;
 	}
  
 }

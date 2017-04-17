@@ -39,6 +39,7 @@ public class UserEntity extends AbstractReadWriteEntity implements Serializable 
 	String password;
 	OrganizationEntity org;
 	Integer status;
+    String position;
 	List<RoleEntity> roles;
 	
 	
@@ -84,6 +85,12 @@ public class UserEntity extends AbstractReadWriteEntity implements Serializable 
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
 	}
 
 }

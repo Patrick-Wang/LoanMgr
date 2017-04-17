@@ -9,12 +9,7 @@ module collection{
 
     export class EntrustedCaseReport{
 
-        static getReports(entrustedCase:number, date:string):Promise<EntrustedCaseReport[]>{
-            return Net.post(Net.BASE_URL + "/entrusted_case/report/search.do",{
-                entrustedCase:entrustedCase,
-                date:date
-            });
-        }
+
 
     }
 }

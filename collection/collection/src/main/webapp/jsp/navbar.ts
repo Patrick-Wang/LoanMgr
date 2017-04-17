@@ -7,13 +7,17 @@ module navbar{
         static ins = new NavBar();
 
         constructor(){
+
+        }
+
+        static openMessageTips(){
             Message.getEntrustedCases()
-            .done((mecs : UnreadMessage[])=>{
-                this.onLoadMEC(mecs);
-            });
+                .done((mecs : UnreadMessage[])=>{
+                    NavBar.ins.onLoadMEC(mecs);
+                });
 
             $("#queryAllMsgs").click(()=>{
-                this.onClickQueryAllMessage();
+                NavBar.ins.onClickQueryAllMessage();
             });
         }
 

@@ -20,5 +20,7 @@ public interface AccountService {
 
 	UserEntity getUser(String userName);
 
+	List<String> getUIAuthAddress(String userName);
+
 
 }

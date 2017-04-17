@@ -21,70 +21,7 @@
                 <!-- Account Area and Settings --->
                 <div class="navbar-header pull-right">
                     <div class="navbar-account">
-                        <ul class="account-area">
-
-                            <li>
-                                <a class=" dropdown-toggle" data-toggle="dropdown" title="Notifications" href="#">
-                                    <i class="icon fa fa-warning red"></i>
-                                    <span class="badge">2</span>
-                                </a>
-                                <!--Notification Dropdown-->
-                                <ul class="pull-right dropdown-menu dropdown-arrow dropdown-notifications">
-                                    <li>
-                                        <a href="#">
-                                            <div class="clearfix">
-                                                <div class="notification-icon">
-                                                    <i class="fa fa-phone bg-themeprimary white"></i>
-                                                </div>
-                                                <div class="notification-body">
-                                                    <span class="title red">未接来电：138-0240-9977</span>
-                                                    <span class="description">今天 上午 9点18分30秒</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <div class="clearfix">
-                                                <div class="notification-icon">
-                                                    <i class="fa fa-phone bg-themeprimary white"></i>
-                                                </div>
-                                                <div class="notification-body">
-                                                    <span class="title red">未接来电：186-2402-0715</span>
-                                                    <span class="description">今天 下午 3点42分18秒</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="dropdown-footer ">
-                                        <span>
-                                            前往呼叫中心
-                                        </span>
-                                    </li>
-                                </ul>
-                                <!--/Notification Dropdown-->
-                            </li>
-
-                            <li>
-                                <a class="dropdown-toggle" data-toggle="dropdown" title="Tasks" href="#">
-                                    <i class="icon fa fa-tasks"></i>
-                                    <span id="msgCount" class="badge">0</span>
-                                </a>
-                                <!--Tasks Dropdown-->
-                                <ul class="pull-right dropdown-menu dropdown-messages dropdown-arrow ">
-                                    <li id="msgCountDetail" class="dropdown-header bordered-darkorange">
-                                        <i class="fa fa-tasks"></i>
-                                        0 条委消息
-                                    </li>
-                                       <li class="dropdown-footer">
-                                        <a id="queryAllMsgs" href="#">
-                                            	查看全部咨询信息
-                                        </a>
-                                    </li>
-                                </ul>
-                                <!--/Tasks Dropdown-->
-                            </li>
-
+                        <ul id="accountarea" class="account-area">
                             <li>
                                 <a class="login-area dropdown-toggle" data-toggle="dropdown">
                                     <div class="avatar" title="View your public profile">

@@ -47,13 +47,12 @@ public class HomeServlet {
 	public ModelAndView getIndex(
 			HttpServletRequest request,
 			HttpServletResponse response){
-		
 		Map<String, Object> mp = new HashMap<String, Object>();
-		
 		String userName = getUserName();
+		List<String> addrs = accountService.getUIAuthAddress(userName);
 		mp.put("userName", userName);
 		mp.put("roles", getRoles(userName));
-		
+		mp.put("address", addrs);
 		return new ModelAndView("index", mp);
 	}
 	

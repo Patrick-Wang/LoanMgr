@@ -5,15 +5,16 @@ var navbar;
     var Net = collection.Net;
     var NavBar = (function () {
         function NavBar() {
-            var _this = this;
+        }
+        NavBar.openMessageTips = function () {
             Message.getEntrustedCases()
                 .done(function (mecs) {
-                _this.onLoadMEC(mecs);
+                NavBar.ins.onLoadMEC(mecs);
             });
             $("#queryAllMsgs").click(function () {
-                _this.onClickQueryAllMessage();
+                NavBar.ins.onClickQueryAllMessage();
             });
-        }
+        };
         NavBar.prototype.onClickQueryAllMessage = function () {
         };
         NavBar.prototype.getDateFromTime = function (time) {

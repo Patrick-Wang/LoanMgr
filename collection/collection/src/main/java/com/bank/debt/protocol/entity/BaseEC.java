@@ -26,7 +26,7 @@ public class BaseEC  extends ECCreditCardEntity implements ProtocolEntity {
 	
 	Integer managerId;
 	List<EntrustedCaseReport> reports;
-	
+	List<Message> messages;
 	
 	public Integer getManagerId() {
 		return managerId;
@@ -42,5 +42,13 @@ public class BaseEC  extends ECCreditCardEntity implements ProtocolEntity {
 
 	public void setReports(List<EntrustedCaseReport> reports) {
 		this.reports = reports;
+	}
+
+	public List<Message> getMessages() {
+		return messages;
+	}
+
+	public void setMessages(List<Message> messages) {
+		this.messages = messages;
 	}
 }

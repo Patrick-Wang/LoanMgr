@@ -39,9 +39,9 @@ public class ECManagerServiceImpl implements ECManagerService {
 	public List<EntrustedCaseManageInfo> getManageInfos(String userName) {
 		UserEntity usr = userDao.getUserByName(userName);
 		List<EntrustedCaseManagerEntity> ecmes = null;
-		if (authorityDao.existAuthAddr(usr.getRoles(), 1600, 1800, AuthAddress.ECM_ALL)){
+		if (authorityDao.existAuthAddr(usr.getRoles(), 1000, 2000, AuthAddress.ECM_ALL)){
 			ecmes = entrustedCaseManagerDao.getAll();
-		} else if (authorityDao.existAuthAddr(usr.getRoles(), 1600, 1800, AuthAddress.ECM_OWNER)){
+		} else if (authorityDao.existAuthAddr(usr.getRoles(), 1000, 2000, AuthAddress.ECM_OWNER)){
 			ecmes = entrustedCaseManagerDao.getByOwner(usr.getId());
 		}
 		return ecme2ecmi(ecmes);

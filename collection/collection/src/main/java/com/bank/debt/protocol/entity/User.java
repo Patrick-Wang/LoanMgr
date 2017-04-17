@@ -7,6 +7,7 @@ public class User  extends ProtocolEntityImpl{
 	String orgName;
 	Integer status;
 	String password;
+    String position;
 	Integer[] roles;
 	
 	public Integer[] getRoles() {
@@ -50,6 +51,12 @@ public class User  extends ProtocolEntityImpl{
 	}
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
 	}
 	
 }

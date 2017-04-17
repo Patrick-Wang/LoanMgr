@@ -4,6 +4,7 @@ public class CreateUser extends ProtocolEntityImpl{
 	String name;
 	String password;
 	Integer orgId;
+    String position;
 	Integer[] roles;
 	public String getName() {
 		return name;
@@ -28,6 +29,12 @@ public class CreateUser extends ProtocolEntityImpl{
 	}
 	public void setRoles(Integer[] role) {
 		this.roles = role;
+	}
+	public String getPosition() {
+		return position;
+	}
+	public void setPosition(String position) {
+		this.position = position;
 	}
 	
 }

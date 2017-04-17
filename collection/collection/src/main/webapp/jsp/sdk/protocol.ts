@@ -13,6 +13,7 @@ module collection.protocol{
         orgName?:string;
         passwrod?:string;
         rol?:number[];
+        position:string;
         status:UseStatus;
     }
 
@@ -20,6 +21,7 @@ module collection.protocol{
         name:string;
         password:string;
         orgId:number;
+        position:string;
         roles:number[];
     }
 
@@ -95,15 +97,21 @@ module collection.protocol{
         sendTime:string;//2013-12-11 58:11:23
     }
 
-    export interface ECCarLoan{
+    export interface BaseEC{
+        reports:EntrustedCaseReport[];
+        messages:Message[];
+        managerId:number;
+    }
+
+    export interface ECCarLoan extends BaseEC{
 
     }
 
-    export interface ECCreditCard{
+    export interface ECCreditCard extends BaseEC{
 
     }
 
-    export interface ECCreditLoan{
+    export interface ECCreditLoan extends BaseEC{
 
     }
 
@@ -112,7 +120,7 @@ module collection.protocol{
     }
 
     export interface ECQueryInfo{
-        ifs:IF[];
+        editIds:number[];
         carLoan?:ECCarLoan[];
         creditLoan?:ECCreditLoan[];
         creditCard?:ECCreditCard[];
