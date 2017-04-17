@@ -19,4 +19,5 @@ authority.register("/nav/tips/messages", function() {
         )
     ));
     navbar.NavBar.openMessageTips();
+
 });

@@ -43,18 +43,18 @@
 							管理层石鑫，主要负责系统的整体把控，监督和督促内勤及业务人员工作，隶属于 沈阳鑫久利商务代理服务有限公司。</div>
 					</div>
 					<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 profile-stats">
-						<div class="row">
+						<div id="console-status" class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
-								<div class="stats-value pink">8888万元</div>
-								<div class="stats-title">累计委案金额</div>
+								<div class="stats-value pink">--</div>
+								<div class="stats-title">--</div>
 							</div>
 							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
-								<div class="stats-value pink">100万元</div>
-								<div class="stats-title">未完成委案金额</div>
+								<div class="stats-value pink">--</div>
+								<div class="stats-title">--</div>
 							</div>
 							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 stats-col">
-								<div class="stats-value pink">10</div>
-								<div class="stats-title">员工数</div>
+								<div class="stats-value pink">--</div>
+								<div class="stats-title">--</div>
 							</div>
 						</div>
 						<div class="row">
