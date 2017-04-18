@@ -29,11 +29,17 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	 */
 	private static final long serialVersionUID = 1L;
 	String code;
+	String pch;
+	Date wwrq;
+	String wwzt;
+	String wwjig;
+	Double wwje;
+	Double yhje;
+	String beiz;
 	Integer	cid		;
 	String	gaxlh		;
 	String	xm		;
 	String	wtf		;
-	String	pch		;
 	String	ajzt		;
 	String	zjh		;
 	String	zjlx		;
@@ -89,7 +95,7 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	Date	sr		;
 	Double	nl		;
 	Double	wczje		;
-	String	bz		;
+	String  bz;
 	String	ycsjl		;
 	Double	bj		;
 	Double	zdhke		;
@@ -1001,5 +1007,275 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void updateCode() {
 		this.code = String.format("00%08d", this.getId());
+	}
+	public Date getWwrq() {
+		return wwrq;
+	}
+	public void setWwrq(Date wwrq) {
+		this.wwrq = wwrq;
+	}
+	public String getWwzt() {
+		return wwzt;
+	}
+	public void setWwzt(String wwzt) {
+		this.wwzt = wwzt;
+	}
+	public String getWwjig() {
+		return wwjig;
+	}
+	public void setWwjig(String wwjig) {
+		this.wwjig = wwjig;
+	}
+	public Double getWwje() {
+		return wwje;
+	}
+	public void setWwje(Double wwje) {
+		this.wwje = wwje;
+	}
+	public Double getYhje() {
+		return yhje;
+	}
+	public void setYhje(Double yhje) {
+		this.yhje = yhje;
+	}
+	public Double getZqk() {
+		return zqk;
+	}
+	public void setZqk(Double zqk) {
+		this.zqk = zqk;
+	}
+	public Double getQkye() {
+		return qkye;
+	}
+	public void setQkye(Double qkye) {
+		this.qkye = qkye;
+	}
+	public String getSqdh() {
+		return sqdh;
+	}
+	public void setSqdh(String sqdh) {
+		this.sqdh = sqdh;
+	}
+	public Date getYqrq() {
+		return yqrq;
+	}
+	public void setYqrq(Date yqrq) {
+		this.yqrq = yqrq;
+	}
+	public String getCssb() {
+		return cssb;
+	}
+	public void setCssb(String cssb) {
+		this.cssb = cssb;
+	}
+	public Double getYqts() {
+		return yqts;
+	}
+	public void setYqts(Double yqts) {
+		this.yqts = yqts;
+	}
+	public Double getWtqx() {
+		return wtqx;
+	}
+	public void setWtqx(Double wtqx) {
+		this.wtqx = wtqx;
+	}
+	public Integer getWaqs() {
+		return waqs;
+	}
+	public void setWaqs(Integer waqs) {
+		this.waqs = waqs;
+	}
+	public Integer getYhqs() {
+		return yhqs;
+	}
+	public void setYhqs(Integer yhqs) {
+		this.yhqs = yhqs;
+	}
+	public Date getZdr() {
+		return zdr;
+	}
+	public void setZdr(Date zdr) {
+		this.zdr = zdr;
+	}
+	public Double getGded() {
+		return gded;
+	}
+	public void setGded(Double gded) {
+		this.gded = gded;
+	}
+	public Double getZdzq() {
+		return zdzq;
+	}
+	public void setZdzq(Double zdzq) {
+		this.zdzq = zdzq;
+	}
+	public Double getZhhke() {
+		return zhhke;
+	}
+	public void setZhhke(Double zhhke) {
+		this.zhhke = zhhke;
+	}
+	public Date getYjtar() {
+		return yjtar;
+	}
+	public void setYjtar(Date yjtar) {
+		this.yjtar = yjtar;
+	}
+	public String getSfzk() {
+		return sfzk;
+	}
+	public void setSfzk(String sfzk) {
+		this.sfzk = sfzk;
+	}
+	public String getFkkr() {
+		return fkkr;
+	}
+	public void setFkkr(String fkkr) {
+		this.fkkr = fkkr;
+	}
+	public Date getDkrq() {
+		return dkrq;
+	}
+	public void setDkrq(Date dkrq) {
+		this.dkrq = dkrq;
+	}
+	public Double getSybj() {
+		return sybj;
+	}
+	public void setSybj(Double sybj) {
+		this.sybj = sybj;
+	}
+	public Integer getYqqs() {
+		return yqqs;
+	}
+	public void setYqqs(Integer yqqs) {
+		this.yqqs = yqqs;
+	}
+	public Integer getZyqcs() {
+		return zyqcs;
+	}
+	public void setZyqcs(Integer zyqcs) {
+		this.zyqcs = zyqcs;
+	}
+	public Double getDkll() {
+		return dkll;
+	}
+	public void setDkll(Double dkll) {
+		this.dkll = dkll;
+	}
+	public Double getMyhk() {
+		return myhk;
+	}
+	public void setMyhk(Double myhk) {
+		this.myhk = myhk;
+	}
+	public Double getYqje() {
+		return yqje;
+	}
+	public void setYqje(Double yqje) {
+		this.yqje = yqje;
+	}
+	public Double getYqbj() {
+		return yqbj;
+	}
+	public void setYqbj(Double yqbj) {
+		this.yqbj = yqbj;
+	}
+	public Double getYqfx() {
+		return yqfx;
+	}
+	public void setYqfx(Double yqfx) {
+		this.yqfx = yqfx;
+	}
+	public Double getYqglf() {
+		return yqglf;
+	}
+	public void setYqglf(Double yqglf) {
+		this.yqglf = yqglf;
+	}
+	public Double getWyj() {
+		return wyj;
+	}
+	public void setWyj(Double wyj) {
+		this.wyj = wyj;
+	}
+	public Double getCxf() {
+		return cxf;
+	}
+	public void setCxf(Double cxf) {
+		this.cxf = cxf;
+	}
+	public Date getDkjzr() {
+		return dkjzr;
+	}
+	public void setDkjzr(Date dkjzr) {
+		this.dkjzr = dkjzr;
+	}
+	public Double getBzj() {
+		return bzj;
+	}
+	public void setBzj(Double bzj) {
+		this.bzj = bzj;
+	}
+	public String getSbdnh() {
+		return sbdnh;
+	}
+	public void setSbdnh(String sbdnh) {
+		this.sbdnh = sbdnh;
+	}
+	public String getSbkh() {
+		return sbkh;
+	}
+	public void setSbkh(String sbkh) {
+		this.sbkh = sbkh;
+	}
+	public Date getSjtar() {
+		return sjtar;
+	}
+	public void setSjtar(Date sjtar) {
+		this.sjtar = sjtar;
+	}
+	public String getCx() {
+		return cx;
+	}
+	public void setCx(String cx) {
+		this.cx = cx;
+	}
+	public String getPzh() {
+		return pzh;
+	}
+	public void setPzh(String pzh) {
+		this.pzh = pzh;
+	}
+	public String getCjh() {
+		return cjh;
+	}
+	public void setCjh(String cjh) {
+		this.cjh = cjh;
+	}
+	public String getJg() {
+		return jg;
+	}
+	public void setJg(String jg) {
+		this.jg = jg;
+	}
+	public String getZdyxx() {
+		return zdyxx;
+	}
+	public void setZdyxx(String zdyxx) {
+		this.zdyxx = zdyxx;
+	}
+	public String getZxcj() {
+		return zxcj;
+	}
+	public void setZxcj(String zxcj) {
+		this.zxcj = zxcj;
+	}
+	public String getBeiz() {
+		return beiz;
+	}
+	public void setBeiz(String beiz) {
+		this.beiz = beiz;
 	}
 }

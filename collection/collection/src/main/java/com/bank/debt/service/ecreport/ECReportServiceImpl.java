@@ -25,6 +25,7 @@ import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
 import com.bank.debt.model.entity.EntrustedCaseReportEntity;
 import com.bank.debt.model.entity.UserEntity;
 import com.bank.debt.protocol.entity.EntrustedCaseReport;
+import com.bank.debt.protocol.entity.PhoneRecordName;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
@@ -95,7 +96,7 @@ public class ECReportServiceImpl implements ECReportService {
 	@Override
 	public boolean downloadAttachement(Integer report, String attachement, OutputStream outputStream) throws IOException {
 		
-		if (PathUtil.isPhoneAttach(attachement)){
+		if (PhoneRecordName.isPhoneAttach(attachement)){
 			return ErrorCode.OK == phoneService.donwloandRecord(PathUtil.getUploadName(attachement), outputStream);
 		}else{
 			EntrustedCaseReportEntity ecre = entrustedCaseReportDao.getById(report);

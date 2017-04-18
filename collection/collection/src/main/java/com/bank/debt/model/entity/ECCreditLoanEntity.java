@@ -28,6 +28,13 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	 */
 	private static final long serialVersionUID = 1L;
 	String code;
+	String pch;
+	Date wwrq;
+	String wwzt;
+	String wwjig;
+	Double wwje;
+	Double yhje;
+	String bz;
 	String	khh		;
 	String	khxm		;
 	String	zhh		;
@@ -512,6 +519,48 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void updateCode() {
 		this.code = String.format("00%08d", this.getId());
+	}
+	public String getPch() {
+		return pch;
+	}
+	public void setPch(String pch) {
+		this.pch = pch;
+	}
+	public Date getWwrq() {
+		return wwrq;
+	}
+	public void setWwrq(Date wwrq) {
+		this.wwrq = wwrq;
+	}
+	public String getWwzt() {
+		return wwzt;
+	}
+	public void setWwzt(String wwzt) {
+		this.wwzt = wwzt;
+	}
+	public String getWwjig() {
+		return wwjig;
+	}
+	public void setWwjig(String wwjig) {
+		this.wwjig = wwjig;
+	}
+	public Double getWwje() {
+		return wwje;
+	}
+	public void setWwje(Double wwje) {
+		this.wwje = wwje;
+	}
+	public Double getYhje() {
+		return yhje;
+	}
+	public void setYhje(Double yhje) {
+		this.yhje = yhje;
+	}
+	public String getBz() {
+		return bz;
+	}
+	public void setBz(String bz) {
+		this.bz = bz;
 	}
 
 }

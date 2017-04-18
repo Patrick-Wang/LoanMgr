@@ -6,17 +6,17 @@ import java.io.OutputStream;
 import java.util.List;
 
 import com.bank.debt.protocol.entity.PhoneRecord;
+import com.bank.debt.protocol.entity.PhoneRecordName;
 import com.bank.debt.protocol.entity.Result;
-import com.bank.debt.protocol.tools.PathUtil.UploadName;
 
 public interface PhoneService {
 
 	List<PhoneRecord> getCallRecords();
 
-	Result uploadRecord(UploadName un, InputStream inputStream) throws IOException;
+	Result uploadRecord(PhoneRecordName un, InputStream inputStream) throws IOException;
 
 	Result recordMissedCall(String number, String time);
 
-	Result donwloandRecord(UploadName un, OutputStream os) throws IOException;
+	Result donwloandRecord(PhoneRecordName un, OutputStream os) throws IOException;
 
 }

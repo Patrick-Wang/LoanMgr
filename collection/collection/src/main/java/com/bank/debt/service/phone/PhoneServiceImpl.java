@@ -21,10 +21,10 @@ import com.bank.debt.model.dao.phonerecord.PhoneRecordDaoImpl;
 import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
 import com.bank.debt.model.entity.PhoneRecordEntity;
 import com.bank.debt.protocol.entity.PhoneRecord;
+import com.bank.debt.protocol.entity.PhoneRecordName;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.PathUtil;
-import com.bank.debt.protocol.tools.PathUtil.UploadName;
 import com.bank.debt.protocol.tools.map.Mapper;
 import com.bank.debt.protocol.tools.map.Mapping;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
@@ -69,7 +69,7 @@ public class PhoneServiceImpl implements PhoneService {
 	}
 
 	@Override
-	public Result uploadRecord(UploadName un, InputStream inputStream) throws IOException {
+	public Result uploadRecord(PhoneRecordName un, InputStream inputStream) throws IOException {
 		if (ftpService.updoadFile(PathUtil.phoneRecordPath(un.getNumber()), un.getName(), inputStream)){
 			EntrustedCaseManagerEntity ecm = ecmDao.getById(un.getEcId());
 			PhoneRecordEntity pre = new PhoneRecordEntity();
@@ -96,7 +96,7 @@ public class PhoneServiceImpl implements PhoneService {
 	}
 
 	@Override
-	public Result donwloandRecord(UploadName un, OutputStream os) throws IOException {
+	public Result donwloandRecord(PhoneRecordName un, OutputStream os) throws IOException {
 		if (ftpService.downloadFile(PathUtil.phoneRecordPath(un.getNumber()),  un.getName(), os)){
 			return ErrorCode.OK;
 		}

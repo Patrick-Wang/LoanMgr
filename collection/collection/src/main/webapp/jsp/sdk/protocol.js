@@ -2,6 +2,18 @@ var collection;
 (function (collection) {
     var protocol;
     (function (protocol) {
+        var PhoneRecordName = (function () {
+            function PhoneRecordName() {
+            }
+            PhoneRecordName.isPhoneAttach = function (attach) {
+                return attach.indexOf("phone:") == 0;
+            };
+            PhoneRecordName.prototype.toName = function () {
+                return this.ecId + "_" + this.numb + "_" + this.time;
+            };
+            return PhoneRecordName;
+        })();
+        protocol.PhoneRecordName = PhoneRecordName;
         (function (UseStatus) {
             UseStatus[UseStatus["inuse"] = 0] = "inuse";
             UseStatus[UseStatus["stop"] = 1] = "stop";

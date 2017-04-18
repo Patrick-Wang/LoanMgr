@@ -97,14 +97,26 @@ create table `phone_records`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+create table `entrusted_case_batch_creator`(
+	`id` int NOT NULL AUTO_INCREMENT,
+	`createdTime` datetime,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 
 
 
 create table `entrusted_case_car_loan`(				
 	`id`	int NOT NULL AUTO_INCREMENT	,--	自增主键
-	`xh`	int	,--	序号
+	`code` varchar(20),
+	`pch` varchar(20),
 	`wwrq`	date	,--	委外日期
+	`wwzt`	varchar(54)	,--	委外状态
+	`wwjig` varchar(50)	,
+	`wwje` double,
+	`yhje` double,
+	`bz`	text	,--	备注
+	`xh`	int	,--	序号
 	`wwdqr`	date	,--	委外到期日
 	`jarq`	date	,--	结案日期
 	`khxm`	varchar(50)	,--	客户姓名
@@ -114,7 +126,6 @@ create table `entrusted_case_car_loan`(
 	`khxb`	varchar(54)	,--	客户性别
 	`khcsrq`	date	,--	客户出生日期
 	`khsfzh`	varchar(54)	,--	客户身份证号
-	`wwzt`	varchar(54)	,--	委外状态
 	`wfqs`	int	,--	外访期数
 	`wfje`	double	,--	外访金额
 	`yqts`	double	,--	逾期天数
@@ -171,7 +182,6 @@ create table `entrusted_case_car_loan`(
 	`khhztd`	text	,--	客户合作态度
 	`clzt`	text	,--	处理状态
 	`fkuirq`	date	,--	反馈日期
-	`bz`	text	,--	备注
 	`wwjg`	text	,--	委外结果
 	`pcode`	varchar(73)	,--	PCODE
 	`ccode`	varchar(73)	,--	CCODE
@@ -181,6 +191,14 @@ create table `entrusted_case_car_loan`(
 
 create table `entrusted_case_credit_loan`(				
 	`id`	int NOT NULL AUTO_INCREMENT	,--	自增主键
+	`code` varchar(20),
+	`pch` varchar(20),
+	`wwrq`	date	,--	委外日期
+	`wwzt`	varchar(54)	,--	委外状态
+	`wwjig` varchar(50)	,
+	`wwje` double,
+	`yhje` double,
+	`bz`	text	,--	备注
 	`khh`	varchar(50)	,--	客户号
 	`khxm`	varchar(50)	,--	客户姓名
 	`zhh`	varchar(50)	,--	账户号
@@ -254,11 +272,18 @@ create table `entrusted_case_credit_loan`(
 
 create table `entrusted_case_credit_card`(				
 	`id`	int NOT NULL AUTO_INCREMENT	,--	自增主键
+	`code` varchar(20),
+	`pch`	varchar(50)	,--	批次号
+	`wwrq`	date	,--	委外日期
+	`wwzt`	varchar(54)	,--	委外状态
+	`wwjig` varchar(50)	,
+	`wwje` double,
+	`yhje` double,
+	`beiz`	text	,--	备注
 	`cid`	int	,--	内部管理ID
 	`gaxlh`	varchar(50)	,--	个案序列号
 	`xm`	varchar(50)	,--	姓名
 	`wtf`	varchar(50)	,--	委托方
-	`pch`	varchar(50)	,--	批次号
 	`ajzt`	varchar(50)	,--	案件状态
 	`zjh`	varchar(50)	,--	证件号
 	`zjlx`	varchar(50)	,--	证件类型

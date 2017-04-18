@@ -1,6 +1,19 @@
 
 module collection.protocol{
 
+    export class PhoneRecordName{
+        ecId:number;
+        numb:string;
+        time:string;
+        static  isPhoneAttach(attach:string):boolean{
+            return attach.indexOf("phone:") == 0;
+        }
+
+        toName():string{
+            return this.ecId + "_" + this.numb + "_" + this.time;
+        }
+    }
+
     export enum UseStatus{
         inuse,
         stop

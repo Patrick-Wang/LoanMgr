@@ -1,15 +1,16 @@
 package com.bank.debt.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import com.speed.frame.model.entity.AbstractReadWriteEntity;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.speed.frame.model.entity.AbstractReadWriteEntity;
 
 
 @Entity
@@ -28,8 +29,14 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	 */
 	private static final long serialVersionUID = 1L;
 	String code;
+	String pch;
+	Date wwrq;
+	String wwzt;
+	String wwjig;
+	Double wwje;
+	Double yhje;
+	String bz;
 	Integer	xh	;
-	Date	wwrq	;
 	Date	wwdqr	;
 	Date	jarq	;
 	String	khxm	;
@@ -39,7 +46,6 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	String	khxb	;
 	Date	khcsrq	;
 	String	khsfzh	;
-	String	wwzt	;
 	Integer	wfqs	;
 	Double	wfje	;
 	Double	yqts	;
@@ -96,7 +102,6 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	String	khhztd	;
 	String	clzt	;
 	Date	fkuirq	;
-	String	bz	;
 	String	wwjg	;
 	String	pcode	;
 	String	ccode	;
@@ -540,5 +545,29 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	}
 	public void updateCode() {
 		this.code = String.format("00%08d", this.getId());
+	}
+	public String getPch() {
+		return pch;
+	}
+	public void setPch(String pch) {
+		this.pch = pch;
+	}
+	public String getWwjig() {
+		return wwjig;
+	}
+	public void setWwjig(String wwjig) {
+		this.wwjig = wwjig;
+	}
+	public Double getWwje() {
+		return wwje;
+	}
+	public void setWwje(Double wwje) {
+		this.wwje = wwje;
+	}
+	public Double getYhje() {
+		return yhje;
+	}
+	public void setYhje(Double yhje) {
+		this.yhje = yhje;
 	}
 }
