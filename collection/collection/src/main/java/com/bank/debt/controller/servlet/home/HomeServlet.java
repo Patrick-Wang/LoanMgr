@@ -54,6 +54,12 @@ public class HomeServlet {
 		mp.put("userName", userName);
 		mp.put("roles", getRoles(ue.getRoles()));
 		mp.put("position", ue.getPosition());
+		mp.put("org", ue.getOrg().getName());
+		if (null != ue.getOrg().getParent()){
+			mp.put("pOrg", ue.getOrg().getParent().getName());
+		}else{
+			mp.put("pOrg", ue.getOrg().getName());
+		}
 		mp.put("address", addrs);
 		return new ModelAndView("index", mp);
 	}
