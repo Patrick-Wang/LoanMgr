@@ -18,5 +18,10 @@ var collection;
             MessageStatus[MessageStatus["read"] = 1] = "read";
         })(protocol.MessageStatus || (protocol.MessageStatus = {}));
         var MessageStatus = protocol.MessageStatus;
+        (function (CallStatus) {
+            CallStatus[CallStatus["callin"] = 0] = "callin";
+            CallStatus[CallStatus["callout"] = 1] = "callout";
+        })(protocol.CallStatus || (protocol.CallStatus = {}));
+        var CallStatus = protocol.CallStatus;
     })(protocol = collection.protocol || (collection.protocol = {}));
 })(collection || (collection = {}));

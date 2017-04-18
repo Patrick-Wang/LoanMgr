@@ -9,7 +9,8 @@ var collection;
             var deferred = $.Deferred();
             $.ajax({
                 type: 'POST',
-                url: url
+                url: url,
+                data: data
             }).done(function (obj) {
                 var jobj = JSON.parse(obj);
                 if (jobj != undefined &&

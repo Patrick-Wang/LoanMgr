@@ -10,6 +10,7 @@ module collection{
             $.ajax({
                 type: 'POST',
                 url: url,
+                data: data
             }).done((obj:string)=>{
                 let jobj = JSON.parse(obj);
                 if (jobj != undefined &&

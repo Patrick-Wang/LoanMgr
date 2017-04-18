@@ -131,8 +131,15 @@ module collection.protocol{
         fail(fFn : (fResult : any)=>void):Promise<S>;
     }
 
-    export interface MissedCall{
-        call:string;//2013-12-11 58:11:23
+    export enum CallStatus{
+        callin,
+        callout
+    }
+
+    export interface PhoneRecord{
+        status : CallStatus;
         phoneNum:string;
+        time:string;
+        record:string;
     }
 }
