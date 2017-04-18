@@ -20,7 +20,7 @@ module collection{
             });
         }
 
-        static getEntrustedCases():Promise<UnreadMessage[]>{
+        static getUnreadMessages():Promise<UnreadMessage[]>{
             return Net.post(Net.BASE_URL + "/message/unread_messages.do");
         }
 

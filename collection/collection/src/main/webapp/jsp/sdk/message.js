@@ -15,7 +15,7 @@ var collection;
                 mids: JSON.stringify(mids)
             });
         };
-        Message.getEntrustedCases = function () {
+        Message.getUnreadMessages = function () {
             return collection.Net.post(collection.Net.BASE_URL + "/message/unread_messages.do");
         };
         Message.getMessages = function (entrusted_case, partner) {
