@@ -30,7 +30,7 @@
                                         <img src="${pageContext.request.contextPath}/jsp/assets/img/avatars/adam-jansen.jpg">
                                     </div>
                                     <section>
-                                        <h2><span class="profile"><span>内勤人员：  王  五</span></span></h2>
+                                        <h2><span class="profile"><span>${position}：  ${userName}</span></span></h2>
                                     </section>
                                 </a>
                                 <!--Login Area Dropdown-->
@@ -103,3 +103,5 @@
     </div>
     <!-- /Navbar -->
     <script src="${pageContext.request.contextPath}/jsp/navbar.js"></script>
+
+

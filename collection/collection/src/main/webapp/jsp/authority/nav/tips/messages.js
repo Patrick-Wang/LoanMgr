@@ -8,7 +8,7 @@ authority.register("/nav/tips/messages", function() {
             React.createElement("ul", {className: "pull-right dropdown-menu dropdown-messages dropdown-arrow "}, 
                 React.createElement("li", {id: "msgCountDetail", className: "dropdown-header bordered-darkorange"}, 
                     React.createElement("i", {className: "fa fa-tasks"}), 
-                    "0 条委消息"
+                    "0 条待处理消息"
                 ), 
                 React.createElement("li", {className: "dropdown-footer"}, 
                     React.createElement("a", {id: "queryAllMsgs", href: "#"}, 

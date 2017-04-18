@@ -8,7 +8,7 @@ authority.register("/nav/tips/messages", function() {
             <ul className="pull-right dropdown-menu dropdown-messages dropdown-arrow ">
                 <li id="msgCountDetail" className="dropdown-header bordered-darkorange">
                     <i className="fa fa-tasks"></i>
-                    0 条委消息
+                    0 条待处理消息
                 </li>
                 <li className="dropdown-footer">
                     <a id="queryAllMsgs" href="#">

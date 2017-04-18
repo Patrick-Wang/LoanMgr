@@ -1,8 +1,12 @@
 ///<reference path="sdk/message.ts"/>
+///<reference path="sdk/phone.ts"/>
 module navbar{
     import Message = collection.Message;
     import Net = collection.Net;
     import UnreadMessage = collection.protocol.UnreadMessage;
+    import Phone = collection.Phone;
+    import PhoneRecord = collection.protocol.PhoneRecord;
+    import CallStatus = collection.protocol.CallStatus;
     export class NavBar{
         static ins = new NavBar();
 
@@ -11,17 +15,40 @@ module navbar{
         }
 
         static openMessageTips(){
+
+            NavBar.ins.triggerRefreshMessageTips();
+            $("#queryAllMsgs").click(()=>{
+                NavBar.ins.onClickQueryAllMessage();
+                return false;
+            });
+        }
+
+        static openCallTips(){
+            NavBar.ins.triggerRefreshCallCenterTips();
+            $("#navCallCenter").click(()=>{
+                NavBar.ins.onClicCallCenter();
+                return false;
+            });
+        }
+
+        triggerRefreshMessageTips():void{
             Message.getEntrustedCases()
                 .done((mecs : UnreadMessage[])=>{
                     NavBar.ins.onLoadMEC(mecs);
                 });
+        }
 
-            $("#queryAllMsgs").click(()=>{
-                NavBar.ins.onClickQueryAllMessage();
+        triggerRefreshCallCenterTips():void{
+            Phone.getRecords().done((prs : PhoneRecord[])=>{
+                NavBar.ins.onLoadCallInfos(prs);
             });
         }
 
         onClickQueryAllMessage(){
+
+        }
+
+        onClicCallCenter(){
 
         }
 
@@ -77,10 +104,39 @@ module navbar{
 
         onLoadMEC(ums : UnreadMessage[]):void{
             $("#msgCount").text(ums.length);
-            $("#msgCountDetail").text(ums.length + "消息待处理");
+            $("#msgCountDetail").text(ums.length + "条待处理消息");
             for(let i = 0; i < ums.length; ++i){
                 this.buildMessageDetail($("#msgCountDetail"), ums[i]);
             }
+        }
+
+
+        buildCallCenter(detailli:any, pr:PhoneRecord){
+            let detail = detailli.before(
+            '<li>'+
+                '<a href="#">'+
+            '<div class="clearfix">'+
+            '<div class="notification-icon">'+
+            '<i class="fa fa-phone bg-themeprimary white"></i>'+
+            '</div>'+
+            '<div class="notification-body">'+
+            '<span class="title red">未接来电：' + pr.phoneNum + '</span>'+
+            '<span class="description">' + pr.time + '</span>'+
+            '</div>'+
+            '</div>'+
+            '</a>'+
+            '</li>');
+        }
+
+        onLoadCallInfos(prs:PhoneRecord[]):void {
+            let count = 5;
+            for (let i = 0; i < prs.length && count > 0; ++i){
+                if (prs[i].status == CallStatus.missed){
+                    this.buildCallCenter($("#navCallCenter").parent(), prs[i]);
+                    --count;
+                }
+            }
+            $("#navCallCount").text(5 - count);
         }
     }
 }

@@ -2,6 +2,18 @@ var collection;
 (function (collection) {
     var protocol;
     (function (protocol) {
+        var PhoneRecordName = (function () {
+            function PhoneRecordName() {
+            }
+            PhoneRecordName.isPhoneAttach = function (attach) {
+                return attach.indexOf("phone:") == 0;
+            };
+            PhoneRecordName.prototype.toName = function () {
+                return this.ecId + "_" + this.numb + "_" + this.time;
+            };
+            return PhoneRecordName;
+        })();
+        protocol.PhoneRecordName = PhoneRecordName;
         (function (UseStatus) {
             UseStatus[UseStatus["inuse"] = 0] = "inuse";
             UseStatus[UseStatus["stop"] = 1] = "stop";
@@ -21,6 +33,7 @@ var collection;
         (function (CallStatus) {
             CallStatus[CallStatus["callin"] = 0] = "callin";
             CallStatus[CallStatus["callout"] = 1] = "callout";
+            CallStatus[CallStatus["missed"] = 2] = "missed";
         })(protocol.CallStatus || (protocol.CallStatus = {}));
         var CallStatus = protocol.CallStatus;
     })(protocol = collection.protocol || (collection.protocol = {}));

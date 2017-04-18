@@ -38,9 +38,9 @@
 							alt="" class="header-avatar" />
 					</div>
 					<div class="col-lg-5 col-md-8 col-sm-12 profile-info">
-						<div class="header-fullname">石鑫</div>
+						<div class="header-fullname">${userName}</div>
 						<div class="header-information">
-							管理层石鑫，主要负责系统的整体把控，监督和督促内勤及业务人员工作，隶属于 沈阳鑫久利商务代理服务有限公司。</div>
+	${org} ${position}  :  ${userName}</div>
 					</div>
 					<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 profile-stats">
 						<div id="console-status" class="row">
@@ -59,13 +59,13 @@
 						</div>
 						<div class="row">
 							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
-								<i class="glyphicon glyphicon-map-marker"></i> 沈阳总公司
+								<i class="glyphicon glyphicon-map-marker"></i> ${org}
 							</div>
 							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
 								综合完成率: <strong>95%</strong>
 							</div>
 							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
-								部门： <strong>总经理</strong>
+	${pOrg}： <strong>${position}</strong>
 							</div>
 						</div>
 					</div>

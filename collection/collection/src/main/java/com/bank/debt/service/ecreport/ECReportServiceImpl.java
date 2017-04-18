@@ -25,6 +25,7 @@ import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
 import com.bank.debt.model.entity.EntrustedCaseReportEntity;
 import com.bank.debt.model.entity.UserEntity;
 import com.bank.debt.protocol.entity.EntrustedCaseReport;
+import com.bank.debt.protocol.entity.PhoneRecordName;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
@@ -33,6 +34,7 @@ import com.bank.debt.protocol.tools.map.Mapper;
 import com.bank.debt.protocol.tools.map.Mapping;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
 import com.bank.debt.protocol.tools.map.MappingSkipException;
+import com.bank.debt.service.phone.PhoneService;
 import com.bank.debt.service.service.ftp.FtpService;
 
 import net.sf.json.JSONArray;
@@ -51,6 +53,9 @@ public class ECReportServiceImpl implements ECReportService {
 
 	@Autowired
 	FtpService ftpService;
+	
+	@Autowired
+	PhoneService phoneService;
 	
 	Mapping<EntrustedCaseReportEntity, EntrustedCaseReport> reportMapping = new Mapping<EntrustedCaseReportEntity, EntrustedCaseReport>(){
 
@@ -90,17 +95,22 @@ public class ECReportServiceImpl implements ECReportService {
 
 	@Override
 	public boolean downloadAttachement(Integer report, String attachement, OutputStream outputStream) throws IOException {
-		EntrustedCaseReportEntity ecre = entrustedCaseReportDao.getById(report);
-		if (ecre != null){
-			ftpService.downloadFile(
-					PathUtil.reportAttachementPath(ecre.getEntrustedCaseManager().getId(), ecre.getCreator().getId(), report), attachement, outputStream);
-			return true;
+		
+		if (PhoneRecordName.isPhoneAttach(attachement)){
+			return ErrorCode.OK == phoneService.donwloandRecord(PhoneRecordName.parse(attachement), outputStream);
+		}else{
+			EntrustedCaseReportEntity ecre = entrustedCaseReportDao.getById(report);
+			if (ecre != null){
+				ftpService.downloadFile(
+						PathUtil.reportAttachementPath(ecre.getEntrustedCaseManager().getId(), ecre.getCreator().getId(), report), attachement, outputStream);
+				return true;
+			}
 		}
 		return false;
 	}
 
 	@Override
-	public Result updateReport(String userName, EntrustedCaseReport ecr, CommonsMultipartFile[] attachements) throws IOException {
+	public Result updateReport(String userName, EntrustedCaseReport ecr, List<String> phoneNames, CommonsMultipartFile[] attachements) throws IOException {
 		UserEntity usr = userDao.getUserByName(userName);
 		EntrustedCaseReportEntity ecre = entrustedCaseReportDao.getById(ecr.getId());
 		if (ecre != null && usr != null){
@@ -141,7 +151,7 @@ public class ECReportServiceImpl implements ECReportService {
 	}
 
 	@Override
-	public Result createReport(String userName, EntrustedCaseReport ecr, CommonsMultipartFile[] attachements) throws IOException {
+	public Result createReport(String userName, EntrustedCaseReport ecr, List<String> phoneNames, CommonsMultipartFile[] attachements) throws IOException {
 		UserEntity usr = userDao.getUserByName(userName);
 		EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getById(ecr.getEntrustedCaseId());
 		if (ecme != null && usr != null){
@@ -159,8 +169,8 @@ public class ECReportServiceImpl implements ECReportService {
 				ecre.setDate(new Date(Calendar.getInstance().getTimeInMillis()));
 			}
 			
+			JSONArray jattachs = ecre.jsonAttachements();
 			if (Checking.isExist(attachements)){
-				JSONArray jattachs = ecre.jsonAttachements();
 				for (CommonsMultipartFile attach : attachements){
 					ftpService.updoadFile(
 							PathUtil.reportAttachementPath(ecre.getEntrustedCaseManager().getId(), ecre.getCreator().getId(), ecre.getId()), 
@@ -168,8 +178,14 @@ public class ECReportServiceImpl implements ECReportService {
 							attach.getInputStream());
 					jattachs.add(attach.getName());
 				}
-				ecre.setAttachements(jattachs.toString());
 			}
+
+			for (String name : phoneNames){
+				if (!jattachs.contains("phone:" + name)){
+					jattachs.add("phone:" + name);
+				}
+			}
+			ecre.setAttachements(jattachs.toString());
 			entrustedCaseReportDao.merge(ecre);
 			return ErrorCode.OK;
 		}

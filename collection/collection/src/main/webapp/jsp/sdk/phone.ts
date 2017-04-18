@@ -5,7 +5,7 @@ module collection{
     import PhoneRecord = collection.protocol.PhoneRecord;
 
     export class Phone{
-        static getRecords():Promise<PhoneRecord>{
+        static getRecords():Promise<PhoneRecord[]>{
             return Net.post(Net.BASE_URL + "/phone/records.do");
         }
     }

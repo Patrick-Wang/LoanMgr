@@ -52,9 +52,7 @@ module pages{
         }
 
         refresh():void{
-            if (this.isShown()){
-                this.onRefresh();
-            }
+            this.onRefresh();
         }
 
         show():void {

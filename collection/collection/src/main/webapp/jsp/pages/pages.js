@@ -45,9 +45,7 @@ var pages;
             });
         }
         PageImpl.prototype.refresh = function () {
-            if (this.isShown()) {
-                this.onRefresh();
-            }
+            this.onRefresh();
         };
         PageImpl.prototype.show = function () {
             if (!this.isShown()) {

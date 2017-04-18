@@ -1,9 +1,11 @@
 package com.bank.debt.protocol.tools;
 
-import java.sql.Date;
 import java.text.SimpleDateFormat;
 
+import com.bank.debt.protocol.entity.PhoneRecordName;
+
 public class PathUtil {
+	
 	static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	
 	public static String msgAttachementPath(Integer entrustedCase, Integer from, Integer to){
@@ -19,5 +21,8 @@ public class PathUtil {
 				date + "/" + 
 				reportId + (title == null ? "" : "_" + title) + "/" + attchName;
 	}
-	
+		
+	public static String phoneRecordPath(String number){
+		return "/PHONE_RECORDS/" + number + "/";
+	}
 }

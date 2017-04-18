@@ -18,9 +18,9 @@ public interface ECReportService {
 
 	boolean downloadAttachement(Integer report, String attachement, OutputStream outputStream) throws IOException;
 
-	Result createReport(String userName, EntrustedCaseReport ecr, CommonsMultipartFile[] attachements) throws IOException;
+	Result createReport(String userName, EntrustedCaseReport ecr, List<String> phoneNames, CommonsMultipartFile[] attachements) throws IOException;
 
-	Result updateReport(String userName, EntrustedCaseReport ecr, CommonsMultipartFile[] attachements) throws IOException;
+	Result updateReport(String userName, EntrustedCaseReport ecr, List<String> phoneNames, CommonsMultipartFile[] attachements) throws IOException;
 
 	List<EntrustedCaseReport> getECReports(Integer entrustedCase, Date date) throws MappingFailedException;
 

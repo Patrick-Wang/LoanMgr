@@ -34,10 +34,9 @@ public class HomeServlet {
 		return userName;
 	}
 	
-	private List<String> getRoles(String userName){
-		UserEntity ue = accountService.getUser(userName);
+	private List<String> getRoles(List<RoleEntity> res){
 		List<String> roles = new ArrayList<String>();
-		for (RoleEntity role : ue.getRoles()){
+		for (RoleEntity role : res){
 			roles.add(role.getName());
 		}
 		return roles;
@@ -48,10 +47,19 @@ public class HomeServlet {
 			HttpServletRequest request,
 			HttpServletResponse response){
 		Map<String, Object> mp = new HashMap<String, Object>();
+		
 		String userName = getUserName();
+		UserEntity ue = accountService.getUser(userName);
 		List<String> addrs = accountService.getUIAuthAddress(userName);
 		mp.put("userName", userName);
-		mp.put("roles", getRoles(userName));
+		mp.put("roles", getRoles(ue.getRoles()));
+		mp.put("position", ue.getPosition());
+		mp.put("org", ue.getOrg().getName());
+		if (null != ue.getOrg().getParent()){
+			mp.put("pOrg", ue.getOrg().getParent().getName());
+		}else{
+			mp.put("pOrg", ue.getOrg().getName());
+		}
 		mp.put("address", addrs);
 		return new ModelAndView("index", mp);
 	}
