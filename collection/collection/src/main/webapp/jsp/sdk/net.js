@@ -2,17 +2,15 @@
 ///<reference path="account.ts"/>
 var collection;
 (function (collection) {
-    var Net = (function () {
-        function Net() {
-        }
-        Net.post = function (url, data) {
-            var deferred = $.Deferred();
+    class Net {
+        static post(url, data) {
+            let deferred = $.Deferred();
             $.ajax({
                 type: 'POST',
                 url: url,
                 data: data
-            }).done(function (obj) {
-                var jobj = JSON.parse(obj);
+            }).done((obj) => {
+                let jobj = JSON.parse(obj);
                 if (jobj != undefined &&
                     jobj.redirect != undefined &&
                     jobj.error == "invalidate session") {
@@ -21,13 +19,12 @@ var collection;
                 else {
                     deferred.resolve(jobj);
                 }
-            }).fail(function (err) {
+            }).fail((err) => {
                 deferred.reject(err);
             });
             return deferred.promise();
-        };
-        Net.BASE_URL = window.document.location.pathname.substring(0, window.document.location.pathname.indexOf("/", 1));
-        return Net;
-    })();
+        }
+    }
+    Net.BASE_URL = window.document.location.pathname.substring(0, window.document.location.pathname.indexOf("/", 1));
     collection.Net = Net;
 })(collection || (collection = {}));

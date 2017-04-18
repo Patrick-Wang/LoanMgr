@@ -20,7 +20,7 @@ module navbar {
         );
 
         let missedCall:MissedCall = new MissedCall();
-        route.router.register(new MessageReceiver(ADDR, (e:Event)=> {
+        route.router.register(new MessageReceiver(ADDR, (e:route.Event)=> {
             switch (e.id) {
                 case ON_REFRESH:
                     if (html != null) {

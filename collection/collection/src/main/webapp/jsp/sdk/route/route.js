@@ -5,69 +5,69 @@ var route;
             return ++idBase;
         };
     })(9988392);
-    var Router = (function () {
-        function Router() {
+    class Router {
+        constructor() {
             this.mEndpoints = {};
             this.mEplist = [];
         }
-        Router.prototype.register = function (endpoint) {
-            var addr = endpoint.getAddr();
+        register(endpoint) {
+            let addr = endpoint.getAddr();
             this.mEndpoints[addr] = endpoint;
             this.mEplist.push(addr);
-        };
-        Router.prototype.unregister = function (endpoint) {
+        }
+        unregister(endpoint) {
             this.mEndpoints[endpoint.getAddr()] = undefined;
-        };
-        Router.prototype.sendInternal = function (e) {
-            var toEndpoint = this.mEndpoints[e.to];
+        }
+        sendInternal(e) {
+            let toEndpoint = this.mEndpoints[e.to];
             if (toEndpoint != undefined) {
                 return toEndpoint.onEvent(e);
             }
             return Router.FAILED;
-        };
-        Router.prototype.fromEp = function (from) {
+        }
+        fromEp(from) {
             return this.from(from.getAddr());
-        };
-        Router.prototype.toEp = function (to) {
+        }
+        toEp(to) {
             return this.to(to.getAddr());
-        };
-        Router.prototype.from = function (from) {
+        }
+        from(from) {
             this.mCurEvent = {};
             this.mCurEvent.from = from;
             return this;
-        };
-        Router.prototype.to = function (target) {
+        }
+        to(target) {
             if (this.mCurEvent == undefined) {
                 this.mCurEvent = {};
             }
             this.mCurEvent.to = target;
             return this;
-        };
-        Router.prototype.broadcast = function (evid, data) {
-            for (var i = 0; i < this.mEplist.length; ++i) {
-                var event_1 = {
+        }
+        broadcast(evid, data) {
+            for (let i = 0; i < this.mEplist.length; ++i) {
+                let event = {
                     from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
                     to: undefined,
                     id: evid,
                     data: data,
                     isBroadcast: true
                 };
-                this.mEndpoints[this.mEplist[i]].onEvent(event_1);
+                this.mEndpoints[this.mEplist[i]].onEvent(event);
             }
             this.mCurEvent = undefined;
             return Router.OK;
-        };
-        Router.prototype.send = function (evid, data) {
+        }
+        send(evid, data) {
             if (this.mCurEvent != undefined) {
                 this.mCurEvent.id = evid;
                 this.mCurEvent.data = data;
-                var event_2 = this.mCurEvent;
+                let event = this.mCurEvent;
                 this.mCurEvent = undefined;
-                return this.sendInternal(event_2);
+                return this.sendInternal(event);
             }
             return Router.FAILED;
-        };
-        Router.prototype.redirect = function (to, event) {
+        }
+        redirect(to, event) {
             if (to != undefined) {
                 if (event.road == undefined) {
                     event.road = [];
@@ -77,14 +77,13 @@ var route;
                 return this.sendInternal(event);
             }
             return Router.FAILED;
-        };
-        Router.prototype.getEndpoint = function (addr) {
+        }
+        getEndpoint(addr) {
             return this.mEndpoints[addr];
-        };
-        Router.OK = "Route.OK";
-        Router.FAILED = "Route.FAILED";
-        return Router;
-    })();
+        }
+    }
+    Router.OK = "Route.OK";
+    Router.FAILED = "Route.FAILED";
     route.Router = Router;
     route.router = new route.Router();
 })(route || (route = {}));

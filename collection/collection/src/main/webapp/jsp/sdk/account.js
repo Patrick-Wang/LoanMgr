@@ -2,26 +2,23 @@
 ///<reference path="net.ts"/>
 var collection;
 (function (collection) {
-    var Account = (function () {
-        function Account() {
-        }
-        Account.getOrgs = function () {
+    class Account {
+        static getOrgs() {
             return collection.Net.post(collection.Net.BASE_URL + "/account/org/search.do");
-        };
-        Account.getUsers = function () {
+        }
+        static getUsers() {
             return collection.Net.post(collection.Net.BASE_URL + "/account/search.do");
-        };
-        Account.updateUsers = function (users) {
+        }
+        static updateUsers(users) {
             return collection.Net.post(collection.Net.BASE_URL + "/account/update.do", {
                 users: JSON.stringify(users)
             });
-        };
-        Account.createUser = function (createUser) {
+        }
+        static createUser(createUser) {
             return collection.Net.post(collection.Net.BASE_URL + "/account/create.do", {
                 user: JSON.stringify(createUser)
             });
-        };
-        return Account;
-    })();
+        }
+    }
     collection.Account = Account;
 })(collection || (collection = {}));

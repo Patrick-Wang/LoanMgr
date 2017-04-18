@@ -6,44 +6,41 @@ var sidebar;
         SiderBar.registerPage(type, page);
     }
     sidebar.registerPage = registerPage;
-    var SiderBar = (function () {
-        function SiderBar() {
+    class SiderBar {
+        constructor() {
             this.pages = [];
             this.items = [];
-            for (var i = 0; i < PageType.end; ++i) {
+            for (let i = 0; i < PageType.end; ++i) {
                 this.pages.push(null);
                 this.items.push(null);
             }
         }
-        SiderBar.registerPage = function (type, page) {
+        static registerPage(type, page) {
             SiderBar.ins.pages[type] = page;
             SiderBar.ins.items[type] = new SiderItemEvent(type);
-        };
-        SiderBar.showPage = function (type) {
+        }
+        static showPage(type) {
             if (SiderBar.ins.pages[type] != null) {
                 SiderBar.ins.pages[type].show();
             }
-        };
-        SiderBar.hideAllBut = function (but) {
-            for (var i = 0; i < SiderBar.ins.pages.length; ++i) {
+        }
+        static hideAllBut(but) {
+            for (let i = 0; i < SiderBar.ins.pages.length; ++i) {
                 if (i != but && SiderBar.ins.pages[i] != null) {
                     SiderBar.ins.pages[i].hide();
                 }
             }
-        };
-        SiderBar.ins = new SiderBar();
-        return SiderBar;
-    })();
-    var SiderItemEvent = (function () {
-        function SiderItemEvent(page) {
-            var _this = this;
+        }
+    }
+    SiderBar.ins = new SiderBar();
+    class SiderItemEvent {
+        constructor(page) {
             this.page = page;
-            $("#" + PageType[page]).click(function () {
-                SiderBar.hideAllBut(_this.page);
-                SiderBar.showPage(_this.page);
+            $("#" + PageType[page]).click(() => {
+                SiderBar.hideAllBut(this.page);
+                SiderBar.showPage(this.page);
                 return false;
             });
         }
-        return SiderItemEvent;
-    })();
+    }
 })(sidebar || (sidebar = {}));

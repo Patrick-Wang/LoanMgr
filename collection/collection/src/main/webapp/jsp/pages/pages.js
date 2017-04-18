@@ -18,51 +18,46 @@ var pages;
         PageType[PageType["end"] = 13] = "end";
     })(pages.PageType || (pages.PageType = {}));
     var PageType = pages.PageType;
-    var PageUtil = (function () {
-        function PageUtil() {
-        }
-        PageUtil.getPageId = function (type) {
+    class PageUtil {
+        static getPageId(type) {
             return PageType[type] + "Page";
-        };
-        PageUtil.jqPage = function (type) {
+        }
+        static jqPage(type) {
             return $("#" + PageUtil.getPageId(type));
-        };
-        return PageUtil;
-    })();
+        }
+    }
     pages.PageUtil = PageUtil;
-    var PageImpl = (function () {
-        function PageImpl(page) {
-            var _this = this;
+    class PageImpl {
+        constructor(page) {
             this.page = page;
             sidebar.registerPage(page, this);
             //PageUtil.jqPage(this.page).css("display", "none");
             //$("script").remove();
             //this.html = PageUtil.jqPage(this.page).html();
             //PageUtil.jqPage(this.page).empty();
-            $("#" + PageUtil.getPageId(this.page) + " #refresh-toggler").click(function () {
-                _this.refresh();
+            $("#" + PageUtil.getPageId(this.page) + " #refresh-toggler").click(() => {
+                this.refresh();
                 return false;
             });
         }
-        PageImpl.prototype.refresh = function () {
+        refresh() {
             this.onRefresh();
-        };
-        PageImpl.prototype.show = function () {
+        }
+        show() {
             if (!this.isShown()) {
                 //PageUtil.jqPage(this.page).append(this.html);
                 //init();
                 PageUtil.jqPage(this.page).css("display", "");
             }
-        };
-        PageImpl.prototype.hide = function () {
+        }
+        hide() {
             if (this.isShown()) {
                 PageUtil.jqPage(this.page).css("display", "none");
             }
-        };
-        PageImpl.prototype.isShown = function () {
+        }
+        isShown() {
             return "none" != PageUtil.jqPage(this.page).css("display");
-        };
-        return PageImpl;
-    })();
+        }
+    }
     pages.PageImpl = PageImpl;
 })(pages || (pages = {}));

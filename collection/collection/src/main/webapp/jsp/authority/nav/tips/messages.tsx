@@ -23,7 +23,7 @@ module navbar{
         );
 
         let msgTip:MsgTip = new MsgTip();
-        route.router.register(new MessageReceiver(ADDR, (e:Event)=>{
+        route.router.register(new MessageReceiver(ADDR, (e:route.Event)=>{
             switch (e.id){
                 case navbar.ON_REFRESH:
                     if (html != null){

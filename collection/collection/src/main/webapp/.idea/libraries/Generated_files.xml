@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Generated files" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/jsp/authority/nav/tips/messages.js" />
+        <item url="file://$PROJECT_DIR$/jsp/authority/nav/tips/missed_call.js" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/jsp/authority/nav/tips/messages.js" />
+      <root url="file://$PROJECT_DIR$/jsp/authority/nav/tips/missed_call.js" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

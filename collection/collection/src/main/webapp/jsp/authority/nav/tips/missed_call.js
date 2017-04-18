@@ -2,11 +2,11 @@
 var navbar;
 (function (navbar) {
     var MessageReceiver = authority.MessageReceiver;
-    var ADDR = "/nav/tips/missed_call";
+    let ADDR = "/nav/tips/missed_call";
     authority.register(ADDR, function () {
-        var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", null, React.createElement("a", {"className": " dropdown-toggle", "data-toggle": "dropdown", "title": "Notifications", "href": "#"}, React.createElement("i", {"className": "icon fa fa-warning red"}), React.createElement("span", {"id": "navCallCount", "className": "badge"}, "0")), React.createElement("ul", {"id": "navCallDetail", "className": "pull-right dropdown-menu dropdown-arrow dropdown-notifications"}, React.createElement("li", {"className": "dropdown-footer "}, React.createElement("div", {"id": "navCallCenter"}, "前往呼叫中心")))));
-        var missedCall = new MissedCall();
-        route.router.register(new MessageReceiver(ADDR, function (e) {
+        let html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", null, React.createElement("a", {"className": " dropdown-toggle", "data-toggle": "dropdown", "title": "Notifications", "href": "#"}, React.createElement("i", {"className": "icon fa fa-warning red"}), React.createElement("span", {"id": "navCallCount", "className": "badge"}, "0")), React.createElement("ul", {"id": "navCallDetail", "className": "pull-right dropdown-menu dropdown-arrow dropdown-notifications"}, React.createElement("li", {"className": "dropdown-footer "}, React.createElement("div", {"id": "navCallCenter"}, "前往呼叫中心")))));
+        let missedCall = new MissedCall();
+        route.router.register(new MessageReceiver(ADDR, (e) => {
             switch (e.id) {
                 case navbar.ON_REFRESH:
                     if (html != null) {
@@ -19,39 +19,36 @@ var navbar;
         }));
         MissedCall.createInstance();
     });
-    var MissedCall = (function () {
-        function MissedCall() {
-            var _this = this;
-            $("#navCallCenter").click(function () {
-                _this.onClickCallCenter();
+    class MissedCall {
+        constructor() {
+            $("#navCallCenter").click(() => {
+                this.onClickCallCenter();
                 return false;
             });
         }
-        MissedCall.createInstance = function () {
+        static createInstance() {
             MissedCall.ins = new MissedCall();
-        };
-        MissedCall.prototype.updateTips = function () {
-            var _this = this;
-            collection.Phone.getRecords().done(function (prs) {
-                _this.onLoadCallInfos(prs);
+        }
+        updateTips() {
+            collection.Phone.getRecords().done((prs) => {
+                this.onLoadCallInfos(prs);
             });
-        };
-        MissedCall.prototype.onClickCallCenter = function () {
+        }
+        onClickCallCenter() {
             alert("onClickCallCenter");
-        };
-        MissedCall.prototype.buildCallCenter = function (detailli, pr) {
+        }
+        buildCallCenter(detailli, pr) {
             detailli.before(ReactDOMServer.renderToStaticMarkup(React.createElement("li", null, React.createElement("a", {"href": "#"}, React.createElement("div", {"className": "clearfix"}, React.createElement("div", {"className": "notification-icon"}, React.createElement("i", {"className": "fa fa-phone bg-themeprimary white"})), React.createElement("div", {"className": "notification-body"}, React.createElement("span", {"className": "title red"}, "未接来电 ", pr.phoneNum), React.createElement("span", {"className": "description"}, " ", pr.time)))))));
-        };
-        MissedCall.prototype.onLoadCallInfos = function (prs) {
-            var count = 5;
-            for (var i = 0; i < prs.length && count > 0; ++i) {
+        }
+        onLoadCallInfos(prs) {
+            let count = 5;
+            for (let i = 0; i < prs.length && count > 0; ++i) {
                 if (prs[i].status == collection.protocol.CallStatus.missed) {
                     this.buildCallCenter($("#navCallCenter").parent(), prs[i]);
                     --count;
                 }
             }
             $("#navCallCount").text(5 - count);
-        };
-        return MissedCall;
-    })();
+        }
+    }
 })(navbar || (navbar = {}));
