@@ -4,7 +4,7 @@ public class PhoneRecord  extends ProtocolEntityImpl{
 	Integer status;
 	String phoneNum;
 	String time;
-	String record;
+	Integer ecid;
 	public Integer getStatus() {
 		return status;
 	}
@@ -23,10 +23,11 @@ public class PhoneRecord  extends ProtocolEntityImpl{
 	public void setTime(String time) {
 		this.time = time;
 	}
-	public String getRecord() {
-		return record;
+	public Integer getEcid() {
+		return ecid;
 	}
-	public void setRecord(String record) {
-		this.record = record;
+	public void setEcid(Integer ecid) {
+		this.ecid = ecid;
 	}
+	
 }

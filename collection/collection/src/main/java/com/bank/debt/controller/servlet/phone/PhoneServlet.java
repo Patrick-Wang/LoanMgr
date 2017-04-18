@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bank.debt.protocol.entity.PhoneRecord;
+import com.bank.debt.protocol.entity.PhoneRecordName;
 import com.bank.debt.protocol.tools.JsonUtil;
-import com.bank.debt.protocol.tools.PathUtil;
 import com.bank.debt.service.phone.PhoneService;
 import com.bank.debt.service.phone.PhoneServiceImpl;
 
@@ -37,7 +37,7 @@ public class PhoneServlet {
 	public @ResponseBody byte[] upload(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam("name") String name) throws IOException {
-		return phoneService.uploadRecord(PathUtil.getUploadName(name), request.getInputStream()).toUtf8Json();
+		return phoneService.uploadRecord(PhoneRecordName.parse(name), request.getInputStream()).toUtf8Json();
 	}
 	
 	@RequestMapping(value = "missed_call.do")

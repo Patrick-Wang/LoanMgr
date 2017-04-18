@@ -57,6 +57,7 @@ public class PhoneServiceImpl implements PhoneService {
 			public PhoneRecord onMap(PhoneRecordEntity from) throws MappingSkipException, MappingFailedException {
 				PhoneRecord pr = new PhoneRecord();
 				pr.setPhoneNum(from.getNumber());
+				pr.setEcid(from.getEntrustedCase());
 				pr.setStatus(from.getStatus());
 				if (from.getStartTime() != null){
 					pr.setTime(formatter.format(from.getStartTime()));

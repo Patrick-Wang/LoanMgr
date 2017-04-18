@@ -153,6 +153,6 @@ module collection.protocol{
         status : CallStatus;
         phoneNum:string;
         time:string;
-        record:string;
+        ecId:string;
     }
 }

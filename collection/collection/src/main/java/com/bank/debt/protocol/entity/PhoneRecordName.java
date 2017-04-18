@@ -32,4 +32,16 @@ public class PhoneRecordName{
 	public static boolean isPhoneAttach(String attachName){
 		return attachName.startsWith("phone:");
 	} 
+	
+	public static PhoneRecordName parse(String attachName){
+		String name = attachName.replace("phone:", "");
+		PhoneRecordName un = new PhoneRecordName();
+		int index = name.indexOf("_");
+		un.setEcId(Integer.valueOf(name.substring(0, index)));
+		name = name.substring(index + 1);
+		index = name.indexOf("_");
+		un.setNumber(name.substring(0, index));
+		un.setName(name.substring(index + 1));
+		return un;
+	} 
 }

@@ -20,11 +20,13 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.bank.debt.protocol.entity.ECQueryInfo;
 import com.bank.debt.protocol.entity.EntrustedCaseManageInfo;
 import com.bank.debt.protocol.entity.EntrustedCaseReport;
+import com.bank.debt.protocol.entity.PhoneRecordName;
 import com.bank.debt.protocol.entity.QueryOption;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
+import com.bank.debt.protocol.tools.PathUtil;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
 import com.bank.debt.protocol.type.EntrustedCaseType;
 import com.bank.debt.service.ecmanager.ECManagerService;
@@ -213,12 +215,17 @@ public class EntrustedCaseServlet {
 	}
 	
 	@RequestMapping(value = "report/download.do")
-	public void reportDownload(HttpServletRequest request,
-			HttpServletResponse response,
-			@RequestParam("report") Integer report, 
-			@RequestParam("attachement") String attachement) throws IOException {
+	public void reportDownload(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("report") Integer report, @RequestParam("attachement") String attachement)
+			throws IOException {
 		response.setContentType("application/octet-stream");
-		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(attachement, "UTF-8")  +"\"");
+		if (PhoneRecordName.isPhoneAttach(attachement)) {
+			response.setHeader("Content-disposition", "attachment;filename=\""
+					+ java.net.URLEncoder.encode(PhoneRecordName.parse(attachement).getName(), "UTF-8") + "\"");
+		} else {
+			response.setHeader("Content-disposition",
+					"attachment;filename=\"" + java.net.URLEncoder.encode(attachement, "UTF-8") + "\"");
+		}
 		eCReportService.downloadAttachement(report, attachement, response.getOutputStream());
 	}
 }

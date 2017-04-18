@@ -21,18 +21,7 @@ public class PathUtil {
 				date + "/" + 
 				reportId + (title == null ? "" : "_" + title) + "/" + attchName;
 	}
-	
-	public static PhoneRecordName getUploadName(String name){
-		PhoneRecordName un = new PhoneRecordName();
-		int index = name.indexOf("_");
-		un.setEcId(Integer.valueOf(name.substring(0, index)));
-		name = name.substring(index + 1);
-		index = name.indexOf("_");
-		un.setNumber(name.substring(0, index));
-		un.setName(name.substring(index + 1));
-		return un;
-	}
-	
+		
 	public static String phoneRecordPath(String number){
 		return "/PHONE_RECORDS/" + number + "/";
 	}
