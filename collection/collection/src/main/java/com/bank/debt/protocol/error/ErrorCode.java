@@ -17,4 +17,6 @@ public class ErrorCode {
 	public final static Result ECM_UPDATE_FAILED = new Result(baseCode++, "委案管理信息修改失败");
 	public final static Result ECR_NOT_EXIST = new Result(baseCode++, "报告不存在");
 	public final static Result ECR_SUBMIT_FAILED = new Result(baseCode++, "报告提交失败");
+	public final static Result PHONE_UPLOAD_FAILED = new Result(baseCode++, "電話記錄上傳失敗");
+	public final static Result PHONE_DOWNLOAD_FAILED = new Result(baseCode++, "電話記錄上傳失敗");
 }

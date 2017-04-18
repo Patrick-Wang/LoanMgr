@@ -181,6 +181,7 @@ public class EntrustedCaseServlet {
 			HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam("report") String report,
+			@RequestParam("phones") String phones,
 			@RequestParam("attachements") CommonsMultipartFile[] attachements) throws IOException {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
@@ -188,10 +189,11 @@ public class EntrustedCaseServlet {
 		String userName = userDetails.getUsername();
 		Result r = ErrorCode.ECR_SUBMIT_FAILED;
 		EntrustedCaseReport ecr = (EntrustedCaseReport) JsonUtil.toObject(JSONObject.fromObject(report), EntrustedCaseReport.class);
+		List<String> phoneNames = JsonUtil.toObjects(JSONArray.fromObject(phones), String.class);
 		if (Checking.isExist(ecr.getId())){
-			r = eCReportService.updateReport(userName, ecr, attachements);
+			r = eCReportService.updateReport(userName, ecr, phoneNames, attachements);
 		}else if (Checking.isExist(ecr.getEntrustedCaseId())){
-			r = eCReportService.createReport(userName, ecr, attachements);
+			r = eCReportService.createReport(userName, ecr, phoneNames, attachements);
 		}
 		return r.toUtf8Json();
 	}

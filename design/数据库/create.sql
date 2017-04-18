@@ -88,6 +88,19 @@ create table `authority`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+create table `phone_records`(
+	`id` int NOT NULL AUTO_INCREMENT,
+	`number` varchar(30) NOT NULL,
+	`entrustedCase` int,
+	`startTime` datetime,
+	`elapse` int,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+
+
+
+
 create table `entrusted_case_car_loan`(				
 	`id`	int NOT NULL AUTO_INCREMENT	,--	×ÔÔöÖ÷¼ü
 	`xh`	int	,--	ÐòºÅ
