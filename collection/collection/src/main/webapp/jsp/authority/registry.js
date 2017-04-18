@@ -1,6 +1,20 @@
 ///<reference path="../sdk/route/route.ts"/>
 var authority;
 (function (authority) {
+    var MessageReceiver = (function () {
+        function MessageReceiver(addr, fn) {
+            this.address = addr;
+            this.FN = fn;
+        }
+        MessageReceiver.prototype.getAddr = function () {
+            return this.address;
+        };
+        MessageReceiver.prototype.onEvent = function (e) {
+            return this.FN(e);
+        };
+        return MessageReceiver;
+    })();
+    authority.MessageReceiver = MessageReceiver;
     function register(address, fn) {
         route.router.to(REG_ADDR).send(EvId.REGISTER, { addr: address, fn: fn });
     }

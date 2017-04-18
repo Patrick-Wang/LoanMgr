@@ -20,8 +20,6 @@
 
 	<script
 		src="${pageContext.request.contextPath}/jsp/authority/nav/tips/messages.js"></script>
-<script
-		src="${pageContext.request.contextPath}/jsp/authority/nav/tips/messageTip.js"></script>
 </c:if>
 
 <c:if test='${address.contains("/console/summary/owner")}'>
