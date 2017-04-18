@@ -17,7 +17,7 @@ authority.register("/console/summary/assigner", function() {
         },
         onEvent: function(e){
             switch (e.id){
-                case pages.Console.ON_PANEL_REFRESH:
+                case pages.Console.ON_REFRESH:
                     update();
                     break;
             }

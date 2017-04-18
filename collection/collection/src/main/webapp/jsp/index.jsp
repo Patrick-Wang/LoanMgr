@@ -71,17 +71,17 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	src="${pageContext.request.contextPath}/jsp/assets/js/jquery.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/assets/js/skins.min.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/sdk/authority.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/pages/pages.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/protocol.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/net.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/account.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/sdk/authority.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/entrustedCase.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/entrustedCaseManager.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/entrustedCaseReport.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/message.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/phone.js"></script>
-
+<%@include file="authority/authFns.jsp" %>
 </head>
 <body>
 	<!-- Loading Container -->
@@ -151,7 +151,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 </body>
 
 <!--Basic Scripts-->
-	<%@include file="authority/authFns.jsp" %>
+	
 	
 	 <%@include file="basicScript.jsp"%> 
 </html>

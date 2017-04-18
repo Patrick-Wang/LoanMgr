@@ -1,5 +1,6 @@
 authority.register("/nav/tips/messages", function() {
-    $("#accountarea").children(":last").before(ReactDOMServer.renderToStaticMarkup(
+
+    var html = ReactDOMServer.renderToStaticMarkup(
         <li>
             <a className="dropdown-toggle" data-toggle="dropdown" title="Tasks" href="#">
                 <i className="icon fa fa-tasks"></i>
@@ -17,6 +18,70 @@ authority.register("/nav/tips/messages", function() {
                 </li>
             </ul>
         </li>
-    ));
-    navbar.NavBar.openMessageTips();
+    );
+
+    route.router.register({
+        getAddr : function(){
+            return "/nav/tips/messages"
+        },
+        onEvent: function(e){
+            switch (e.id){
+                case navbar.ON_REFRESH:
+                    if (html != null){
+                        $("#accountarea").children(":last").before(html);
+                        html = null;
+                    }
+                    navbar.MsgTip.updateTips();
+                    break;
+            }
+        }
+    });
+
+
 });
+function getDateFromTime(time){
+    let dt = new Date(Date.parse(time));
+    let now = new Date(Date.now());
+    if (dt.getFullYear() == now.getFullYear() &&
+        dt.getMonth() == now.getMonth()){
+        if (dt.getDate() == now.getDate()){
+            return "今天";
+        }
+        now = new Date(now.getTime() - 24 * 60 * 3600);
+        if (dt.getDate() == now.getDate()){
+            return "昨天";
+        }
+
+        now = new Date(now.getTime() - 24 * 60 * 3600);
+        if (dt.getDate() == now.getDate()){
+            return "前天天";
+        }
+    }
+    return time;
+}
+
+function buildMessageDetail(um) {
+    var html = ReactDOMServer.renderToStaticMarkup(
+        <li id="navMsgTmp">
+            <a onclick={"navbar.MsgTip.ins.clickMessage('"+ um.msgId + "')"} href='#'>
+                <img src={collection.Net.BASE_URL + "/jsp/assets/img/avatars/bing.png"} className="message-avatar"
+                     alt="Microsoft Bing"/>
+                <div className="message">
+                        <span className="message-sender">
+                            {um.fromName}
+                        </span>
+                        <span className="message-time">
+                            {getDateFromTime(um.sendTime)}
+                        </span>
+                        <span className="message-subject">
+                            {um.title}
+                        </span>
+                        <span className="message-body">
+                            {um.content}
+                        </span>
+                </div>
+            </a>
+        </li>
+    );
+    return html;
+}

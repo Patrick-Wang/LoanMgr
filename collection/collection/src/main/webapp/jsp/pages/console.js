@@ -14,9 +14,9 @@ var pages;
             _super.call(this, page);
         }
         Console.prototype.onRefresh = function () {
-            route.router.broadcast(Console.ON_PANEL_REFRESH);
+            route.router.broadcast(Console.ON_REFRESH);
         };
-        Console.ON_PANEL_REFRESH = route.nextId();
+        Console.ON_REFRESH = route.nextId();
         Console.ins = new Console(pages.PageType.console);
         return Console;
     })(pages.PageImpl);

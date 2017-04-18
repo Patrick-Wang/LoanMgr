@@ -1,13 +1,16 @@
 ///<reference path="sdk/message.ts"/>
 ///<reference path="sdk/phone.ts"/>
+///<reference path="sdk/route/route.ts"/>
 var navbar;
 (function (navbar) {
     var Message = collection.Message;
     var Net = collection.Net;
     var Phone = collection.Phone;
     var CallStatus = collection.protocol.CallStatus;
+    navbar.ON_REFRESH = route.nextId();
     var NavBar = (function () {
         function NavBar() {
+            route.router.broadcast(navbar.ON_REFRESH);
         }
         NavBar.openMessageTips = function () {
             NavBar.ins.triggerRefreshMessageTips();
@@ -24,7 +27,7 @@ var navbar;
             });
         };
         NavBar.prototype.triggerRefreshMessageTips = function () {
-            Message.getEntrustedCases()
+            Message.getUnreadMessages()
                 .done(function (mecs) {
                 NavBar.ins.onLoadMEC(mecs);
             });

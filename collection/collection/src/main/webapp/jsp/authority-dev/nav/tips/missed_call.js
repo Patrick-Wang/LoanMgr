@@ -14,5 +14,5 @@ authority.register("/nav/tips/missed_call", function() {
             </ul>
         </li>
     ));
-    navbar.NavBar.openCallTips();
+    //navbar.NavBar.openCallTips();
 });

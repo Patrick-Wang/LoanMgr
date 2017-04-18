@@ -1,5 +1,6 @@
 ///<reference path="sdk/message.ts"/>
 ///<reference path="sdk/phone.ts"/>
+///<reference path="sdk/route/route.ts"/>
 module navbar{
     import Message = collection.Message;
     import Net = collection.Net;
@@ -7,11 +8,12 @@ module navbar{
     import Phone = collection.Phone;
     import PhoneRecord = collection.protocol.PhoneRecord;
     import CallStatus = collection.protocol.CallStatus;
+    export var ON_REFRESH:number = route.nextId();
     export class NavBar{
+
         static ins = new NavBar();
-
         constructor(){
-
+            route.router.broadcast(navbar.ON_REFRESH);
         }
 
         static openMessageTips(){
@@ -32,7 +34,7 @@ module navbar{
         }
 
         triggerRefreshMessageTips():void{
-            Message.getEntrustedCases()
+            Message.getUnreadMessages()
                 .done((mecs : UnreadMessage[])=>{
                     NavBar.ins.onLoadMEC(mecs);
                 });

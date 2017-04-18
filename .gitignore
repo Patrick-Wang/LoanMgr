@@ -1,2 +1,4 @@
 demo/LoanMgr/.idea/
 collection/collection/.idea/
+.module-cache/
+*.class
