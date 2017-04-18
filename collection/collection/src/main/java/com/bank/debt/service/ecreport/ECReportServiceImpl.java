@@ -97,7 +97,7 @@ public class ECReportServiceImpl implements ECReportService {
 	public boolean downloadAttachement(Integer report, String attachement, OutputStream outputStream) throws IOException {
 		
 		if (PhoneRecordName.isPhoneAttach(attachement)){
-			return ErrorCode.OK == phoneService.donwloandRecord(PathUtil.getUploadName(attachement), outputStream);
+			return ErrorCode.OK == phoneService.donwloandRecord(PhoneRecordName.parse(attachement), outputStream);
 		}else{
 			EntrustedCaseReportEntity ecre = entrustedCaseReportDao.getById(report);
 			if (ecre != null){

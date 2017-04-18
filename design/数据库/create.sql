@@ -90,6 +90,7 @@ create table `authority`(
 
 create table `phone_records`(
 	`id` int NOT NULL AUTO_INCREMENT,
+	`status` int,
 	`number` varchar(30) NOT NULL,
 	`entrustedCase` int,
 	`startTime` datetime,
@@ -659,6 +660,12 @@ values
 insert into `entrusted_case_car_loan` (khxm)
 values
 ('test');
+
+insert into `phone_records` (`number`, `status`, `startTime`)
+values
+('15968542364', 2, '2010-11-12 18:58:25'),
+('15968542364', 2, '2010-10-12 18:44:25'),
+('15968542364', 2, '2010-12-12 18:36:25');
 
 insert into user_role (user, role) values
 (1, 1),

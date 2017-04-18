@@ -76,11 +76,13 @@ public class PhoneServiceImpl implements PhoneService {
 			PhoneRecordEntity pre = new PhoneRecordEntity();
 			if (null != ecm){
 				pre.setEntrustedCase(ecm.getId());
-				pre.setNumber(un.getNumber());
-				pre.setStatus(0);				
-				pre.setStartTime(un.getTime());
-				phoneRecordDao.merge(pre);
+				pre.setStatus(1);	
+			}else{
+				pre.setStatus(0);		
 			}
+			pre.setNumber(un.getNumber());
+			pre.setStartTime(un.getTime());
+			phoneRecordDao.merge(pre);
 			return ErrorCode.OK;
 		}
 		return ErrorCode.PHONE_UPLOAD_FAILED;

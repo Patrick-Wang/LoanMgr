@@ -34,14 +34,16 @@ public class PhoneRecordName{
 	} 
 	
 	public static PhoneRecordName parse(String attachName){
-		String name = attachName.replace("phone:", "");
+		String[] items = attachName.replace("phone:", "").split("_");
 		PhoneRecordName un = new PhoneRecordName();
-		int index = name.indexOf("_");
-		un.setEcId(Integer.valueOf(name.substring(0, index)));
-		name = name.substring(index + 1);
-		index = name.indexOf("_");
-		un.setNumber(name.substring(0, index));
-		un.setName(name.substring(index + 1));
+		if (items.length == 2){
+			un.setNumber(items[0]);
+			un.setName(items[1]);
+		}else if (items.length == 3){
+			un.setEcId(Integer.valueOf(items[0]));
+			un.setNumber(items[1]);
+			un.setName(items[2]);
+		}
 		return un;
 	} 
 }

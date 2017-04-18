@@ -80,6 +80,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <script src="${pageContext.request.contextPath}/jsp/sdk/entrustedCaseManager.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/entrustedCaseReport.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/message.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/sdk/phone.js"></script>
 
 </head>
 <body>

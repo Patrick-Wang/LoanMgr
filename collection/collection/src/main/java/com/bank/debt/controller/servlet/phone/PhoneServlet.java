@@ -32,7 +32,10 @@ public class PhoneServlet {
 		return JsonUtil.toUtf8Json(recrods);
 	}
 	
+	//Call out
 	//name : ecid_phonenumber_time   eg.   2_15966832154_895421214
+	//Call in
+	//name : phonenumber_time   eg.   15966832154_895421214
 	@RequestMapping(value = "upload.do")
 	public @ResponseBody byte[] upload(HttpServletRequest request,
 			HttpServletResponse response,

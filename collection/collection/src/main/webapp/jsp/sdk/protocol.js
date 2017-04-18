@@ -33,6 +33,7 @@ var collection;
         (function (CallStatus) {
             CallStatus[CallStatus["callin"] = 0] = "callin";
             CallStatus[CallStatus["callout"] = 1] = "callout";
+            CallStatus[CallStatus["missed"] = 2] = "missed";
         })(protocol.CallStatus || (protocol.CallStatus = {}));
         var CallStatus = protocol.CallStatus;
     })(protocol = collection.protocol || (collection.protocol = {}));

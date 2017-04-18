@@ -146,7 +146,8 @@ module collection.protocol{
 
     export enum CallStatus{
         callin,
-        callout
+        callout,
+        missed
     }
 
     export interface PhoneRecord{
