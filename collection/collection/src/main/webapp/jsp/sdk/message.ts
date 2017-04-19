@@ -8,11 +8,11 @@ module collection{
     import UnreadMessage = collection.protocol.UnreadMessage;
 
     export class Message{
-        //unread(entrusted_case:number):Promise<number>{
-        //    return Net.post("message/unread.do",{
-        //        entrusted_case:entrusted_case
-        //    });
-        //}
+        static getUnreadCount(entrusted_case?:number):Promise<number>{
+            return Net.post("message/unread.do",{
+                entrusted_case:entrusted_case
+            });
+        }
 
         static setMessageRead(mids:number[]):Promise<Result>{
             return Net.post(Net.BASE_URL + "/message/read_message.do",{

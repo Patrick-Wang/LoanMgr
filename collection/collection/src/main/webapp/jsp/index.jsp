@@ -66,6 +66,15 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	href="${pageContext.request.contextPath}/jsp/assets/css/datatables.bootstrap.css"
 	rel="stylesheet" />
 
+	<script>
+		var context  = {
+			position : '${position}',
+			userName : '${userName}',
+			org : '${org}',
+			pOrg : '${pOrg}',
+		}
+	</script>
+
 <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
 <script
 	src="${pageContext.request.contextPath}/jsp/assets/js/jquery.min.js"></script>

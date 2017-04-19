@@ -3,11 +3,11 @@
 var collection;
 (function (collection) {
     class Message {
-        //unread(entrusted_case:number):Promise<number>{
-        //    return Net.post("message/unread.do",{
-        //        entrusted_case:entrusted_case
-        //    });
-        //}
+        static getUnreadCount(entrusted_case) {
+            return collection.Net.post("message/unread.do", {
+                entrusted_case: entrusted_case
+            });
+        }
         static setMessageRead(mids) {
             return collection.Net.post(collection.Net.BASE_URL + "/message/read_message.do", {
                 mids: JSON.stringify(mids)

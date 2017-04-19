@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.bank.debt.protocol.entity.AcceptSummary;
+import com.bank.debt.protocol.entity.AssignSummary;
 import com.bank.debt.protocol.entity.ECQueryInfo;
 import com.bank.debt.protocol.entity.EntrustedCaseManageInfo;
 import com.bank.debt.protocol.entity.EntrustedCaseReport;
@@ -26,7 +28,6 @@ import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
-import com.bank.debt.protocol.tools.PathUtil;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
 import com.bank.debt.protocol.type.EntrustedCaseType;
 import com.bank.debt.service.ecmanager.ECManagerService;
@@ -153,6 +154,30 @@ public class EntrustedCaseServlet {
 
 		return r.toUtf8Json();
 	}
+	
+	
+	@RequestMapping(value = "assign/summary.do")
+	public @ResponseBody byte[] assignSummary(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
+		AssignSummary as = entrustedCaseService.getAssignSummary(userName);
+		return as.toUtf8Json();
+	}
+	
+	@RequestMapping(value = "accept/summary.do")
+	public @ResponseBody byte[] acceptSummary(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
+		AcceptSummary as = entrustedCaseService.getAcceptSummary(userName);
+		return as.toUtf8Json();
+	}
+	
 	
 	@RequestMapping(value = "manager/search.do")
 	public @ResponseBody byte[] managerSearch(HttpServletRequest request,

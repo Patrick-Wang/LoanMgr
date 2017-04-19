@@ -25,21 +25,21 @@
 <c:if test='${address.contains("/console/summary/owner")}'>
 
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/console/summary/owner.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/console/summary/owner.ts"></script>
 
 </c:if>
 
 <c:if test='${address.contains("/console/summary/assigner")}'>
 
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/console/summary/assigner.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/console/summary/assigner.ts"></script>
 
 </c:if>
 
 <c:if test='${address.contains("/console/summary/manager")}'>
 
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/console/summary/manager.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/console/summary/manager.ts"></script>
 
 </c:if>
 
@@ -53,57 +53,57 @@
 <c:if test='${address.contains("/ec/edit/owner")}'>
 
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/ec/edit/owner.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/ec/edit/owner.ts"></script>
 
 </c:if>
 
 <c:if test='${address.contains("/ec/import")}'>
 
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/ec/import.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/ec/import.ts"></script>
 
 </c:if>
 
 <c:if test='${address.contains("/ec/ask")}'>
 
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/ec/ask.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/ec/ask.ts"></script>
 
 </c:if>
 
 <c:if test='${address.contains("/ec/answer")}'>
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/ec/answer.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/ec/answer.ts"></script>
 </c:if>
 <c:if test='${address.contains("/ec/assign")}'>
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/ec/assign.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/ec/assign.ts"></script>
 </c:if>
 <c:if test='${address.contains("/ec/backup")}'>
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/ec/backup.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/ec/backup.ts"></script>
 </c:if>
 <c:if test='${address.contains("/ec/export")}'>
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/ec/export.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/ec/export.ts"></script>
 </c:if>
 <c:if test='${address.contains("/ec/report")}'>
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/ec/report.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/ec/report.ts"></script>
 </c:if>
 <c:if test='${address.contains("/user/manager")}'>
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/user/manager.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/user/manager.ts"></script>
 </c:if>
 
 <c:if test='${address.contains("/user/ec/assign")}'>
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/user/ec/assign.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/user/ec/assign.ts"></script>
 </c:if>
 
 <c:if test='${address.contains("/phone/call")}'>
 	<script
-		src="${pageContext.request.contextPath}/jsp/authority/phone/call.js"></script>
+		src="${pageContext.request.contextPath}/jsp/authority/phone/call.ts"></script>
 </c:if>
 <script>
 	<c:forEach items="${address}" var="item">

@@ -1,4 +1,5 @@
 
+import ServerContext = collection.protocol.ServerContext;
 module collection.protocol{
 
     export class PhoneRecordName{
@@ -65,6 +66,12 @@ module collection.protocol{
         carLoan,
         creditLoan,
         creditCard
+    }
+
+    export enum ECStatus{
+        unassign,
+        assign,
+        complete
     }
 
     export interface EntrustedCaseManageInfo{
@@ -161,4 +168,24 @@ module collection.protocol{
         time:string;
         ecId:string;
     }
+
+    export interface ServerContext{
+        userName:string;
+        position:string;
+        org:string;
+        pOrg:string;
+    }
+
+    export interface AssignSummary{
+        totoal:number;
+        unassign:number;
+        assign:number;
+        complete:number;
+    }
+    export interface AcceptSummary{
+        totoal:number;
+        complete:number;
+    }
 }
+
+declare var context : ServerContext;

@@ -5,6 +5,8 @@ import java.io.OutputStream;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.bank.debt.protocol.entity.AcceptSummary;
+import com.bank.debt.protocol.entity.AssignSummary;
 import com.bank.debt.protocol.entity.ECQueryInfo;
 import com.bank.debt.protocol.entity.QueryOption;
 import com.bank.debt.protocol.entity.Result;
@@ -37,6 +39,10 @@ public interface EntrustedCaseService {
 	Result updateCreditCard(String userName, JSONArray jdata) throws IOException;
 
 	Result updateCarLoan(String userName, JSONArray jdata) throws IOException;
+
+	AssignSummary getAssignSummary(String userName);
+
+	AcceptSummary getAcceptSummary(String userName);
 
 
 }

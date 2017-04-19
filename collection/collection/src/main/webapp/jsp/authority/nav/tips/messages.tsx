@@ -1,8 +1,9 @@
+///<reference path="../../registry.ts"/>
 module navbar{
     import MessageReceiver = authority.MessageReceiver;
     let ADDR:string = "/nav/tips/messages";
     authority.register(ADDR, () => {
-        var html = ReactDOMServer.renderToStaticMarkup(
+        let html = ReactDOMServer.renderToStaticMarkup(
             <li>
                 <a className="dropdown-toggle" data-toggle="dropdown" title="Tasks" href="#">
                     <i className="icon fa fa-tasks"></i>

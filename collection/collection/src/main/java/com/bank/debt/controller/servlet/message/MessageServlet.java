@@ -55,16 +55,16 @@ public class MessageServlet {
 		return r.toUtf8Json();
 	}
 	
-//	@RequestMapping(value = "unread.do")
-//	public @ResponseBody Integer unread(HttpServletRequest request,
-//			HttpServletResponse response,
-//			@RequestParam("entrusted_case") Integer entrustedCase) throws UnsupportedEncodingException {
-//		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
-//			    .getAuthentication()
-//			    .getPrincipal();
-//		String userName = userDetails.getUsername();
-//		return messageService.getUnreadCount(entrustedCase, userName);
-//	}
+	@RequestMapping(value = "unread.do")
+	public @ResponseBody Integer unread(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam("entrusted_case") Integer entrustedCase) throws UnsupportedEncodingException {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
+		return messageService.getUnreadCount(entrustedCase, userName);
+	}
 	
 	@RequestMapping(value = "read_message.do")
 	public @ResponseBody byte[] readMessage(HttpServletRequest request,

@@ -22,6 +22,12 @@ var collection;
             EntrustedCaseType[EntrustedCaseType["creditCard"] = 2] = "creditCard";
         })(protocol.EntrustedCaseType || (protocol.EntrustedCaseType = {}));
         var EntrustedCaseType = protocol.EntrustedCaseType;
+        (function (ECStatus) {
+            ECStatus[ECStatus["unassign"] = 0] = "unassign";
+            ECStatus[ECStatus["assign"] = 1] = "assign";
+            ECStatus[ECStatus["complete"] = 2] = "complete";
+        })(protocol.ECStatus || (protocol.ECStatus = {}));
+        var ECStatus = protocol.ECStatus;
         (function (MessageStatus) {
             MessageStatus[MessageStatus["unread"] = 0] = "unread";
             MessageStatus[MessageStatus["read"] = 1] = "read";

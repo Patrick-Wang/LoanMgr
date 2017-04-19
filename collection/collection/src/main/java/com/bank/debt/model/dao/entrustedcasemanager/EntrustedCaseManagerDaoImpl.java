@@ -2,6 +2,7 @@ package com.bank.debt.model.dao.entrustedcasemanager;
 
 
 import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
+import com.bank.debt.model.entity.UserEntity;
 import com.speed.frame.model.dao.AbstractReadWriteDaoImpl;
 
 import oracle.net.aso.e;
@@ -47,4 +48,21 @@ public class EntrustedCaseManagerDaoImpl extends AbstractReadWriteDaoImpl<Entrus
 		q.setParameter("id", ownerId);
 		return q.getResultList();
 	}
+
+	@Override
+	public Integer getAssignedCount(UserEntity ue) {
+		Query q = this.getEntityManager().createQuery("select count(*) from EntrustedCaseManagerEntity where owner.id = :id and assignee is not null");
+		q.setParameter("id", ue.getId());
+		List ret = q.getResultList();
+		return ((Long)(ret.get(0))).intValue();
+	}
+
+	@Override
+	public Integer getTotalForOwner(UserEntity ue) {
+		Query q = this.getEntityManager().createQuery("select count(*) from EntrustedCaseManagerEntity where owner.id = :id");
+		q.setParameter("id", ue.getId());
+		List ret = q.getResultList();
+		return ((Long)(ret.get(0))).intValue();
+	}
+
 }

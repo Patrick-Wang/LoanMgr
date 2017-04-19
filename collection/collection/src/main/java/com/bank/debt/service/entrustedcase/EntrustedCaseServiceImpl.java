@@ -37,6 +37,8 @@ import com.bank.debt.model.entity.ECCreditLoanEntity;
 import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
 import com.bank.debt.model.entity.IntfEntity;
 import com.bank.debt.model.entity.UserEntity;
+import com.bank.debt.protocol.entity.AcceptSummary;
+import com.bank.debt.protocol.entity.AssignSummary;
 import com.bank.debt.protocol.entity.BaseEC;
 import com.bank.debt.protocol.entity.ECCarLoan;
 import com.bank.debt.protocol.entity.ECCreditCard;
@@ -477,6 +479,29 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			return ErrorCode.OK;
 		}
 		return ErrorCode.EC_UPDATE_FAILED;
+	}
+
+	@Override
+	public AssignSummary getAssignSummary(String userName) {
+		UserEntity ue = userDao.getUserByName(userName);
+		AssignSummary as = new AssignSummary();
+		as.setTotoal(entrustedCaseManagerDao.getTotalForOwner(ue));
+		as.setAssign(entrustedCaseManagerDao.getAssignedCount(ue));
+		as.setUnassign(as.getTotoal() - as.getAssign());
+		as.setComplete(eCCreditLoanDao.getCompleteForOwner(ue)
+				+ eCCarLoanDao.getCompleteForOwner(ue)
+				+ eCCreditCardDao.getCompleteForOwner(ue));
+		return as;
+	}
+
+	@Override
+	public AcceptSummary getAcceptSummary(String userName) {
+		UserEntity ue = userDao.getUserByName(userName);
+		AcceptSummary as = new AcceptSummary();
+		as.setTotoal(eCCreditLoanDao.getCompleteForAssignee(ue)
+				+ eCCarLoanDao.getCompleteForAssignee(ue)
+				+ eCCreditCardDao.getCompleteForAssignee(ue));
+		return as;
 	}
 
 

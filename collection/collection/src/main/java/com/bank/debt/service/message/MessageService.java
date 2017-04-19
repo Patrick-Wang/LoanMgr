@@ -11,7 +11,7 @@ import com.bank.debt.protocol.entity.UnreadMessage;
 
 public interface MessageService {
 
-//	Integer getUnreadCount(Integer entrustedCase, String toUser);
+	Integer getUnreadCount(Integer entrustedCase, String toUser);
 
 	void readMessages(List<Integer> msgIds);
 

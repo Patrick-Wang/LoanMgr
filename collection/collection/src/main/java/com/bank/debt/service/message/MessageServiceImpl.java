@@ -57,10 +57,15 @@ public class MessageServiceImpl implements MessageService {
 	
 	public final static String NAME = "MessageServiceImpl";
 
-//	@Override
-//	public Integer getUnreadCount(Integer entrustedCase) {
-//		return messageDao.getUnreadCount(entrustedCase);
-//	}
+	@Override
+	public Integer getUnreadCount(Integer entrustedCase, String toUser) {
+		UserEntity user = userDao.getUserByName(toUser);
+		if (null != entrustedCase){
+			return messageDao.getUnreadCount(entrustedCase, user.getId());
+		}else{
+			return messageDao.getUnreadCount(user.getId());
+		}
+	}
 
 	@Override
 	public void readMessages(List<Integer> msgIds) {

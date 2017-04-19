@@ -31,7 +31,7 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	String code;
 	String pch;
 	Date wwrq;
-	String wwzt;
+	String wwzt; //未分配、已分配、进行中、已结案
 	String wwjig;
 	Double wwje;
 	Double yhje;

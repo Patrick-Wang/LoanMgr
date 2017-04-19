@@ -1,4 +1,5 @@
 ///<reference path="../../../navbar.ts"/>
+///<reference path="../../registry.ts"/>
 var navbar;
 (function (navbar) {
     var MessageReceiver = authority.MessageReceiver;

@@ -26,11 +26,12 @@ public class MessageDaoImpl extends AbstractReadWriteDaoImpl<MessageEntity> impl
 		super.setEntityManager(entityManager);
 	}
 
-//	@Override
-//	public Integer getUnreadCount(Integer entrustedCase) {
-//		Query q = this.getEntityManager().createQuery("select count(*) from MessageEntity where read = 0");
-//		return ((Long)q.getResultList().get(0)).intValue();
-//	}
+	@Override
+	public Integer getUnreadCount(Integer to) {
+		Query q = this.getEntityManager().createQuery("select count(*) from MessageEntity where read = 0 and to.id = :to");
+		q.setParameter("to", to);
+		return ((Long)q.getResultList().get(0)).intValue();
+	}
 
 	@Override
 	public List<MessageEntity> getUnreadMsgToUser(UserEntity user) {
@@ -49,9 +50,11 @@ public class MessageDaoImpl extends AbstractReadWriteDaoImpl<MessageEntity> impl
 	}
 
 	@Override
-	public Integer getUnreadCount(Integer entrustedCase, Integer from) {
-		Query q = this.getEntityManager().createQuery("select count(*) from MessageEntity where read = 0 and from.id=:from");
-		q.setParameter("from", from);
+	public Integer getUnreadCount(Integer ecid, Integer to) {
+		Query q = this.getEntityManager().createQuery("select count(*) from MessageEntity where read = 0 and to.id=:to and entrustedCaseManager.id = :ecid");
+		q.setParameter("to", to);
+		q.setParameter("ecid", ecid);
 		return ((Long)q.getResultList().get(0)).intValue();
 	}
+
 }

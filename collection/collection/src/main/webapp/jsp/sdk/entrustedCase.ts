@@ -5,6 +5,8 @@ module collection{
     import Result = collection.protocol.Result;
     import ECQueryInfo = collection.protocol.ECQueryInfo;
     import QueryOption = collection.protocol.QueryOption;
+    import AssignSummary = collection.protocol.AssignSummary;
+    import AcceptSummary = collection.protocol.AcceptSummary;
 
     export class EntrustedCase{
         static search(type:number, qOpt:QueryOption):Promise<ECQueryInfo>{
@@ -19,6 +21,13 @@ module collection{
                 type: type,
                 data: JSON.stringify(data)
             });
+        }
+
+        static getAssignSummary():Promise<AssignSummary>{
+            return Net.post(Net.BASE_URL + "/entrusted_case/assign/summary.do");
+        }
+        static getAcceptSummary():Promise<AcceptSummary>{
+            return Net.post(Net.BASE_URL + "/entrusted_case/accept/summary.do");
         }
     }
 }

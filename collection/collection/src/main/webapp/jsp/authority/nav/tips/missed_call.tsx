@@ -1,4 +1,5 @@
 ///<reference path="../../../navbar.ts"/>
+///<reference path="../../registry.ts"/>
 module navbar {
     import MessageReceiver = authority.MessageReceiver;
     let ADDR:string = "/nav/tips/missed_call";
@@ -51,7 +52,7 @@ module navbar {
 
 
         updateTips():void {
-            collection.Phone.getRecords().done((prs:PhoneRecord[])=> {
+            collection.Phone.getRecords().done((prs:collection.protocol.PhoneRecord[])=> {
                 this.onLoadCallInfos(prs);
             });
         }
@@ -60,7 +61,7 @@ module navbar {
             alert("onClickCallCenter");
         }
 
-        buildCallCenter(detailli:any, pr:PhoneRecord) {
+        buildCallCenter(detailli:any, pr:collection.protocol.PhoneRecord) {
             detailli.before(ReactDOMServer.renderToStaticMarkup(
                 <li>
                     <a href="#">
@@ -77,7 +78,7 @@ module navbar {
                 </li>));
         }
 
-        onLoadCallInfos(prs:PhoneRecord[]):void {
+        onLoadCallInfos(prs:collection.protocol.PhoneRecord[]):void {
             let count = 5;
             for (let i = 0; i < prs.length && count > 0; ++i) {
                 if (prs[i].status == collection.protocol.CallStatus.missed) {

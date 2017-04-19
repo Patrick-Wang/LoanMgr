@@ -1,4 +1,7 @@
 ///<reference path="../sdk/route/route.ts"/>
+declare var ReactDOMServer:any;
+declare var React:any;
+declare var $:any;
 module authority{
 
     import Endpoint = route.Endpoint;

@@ -15,6 +15,12 @@ var collection;
                 data: JSON.stringify(data)
             });
         }
+        static getAssignSummary() {
+            return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/assign/summary.do");
+        }
+        static getAcceptSummary() {
+            return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/accept/summary.do");
+        }
     }
     collection.EntrustedCase = EntrustedCase;
 })(collection || (collection = {}));
