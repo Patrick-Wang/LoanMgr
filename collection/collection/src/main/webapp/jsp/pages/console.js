@@ -13,4 +13,5 @@ var pages;
     }
     Console.ON_REFRESH = route.nextId();
     Console.ins = new Console(pages.PageType.console);
+    pages.Console = Console;
 })(pages || (pages = {}));
