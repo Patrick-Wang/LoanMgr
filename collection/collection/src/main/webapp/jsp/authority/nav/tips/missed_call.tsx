@@ -23,11 +23,14 @@ module navbar {
         let missedCall:MissedCall = new MissedCall();
         route.router.register(new MessageReceiver(ADDR, (e:route.Event)=> {
             switch (e.id) {
-                case ON_REFRESH:
+                case route.MSG.NAV_REFRESH:
                     if (html != null) {
                         $("#accountarea").children(":first").before(html);
                         html = null;
                     }
+                    setInterval(()=>{
+                        missedCall.updateTips();
+                    }, 30000)
                     missedCall.updateTips();
                     break;
             }
@@ -63,7 +66,7 @@ module navbar {
 
         buildCallCenter(detailli:any, pr:collection.protocol.PhoneRecord) {
             detailli.before(ReactDOMServer.renderToStaticMarkup(
-                <li>
+                <li className="navMissedTmp">
                     <a href="#">
                         <div className="clearfix">
                             <div className="notification-icon">
@@ -80,6 +83,7 @@ module navbar {
 
         onLoadCallInfos(prs:collection.protocol.PhoneRecord[]):void {
             let count = 5;
+            $(".navMissedTmp").remove();
             for (let i = 0; i < prs.length && count > 0; ++i) {
                 if (prs[i].status == collection.protocol.CallStatus.missed) {
                     this.buildCallCenter($("#navCallCenter").parent(), prs[i]);

@@ -2,26 +2,29 @@
 ///<reference path="net.ts"/>
 var collection;
 (function (collection) {
-    class Message {
-        static getUnreadCount(entrusted_case) {
-            return collection.Net.post("message/unread.do", {
+    var Message = (function () {
+        function Message() {
+        }
+        Message.getUnreadCount = function (entrusted_case) {
+            return collection.Net.post(collection.Net.BASE_URL + "/message/unread.do", {
                 entrusted_case: entrusted_case
             });
-        }
-        static setMessageRead(mids) {
+        };
+        Message.setMessageRead = function (mids) {
             return collection.Net.post(collection.Net.BASE_URL + "/message/read_message.do", {
                 mids: JSON.stringify(mids)
             });
-        }
-        static getUnreadMessages() {
+        };
+        Message.getUnreadMessages = function () {
             return collection.Net.post(collection.Net.BASE_URL + "/message/unread_messages.do");
-        }
-        static getMessages(entrusted_case, partner) {
+        };
+        Message.getMessages = function (entrusted_case, partner) {
             return collection.Net.post(collection.Net.BASE_URL + "/message/receive.do", {
                 entrusted_case: entrusted_case,
                 with: partner
             });
-        }
-    }
+        };
+        return Message;
+    })();
     collection.Message = Message;
 })(collection || (collection = {}));

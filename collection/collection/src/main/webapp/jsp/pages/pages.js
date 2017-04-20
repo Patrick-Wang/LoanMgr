@@ -18,46 +18,53 @@ var pages;
         PageType[PageType["end"] = 13] = "end";
     })(pages.PageType || (pages.PageType = {}));
     var PageType = pages.PageType;
-    class PageUtil {
-        static getPageId(type) {
+    var PageUtil = (function () {
+        function PageUtil() {
+        }
+        PageUtil.getPageId = function (type) {
             return PageType[type] + "Page";
-        }
-        static jqPage(type) {
+        };
+        PageUtil.jqPage = function (type) {
             return $("#" + PageUtil.getPageId(type));
-        }
-    }
+        };
+        return PageUtil;
+    })();
     pages.PageUtil = PageUtil;
-    class PageImpl {
-        constructor(page) {
+    var PageImpl = (function () {
+        function PageImpl(page) {
+            var _this = this;
             this.page = page;
             sidebar.registerPage(page, this);
             //PageUtil.jqPage(this.page).css("display", "none");
             //$("script").remove();
             //this.html = PageUtil.jqPage(this.page).html();
             //PageUtil.jqPage(this.page).empty();
-            $("#" + PageUtil.getPageId(this.page) + " #refresh-toggler").click(() => {
-                this.refresh();
+            $("#" + PageUtil.getPageId(this.page) + " #refresh-toggler").click(function () {
+                route.router.broadcast(route.MSG.PAGE_REFRESH, _this.page);
+                _this.refresh();
                 return false;
             });
+            route.router.broadcast(route.MSG.PAGE_REFRESH, this.page, route.DELAY_READY);
         }
-        refresh() {
+        PageImpl.prototype.refresh = function () {
             this.onRefresh();
-        }
-        show() {
+        };
+        PageImpl.prototype.show = function () {
             if (!this.isShown()) {
                 //PageUtil.jqPage(this.page).append(this.html);
                 //init();
                 PageUtil.jqPage(this.page).css("display", "");
             }
-        }
-        hide() {
+        };
+        PageImpl.prototype.hide = function () {
             if (this.isShown()) {
                 PageUtil.jqPage(this.page).css("display", "none");
             }
-        }
-        isShown() {
+        };
+        PageImpl.prototype.isShown = function () {
             return "none" != PageUtil.jqPage(this.page).css("display");
-        }
-    }
+        };
+        return PageImpl;
+    })();
     pages.PageImpl = PageImpl;
 })(pages || (pages = {}));

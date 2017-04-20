@@ -9,7 +9,7 @@ module collection{
 
     export class Message{
         static getUnreadCount(entrusted_case?:number):Promise<number>{
-            return Net.post("message/unread.do",{
+            return Net.post(Net.BASE_URL + "/message/unread.do",{
                 entrusted_case:entrusted_case
             });
         }

@@ -5,69 +5,127 @@ var route;
             return ++idBase;
         };
     })(9988392);
-    class Router {
-        constructor() {
+    var MSG = (function () {
+        function MSG() {
+        }
+        MSG.PAGE_REFRESH = route.nextId();
+        MSG.NAV_REFRESH = route.nextId();
+        return MSG;
+    })();
+    route.MSG = MSG;
+    route.DELAY_READY = -1;
+    var Router = (function () {
+        function Router() {
             this.mEndpoints = {};
             this.mEplist = [];
         }
-        register(endpoint) {
-            let addr = endpoint.getAddr();
+        Router.prototype.register = function (endpoint) {
+            var addr = endpoint.getAddr();
             this.mEndpoints[addr] = endpoint;
             this.mEplist.push(addr);
-        }
-        unregister(endpoint) {
+        };
+        Router.prototype.unregister = function (endpoint) {
             this.mEndpoints[endpoint.getAddr()] = undefined;
-        }
-        sendInternal(e) {
-            let toEndpoint = this.mEndpoints[e.to];
+        };
+        Router.prototype.sendInternal = function (e, delay) {
+            var toEndpoint = this.mEndpoints[e.to];
             if (toEndpoint != undefined) {
-                return toEndpoint.onEvent(e);
+                if (undefined == delay) {
+                    return toEndpoint.onEvent(e);
+                }
+                else {
+                    if (route.DELAY_READY == delay) {
+                        $(document).ready(function () {
+                            toEndpoint.onEvent(e);
+                        });
+                    }
+                    else {
+                        setTimeout(function () {
+                            toEndpoint.onEvent(e);
+                        }, delay);
+                    }
+                    return Router.OK;
+                }
             }
             return Router.FAILED;
-        }
-        fromEp(from) {
+        };
+        Router.prototype.fromEp = function (from) {
             return this.from(from.getAddr());
-        }
-        toEp(to) {
+        };
+        Router.prototype.toEp = function (to) {
             return this.to(to.getAddr());
-        }
-        from(from) {
+        };
+        Router.prototype.from = function (from) {
             this.mCurEvent = {};
             this.mCurEvent.from = from;
             return this;
-        }
-        to(target) {
+        };
+        Router.prototype.to = function (target) {
             if (this.mCurEvent == undefined) {
                 this.mCurEvent = {};
             }
             this.mCurEvent.to = target;
             return this;
-        }
-        broadcast(evid, data) {
-            for (let i = 0; i < this.mEplist.length; ++i) {
-                let event = {
-                    from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
-                    to: undefined,
-                    id: evid,
-                    data: data,
-                    isBroadcast: true
-                };
-                this.mEndpoints[this.mEplist[i]].onEvent(event);
+        };
+        Router.prototype.broadcast = function (evid, data, delay) {
+            var _this = this;
+            if (undefined == delay) {
+                for (var i = 0; i < this.mEplist.length; ++i) {
+                    var event_1 = {
+                        from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
+                        to: undefined,
+                        id: evid,
+                        data: data,
+                        isBroadcast: true
+                    };
+                    this.mEndpoints[this.mEplist[i]].onEvent(event_1);
+                }
+            }
+            else {
+                var from = this.mCurEvent == undefined ? undefined : this.mCurEvent.from;
+                if (route.DELAY_READY == delay) {
+                    $(document).ready(function () {
+                        for (var i = 0; i < _this.mEplist.length; ++i) {
+                            var event_2 = {
+                                from: from,
+                                to: undefined,
+                                id: evid,
+                                data: data,
+                                isBroadcast: true
+                            };
+                            _this.mEndpoints[_this.mEplist[i]].onEvent(event_2);
+                        }
+                    });
+                }
+                else {
+                    setTimeout(function () {
+                        for (var i = 0; i < _this.mEplist.length; ++i) {
+                            var event_3 = {
+                                from: from,
+                                to: undefined,
+                                id: evid,
+                                data: data,
+                                isBroadcast: true
+                            };
+                            _this.mEndpoints[_this.mEplist[i]].onEvent(event_3);
+                        }
+                    }, delay);
+                }
             }
             this.mCurEvent = undefined;
             return Router.OK;
-        }
-        send(evid, data) {
+        };
+        Router.prototype.send = function (evid, data, delay) {
             if (this.mCurEvent != undefined) {
                 this.mCurEvent.id = evid;
                 this.mCurEvent.data = data;
-                let event = this.mCurEvent;
+                var event_4 = this.mCurEvent;
                 this.mCurEvent = undefined;
-                return this.sendInternal(event);
+                return this.sendInternal(event_4, delay);
             }
             return Router.FAILED;
-        }
-        redirect(to, event) {
+        };
+        Router.prototype.redirect = function (to, event) {
             if (to != undefined) {
                 if (event.road == undefined) {
                     event.road = [];
@@ -77,13 +135,14 @@ var route;
                 return this.sendInternal(event);
             }
             return Router.FAILED;
-        }
-        getEndpoint(addr) {
+        };
+        Router.prototype.getEndpoint = function (addr) {
             return this.mEndpoints[addr];
-        }
-    }
-    Router.OK = "Route.OK";
-    Router.FAILED = "Route.FAILED";
+        };
+        Router.OK = "Route.OK";
+        Router.FAILED = "Route.FAILED";
+        return Router;
+    })();
     route.Router = Router;
     route.router = new route.Router();
 })(route || (route = {}));

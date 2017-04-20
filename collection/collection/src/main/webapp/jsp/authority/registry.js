@@ -1,18 +1,19 @@
 ///<reference path="../sdk/route/route.ts"/>
 var authority;
 (function (authority) {
-    class MessageReceiver {
-        constructor(addr, fn) {
+    var MessageReceiver = (function () {
+        function MessageReceiver(addr, fn) {
             this.address = addr;
             this.FN = fn;
         }
-        getAddr() {
+        MessageReceiver.prototype.getAddr = function () {
             return this.address;
-        }
-        onEvent(e) {
+        };
+        MessageReceiver.prototype.onEvent = function (e) {
             return this.FN(e);
-        }
-    }
+        };
+        return MessageReceiver;
+    })();
     authority.MessageReceiver = MessageReceiver;
     function register(address, fn) {
         route.router.to(REG_ADDR).send(EvId.REGISTER, { addr: address, fn: fn });
@@ -22,34 +23,35 @@ var authority;
         route.router.to(REG_ADDR).send(EvId.CALL, address);
     }
     authority.call = call;
-    let REG_ADDR = "_auth_reg";
+    var REG_ADDR = "_auth_reg";
     var EvId;
     (function (EvId) {
         EvId[EvId["REGISTER"] = 0] = "REGISTER";
         EvId[EvId["CALL"] = 1] = "CALL"; // data : string  -- address
     })(EvId || (EvId = {}));
-    class Registry {
-        constructor() {
+    var Registry = (function () {
+        function Registry() {
             this.reg = {};
             route.router.register(this);
         }
-        getAddr() {
+        Registry.prototype.getAddr = function () {
             return REG_ADDR;
-        }
-        onEvent(e) {
+        };
+        Registry.prototype.onEvent = function (e) {
             switch (e.id) {
                 case EvId.REGISTER:
-                    let addrFn = e.data;
+                    var addrFn = e.data;
                     this.reg[addrFn.addr] = addrFn.fn;
                     break;
                 case EvId.CALL:
-                    let addr = e.data;
+                    var addr = e.data;
                     if (this.reg[addr] != undefined) {
                         this.reg[addr]();
                     }
                     break;
             }
-        }
-    }
-    Registry.ins = new Registry();
+        };
+        Registry.ins = new Registry();
+        return Registry;
+    })();
 })(authority || (authority = {}));

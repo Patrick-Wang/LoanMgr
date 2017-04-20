@@ -1,19 +1,21 @@
 module console {
     import MessageReceiver = authority.MessageReceiver;
-    import EntrustedCaseManager = collection.EntrustedCaseManager;
     import AcceptSummary = collection.protocol.AcceptSummary;
     import Message = collection.Message;
+    import EntrustedCase = collection.EntrustedCase;
     authority.register("/console/summary/assigner", () => {
         route.router.register(new MessageReceiver("/console/summary", (e:route.Event)=> {
             switch (e.id) {
-                case pages.Console.ON_REFRESH:
-                    Assigner.update();
+                case route.MSG.PAGE_REFRESH:
+                    if (e.data == pages.PageType.console){
+                        Accepter.update();
+                    }
                     break;
             }
         }));
     });
 
-    class Assigner {
+    class Accepter {
         static update() {
             EntrustedCase.getAcceptSummary()
                 .done((as:AcceptSummary)=>{

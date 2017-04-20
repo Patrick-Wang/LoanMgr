@@ -7,43 +7,42 @@ var navbar;
     var Net = collection.Net;
     var Phone = collection.Phone;
     var CallStatus = collection.protocol.CallStatus;
-    navbar.ON_REFRESH = route.nextId();
-    class NavBar {
-        constructor() {
-            route.router.broadcast(navbar.ON_REFRESH);
+    var NavBar = (function () {
+        function NavBar() {
+            route.router.broadcast(route.MSG.NAV_REFRESH);
         }
-        static openMessageTips() {
+        NavBar.openMessageTips = function () {
             NavBar.ins.triggerRefreshMessageTips();
-            $("#queryAllMsgs").click(() => {
+            $("#queryAllMsgs").click(function () {
                 NavBar.ins.onClickQueryAllMessage();
                 return false;
             });
-        }
-        static openCallTips() {
+        };
+        NavBar.openCallTips = function () {
             NavBar.ins.triggerRefreshCallCenterTips();
-            $("#navCallCenter").click(() => {
+            $("#navCallCenter").click(function () {
                 NavBar.ins.onClicCallCenter();
                 return false;
             });
-        }
-        triggerRefreshMessageTips() {
+        };
+        NavBar.prototype.triggerRefreshMessageTips = function () {
             Message.getUnreadMessages()
-                .done((mecs) => {
+                .done(function (mecs) {
                 NavBar.ins.onLoadMEC(mecs);
             });
-        }
-        triggerRefreshCallCenterTips() {
-            Phone.getRecords().done((prs) => {
+        };
+        NavBar.prototype.triggerRefreshCallCenterTips = function () {
+            Phone.getRecords().done(function (prs) {
                 NavBar.ins.onLoadCallInfos(prs);
             });
-        }
-        onClickQueryAllMessage() {
-        }
-        onClicCallCenter() {
-        }
-        getDateFromTime(time) {
-            let dt = new Date(Date.parse(time));
-            let now = new Date(Date.now());
+        };
+        NavBar.prototype.onClickQueryAllMessage = function () {
+        };
+        NavBar.prototype.onClicCallCenter = function () {
+        };
+        NavBar.prototype.getDateFromTime = function (time) {
+            var dt = new Date(Date.parse(time));
+            var now = new Date(Date.now());
             if (dt.getFullYear() == now.getFullYear() &&
                 dt.getMonth() == now.getMonth()) {
                 if (dt.getDate() == now.getDate()) {
@@ -59,13 +58,13 @@ var navbar;
                 }
             }
             return time;
-        }
-        clickMessage(msgId) {
+        };
+        NavBar.prototype.clickMessage = function (msgId) {
             alert(msgId);
             return false;
-        }
-        buildMessageDetail(detailli, um) {
-            let detail = detailli.after("<li> " +
+        };
+        NavBar.prototype.buildMessageDetail = function (detailli, um) {
+            var detail = detailli.after("<li> " +
                 "<a onclick='navbar.NavBar.ins.clickMessage(" + um.msgId + ")' href='#'>" +
                 '<img src="' + Net.BASE_URL + '/jsp/assets/img/avatars/bing.png" class="message-avatar" alt="Microsoft Bing">' +
                 '<div class="message">' +
@@ -84,16 +83,16 @@ var navbar;
                 '</div>' +
                 "</a>" +
                 "</li>");
-        }
-        onLoadMEC(ums) {
+        };
+        NavBar.prototype.onLoadMEC = function (ums) {
             $("#msgCount").text(ums.length);
             $("#msgCountDetail").text(ums.length + "条待处理消息");
-            for (let i = 0; i < ums.length; ++i) {
+            for (var i = 0; i < ums.length; ++i) {
                 this.buildMessageDetail($("#msgCountDetail"), ums[i]);
             }
-        }
-        buildCallCenter(detailli, pr) {
-            let detail = detailli.before('<li>' +
+        };
+        NavBar.prototype.buildCallCenter = function (detailli, pr) {
+            var detail = detailli.before('<li>' +
                 '<a href="#">' +
                 '<div class="clearfix">' +
                 '<div class="notification-icon">' +
@@ -106,18 +105,19 @@ var navbar;
                 '</div>' +
                 '</a>' +
                 '</li>');
-        }
-        onLoadCallInfos(prs) {
-            let count = 5;
-            for (let i = 0; i < prs.length && count > 0; ++i) {
+        };
+        NavBar.prototype.onLoadCallInfos = function (prs) {
+            var count = 5;
+            for (var i = 0; i < prs.length && count > 0; ++i) {
                 if (prs[i].status == CallStatus.missed) {
                     this.buildCallCenter($("#navCallCenter").parent(), prs[i]);
                     --count;
                 }
             }
             $("#navCallCount").text(5 - count);
-        }
-    }
-    NavBar.ins = new NavBar();
+        };
+        NavBar.ins = new NavBar();
+        return NavBar;
+    })();
     navbar.NavBar = NavBar;
 })(navbar || (navbar = {}));

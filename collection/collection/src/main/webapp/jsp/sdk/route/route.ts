@@ -16,10 +16,17 @@ module route {
     })(9988392);
 
 
+    export class MSG{
+        static PAGE_REFRESH:number = nextId();
+        static NAV_REFRESH:number = nextId();
+    }
+
     export interface Endpoint {
         getAddr():string;
         onEvent(e:Event):any;
     }
+
+    export let DELAY_READY : number = -1;
 
     export class Router {
         static OK:string = "Route.OK";
@@ -39,10 +46,24 @@ module route {
             this.mEndpoints[endpoint.getAddr()] = undefined;
         }
 
-        private sendInternal(e:Event):any {
+        private sendInternal(e:Event, delay?:number):any {
             let toEndpoint = this.mEndpoints[e.to];
             if (toEndpoint != undefined) {
-                return toEndpoint.onEvent(e);
+                if (undefined == delay){
+                    return toEndpoint.onEvent(e);
+                }else{
+                    if (DELAY_READY == delay){
+                        $(document).ready(()=>{
+                            toEndpoint.onEvent(e);
+                        });
+                    }else {
+                        setTimeout(()=> {
+                            toEndpoint.onEvent(e);
+                        }, delay);
+                    }
+                    return Router.OK;
+                }
+
             }
             return Router.FAILED;
         }
@@ -69,28 +90,64 @@ module route {
             return this;
         }
 
-        public broadcast(evid:number, data?:any):any {
-            for (let i = 0; i < this.mEplist.length; ++i) {
-                let event = {
-                    from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
-                    to: undefined,
-                    id: evid,
-                    data: data,
-                    isBroadcast:true
+        public broadcast(evid:number, data?:any, delay?:number):any {
+
+
+            if (undefined == delay){
+                for (let i = 0; i < this.mEplist.length; ++i) {
+                    let event = {
+                        from: this.mCurEvent == undefined ? undefined : this.mCurEvent.from,
+                        to: undefined,
+                        id: evid,
+                        data: data,
+                        isBroadcast:true
+                    }
+                    this.mEndpoints[this.mEplist[i]].onEvent(event);
                 }
-                this.mEndpoints[this.mEplist[i]].onEvent(event);
+            }else{
+                let from = this.mCurEvent == undefined ? undefined : this.mCurEvent.from;
+                if (DELAY_READY == delay){
+                    $(document).ready(()=>{
+                        for (let i = 0; i < this.mEplist.length; ++i) {
+                            let event = {
+                                from: from,
+                                to: undefined,
+                                id: evid,
+                                data: data,
+                                isBroadcast:true
+                            }
+                            this.mEndpoints[this.mEplist[i]].onEvent(event);
+                        }
+                    });
+                }else{
+                    setTimeout(()=>{
+                        for (let i = 0; i < this.mEplist.length; ++i) {
+                            let event = {
+                                from: from,
+                                to: undefined,
+                                id: evid,
+                                data: data,
+                                isBroadcast:true
+                            }
+                            this.mEndpoints[this.mEplist[i]].onEvent(event);
+                        }
+                    }, delay);
+                }
+
+
+
             }
             this.mCurEvent = undefined;
             return Router.OK;
         }
 
-        public send(evid:number, data?:any):any {
+        public send(evid:number, data?:any, delay?:number):any {
             if (this.mCurEvent != undefined) {
                 this.mCurEvent.id = evid;
                 this.mCurEvent.data = data;
                 let event = this.mCurEvent;
                 this.mCurEvent = undefined;
-                return this.sendInternal(event);
+                return this.sendInternal(event, delay);
             }
             return Router.FAILED;
         }

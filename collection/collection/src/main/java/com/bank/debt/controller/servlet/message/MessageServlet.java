@@ -28,6 +28,8 @@ import com.bank.debt.service.message.MessageService;
 import com.bank.debt.service.message.MessageServiceImpl;
 import com.bank.debt.service.service.ftp.FtpService;
 
+import net.sf.json.JSONObject;
+
 @Controller
 @RequestMapping(value = "message")
 public class MessageServlet {
@@ -40,13 +42,12 @@ public class MessageServlet {
 	@RequestMapping(value = "send.do")
 	public @ResponseBody byte[] send(HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("entrusted_case") Integer entrustedCase,
+			@RequestParam("entrusted_case") Integer entrustedCase, 
 			@RequestParam("to") Integer to,
-			@RequestParam("message") String message,
-			@RequestParam("attachements") CommonsMultipartFile[] attachements) throws IOException {
-		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
-			    .getAuthentication()
-			    .getPrincipal();
+			@RequestParam(value = "message", required = false) String message,
+			@RequestParam(value = "attachements", required = false) CommonsMultipartFile[] attachements)
+			throws IOException {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String userName = userDetails.getUsername();
 		Result r = ErrorCode.MESSAGE_SEND_FALIED;
 		if (Checking.isExist(entrustedCase) && Checking.isExist(to)){
@@ -56,14 +57,14 @@ public class MessageServlet {
 	}
 	
 	@RequestMapping(value = "unread.do")
-	public @ResponseBody Integer unread(HttpServletRequest request,
+	public @ResponseBody byte[] unread(HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("entrusted_case") Integer entrustedCase) throws UnsupportedEncodingException {
+			@RequestParam(value="entrusted_case", required=false) Integer entrustedCase) throws UnsupportedEncodingException {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
 		String userName = userDetails.getUsername();
-		return messageService.getUnreadCount(entrustedCase, userName);
+		return JsonUtil.toUtf8Json(messageService.getUnreadCount(entrustedCase, userName));
 	}
 	
 	@RequestMapping(value = "read_message.do")

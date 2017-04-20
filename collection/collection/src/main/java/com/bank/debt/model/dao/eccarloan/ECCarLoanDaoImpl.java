@@ -37,7 +37,11 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 
 	@Override
 	public int getCompleteForOwner(UserEntity ue) {
-		Query q = this.getEntityManager().createQuery("select count(*) from ECCarLoanEntity eccle, EntrustedCaseManagerEntity ecme where eccle.entrustedCase = ecme.id and eccle。wwzt='已结案' and ecme.owner.id = :uid");
+		Query q = this.getEntityManager().createQuery("select count(*) "
+				+ "from ECCarLoanEntity eccle, EntrustedCaseManagerEntity ecme "
+				+ "where eccle.id = ecme.entrustedCase and "
+				+ "wwzt='已结案' and "
+				+ "ecme.owner.id = :uid");
 		q.setParameter("uid", ue.getId());
 		List ret = q.getResultList();
 		return ((Long)(ret.get(0))).intValue();
@@ -45,7 +49,11 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 
 	@Override
 	public int getCompleteForAssignee(UserEntity ue) {
-		Query q = this.getEntityManager().createQuery("select count(*) from ECCarLoanEntity eccle, EntrustedCaseManagerEntity ecme where eccle.entrustedCase = ecme.id and eccle。wwzt='已结案' and ecme.assignee.id = :uid");
+		Query q = this.getEntityManager().createQuery("select count(*) "
+				+ "from ECCarLoanEntity eccle, EntrustedCaseManagerEntity ecme "
+				+ "where eccle.id = ecme.entrustedCase and "
+				+ "wwzt='已结案' and "
+				+ "ecme.assignee.id = :uid");
 		q.setParameter("uid", ue.getId());
 		List ret = q.getResultList();
 		return ((Long)(ret.get(0))).intValue();

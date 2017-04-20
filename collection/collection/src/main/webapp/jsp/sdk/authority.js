@@ -2,30 +2,33 @@
 ///<reference path="net.ts"/>
 var collection;
 (function (collection) {
-    class Authority {
-        static getRoles() {
+    var Authority = (function () {
+        function Authority() {
+        }
+        Authority.getRoles = function () {
             return collection.Net.post(collection.Net.BASE_URL + "/authority/role.do");
-        }
-        static getIfs() {
+        };
+        Authority.getIfs = function () {
             return collection.Net.post(collection.Net.BASE_URL + "/authority/interface.do");
-        }
-        static getRoleIfs(role) {
+        };
+        Authority.getRoleIfs = function (role) {
             return collection.Net.post(collection.Net.BASE_URL + "/authority/search.do", {
                 role: role
             });
-        }
-        static deleteIfs(role, ifs) {
+        };
+        Authority.deleteIfs = function (role, ifs) {
             return collection.Net.post(collection.Net.BASE_URL + "/authority/delete.do", {
                 role: role,
                 ifs: JSON.stringify(ifs)
             });
-        }
-        addIfs(role, ifs) {
+        };
+        Authority.prototype.addIfs = function (role, ifs) {
             return collection.Net.post(collection.Net.BASE_URL + "/authority/add.do", {
                 role: role,
                 ifs: JSON.stringify(ifs)
             });
-        }
-    }
+        };
+        return Authority;
+    })();
     collection.Authority = Authority;
 })(collection || (collection = {}));

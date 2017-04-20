@@ -21,6 +21,7 @@ module sidebar {
         static registerPage(type:PageType, page:pages.Page) {
             SiderBar.ins.pages[type] = page;
             SiderBar.ins.items[type] = new SiderItemEvent(type);
+            SiderBar.ins.pages[type].refresh();
         }
 
         static showPage(type:PageType) {

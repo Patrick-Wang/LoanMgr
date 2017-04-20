@@ -2,29 +2,35 @@ var console;
 (function (console) {
     var MessageReceiver = authority.MessageReceiver;
     var Message = collection.Message;
-    authority.register("/console/summary/assigner", () => {
-        route.router.register(new MessageReceiver("/console/summary", (e) => {
+    var EntrustedCase = collection.EntrustedCase;
+    authority.register("/console/summary/assigner", function () {
+        route.router.register(new MessageReceiver("/console/summary", function (e) {
             switch (e.id) {
-                case pages.Console.ON_REFRESH:
-                    Assigner.update();
+                case route.MSG.PAGE_REFRESH:
+                    if (e.data == pages.PageType.console) {
+                        Accepter.update();
+                    }
                     break;
             }
         }));
     });
-    class Assigner {
-        static update() {
+    var Accepter = (function () {
+        function Accepter() {
+        }
+        Accepter.update = function () {
             EntrustedCase.getAcceptSummary()
-                .done((as) => {
+                .done(function (as) {
                 $("#console-status>div:eq(0)>div").eq(0)
                     .text(as.totoal).next().text("已接受委案");
                 $("#console-status>div:eq(1)>div").eq(0)
                     .text(as.totoal - as.complete).next().text("未完成委案");
             });
             Message.getUnreadCount()
-                .done((count) => {
+                .done(function (count) {
                 $("#console-status>div:eq(2)>div").eq(0)
                     .text(count).next().text("未回复委案咨询");
             });
-        }
-    }
+        };
+        return Accepter;
+    })();
 })(console || (console = {}));

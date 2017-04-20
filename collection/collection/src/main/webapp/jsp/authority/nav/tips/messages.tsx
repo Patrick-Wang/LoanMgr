@@ -26,11 +26,14 @@ module navbar{
         let msgTip:MsgTip = new MsgTip();
         route.router.register(new MessageReceiver(ADDR, (e:route.Event)=>{
             switch (e.id){
-                case navbar.ON_REFRESH:
+                case route.MSG.NAV_REFRESH:
                     if (html != null){
                         $("#accountarea").children(":last").before(html);
                         html = null;
                     }
+                    setInterval(()=>{
+                        msgTip.updateTips();
+                    }, 30000)
                     msgTip.updateTips();
                     break;
             }
@@ -86,7 +89,7 @@ module navbar{
 
         buildMessageDetail(um):string {
             let html = ReactDOMServer.renderToStaticMarkup(
-                <li id="navMsgTmp">
+                <li className="navMsgTmp">
                     <a id={um.msgId} href='#'>
                         <img src={collection.Net.BASE_URL + "/jsp/assets/img/avatars/bing.png"} className="message-avatar"
                              alt="Microsoft Bing"/>
@@ -113,8 +116,8 @@ module navbar{
         onLoadMEC(ums : UnreadMessage[]):void{
             $("#msgCount").text(ums.length);
             $("#msgCountDetail").text(ums.length + "条待处理消息");
-            $("#navMsgTmp").remove();
-            for(let i = 0; i < ums.length; ++i){
+            $(".navMsgTmp").remove();
+            for (let i = 0; i < ums.length; ++i){
                 $("#msgCountDetail").after(this.buildMessageDetail(ums[i]));
                 let id = ums[i].msgId;
                 $("#" + ums[i].msgId).click(()=>{

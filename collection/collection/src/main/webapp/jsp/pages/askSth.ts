@@ -10,7 +10,7 @@ module pages{
         }
 
         protected onRefresh():void {
-            MessageReceiver
+
         }
     }
 }

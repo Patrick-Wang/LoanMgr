@@ -114,9 +114,11 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				<div id="consolePage">
 					<%@include file="pages/console.jsp"%>
 				</div>
-				<div id="importLoansPage" style="display: none">
-					<%@include file="pages/importLoans.jsp"%>
-				</div>
+				<c:if test='${address.contains("/ec/import")}'>
+					<div id="importLoansPage" style="display: none">
+						<%@include file="pages/importLoans.jsp"%>
+					</div>
+				</c:if>
 				<div id="assignLoansPage" style="display: none">
 					<%@include file="pages/assignLoans.jsp"%>
 				</div> 
@@ -126,12 +128,16 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				<div id="exportLoansPage" style="display: none">
 					<%@include file="pages/exportLoans.jsp"%>
 				</div>
-				<div id="callCenterPage" style="display: none">
-					<%@include file="pages/callCenter.jsp"%>
-				</div>
-				<div id="userMgrPage" style="display: none">
-					<%@include file="pages/userMgr.jsp"%>
-				</div>
+				<c:if test='${address.contains("/phone/call")}'>
+					<div id="callCenterPage" style="display: none">
+						<%@include file="pages/callCenter.jsp"%>
+					</div>
+				</c:if>
+				<c:if test='${address.contains("/user/manager") || address.contains("/user/ec/assign")}'>
+					<div id="userMgrPage" style="display: none">
+						<%@include file="pages/userMgr.jsp"%>
+					</div>
+				</c:if>
 				<div id="propertyMgrPage" style="display: none">
 					<%@include file="pages/propertyMgr.jsp"%>
 				</div>

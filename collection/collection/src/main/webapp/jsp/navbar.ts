@@ -8,12 +8,11 @@ module navbar{
     import Phone = collection.Phone;
     import PhoneRecord = collection.protocol.PhoneRecord;
     import CallStatus = collection.protocol.CallStatus;
-    export var ON_REFRESH:number = route.nextId();
     export class NavBar{
 
         static ins = new NavBar();
         constructor(){
-            route.router.broadcast(navbar.ON_REFRESH);
+            route.router.broadcast(route.MSG.NAV_REFRESH);
         }
 
         static openMessageTips(){

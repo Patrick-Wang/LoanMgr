@@ -46,9 +46,11 @@ module pages{
             //this.html = PageUtil.jqPage(this.page).html();
             //PageUtil.jqPage(this.page).empty();
             $("#" + PageUtil.getPageId(this.page) + " #refresh-toggler").click(()=> {
+                route.router.broadcast(route.MSG.PAGE_REFRESH, this.page);
                 this.refresh();
                 return false;
             });
+            route.router.broadcast(route.MSG.PAGE_REFRESH, this.page, route.DELAY_READY);
         }
 
         refresh():void{

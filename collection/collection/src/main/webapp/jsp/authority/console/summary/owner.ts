@@ -1,13 +1,15 @@
 module console {
     import MessageReceiver = authority.MessageReceiver;
-    import EntrustedCaseManager = collection.EntrustedCaseManager;
     import Message = collection.Message;
     import AssignSummary = collection.protocol.AssignSummary;
+    import EntrustedCase = collection.EntrustedCase;
     authority.register("/console/summary/owner", () => {
         route.router.register(new MessageReceiver("/console/summary", (e:route.Event)=> {
             switch (e.id) {
-                case pages.Console.ON_REFRESH:
-                    Assigner.update();
+                case route.MSG.PAGE_REFRESH:
+                    if (e.data == pages.PageType.console){
+                        Assigner.update();
+                    }
                     break;
             }
         }));

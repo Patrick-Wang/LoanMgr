@@ -209,7 +209,7 @@ public class EntrustedCaseServlet {
 			HttpServletResponse response,
 			@RequestParam("report") String report,
 			@RequestParam("phones") String phones,
-			@RequestParam("attachements") CommonsMultipartFile[] attachements) throws IOException {
+			@RequestParam(value = "attachements", required = false) CommonsMultipartFile[] attachements) throws IOException {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();

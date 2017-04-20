@@ -2,7 +2,10 @@
 ///<reference path="net.ts"/>
 var collection;
 (function (collection) {
-    class EntrustedCaseReport {
-    }
+    var EntrustedCaseReport = (function () {
+        function EntrustedCaseReport() {
+        }
+        return EntrustedCaseReport;
+    })();
     collection.EntrustedCaseReport = EntrustedCaseReport;
 })(collection || (collection = {}));

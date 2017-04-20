@@ -18,7 +18,12 @@ public class JsonUtil {
 	public static String toJson(Object bean){
 		if (bean instanceof List || bean.getClass().isArray()){
 			return JSONArray.fromObject(bean).toString();
-		}else{
+		} else if (bean instanceof String ||
+				bean instanceof Integer ||
+				bean instanceof Double ||
+				bean instanceof Long){
+			return bean.toString();
+		} else{
 			return JSONObject.fromObject(bean).toString();
 		}
 	}
