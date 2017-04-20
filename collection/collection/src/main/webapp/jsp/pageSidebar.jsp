@@ -36,19 +36,25 @@
 							class="menu-text">分配委案</span>
 					</a></li>
 				</c:if>
-				
+
 				<li><a id="loansMgr" href="loansMgr.html"> <span
 						class="menu-text">委案信息查询和维护</span>
 				</a></li>
-				<li><a id="exportLoans" href="exportLoans.html"> <span
-						class="menu-text">委案备份</span>
-				</a></li>
+
+				<c:if test='${address.contains("/ec/export")}'>
+					<li><a id="exportLoans" href="exportLoans.html"> <span
+							class="menu-text">委案备份</span>
+					</a></li>
+				</c:if>
+
 				<li><a id="reportTask" href="reportTask.html"> <span
 						class="menu-text">委案工作汇报</span>
 				</a></li>
+
 				<li><a id="askSth" href="askSth.html"> <span
 						class="menu-text">委案咨询</span>
 				</a></li>
+
 				<c:if test='${address.contains("/phone/call")}'>
 					<li><a id="callCenter" href="callCenter.html"> <span
 							class="menu-text">呼叫中心</span>
@@ -62,31 +68,44 @@
 		</a>
 
 			<ul class="submenu">
-				<c:if test='${address.contains("/user/manager") || address.contains("/user/ec/assign")}'>
+				<c:if test='${address.contains("/user/manager")}'>
 					<li><a id="userMgr" href="userMgr.html"> <span
 							class="menu-text">用户管理</span>
 					</a></li>
 				</c:if>
+
 				<li><a id="propertyMgr" href="propertyMgr.html"> <span
 						class="menu-text">权限配置</span>
 				</a></li>
+
 				<c:if test='${address.contains("/ec/backup")}'>
-				<li><a id="backup" href="backup.html"> <span
-						class="menu-text">数据备份</span>
-				</a></li>
+					<li><a id="backup" href="backup.html"> <span
+							class="menu-text">数据备份</span>
+					</a></li>
 				</c:if>
-				<li><a href="#" class="menu-dropdown"> <span
-						class="menu-text">人员调配 </span> <i class="menu-expand"></i>
-				</a>
-					<ul class="submenu">
-						<li><a id="rearangeOffice" href="rearangeOffice.html"> <i
-								class="menu-icon fa fa-user-md"></i> <span class="menu-text">调整内勤人员</span>
-						</a></li>
-						<li><a id="rearangeBussiness" href="rearangeBusiness.html">
-								<i class="menu-icon fa fa-user"></i> <span class="menu-text">调整业务人员</span>
-						</a></li>
-					</ul></li>
+
+				<c:if
+					test='${address.contains("/user/manager") || address.contains("/user/ec/assign")}'>
+					<li><a href="#" class="menu-dropdown"> <span
+							class="menu-text">人员调配 </span> <i class="menu-expand"></i>
+					</a>
+						<ul class="submenu">
+							<c:if test='${address.contains("/user/manager")}'>
+								<li><a id="rearangeOffice" href="rearangeOffice.html">
+										<i class="menu-icon fa fa-user-md"></i> <span
+										class="menu-text">调整内勤人员</span>
+								</a></li>
+							</c:if>
+							
+							<c:if test='${address.contains("/user/ec/assign")}'>
+								<li><a id="rearangeBussiness" href="rearangeBusiness.html">
+										<i class="menu-icon fa fa-user"></i> <span class="menu-text">调整业务人员</span>
+								</a></li>
+							</c:if>
+						</ul></li>
+				</c:if>
 			</ul></li>
+
 		<li><a href="index.html"> <i
 				class="menu-icon glyphicon glyphicon-gift themesecondary"></i> <span
 				class="menu-text"> 贷款委案管理平台 v1.0 </span>
