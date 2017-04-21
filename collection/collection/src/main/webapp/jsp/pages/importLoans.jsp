@@ -34,11 +34,11 @@
 		<div id="WiredWizard" class="wizard wizard-wired"
 			data-target="#WiredWizardsteps">
 			<ul class="steps">
-				<li data-target="#wiredstep1" class="active"><span class="step">1</span><span
+				<li id="step1" data-target="#wiredstep1" class="active"><span class="step">1</span><span
 					class="title">选择导入类别</span><span class="chevron"></span></li>
-				<li data-target="#wiredstep2"><span class="step">2</span><span
+				<li id="step2" data-target="#wiredstep2"><span class="step">2</span><span
 					class="title">导入Excel</span> <span class="chevron"></span></li>
-				<li data-target="#wiredstep3"><span class="step">3</span><span
+				<li id="step3" data-target="#wiredstep3"><span class="step">3</span><span
 					class="title">确认导入信息</span> <span class="chevron"></span></li>
 			</ul>
 		</div>
@@ -48,19 +48,19 @@
 					<div class="col-xs-12 col-sm-6 col-md-3">
 						<div class="plan popular-plan animated bounce">
 							<div class="header bordered-yellow">车贷</div>
-							<a class="signup bg-yellow" href="#">选择</a>
+							<a id="selcar" class="signup bg-yellow" href="#">选择</a>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-6 col-md-3">
-						<div class="plan">
+						<div class="plan animated ">
 							<div class="header bordered-palegreen">信贷</div>
-							<a class="signup bg-palegreen" href="#">选择</a>
+							<a id="selloan" class="signup bg-palegreen" href="#">选择</a>
 						</div>
 					</div>
 					<div class="col-xs-12 col-sm-6 col-md-3">
-						<div class="plan">
+						<div class="plan animated ">
 							<div class="header bordered-orange">信用卡</div>
-							<a class="signup bg-orange" href="#">选择</a>
+							<a id="selcard" class="signup bg-orange" href="#">选择</a>
 						</div>
 					</div>
 				</div>

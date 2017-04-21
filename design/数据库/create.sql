@@ -646,7 +646,12 @@ insert into organization (parent, name, status) values
 
 insert into user (username, password, org, position, status) values
 ('test', '1', 1, '测试职位1', 0),
-('test1', '1', 1, '测试职位2', 0);
+('test1', '1', 1, '测试职位2', 0),
+('admin', '1', 1, '管理层', 0),
+('inside', '1', 1, '内勤', 0),
+('outside', '1', 1, '外勤', 0),
+('insideMgr', '1', 1, '内勤管理', 0),
+('outsideMgr', '1', 1, '外勤管理', 0);
 
 insert into `message` (come, `to`, entrustedCaseManager, title, content, sendTime)
 values
@@ -677,4 +682,9 @@ insert into user_role (user, role) values
 (2, 2),
 (2, 3),
 (2, 4),
-(2, 5);
+(2, 5),
+(3, 1),
+(6, 2),
+(7, 3),
+(4, 4),
+(5, 5);

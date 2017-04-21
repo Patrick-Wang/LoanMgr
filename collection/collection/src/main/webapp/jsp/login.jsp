@@ -55,7 +55,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
                 	<input type="text" class="form-control" name="username" placeholder="用户名" />
             	</div>
 				<div class="loginbox-textbox">
-                	<input type="text" class="form-control"  name="password" placeholder="密码" />
+                	<input type="password" class="form-control"  name="password" placeholder="密码" />
             	</div>
             	<div class="loginbox-submit">
 					<input type="submit" class="btn btn-primary btn-block" value="登录"/>

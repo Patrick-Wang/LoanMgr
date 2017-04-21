@@ -61,7 +61,7 @@
                                     </li>
                                     <!--/Theme Selector Area-->
                                     <li class="dropdown-footer">
-                                        <a href="login.html">
+                                        <a href="${pageContext.request.contextPath}/logout.do">
                                             退出登录
                                         </a>
                                     </li>
