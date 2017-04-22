@@ -33,32 +33,56 @@ var pages;
                 _this.onclickSelectCard();
                 return false;
             });
+            $("#pre").click(function () {
+                _this.onclickPre();
+            });
         }
         ImportLoans.prototype.onRefresh = function () {
+            if (undefined != this.dropz) {
+                this.dropz.removeAllFiles();
+            }
         };
         ImportLoans.prototype.onclickSelectCard = function () {
             this.ecType = EntrustedCaseType.creditCard;
+            $("#wiredstep2 .header").text("选择信用卡文件或拖拽信用卡文件到此处");
             this.onclickSelect();
         };
         ImportLoans.prototype.onclickSelectLoan = function () {
             this.ecType = EntrustedCaseType.creditLoan;
+            $("#wiredstep2 .header").text("选择信贷文件或拖拽信贷文件到此处");
             this.onclickSelect();
         };
         ImportLoans.prototype.onclickSelectCar = function () {
             this.ecType = EntrustedCaseType.carLoan;
+            $("#wiredstep2 .header").text("选择车贷文件或拖拽车贷文件到此处");
             this.onclickSelect();
         };
         ImportLoans.prototype.onclickSelect = function () {
             $("#step2").addClass("active");
             $("#wiredstep1").removeClass("active");
             $("#wiredstep2").addClass("active");
-            var dropz = new Dropzone("#dropzone", {
-                url: Net.BASE_URL + "/entrusted_case/import.do?type=" + this.ecType,
-                maxFiles: 10,
-                maxFilesize: 512,
-                acceptedFiles: ".xls, xlsx",
-                paramName: "file"
-            });
+            if (undefined != this.dropz) {
+                this.dropz.options.url = Net.BASE_URL + "/entrusted_case/import.do?type=" + this.ecType;
+            }
+            else {
+                this.dropz = new Dropzone("#dropzone", {
+                    url: Net.BASE_URL + "/entrusted_case/import.do?type=" + this.ecType,
+                    maxFiles: 10,
+                    maxFilesize: 512,
+                    acceptedFiles: ".xls, xlsx",
+                    paramName: "file"
+                });
+            }
+            $("#WiredWizard-actions").show();
+        };
+        ImportLoans.prototype.onclickPre = function () {
+            if (this.dropz != undefined) {
+                this.dropz.removeAllFiles();
+            }
+            $("#step2").removeClass("active");
+            $("#wiredstep2").removeClass("active");
+            $("#wiredstep1").addClass("active");
+            $("#WiredWizard-actions").hide();
         };
         ImportLoans.ins = new ImportLoans(pages.PageType.importLoans);
         return ImportLoans;

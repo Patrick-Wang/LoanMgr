@@ -65,6 +65,8 @@ public class Xls2JsonMapping implements Mapping<InputStream, JSONArray> {
 	
 	public Double parseNumber(HSSFCell cell) throws ValidationException{
 		switch(cell.getCellType()){
+		case HSSFCell.CELL_TYPE_STRING:
+			return Double.parseDouble(cell.getStringCellValue());
 		case HSSFCell.CELL_TYPE_BLANK:
 			return null;
 		case HSSFCell.CELL_TYPE_NUMERIC:

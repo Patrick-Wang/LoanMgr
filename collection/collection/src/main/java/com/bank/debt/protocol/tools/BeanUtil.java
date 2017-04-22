@@ -44,10 +44,10 @@ public class BeanUtil {
 				types.add(field);
 			} catch (NoSuchMethodException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			} catch (SecurityException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				//e.printStackTrace();
 			}
 			
 		}

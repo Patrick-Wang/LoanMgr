@@ -193,6 +193,7 @@ create table `entrusted_case_car_loan`(
 
 create table `entrusted_case_credit_loan`(				
 	`id`	int NOT NULL AUTO_INCREMENT	,--	自增主键
+	`xh`	int,
 	`code` varchar(20),
 	`pch` varchar(20),
 	`wwrq`	date	,--	委外日期

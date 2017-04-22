@@ -28,6 +28,7 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	Integer xh;
 	String code;
 	String pch;
 	Date wwrq;
@@ -566,6 +567,12 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void setBz(String bz) {
 		this.bz = bz;
+	}
+	public Integer getXh() {
+		return xh;
+	}
+	public void setXh(Integer xh) {
+		this.xh = xh;
 	}
 
 }
