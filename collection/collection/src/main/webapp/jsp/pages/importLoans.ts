@@ -57,7 +57,7 @@ module pages{
             $("#wiredstep2 .header").text("选择信贷文件或拖拽信贷文件到此处");
             this.onclickSelect();
         }
-
+ 
         private onclickSelectCar():void {
             this.ecType = EntrustedCaseType.carLoan;
             $("#wiredstep2 .header").text("选择车贷文件或拖拽车贷文件到此处");
