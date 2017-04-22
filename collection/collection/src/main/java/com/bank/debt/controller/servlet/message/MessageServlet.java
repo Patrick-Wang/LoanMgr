@@ -28,6 +28,7 @@ import com.bank.debt.service.message.MessageService;
 import com.bank.debt.service.message.MessageServiceImpl;
 import com.bank.debt.service.service.ftp.FtpService;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -69,8 +70,9 @@ public class MessageServlet {
 	
 	@RequestMapping(value = "read_message.do")
 	public @ResponseBody byte[] readMessage(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		List<Integer> msgIds = (List<Integer>) JsonUtil.getObjects(request, "mids", Integer.class);
+			HttpServletResponse response,
+			@RequestParam("mids") String mids) throws IOException {
+		List<Integer> msgIds = (List<Integer>) JsonUtil.toObjects(JSONArray.fromObject(mids), Integer.class, null);
 		
 		messageService.readMessages(msgIds);
 		

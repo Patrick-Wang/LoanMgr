@@ -70,7 +70,7 @@
 					<div class="col-lg-12">
 						<div class="well with-header">
 							<div class="header bordered-darkpink">选择文件或拖拽文件到此处</div>
-							<form action="/upload" class="dropzone"></form>
+							<form  id="dropzone" action="${pageContext.request.contextPath}/entrusted_case/import.do" class="dropzone"></form>
 						</div>
 					</div>
 				</div>

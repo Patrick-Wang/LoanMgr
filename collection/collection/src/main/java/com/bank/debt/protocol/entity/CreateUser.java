@@ -1,5 +1,14 @@
 package com.bank.debt.protocol.entity;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+
+import com.bank.debt.protocol.tools.JsonUtil;
+import com.bank.debt.protocol.tools.JsonUtil.PropertyHandler;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 public class CreateUser extends ProtocolEntityImpl{
 	String name;
 	String password;
@@ -37,4 +46,19 @@ public class CreateUser extends ProtocolEntityImpl{
 		this.position = position;
 	}
 	
+
+	@Override
+	public ProtocolEntity fromJson(JSONObject jo) throws IOException {
+		return (ProtocolEntity) JsonUtil.toObject(jo, this, new PropertyHandler(){
+
+			@Override
+			public Object toBeanValue(Field beanField, Object jsonObj) {
+				if (beanField.getName().equals("roles")){
+					JsonUtil.toObjects((JSONArray) jsonObj, Integer.class, null);
+				}
+				return null;
+			}
+			
+		});
+	}
 }

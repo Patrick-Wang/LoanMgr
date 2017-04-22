@@ -1,5 +1,11 @@
 package com.bank.debt.protocol.entity;
 
+import java.io.IOException;
+
+import com.bank.debt.protocol.tools.JsonUtil;
+
+import net.sf.json.JSONObject;
+
 public class UnreadMessage  extends ProtocolEntityImpl{
 	Integer msgId;
 	Integer fromId;
@@ -54,5 +60,9 @@ public class UnreadMessage  extends ProtocolEntityImpl{
 
 	public void setSendTime(String sendTime) {
 		this.sendTime = sendTime;
+	}
+	@Override
+	public ProtocolEntity fromJson(JSONObject jo) throws IOException {
+		return (ProtocolEntity) JsonUtil.toObject(jo, this, null);
 	}
 }

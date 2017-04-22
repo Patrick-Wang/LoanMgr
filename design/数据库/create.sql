@@ -24,6 +24,7 @@ create table `entrusted_case_manager`(
 	`owner` int NOT NULL,
 	`assignee` int,
 	`modifier` int,
+	`batchNo` int,
 	`type` int,
 	`entrustedCase` int not null,
 	`createdTime` datetime,

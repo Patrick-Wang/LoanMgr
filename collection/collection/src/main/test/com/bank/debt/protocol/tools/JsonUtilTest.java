@@ -34,7 +34,7 @@ public class JsonUtilTest {
 		usr.setName("123");
 		String json = JsonUtil.toJson(usr);
 		User usr2 = new User();
-		JsonUtil.toObject(JSONObject.fromObject(json), usr2);
+		JsonUtil.toObject(JSONObject.fromObject(json), usr2, null);
 		System.out.println(usr2.toString());
 	}
 

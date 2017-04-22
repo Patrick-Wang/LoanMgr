@@ -15,7 +15,6 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import com.bank.debt.protocol.entity.BaseEC;
 import com.bank.debt.protocol.entity.ECCarLoan;
 import com.bank.debt.protocol.entity.ECCreditCard;
 import com.bank.debt.protocol.entity.ECCreditLoan;
@@ -29,7 +28,7 @@ public class ECQI2XlsMapping implements Mapping<ECQueryInfo, OutputStream> {
 	
 	private OutputStream doMapping(ECQueryInfo ecqi) throws IOException, ValidationException, MappingFailedException{
 		
-		List<BaseEC> baseEC = null;
+		List<Object> baseEC = null;
 		Class<?> cls = null;
 		if (ecqi.getCarLoan() != null){
 			cls = ECCarLoan.class;

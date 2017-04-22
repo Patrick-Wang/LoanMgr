@@ -1,12 +1,22 @@
 package com.bank.debt.protocol.entity;
 
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.List;
+
+import com.bank.debt.protocol.tools.JsonUtil;
+import com.bank.debt.protocol.tools.JsonUtil.PropertyHandler;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 public class EntrustedCaseReport  extends ProtocolEntityImpl{
 	Integer id;
 	Integer entrustedCaseId;
 	String date;
 	String title;
 	String content;
-	String[] attachements;
+	List<String> attachements;
 
 	public Integer getId() {
 		return id;
@@ -40,11 +50,11 @@ public class EntrustedCaseReport  extends ProtocolEntityImpl{
 		this.content = content;
 	}
 
-	public String[] getAttachements() {
+	public List<String> getAttachements() {
 		return attachements;
 	}
 
-	public void setAttachements(String[] attachements) {
+	public void setAttachements(List<String> attachements) {
 		this.attachements = attachements;
 	}
 
@@ -54,5 +64,20 @@ public class EntrustedCaseReport  extends ProtocolEntityImpl{
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	
+	@Override
+	public ProtocolEntity fromJson(JSONObject jo) throws IOException {
+		return (ProtocolEntity) JsonUtil.toObject(jo, this, new PropertyHandler(){
+
+			@Override
+			public Object toBeanValue(Field beanField, Object jsonObj) {
+				if (beanField.getName().equals("attachements")){
+					return JsonUtil.toObjects((JSONArray) jsonObj, String.class, null);
+				}
+				return null;
+			}
+			
+		});
 	}
 }

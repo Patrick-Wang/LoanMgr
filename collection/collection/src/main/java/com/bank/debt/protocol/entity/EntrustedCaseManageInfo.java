@@ -1,5 +1,11 @@
 package com.bank.debt.protocol.entity;
 
+import java.io.IOException;
+
+import com.bank.debt.protocol.tools.JsonUtil;
+
+import net.sf.json.JSONObject;
+
 public class EntrustedCaseManageInfo  extends ProtocolEntityImpl{
 	Integer id;
 	Integer ownerId;
@@ -45,5 +51,9 @@ public class EntrustedCaseManageInfo  extends ProtocolEntityImpl{
 
 	public void setAssigneeName(String assigneeName) {
 		this.assigneeName = assigneeName;
+	}
+	@Override
+	public ProtocolEntity fromJson(JSONObject jo) throws IOException {
+		return (ProtocolEntity) JsonUtil.toObject(jo, this, null);
 	}
 }

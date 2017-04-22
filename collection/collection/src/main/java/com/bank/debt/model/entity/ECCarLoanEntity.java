@@ -2,6 +2,7 @@ package com.bank.debt.model.entity;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -543,8 +544,12 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public void updateCode() {
+	public void update() {
 		this.code = String.format("00%08d", this.getId());
+		if (this.wwjg != null && this.wwrq != null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+			this.pch = wwjg + sdf.format(this.wwrq);
+		}
 	}
 	public String getPch() {
 		return pch;

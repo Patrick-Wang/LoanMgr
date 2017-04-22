@@ -39,7 +39,6 @@ import com.bank.debt.model.entity.IntfEntity;
 import com.bank.debt.model.entity.UserEntity;
 import com.bank.debt.protocol.entity.AcceptSummary;
 import com.bank.debt.protocol.entity.AssignSummary;
-import com.bank.debt.protocol.entity.BaseEC;
 import com.bank.debt.protocol.entity.ECCarLoan;
 import com.bank.debt.protocol.entity.ECCreditCard;
 import com.bank.debt.protocol.entity.ECCreditLoan;
@@ -49,7 +48,6 @@ import com.bank.debt.protocol.entity.IF;
 import com.bank.debt.protocol.entity.QueryOption;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
-import com.bank.debt.protocol.tools.AuthUtil;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
 import com.bank.debt.protocol.tools.PathUtil;
@@ -114,11 +112,12 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 		if (null != usr){
 			JSONArray data = null;
 			try {
-				if (file.getName().endsWith("xls")){
+				String fileName = file.getOriginalFilename();
+				if (fileName.endsWith("xls")){
 					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
 					mapper.setMapping(new Xls2JsonMapping(ECCarLoanEntity.class));
 					data = mapper.map(file.getInputStream());
-				}else if (file.getName().endsWith("xlsx")){
+				}else if (fileName.endsWith("xlsx")){
 					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
 					mapper.setMapping(new Xlsx2JsonMapping(ECCarLoanEntity.class));
 					data = mapper.map(file.getInputStream());
@@ -134,14 +133,14 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			
 			if (null != data){
 				Timestamp current = new Timestamp(Calendar.getInstance().getTimeInMillis());
-				List<ECCarLoanEntity> eccls = JsonUtil.toObjects(data, ECCarLoanEntity.class);
+				List<ECCarLoanEntity> eccls = JsonUtil.toObjects(data, ECCarLoanEntity.class, null);
 				Integer batchNo = null;
 				if (!eccls.isEmpty()){
 					batchNo = eCBatchCreatorDao.createBatchNo(current);
 				}
 				for (ECCarLoanEntity entity : eccls){
 					entity = eCCarLoanDao.merge(entity);
-					entity.updateCode();
+					entity.update();
 					eCCarLoanDao.merge(entity);
 
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
@@ -167,11 +166,11 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 		if (null != usr){
 			JSONArray data = null;
 			try {
-				if (file.getName().endsWith("xls")){
+				if (file.getOriginalFilename().endsWith("xls")){
 					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
 					mapper.setMapping(new Xls2JsonMapping(ECCreditCardEntity.class));
 					data = mapper.map(file.getInputStream());
-				}else if (file.getName().endsWith("xlsx")){
+				}else if (file.getOriginalFilename().endsWith("xlsx")){
 					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
 					mapper.setMapping(new Xlsx2JsonMapping(ECCreditCardEntity.class));
 					data = mapper.map(file.getInputStream());
@@ -186,14 +185,14 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			
 			if (null != data){
 				Timestamp current = new Timestamp(Calendar.getInstance().getTimeInMillis());
-				List<ECCreditCardEntity> eccls = JsonUtil.toObjects(data, ECCreditCardEntity.class);
+				List<ECCreditCardEntity> eccls = JsonUtil.toObjects(data, ECCreditCardEntity.class, null);
 				Integer batchNo = null;
 				if (!eccls.isEmpty()){
 					batchNo = eCBatchCreatorDao.createBatchNo(current);
 				}
 				for (ECCreditCardEntity entity : eccls){
 					entity = eCCreditCardDao.merge(entity);
-					entity.updateCode();
+					entity.update();
 					eCCreditCardDao.merge(entity);
 					
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
@@ -219,11 +218,11 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 		if (null != usr){
 			JSONArray data = null;
 			try {
-				if (file.getName().endsWith("xls")){
+				if (file.getOriginalFilename().endsWith("xls")){
 					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
 					mapper.setMapping(new Xls2JsonMapping(ECCreditLoanEntity.class));
 					data = mapper.map(file.getInputStream());
-				}else if (file.getName().endsWith("xlsx")){
+				}else if (file.getOriginalFilename().endsWith("xlsx")){
 					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
 					mapper.setMapping(new Xlsx2JsonMapping(ECCreditLoanEntity.class));
 					data = mapper.map(file.getInputStream());
@@ -238,14 +237,14 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			
 			if (null != data){
 				Timestamp current = new Timestamp(Calendar.getInstance().getTimeInMillis());
-				List<ECCreditLoanEntity> eccls = JsonUtil.toObjects(data, ECCreditLoanEntity.class);
+				List<ECCreditLoanEntity> eccls = JsonUtil.toObjects(data, ECCreditLoanEntity.class, null);
 				Integer batchNo = null;
 				if (!eccls.isEmpty()){
 					batchNo = eCBatchCreatorDao.createBatchNo(current);
 				}
 				for (ECCreditLoanEntity entity : eccls){
 					entity = eCCreditLoanDao.merge(entity);
-					entity.updateCode();
+					entity.update();
 					eCCreditLoanDao.merge(entity);
 					
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
@@ -294,8 +293,8 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 		return null;
 	}
 
-	private void zipAttachement(ZipOutputStream zipOut, BaseEC baseEc) throws IOException{
-		for (EntrustedCaseReport ecr : baseEc.getReports()){
+	private void zipAttachement(ZipOutputStream zipOut, List<EntrustedCaseReport> reports) throws IOException{
+		for (EntrustedCaseReport ecr : reports){
 			if (Checking.isExist(ecr.getAttachements())){
 				for (String attach : ecr.getAttachements()){
 					ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -329,7 +328,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			ZipOutputStream zipOut = new ZipOutputStream(outputStream);
 			zipECQI(zipOut, "委案信息.xls", ecqi);
 			for (int i = 0; i < eccls.size(); ++i){
-				zipAttachement(zipOut, eccls.get(i));				
+				zipAttachement(zipOut, eccls.get(i).getReports());				
 			}
 		}
 	}
@@ -347,7 +346,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			ZipOutputStream zipOut = new ZipOutputStream(outputStream);
 			zipECQI(zipOut, "委案信息.xls", ecqi);
 			for (int i = 0; i < ecccs.size(); ++i){
-				zipAttachement(zipOut, ecccs.get(i));				
+				zipAttachement(zipOut, ecccs.get(i).getReports());				
 			}
 		}
 	}
@@ -365,7 +364,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			ZipOutputStream zipOut = new ZipOutputStream(outputStream);
 			zipECQI(zipOut, "委案信息.xls", ecqi);
 			for (int i = 0; i < eccls.size(); ++i){
-				zipAttachement(zipOut, eccls.get(i));				
+				zipAttachement(zipOut, eccls.get(i).getReports());				
 			}
 		}
 	}
@@ -380,7 +379,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			ECQueryInfo ecqi = new ECQueryInfo();
 			ecqi.setCarLoan(eccls);
 			ecqi.setIfs(ifs);
-			return AuthUtil.filterECQI(ecqi);
+			return ecqi;//AuthUtil.filterECQI(ecqi);
 		}
 		return null;
 	}
@@ -395,7 +394,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			ECQueryInfo ecqi = new ECQueryInfo();
 			ecqi.setCreditCard(ecccs);
 			ecqi.setIfs(ifs);
-			return AuthUtil.filterECQI(ecqi);
+			return ecqi;//AuthUtil.filterECQI(ecqi);
 		}
 		return null;
 	}
@@ -410,7 +409,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 			ECQueryInfo ecqi = new ECQueryInfo();
 			ecqi.setCreditLoan(eccls);
 			ecqi.setIfs(ifs);
-			return AuthUtil.filterECQI(ecqi);
+			return ecqi;//AuthUtil.filterECQI(ecqi);
 		}
 		return null;
 	}
@@ -425,7 +424,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 					EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getByECId(EntrustedCaseType.CREDIT_LOAN, jec.getInt("id"));
 					ECCarLoanEntity entity = eCCarLoanDao.getById(jec.getInt("id"));
 					if (entity != null){
-						JsonUtil.toObject(jec, entity);
+						JsonUtil.toObject(jec, entity, null);
 						eCCarLoanDao.merge(entity);
 					}
 				}
@@ -445,7 +444,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 					EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getByECId(EntrustedCaseType.CREDIT_CARD, jec.getInt("id"));
 					ECCreditCardEntity entity = eCCreditCardDao.getById(jec.getInt("id"));
 					if (entity != null){
-						JsonUtil.toObject(jec, entity);
+						JsonUtil.toObject(jec, entity, null);
 						eCCreditCardDao.merge(entity);
 						ecme.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 						ecme.setModifier(usr);
@@ -468,7 +467,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService {
 					EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getByECId(EntrustedCaseType.CAR_LOAN, jec.getInt("id"));
 					ECCreditLoanEntity entity = eCCreditLoanDao.getById(jec.getInt("id"));
 					if (entity != null && ecme != null){
-						JsonUtil.toObject(jec, entity);
+						JsonUtil.toObject(jec, entity, null);
 						eCCreditLoanDao.merge(entity);
 						ecme.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 						ecme.setModifier(usr);

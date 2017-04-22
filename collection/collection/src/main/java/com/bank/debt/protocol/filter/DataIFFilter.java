@@ -6,11 +6,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.bank.debt.protocol.entity.BaseEC;
 import com.bank.debt.protocol.entity.IF;
 import com.bank.debt.protocol.tools.BeanUtil;
 
-public class DataIFFilter<T extends BaseEC> {
+public class DataIFFilter {
 
 	Set<String> setMethods;
 	public DataIFFilter(List<IF> dataIfs) {
@@ -25,7 +24,7 @@ public class DataIFFilter<T extends BaseEC> {
 		return setMethods;
 	}
 	
-	public T filter(T ec){
+	public Object filter(Object ec){
 		Method[] mds = ec.getClass().getMethods();
 		for (Method md : mds){
 			if (md.getParameterTypes().length == 1 && !setMethods.contains(md.getName())){
@@ -41,8 +40,8 @@ public class DataIFFilter<T extends BaseEC> {
 		return ec;
 	}
 	
-	public List<T> filter(List<T> ecs){
-		for (T bec : ecs){
+	public List<Object> filter(List<Object> ecs){
+		for (Object bec : ecs){
 			filter(bec);
 		}
 		return ecs;

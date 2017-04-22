@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bank.debt.protocol.entity.IF;
@@ -18,6 +19,8 @@ import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.JsonUtil;
 import com.bank.debt.service.authority.AuthorityService;
 import com.bank.debt.service.authority.AuthorityServiceImpl;
+
+import net.sf.json.JSONArray;
 
 @SuppressWarnings("unchecked")
 @Controller
@@ -50,20 +53,22 @@ public class AuthorityServlet {
 	
 	@RequestMapping(value = "delete.do")
 	public @ResponseBody byte[] delete(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		Integer roleId = Integer.valueOf(request.getParameter("role"));
-		List<Integer> ifs = (List<Integer>) JsonUtil.getObjects(request, "ifs", Integer.class);
-		authorityService.deleteRoleIfs(roleId, ifs);
+			HttpServletResponse response,
+			@RequestParam("role") Integer role,
+			@RequestParam("ifs") String jIfs) throws IOException {
+		List<Integer> ifs = (List<Integer>) JsonUtil.toObjects(JSONArray.fromObject(jIfs), Integer.class, null);
+		authorityService.deleteRoleIfs(role, ifs);
 		
 		return ErrorCode.OK.toUtf8Json();
 	}
 	
 	@RequestMapping(value = "add.do")
 	public @ResponseBody byte[] add(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		Integer roleId = Integer.valueOf(request.getParameter("role"));
-		List<Integer> ifs = (List<Integer>) JsonUtil.getObjects(request, "ifs", Integer.class);
-		authorityService.addRoleIfs(roleId, ifs);
+			HttpServletResponse response,
+			@RequestParam("role") Integer role,
+			@RequestParam("ifs") String jIfs) throws IOException {
+		List<Integer> ifs = (List<Integer>) JsonUtil.toObjects(JSONArray.fromObject(jIfs), Integer.class, null);
+		authorityService.addRoleIfs(role, ifs);
 		
 		return ErrorCode.OK.toUtf8Json();
 	}

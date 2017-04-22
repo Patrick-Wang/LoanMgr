@@ -1,13 +1,10 @@
 package com.bank.debt.protocol.entity;
 
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
 import com.bank.debt.protocol.tools.JsonUtil;
 
-import net.sf.json.JSONObject;
-
-public class ProtocolEntityImpl implements ProtocolEntity{
+public abstract class ProtocolEntityImpl implements ProtocolEntity{
 	
 	public byte[] toUtf8Json() throws UnsupportedEncodingException {
 		return JsonUtil.toUtf8Json(this);
@@ -17,8 +14,8 @@ public class ProtocolEntityImpl implements ProtocolEntity{
 		return JsonUtil.toJson(this);
 	}
 	
-	public ProtocolEntityImpl fromJson(JSONObject jo) throws IOException{
-		return  (ProtocolEntityImpl) JsonUtil.toObject(jo, this);
-	}
+//	public ProtocolEntityImpl fromJson(JSONObject jo) throws IOException{
+//		return  (ProtocolEntityImpl) JsonUtil.toObject(jo, this);
+//	}
 	
 }

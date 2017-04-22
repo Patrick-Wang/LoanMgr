@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import com.speed.frame.model.entity.AbstractReadWriteEntity;
 import java.io.Serializable;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -517,8 +518,12 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public void updateCode() {
+	public void update() {
 		this.code = String.format("00%08d", this.getId());
+		if (this.wwjig != null && this.wwrq != null){
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+			this.pch = wwjig + sdf.format(this.wwrq);
+		}
 	}
 	public String getPch() {
 		return pch;

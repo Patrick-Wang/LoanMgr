@@ -1,5 +1,11 @@
 package com.bank.debt.protocol.entity;
 
+import java.io.IOException;
+
+import com.bank.debt.protocol.tools.JsonUtil;
+
+import net.sf.json.JSONObject;
+
 public class Result  extends ProtocolEntityImpl{
 	
 	public Result() {
@@ -31,5 +37,9 @@ public class Result  extends ProtocolEntityImpl{
 	
 	public Result clone(){
 		return new Result(code, msg);
+	}
+	@Override
+	public ProtocolEntity fromJson(JSONObject jo) throws IOException {
+		return (ProtocolEntity) JsonUtil.toObject(jo, this, null);
 	}
 }

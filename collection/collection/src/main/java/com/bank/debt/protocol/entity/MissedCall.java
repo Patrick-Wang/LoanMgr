@@ -1,6 +1,12 @@
 package com.bank.debt.protocol.entity;
 
-public class MissedCall {
+import java.io.IOException;
+
+import com.bank.debt.protocol.tools.JsonUtil;
+
+import net.sf.json.JSONObject;
+
+public class MissedCall extends ProtocolEntityImpl {
 
 	String call;
 	String phoneNum;
@@ -15,5 +21,9 @@ public class MissedCall {
 	}
 	public void setPhoneNum(String phoneNum) {
 		this.phoneNum = phoneNum;
+	}
+	@Override
+	public ProtocolEntity fromJson(JSONObject jo) throws IOException {
+		return (ProtocolEntity) JsonUtil.toObject(jo, this, null);
 	}
 }

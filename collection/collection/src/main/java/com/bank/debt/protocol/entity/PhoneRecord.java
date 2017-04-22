@@ -1,5 +1,11 @@
 package com.bank.debt.protocol.entity;
 
+import java.io.IOException;
+
+import com.bank.debt.protocol.tools.JsonUtil;
+
+import net.sf.json.JSONObject;
+
 public class PhoneRecord  extends ProtocolEntityImpl{
 	Integer status;
 	String phoneNum;
@@ -29,5 +35,8 @@ public class PhoneRecord  extends ProtocolEntityImpl{
 	public void setEcid(Integer ecid) {
 		this.ecid = ecid;
 	}
-	
+	@Override
+	public ProtocolEntity fromJson(JSONObject jo) throws IOException {
+		return (ProtocolEntity) JsonUtil.toObject(jo, this, null);
+	}
 }

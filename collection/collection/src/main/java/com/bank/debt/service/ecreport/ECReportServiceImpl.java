@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -69,7 +70,12 @@ public class ECReportServiceImpl implements ECReportService {
 			ecr.setContent(from.getContent());
 			ecr.setDate(formatter.format(from.getDate()));
 			ecr.setEntrustedCaseId(from.getEntrustedCaseManager().getId());
-			ecr.setAttachements((String[]) from.jsonAttachements().toArray());
+			List<String> attachs = new ArrayList<String>();
+			JSONArray ja = from.jsonAttachements();
+			for (int i = 0; i < ja.size(); ++i){
+				attachs.add(ja.getString(i));
+			}
+			ecr.setAttachements(attachs);
 			ecr.setTitle(from.getTitle());
 			return ecr;
 		}

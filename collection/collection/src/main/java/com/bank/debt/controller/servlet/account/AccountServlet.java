@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bank.debt.protocol.entity.CreateUser;
@@ -20,6 +21,9 @@ import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
 import com.bank.debt.service.account.AccountService;
 import com.bank.debt.service.account.AccountServiceImpl;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "account")
@@ -47,15 +51,18 @@ public class AccountServlet {
 	
 	@RequestMapping(value = "update.do")
 	public @ResponseBody byte[] update(HttpServletRequest request,
-			HttpServletResponse response)  throws IOException {
-		List<User> usrs = (List<User>) JsonUtil.getObjects(request, "users", User.class);
+			HttpServletResponse response,
+			@RequestParam("users") String users)  throws IOException {
+		List<User> usrs = (List<User>) JsonUtil.toObjects(JSONArray.fromObject(users), User.class);
 		return accountService.updateUsers(usrs).toUtf8Json();
 	}
 	
 	@RequestMapping(value = "create.do")
 	public @ResponseBody byte[] create(HttpServletRequest request,
-			HttpServletResponse response) throws IOException {
-		CreateUser usr = (CreateUser) JsonUtil.getObject(request, "user", User.class);
+			HttpServletResponse response,
+			@RequestParam("user") String createUser) throws IOException {
+		CreateUser usr = new CreateUser();
+		usr.fromJson(JSONObject.fromObject(createUser));
 		if (Checking.isExist(usr.getName()) && 
 			Checking.isExist(usr.getPassword()) &&
 			Checking.isExist(usr.getOrgId()) &&

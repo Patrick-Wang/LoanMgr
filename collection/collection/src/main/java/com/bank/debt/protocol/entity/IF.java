@@ -1,5 +1,11 @@
 package com.bank.debt.protocol.entity;
 
+import java.io.IOException;
+
+import com.bank.debt.protocol.tools.JsonUtil;
+
+import net.sf.json.JSONObject;
+
 public class IF extends ProtocolEntityImpl{
     Integer id;
     String address;
@@ -26,5 +32,8 @@ public class IF extends ProtocolEntityImpl{
 		int index = address.indexOf(".");
 		return address.substring(index + 1);
 	}
-    
+	@Override
+	public ProtocolEntity fromJson(JSONObject jo) throws IOException {
+		return (ProtocolEntity) JsonUtil.toObject(jo, this, null);
+	}
 }

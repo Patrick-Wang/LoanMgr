@@ -2,6 +2,7 @@ package com.bank.debt.controller.servlet.entrustedcase;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.sql.Date;
 import java.util.List;
 
@@ -28,6 +29,7 @@ import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
+import com.bank.debt.protocol.tools.JsonUtil.PropertyHandler;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
 import com.bank.debt.protocol.type.EntrustedCaseType;
 import com.bank.debt.service.ecmanager.ECManagerService;
@@ -57,8 +59,8 @@ public class EntrustedCaseServlet {
 	public @ResponseBody byte[] add(
 			HttpServletRequest request,
 			HttpServletResponse response, 
-			@RequestParam("type") Integer type,
-			@RequestParam("file") CommonsMultipartFile file) throws UnsupportedEncodingException {
+			@RequestParam(value="type", required=false) Integer type,
+			@RequestParam(value="file", required=false) CommonsMultipartFile file) throws UnsupportedEncodingException {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
@@ -90,7 +92,7 @@ public class EntrustedCaseServlet {
 			    .getPrincipal();
 		String userName = userDetails.getUsername();
 		ECQueryInfo ecqi = null;
-		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), QueryOption.class);
+		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), QueryOption.class, null);
 		switch(type){
 		case EntrustedCaseType.CAR_LOAN:
 			ecqi = entrustedCaseService.searchCarLoan(userName, qOpt);
@@ -114,7 +116,7 @@ public class EntrustedCaseServlet {
 			    .getAuthentication()
 			    .getPrincipal();
 		String usr = userDetails.getUsername();
-		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), QueryOption.class);
+		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), QueryOption.class, null);
 		switch(type){
 		case EntrustedCaseType.CAR_LOAN:
 			entrustedCaseService.getDownloadCarLoan(usr, qOpt, response.getOutputStream());
@@ -198,7 +200,7 @@ public class EntrustedCaseServlet {
 			    .getAuthentication()
 			    .getPrincipal();
 		String userName = userDetails.getUsername();
-		List<EntrustedCaseManageInfo> ecmis = JsonUtil.toObjects(JSONArray.fromObject(data), EntrustedCaseManageInfo.class);
+		List<EntrustedCaseManageInfo> ecmis = JsonUtil.toObjects(JSONArray.fromObject(data), EntrustedCaseManageInfo.class, null);
 		Result r = eCManagerService.updateManageInfo(userName, ecmis);
 		return r.toUtf8Json();
 	}
@@ -215,8 +217,19 @@ public class EntrustedCaseServlet {
 			    .getPrincipal();
 		String userName = userDetails.getUsername();
 		Result r = ErrorCode.ECR_SUBMIT_FAILED;
-		EntrustedCaseReport ecr = (EntrustedCaseReport) JsonUtil.toObject(JSONObject.fromObject(report), EntrustedCaseReport.class);
-		List<String> phoneNames = JsonUtil.toObjects(JSONArray.fromObject(phones), String.class);
+		EntrustedCaseReport ecr = (EntrustedCaseReport) JsonUtil.toObject(JSONObject.fromObject(report), EntrustedCaseReport.class, new PropertyHandler(){
+
+			@Override
+			public Object toBeanValue(Field beanField, Object jsonObj) {
+				if (beanField.getName().equals("attachements")){
+					JSONArray ja = (JSONArray) jsonObj;
+					return JsonUtil.toObjects(ja, String.class, null);
+				}
+				return null;
+			}
+			
+		});
+		List<String> phoneNames = JsonUtil.toObjects(JSONArray.fromObject(phones), String.class, null);
 		if (Checking.isExist(ecr.getId())){
 			r = eCReportService.updateReport(userName, ecr, phoneNames, attachements);
 		}else if (Checking.isExist(ecr.getEntrustedCaseId())){

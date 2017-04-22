@@ -126,7 +126,7 @@ public class MessageServiceImpl implements MessageService {
 		msg.setRead(entity.getRead());
 		msg.setSendTime(formatter.format(entity.getSendTime()));
 		if (Checking.isExist(entity.getAttachements())){
-			msg.setAttachements(JsonUtil.toObjects(JSONArray.fromObject(entity.getAttachements()), String.class));
+			msg.setAttachements(JsonUtil.toObjects(JSONArray.fromObject(entity.getAttachements()), String.class, null));
 		}
 		return msg;
 	}
