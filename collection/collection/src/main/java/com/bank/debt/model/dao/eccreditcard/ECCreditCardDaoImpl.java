@@ -1,13 +1,6 @@
 package com.bank.debt.model.dao.eccreditcard;
 
 
-import com.bank.debt.model.entity.ECCreditCardEntity;
-import com.bank.debt.model.entity.UserEntity;
-import com.bank.debt.protocol.entity.ECCreditCard;
-import com.bank.debt.protocol.entity.QueryOption;
-import com.speed.frame.model.dao.AbstractReadWriteDaoImpl;
-import com.bank.debt.model.dao.eccreditcard.ECCreditCardDao;
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -16,6 +9,11 @@ import javax.persistence.Query;
 
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.bank.debt.model.entity.ECCreditCardEntity;
+import com.bank.debt.model.entity.UserEntity;
+import com.bank.debt.protocol.entity.QueryOption;
+import com.speed.frame.model.dao.AbstractReadWriteDaoImpl;
 
 
 
@@ -30,9 +28,60 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 	}
 
 	@Override
-	public List<ECCreditCard> search(QueryOption qOpt) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Object[]> search(QueryOption qOpt) {
+		String sql = "select ecme, eccle from ECCreditCardEntity eccle, EntrustedCaseManagerEntity ecme";
+		String where = " where ecme.entrustedCase = eccle.id ";
+		if (qOpt.getName() != null){
+			where += " and khxm=:name ";
+		}
+		
+		if (qOpt.getPIN() != null){
+			where += " and  khsfzh = :pin ";
+		}
+		
+		if (qOpt.getCode() != null){
+			where += " and  code = :code ";
+		}
+		
+		if (qOpt.getWwrq() != null){
+			where += " and  wwrq = :wwrq ";
+		}
+		
+		if (qOpt.getWwjg() != null){
+			where += " and  wwjg = :wwjg ";
+		}
+		
+		if (qOpt.getWwzt() != null){
+			where += " and  wwzt = :wwzt ";
+		}
+
+		Query q = this.getEntityManager().createQuery(sql + where);
+		
+		if (qOpt.getName() != null){
+			q.setParameter("name", qOpt.getName());
+		}
+		
+		if (qOpt.getPIN() != null){
+			q.setParameter("pin", qOpt.getPIN());
+		}
+		
+		if (qOpt.getCode() != null){
+			q.setParameter("code", qOpt.getCode());
+		}
+		
+		if (qOpt.getWwrq() != null){
+			q.setParameter("wwrq", qOpt.getWwrq());
+		}
+		
+		if (qOpt.getWwjg() != null){
+			q.setParameter("wwjg", qOpt.getWwjg());
+		}
+		
+		if (qOpt.getWwzt() != null){
+			q.setParameter("wwzt", qOpt.getWwzt());
+		}
+		
+		return q.getResultList();
 	}
 
 	@Override

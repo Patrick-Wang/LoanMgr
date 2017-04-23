@@ -33,7 +33,26 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
     <link href="${pageContext.request.contextPath}/jsp/assets/css/demo.min.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/jsp/assets/css/animate.min.css" rel="stylesheet" />
     <link id="skin-link" href="" rel="stylesheet" type="text/css" />
+    <!-- jquery ui blue -->
+    <link rel="stylesheet" type="text/css" media="screen"
+    href="${pageContext.request.contextPath}/jsp/jqgrid/themes/redmond/jquery-ui-custom.css">
+    <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery-ui-custom.min.js"
+    type="text/javascript"></script>
 
+    <!-- jqgrid -->
+    <link rel="stylesheet" type="text/css" media="screen"
+    href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.jqgrid.css">
+    <link rel="stylesheet" type="text/css" media="screen"
+    href="${pageContext.request.contextPath}/jsp/jqgrid/themes/ui.multiselect.css">
+    <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.tablednd.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.contextmenu.js"
+    type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/i18n/grid.locale-cn.js"
+    type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.layout.js" type="text/javascript"></script>
+    <script src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery.jqGrid.js" type="text/javascript"></script>
+    <!-- jqgrid assist -->
+    <script src="${pageContext.request.contextPath}/jsp/jqgrid/jqassist.js" type="text/javascript"></script>
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="${pageContext.request.contextPath}/jsp/assets/js/skins.min.js"></script>
 </head>

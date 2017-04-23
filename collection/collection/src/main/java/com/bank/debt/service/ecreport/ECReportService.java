@@ -14,7 +14,7 @@ import com.bank.debt.protocol.tools.map.MappingFailedException;
 
 public interface ECReportService {
 
-	List<EntrustedCaseReport> getECReports(Integer entrustedCase) throws MappingFailedException;
+	List<EntrustedCaseReport> getECReports(Integer entrustedCase) ;
 
 	boolean downloadAttachement(Integer report, String attachement, OutputStream outputStream) throws IOException;
 

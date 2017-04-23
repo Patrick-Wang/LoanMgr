@@ -11,16 +11,10 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class ECQueryInfo extends ProtocolEntityImpl{
-	List<IF> ifs;
 	List<ECCreditCard> creditCard;
 	List<ECCreditLoan> creditLoan;
 	List<ECCarLoan> carLoan;
-	public List<IF> getIfs() {
-		return ifs;
-	}
-	public void setIfs(List<IF> ifs) {
-		this.ifs = ifs;
-	}
+	
 	public List getCreditCard() {
 		return creditCard;
 	}

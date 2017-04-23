@@ -2,12 +2,16 @@ package com.bank.debt.service.entrustedcase;
 
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.bank.debt.model.entity.ECCarLoanEntity;
+import com.bank.debt.model.entity.ECCreditCardEntity;
+import com.bank.debt.model.entity.ECCreditLoanEntity;
 import com.bank.debt.protocol.entity.AcceptSummary;
 import com.bank.debt.protocol.entity.AssignSummary;
-import com.bank.debt.protocol.entity.ECQueryInfo;
+import com.bank.debt.protocol.entity.EC;
 import com.bank.debt.protocol.entity.QueryOption;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
@@ -28,11 +32,11 @@ public interface EntrustedCaseService {
 
 	void getDownloadCreditLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException;
 
-	ECQueryInfo searchCarLoan(String userName, QueryOption qOpt);
+	List<EC<ECCarLoanEntity>> searchCarLoan(String userName, QueryOption qOpt);
 
-	ECQueryInfo searchCreditCard(String userName, QueryOption qOpt);
+	List<EC<ECCreditCardEntity>> searchCreditCard(String userName, QueryOption qOpt);
 
-	ECQueryInfo searchCreditLoan(String userName, QueryOption qOpt);
+	List<EC<ECCreditLoanEntity>> searchCreditLoan(String userName, QueryOption qOpt);
 
 	Result updateCreditLoan(String userName, JSONArray jdata) throws IOException;
 
@@ -43,6 +47,5 @@ public interface EntrustedCaseService {
 	AssignSummary getAssignSummary(String userName);
 
 	AcceptSummary getAcceptSummary(String userName);
-
 
 }

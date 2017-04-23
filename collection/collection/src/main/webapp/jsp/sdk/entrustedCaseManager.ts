@@ -18,5 +18,6 @@ module collection{
                 data: JSON.stringify(data)
             });
         }
+
     }
 }

@@ -7,9 +7,10 @@ module collection{
     import QueryOption = collection.protocol.QueryOption;
     import AssignSummary = collection.protocol.AssignSummary;
     import AcceptSummary = collection.protocol.AcceptSummary;
+    import EC = collection.protocol.EC;
 
     export class EntrustedCase{
-        static search(type:number, qOpt:QueryOption):Promise<ECQueryInfo>{
+        static search(type:number, qOpt:QueryOption):Promise<EC<any>[]>{
             return Net.post(Net.BASE_URL + "/entrusted_case/search.do", {
                 type:type,
                 query:JSON.stringify(qOpt)

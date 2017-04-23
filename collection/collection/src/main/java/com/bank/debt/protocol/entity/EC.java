@@ -1,23 +1,23 @@
 package com.bank.debt.protocol.entity;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.util.List;
 
-import com.bank.debt.model.entity.ECCarLoanEntity;
-import com.bank.debt.model.entity.ECCreditCardEntity;
 import com.bank.debt.protocol.tools.JsonUtil;
 import com.bank.debt.protocol.tools.JsonUtil.PropertyHandler;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class ECCarLoan extends ECCarLoanEntity implements ProtocolEntity {
-
+public class EC<T>  extends ProtocolEntityImpl {
 	Integer managerId;
+	String owner;
+	String assignee;
 	List<EntrustedCaseReport> reports;
 	List<Message> messages;
+	T loan;
+	
 	
 	public Integer getManagerId() {
 		return managerId;
@@ -43,14 +43,6 @@ public class ECCarLoan extends ECCarLoanEntity implements ProtocolEntity {
 		this.messages = messages;
 	}
 
-	public byte[] toUtf8Json() throws UnsupportedEncodingException {
-		return JsonUtil.toUtf8Json(this);
-	}
-	
-	public String toJson() throws UnsupportedEncodingException {
-		return JsonUtil.toJson(this);
-	}
-
 	@Override
 	public ProtocolEntity fromJson(JSONObject jo) throws IOException {
 		return (ProtocolEntity) JsonUtil.toObject(jo, this, new PropertyHandler(){
@@ -63,10 +55,37 @@ public class ECCarLoan extends ECCarLoanEntity implements ProtocolEntity {
 				if (beanField.getName().equals("messages")){
 					return JsonUtil.toObjects((JSONArray) jsonObj, Message.class);
 				}
+
 				return null;
 			}
 			
 		});
 	}
+
+	public T getLoan() {
+		return loan;
+	}
+
+	public void setLoan(T loan) {
+		this.loan = loan;
+	}
+
+	public String getOwner() {
+		return owner;
+	}
+
+	public void setOwner(String owner) {
+		this.owner = owner;
+	}
+
+	public String getAssignee() {
+		return assignee;
+	}
+
+	public void setAssignee(String assignee) {
+		this.assignee = assignee;
+	}
+
+	
 	
 }

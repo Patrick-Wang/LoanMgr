@@ -8,8 +8,8 @@ import net.sf.json.JSONObject;
 
 public class QueryOption extends ProtocolEntityImpl {
 
-	 String name;
-	 String PIN;
+	 String name; //姓名
+	 String PIN;	//身份證號
 	 String code;//卡号，客户号、车牌号
 	 String wwrq;//委外日期
 	 String wwjg;//委外机构

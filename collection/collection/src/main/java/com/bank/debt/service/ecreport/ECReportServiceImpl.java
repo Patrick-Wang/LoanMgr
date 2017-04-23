@@ -84,11 +84,11 @@ public class ECReportServiceImpl implements ECReportService {
 	public final static String NAME = "ECReportServiceImpl";
 
 	@Override
-	public List<EntrustedCaseReport> getECReports(Integer entrustedCase) throws MappingFailedException {
+	public List<EntrustedCaseReport> getECReports(Integer entrustedCase) {
 		List<EntrustedCaseReportEntity> ecres = entrustedCaseReportDao.getByECId(entrustedCase);		
 		Mapper<EntrustedCaseReportEntity, EntrustedCaseReport> mapper = new Mapper<EntrustedCaseReportEntity, EntrustedCaseReport>();
 		mapper.setMapping(reportMapping);
-		return mapper.map(ecres);
+		return mapper.forceMap(ecres);
 	}
 	
 	@Override

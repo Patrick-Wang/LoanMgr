@@ -20,7 +20,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.bank.debt.protocol.entity.AcceptSummary;
 import com.bank.debt.protocol.entity.AssignSummary;
-import com.bank.debt.protocol.entity.ECQueryInfo;
+import com.bank.debt.protocol.entity.EC;
 import com.bank.debt.protocol.entity.EntrustedCaseManageInfo;
 import com.bank.debt.protocol.entity.EntrustedCaseReport;
 import com.bank.debt.protocol.entity.PhoneRecordName;
@@ -91,8 +91,8 @@ public class EntrustedCaseServlet {
 			    .getAuthentication()
 			    .getPrincipal();
 		String userName = userDetails.getUsername();
-		ECQueryInfo ecqi = null;
-		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), QueryOption.class, null);
+		List ecqi = null;
+		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), new QueryOption(), null);
 		switch(type){
 		case EntrustedCaseType.CAR_LOAN:
 			ecqi = entrustedCaseService.searchCarLoan(userName, qOpt);
@@ -104,7 +104,7 @@ public class EntrustedCaseServlet {
 			ecqi = entrustedCaseService.searchCreditLoan(userName, qOpt);
 			break;
 		}		
-		return JsonUtil.nullOrJson(ecqi);
+		return JsonUtil.toUtf8Json(ecqi);
 	}
 	
 	@RequestMapping(value = "download.do")
