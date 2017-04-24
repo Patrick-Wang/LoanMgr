@@ -110,19 +110,14 @@ module pages {
         private refreshNotAssigned(type:any):void {
             let tableAssist:JQTable.JQGridAssistant = this.createTableAssist("tbNotAssigned", type);
             let loans = [];
-            let isLinked:any[] = [];
+            let isLinked:any = {};
             for (let i = 0; i < this.ecs.length; ++i) {
                 if (undefined == this.ecs[i].assignee || "" == this.ecs[i].assignee) {
                     if (this.ecs[i].loan[2] != "" && this.ecs[i].loan[2] != null){
                         if (this.isOwner && this.ecs[i].owner == context.userName){
-                            isLinked.push([this.ecs[i].loan[0], this.ecs[i].loan[2]]);
-                        } else{
-                            isLinked.push(null);
+                            isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
                         }
-                    }else{
-                        isLinked.push(null);
                     }
-
                     loans.push(this.ecs[i].loan);
                 }
             }
@@ -152,22 +147,31 @@ module pages {
                             alert(rowid + " " +  iCol);
                         }
                     },
+                    onSortCol:(index,iCol,sortorder)=>{
+                        setTimeout(()=>{
+                            let rids = $("#tbNotAssignedTable").getDataIDs();
+                            for (let i =0; i < rids.length; ++i){
+                                if (undefined != isLinked[rids[i]]) {
+                                    $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
+                                }
+                            }
+                        }, 0);
+                    },
                     onPaging:(btn)=>{
                         setTimeout(()=>{
-                            let curPg = $("#tbNotAssignedTable").jqGrid("getGridParam","page");
-                            let rowNum= $("#tbNotAssignedTable").jqGrid("getGridParam",'rowNum');
-                            for (let i = (curPg - 1) * rowNum; i < curPg * rowNum; ++i){
-                                if (null != isLinked[i]) {
-                                    $("#tbNotAssignedTable").setCell(isLinked[i][0], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[i][1] + "</div>");
+                            let rids = $("#tbNotAssignedTable").getDataIDs();
+                            for (let i =0; i < rids.length; ++i){
+                                if (undefined != isLinked[rids[i]]) {
+                                    $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
                                 }
                             }
                         }, 0);
                     }
                 }));
-
-            for (let i =0; i < isLinked.length; ++i){
-                if (null != isLinked[i]) {
-                    $("#tbNotAssignedTable").setCell(isLinked[i][0], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[i][1] + "</div>");
+            let rids = $("#tbNotAssignedTable").getDataIDs();
+            for (let i =0; i < rids.length; ++i){
+                if (undefined != isLinked[rids[i]]) {
+                    $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
                 }
             }
             this.adjustWidth("tbNotAssigned", $("#tbNotAssignedTable"));
@@ -219,26 +223,20 @@ module pages {
         private refreshAllLoans(type:any):void {
             let tableAssist:JQTable.JQGridAssistant = this.createTableAssist("tbAll", type);
             let loans = [];
-            let isLinked:any[] = [];
+            let isLinked:any = {};
             for (let i = 0; i < this.ecs.length; ++i) {
                 if (this.ecs[i].loan[2] != "" && this.ecs[i].loan[2] != null){
                     if (this.isOwner && this.ecs[i].owner == context.userName){
-                        isLinked.push([this.ecs[i].loan[0], this.ecs[i].loan[2]]);
+                        isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
                     } else if (this.isAssigner && this.ecs[i].assignee == context.userName){
-                        isLinked.push([this.ecs[i].loan[0], this.ecs[i].loan[2]]);
-                    } else{
-                        isLinked.push(null);
+                        isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
                     }
-                }else{
-                    isLinked.push(null);
                 }
                 loans.push(this.ecs[i].loan);
             }
 
             $("#tbAllTable").jqGrid(
                 tableAssist.decorate({
-                    // url: "TestTable/WGDD_load.do",
-                    // datatype: "json",
                     data: tableAssist.getDataWithId(loans),
                     datatype: "local",
                     multiselect: false,
@@ -247,10 +245,7 @@ module pages {
                     autowidth: true,
                     viewrecords: true,
                     sortable: true,
-                    //                    cellsubmit: 'clientArray',
-                    //                    cellEdit: true,
                     height: '100%',
-                    //  width:  $("#allLoans").width() - 30,
                     shrinkToFit: false,
                     rowNum: 10,
                     autoScroll: true,
@@ -260,22 +255,32 @@ module pages {
                             alert(rowid + " " +  iCol);
                         }
                     },
+                    onSortCol:(index,iCol,sortorder)=>{
+                        setTimeout(()=>{
+                            let rids = $("#tbAllTable").getDataIDs();
+                            for (let i =0; i < rids.length; ++i){
+                                if (undefined != isLinked[rids[i]]) {
+                                    $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
+                                }
+                            }
+                        }, 0);
+                    },
                     onPaging:(btn)=>{
                         setTimeout(()=>{
-                            let curPg = $("#tbAllTable").jqGrid("getGridParam","page");
-                            let rowNum= $("#tbAllTable").jqGrid("getGridParam",'rowNum');
-                            for (let i = (curPg - 1) * rowNum; i < curPg * rowNum; ++i){
-                                if (null != isLinked[i]) {
-                                    $("#tbAllTable").setCell(isLinked[i][0], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[i][1] + "</div>");
+                            let rids = $("#tbAllTable").getDataIDs();
+                            for (let i =0; i < rids.length; ++i){
+                                if (undefined != isLinked[rids[i]]) {
+                                    $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
                                 }
                             }
                         }, 0);
                     }
                 }));
 
-            for (let i =0; i < isLinked.length; ++i){
-                if (null != isLinked[i]) {
-                    $("#tbAllTable").setCell(isLinked[i][0], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[i][1] + "</div>");
+            let rids = $("#tbAllTable").getDataIDs();
+            for (let i =0; i < rids.length; ++i){
+                if (undefined != isLinked[rids[i]]) {
+                    $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
                 }
             }
             this.adjustWidth("tbAll",  $("#tbAllTable"));

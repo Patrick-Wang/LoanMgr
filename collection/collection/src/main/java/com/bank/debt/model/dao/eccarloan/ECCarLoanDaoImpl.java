@@ -30,7 +30,7 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 	@Override
 	public List<Object[]> search(QueryOption qOpt) {
 		String sql = "select ecme, eccle from ECCarLoanEntity eccle, EntrustedCaseManagerEntity ecme";
-		String where = " where ecme.entrustedCase = eccle.id ";
+		String where = " where entrustedCase = eccle.id and type = 0";
 		if (qOpt.getName() != null){
 			where += " and khxm=:name ";
 		}

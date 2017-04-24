@@ -45,7 +45,7 @@ var pages;
                         .text(as.total).next().text("已接受委案");
                     $("#console-status>div:eq(1)>div").eq(0)
                         .text(as.total - as.complete).next().text("未完成委案");
-                    if (as.totoal != 0) {
+                    if (as.total != 0) {
                         $("#completeRate")
                             .text(parseFloat("" + (as.complete / as.total * 100)).toFixed(1) + "%");
                     }

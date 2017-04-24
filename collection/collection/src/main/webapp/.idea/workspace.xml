@@ -21,17 +21,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="console.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="console.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/pages/console.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.7537037">
-              <caret line="270" column="29" selection-start-line="270" selection-start-column="29" selection-end-line="270" selection-end-column="29" />
+            <state vertical-scroll-proportion="18.466667">
+              <caret line="225" column="34" selection-start-line="225" selection-start-column="34" selection-end-line="225" selection-end-column="34" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
-                <marker date="1493024128192" expanded="true" signature="6974:6999" placeholder="..." />
-                <marker date="1493024128192" expanded="true" signature="7355:7380" placeholder="..." />
-                <marker date="1493024128192" expanded="true" signature="11830:11855" placeholder="..." />
-                <marker date="1493024128192" expanded="true" signature="12203:12228" placeholder="..." />
+                <marker date="1493024993799" expanded="true" signature="6695:6720" placeholder="..." />
+                <marker date="1493024993799" expanded="true" signature="7263:7288" placeholder="..." />
+                <marker date="1493024993799" expanded="true" signature="7708:7733" placeholder="..." />
+                <marker date="1493024993799" expanded="true" signature="11643:11668" placeholder="..." />
+                <marker date="1493024993799" expanded="true" signature="12195:12220" placeholder="..." />
+                <marker date="1493024993799" expanded="true" signature="12625:12650" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -53,7 +55,7 @@
         <entry file="file://$PROJECT_DIR$/jsp/authority/console/summary/owner.tsx">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
+              <caret line="49" column="37" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -69,11 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="assigner.tsx" pinned="false" current-in-tab="false">
+      <file leaf-file-name="assigner.tsx" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/jsp/authority/console/summary/assigner.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.6333333">
+              <caret line="54" column="37" selection-start-line="54" selection-start-column="37" selection-end-line="54" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -181,10 +183,10 @@
         <option value="$PROJECT_DIR$/jsp/authority/nav/tips/messages.tsx" />
         <option value="$PROJECT_DIR$/jsp/authority/nav/tips/missed_call.tsx" />
         <option value="$PROJECT_DIR$/jsp/pages/console.jsp" />
-        <option value="$PROJECT_DIR$/jsp/authority/console/summary/owner.tsx" />
-        <option value="$PROJECT_DIR$/jsp/authority/console/summary/assigner.tsx" />
         <option value="$PROJECT_DIR$/jsp/sdk/protocol.ts" />
         <option value="$PROJECT_DIR$/jsp/pages/console.ts" />
+        <option value="$PROJECT_DIR$/jsp/authority/console/summary/assigner.tsx" />
+        <option value="$PROJECT_DIR$/jsp/authority/console/summary/owner.tsx" />
       </list>
     </option>
   </component>
@@ -277,42 +279,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="sdk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="pages" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="jsp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="jqgrid" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -331,11 +297,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="jqgrid" />
+              <option name="myItemId" value="authority" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="authority" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="console" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="summary" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -891,22 +879,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/authority/console/summary/owner.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="46" column="36" selection-start-line="46" selection-start-column="36" selection-end-line="46" selection-end-column="36" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/authority/console/summary/assigner.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="59" column="0" selection-start-line="59" selection-start-column="0" selection-end-line="59" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/sdk/protocol.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.56296295">
@@ -927,15 +899,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/pages/console.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7537037">
-          <caret line="270" column="29" selection-start-line="270" selection-start-column="29" selection-end-line="270" selection-end-column="29" />
+        <state vertical-scroll-proportion="18.466667">
+          <caret line="225" column="34" selection-start-line="225" selection-start-column="34" selection-end-line="225" selection-end-column="34" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
-            <marker date="1493024128192" expanded="true" signature="6974:6999" placeholder="..." />
-            <marker date="1493024128192" expanded="true" signature="7355:7380" placeholder="..." />
-            <marker date="1493024128192" expanded="true" signature="11830:11855" placeholder="..." />
-            <marker date="1493024128192" expanded="true" signature="12203:12228" placeholder="..." />
+            <marker date="1493024993799" expanded="true" signature="6695:6720" placeholder="..." />
+            <marker date="1493024993799" expanded="true" signature="7263:7288" placeholder="..." />
+            <marker date="1493024993799" expanded="true" signature="7708:7733" placeholder="..." />
+            <marker date="1493024993799" expanded="true" signature="11643:11668" placeholder="..." />
+            <marker date="1493024993799" expanded="true" signature="12195:12220" placeholder="..." />
+            <marker date="1493024993799" expanded="true" signature="12625:12650" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/authority/console/summary/owner.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="49" column="37" selection-start-line="49" selection-start-column="37" selection-end-line="49" selection-end-column="37" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/authority/console/summary/assigner.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6333333">
+          <caret line="54" column="37" selection-start-line="54" selection-start-column="37" selection-end-line="54" selection-end-column="37" />
+          <folding />
         </state>
       </provider>
     </entry>
