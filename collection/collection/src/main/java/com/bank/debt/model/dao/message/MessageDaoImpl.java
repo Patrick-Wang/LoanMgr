@@ -57,4 +57,18 @@ public class MessageDaoImpl extends AbstractReadWriteDaoImpl<MessageEntity> impl
 		return ((Long)q.getResultList().get(0)).intValue();
 	}
 
+	@Override
+	public List<MessageEntity> getMsgFromUser(UserEntity user, Integer read) {
+		if (read == null){
+			Query q = this.getEntityManager().createQuery("from MessageEntity where come.id =  :uid");
+			q.setParameter("uid", user.getId());
+			return q.getResultList();
+		}else{
+			Query q = this.getEntityManager().createQuery("from MessageEntity where come.id =  :uid and read = :read");
+			q.setParameter("uid", user.getId());
+			q.setParameter("read", read);
+			return q.getResultList();
+		}
+	}
+
 }

@@ -5,20 +5,7 @@ declare var $:any;
 module authority{
 
     import Endpoint = route.Endpoint;
-    export class MessageReceiver implements Endpoint{
-        address:string;
-        FN:(e:route.Event)=>any;
-        constructor(addr:string, fn:(e:route.Event)=>any){
-            this.address = addr;
-            this.FN = fn;
-        }
-        getAddr():string {
-            return this.address;
-        }
-        onEvent(e:route.Event):any {
-            return this.FN(e);
-        }
-    }
+
 
     export function register(address:string, fn:()=>void){
         route.router.to(REG_ADDR).send(EvId.REGISTER, {addr : address, fn: fn});

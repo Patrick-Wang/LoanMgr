@@ -1,7 +1,7 @@
 ///<reference path="../../../navbar.ts"/>
 ///<reference path="../../registry.ts"/>
 module navbar {
-    import MessageReceiver = authority.MessageReceiver;
+    import Receiver = route.Receiver;
     let ADDR:string = "/nav/tips/missed_call";
     authority.register(ADDR, function () {
         let html = ReactDOMServer.renderToStaticMarkup(
@@ -21,7 +21,7 @@ module navbar {
         );
 
         let missedCall:MissedCall = new MissedCall();
-        route.router.register(new MessageReceiver(ADDR, (e:route.Event)=> {
+        route.router.register(new Receiver(ADDR, (e:route.Event)=> {
             switch (e.id) {
                 case route.MSG.NAV_REFRESH:
                     if (html != null) {

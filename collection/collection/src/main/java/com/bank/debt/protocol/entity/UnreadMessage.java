@@ -8,8 +8,11 @@ import net.sf.json.JSONObject;
 
 public class UnreadMessage  extends ProtocolEntityImpl{
 	Integer msgId;
+	String ecCode;
 	Integer fromId;
 	String fromName;
+	Integer toId;
+	String toName;
 	String title;
 	String Content;
 	String sendTime;
@@ -64,5 +67,13 @@ public class UnreadMessage  extends ProtocolEntityImpl{
 	@Override
 	public ProtocolEntity fromJson(JSONObject jo) throws IOException {
 		return (ProtocolEntity) JsonUtil.toObject(jo, this, null);
+	}
+
+	public String getEcCode() {
+		return ecCode;
+	}
+
+	public void setEcCode(String ecCode) {
+		this.ecCode = ecCode;
 	}
 }

@@ -104,7 +104,7 @@ public class JsonUtil {
 
 		
 	public static Object toObject(JSONObject jo, Object obj, PropertyHandler propHandler) throws IOException{
-		List<Field> fields = BeanUtil.getBeanFieldTypes(obj.getClass());
+		List<Field> fields = BeanUtil.getFields(obj.getClass());
 		SimpleTypeHandler sth = new SimpleTypeHandler();
 		for (Field fd: fields){
 			Object jFd = jo.get(fd.getName());

@@ -19,12 +19,44 @@ module route {
     export class MSG{
         static PAGE_REFRESH:number = nextId();
         static NAV_REFRESH:number = nextId();
+        static CONSOLE_ASSIGNER_UNRESPMSGS:number = route.nextId();
+        static CONSOLE_OWNER_UNREADMSGS:number = route.nextId();
+
     }
 
     export interface Endpoint {
         getAddr():string;
         onEvent(e:Event):any;
     }
+
+    export class Receiver implements Endpoint{
+        address:string;
+        FN:(e:route.Event)=>any;
+        constructor(addr:string, fn:(e:route.Event)=>any){
+            this.address = addr;
+            this.FN = fn;
+        }
+        getAddr():string {
+            return this.address;
+        }
+        onEvent(e:route.Event):any {
+            return this.FN(e);
+        }
+    }
+
+    export class AnonymousReceiver implements Endpoint{
+        receiverStub : Receiver;
+        constructor(fn:(e:route.Event)=>any){
+            this.receiverStub = new Receiver(nextId() + "", fn);
+        }
+        getAddr():string {
+            return this.receiverStub.getAddr();
+        }
+        onEvent(e:route.Event):any {
+            return this.receiverStub.onEvent(e);
+        }
+    }
+
 
     export let DELAY_READY : number = -1;
 

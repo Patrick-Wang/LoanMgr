@@ -1,6 +1,6 @@
 ///<reference path="../../registry.ts"/>
 module navbar{
-    import MessageReceiver = authority.MessageReceiver;
+    import Receiver = route.Receiver;
     let ADDR:string = "/nav/tips/messages";
     authority.register(ADDR, () => {
         let html = ReactDOMServer.renderToStaticMarkup(
@@ -24,7 +24,7 @@ module navbar{
         );
 
         let msgTip:MsgTip = new MsgTip();
-        route.router.register(new MessageReceiver(ADDR, (e:route.Event)=>{
+        route.router.register(new Receiver(ADDR, (e:route.Event)=>{
             switch (e.id){
                 case route.MSG.NAV_REFRESH:
                     if (html != null){
@@ -40,7 +40,6 @@ module navbar{
         }));
     });
 
-    import UnreadMessage = collection.protocol.UnreadMessage;
     export class MsgTip{
 
         constructor(){
@@ -52,7 +51,7 @@ module navbar{
 
         updateTips(){
             collection.Message.getUnreadMessages()
-                .done((mecs : UnreadMessage[])=>{
+                .done((mecs : collection.protocol.Message[])=>{
                    this.onLoadMEC(mecs);
                 });
         }
@@ -113,7 +112,7 @@ module navbar{
             return html;
         }
 
-        onLoadMEC(ums : UnreadMessage[]):void{
+        onLoadMEC(ums : collection.protocol.Message[]):void{
             $("#msgCount").text(ums.length);
             $("#msgCountDetail").text(ums.length + "条待处理消息");
             $(".navMsgTmp").remove();

@@ -19,7 +19,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.bank.debt.protocol.entity.Message;
 import com.bank.debt.protocol.entity.Result;
-import com.bank.debt.protocol.entity.UnreadMessage;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
@@ -29,7 +28,6 @@ import com.bank.debt.service.message.MessageServiceImpl;
 import com.bank.debt.service.service.ftp.FtpService;
 
 import net.sf.json.JSONArray;
-import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping(value = "message")
@@ -67,6 +65,7 @@ public class MessageServlet {
 		String userName = userDetails.getUsername();
 		return JsonUtil.toUtf8Json(messageService.getUnreadCount(entrustedCase, userName));
 	}
+
 	
 	@RequestMapping(value = "read_message.do")
 	public @ResponseBody byte[] readMessage(HttpServletRequest request,
@@ -87,7 +86,21 @@ public class MessageServlet {
 			    .getPrincipal();
 		String userName = userDetails.getUsername();
 		
-		List<UnreadMessage> ums = messageService.getUnressages(userName);
+		List<Message> ums = messageService.getUnreadMessages(userName);
+		
+		return JsonUtil.toUtf8Json(ums);
+	}
+	
+	@RequestMapping(value = "send_messages.do")
+	public @ResponseBody byte[] sendMessages(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="read", required=false) Integer read) throws UnsupportedEncodingException {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
+		
+		List<Message> ums = messageService.getSendMessages(userName, read);
 		
 		return JsonUtil.toUtf8Json(ums);
 	}

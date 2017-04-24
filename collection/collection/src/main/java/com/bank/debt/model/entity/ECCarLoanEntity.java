@@ -29,6 +29,7 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	Integer	xh	;
 	String code;
 	String pch;
 	Date wwrq;
@@ -37,7 +38,6 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	Double wwje;
 	Double yhje;
 	String bz;
-	Integer	xh	;
 	Date	wwdqr	;
 	Date	jarq	;
 	String	khxm	;

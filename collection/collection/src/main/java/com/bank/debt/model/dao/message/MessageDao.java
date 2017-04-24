@@ -17,4 +17,6 @@ public interface MessageDao extends AbstractReadWriteDao<MessageEntity> {
 
 	Integer getUnreadCount(Integer to);
 
+	List<MessageEntity> getMsgFromUser(UserEntity user, Integer read);
+
 }

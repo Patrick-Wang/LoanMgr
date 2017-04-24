@@ -2,12 +2,12 @@
 ///<reference path="../../registry.ts"/>
 var navbar;
 (function (navbar) {
-    var MessageReceiver = authority.MessageReceiver;
+    var Receiver = route.Receiver;
     var ADDR = "/nav/tips/missed_call";
     authority.register(ADDR, function () {
         var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", null, React.createElement("a", {"className": " dropdown-toggle", "data-toggle": "dropdown", "title": "Notifications", "href": "#"}, React.createElement("i", {"className": "icon fa fa-warning red"}), React.createElement("span", {"id": "navCallCount", "className": "badge"}, "0")), React.createElement("ul", {"id": "navCallDetail", "className": "pull-right dropdown-menu dropdown-arrow dropdown-notifications"}, React.createElement("li", {"className": "dropdown-footer "}, React.createElement("div", {"id": "navCallCenter"}, "前往呼叫中心")))));
         var missedCall = new MissedCall();
-        route.router.register(new MessageReceiver(ADDR, function (e) {
+        route.router.register(new Receiver(ADDR, function (e) {
             switch (e.id) {
                 case route.MSG.NAV_REFRESH:
                     if (html != null) {

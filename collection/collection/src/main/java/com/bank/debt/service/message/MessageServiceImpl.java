@@ -14,6 +14,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.bank.debt.model.dao.eccarloan.ECCarLoanDao;
+import com.bank.debt.model.dao.eccarloan.ECCarLoanDaoImpl;
+import com.bank.debt.model.dao.eccreditcard.ECCreditCardDao;
+import com.bank.debt.model.dao.eccreditcard.ECCreditCardDaoImpl;
+import com.bank.debt.model.dao.eccreditloan.ECCreditLoanDao;
+import com.bank.debt.model.dao.eccreditloan.ECCreditLoanDaoImpl;
 import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDao;
 import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDaoImpl;
 import com.bank.debt.model.dao.message.MessageDao;
@@ -25,7 +31,6 @@ import com.bank.debt.model.entity.MessageEntity;
 import com.bank.debt.model.entity.UserEntity;
 import com.bank.debt.protocol.entity.Message;
 import com.bank.debt.protocol.entity.Result;
-import com.bank.debt.protocol.entity.UnreadMessage;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
@@ -34,6 +39,7 @@ import com.bank.debt.protocol.tools.map.Mapper;
 import com.bank.debt.protocol.tools.map.Mapping;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
 import com.bank.debt.protocol.tools.map.MappingSkipException;
+import com.bank.debt.protocol.type.EntrustedCaseType;
 import com.bank.debt.protocol.type.MessageStatus;
 import com.bank.debt.service.service.ftp.FtpService;
 
@@ -51,6 +57,14 @@ public class MessageServiceImpl implements MessageService {
 	@Resource(name=MessageDaoImpl.NAME)
 	MessageDao messageDao;
 
+	@Resource(name=ECCarLoanDaoImpl.NAME)
+	ECCarLoanDao eCCarLoanDao;
+
+	@Resource(name=ECCreditLoanDaoImpl.NAME)
+	ECCreditLoanDao eCCreditLoanDao;
+
+	@Resource(name=ECCreditCardDaoImpl.NAME)
+	ECCreditCardDao eCCreditCardDao;
 	
 	@Autowired
 	FtpService ftpService;
@@ -78,19 +92,31 @@ public class MessageServiceImpl implements MessageService {
 		}
 	}
 
-	
+	String getECCode(EntrustedCaseManagerEntity ecme ){
+		if( ecme.getType() == EntrustedCaseType.CAR_LOAN){
+			return eCCarLoanDao.getById(ecme.getEntrustedCase()).getCode();
+		}
+		if( ecme.getType() == EntrustedCaseType.CREDIT_CARD){
+			return eCCreditCardDao.getById(ecme.getEntrustedCase()).getCode();
+		}
+		if( ecme.getType() == EntrustedCaseType.CREDIT_LOAN){
+			return eCCreditLoanDao.getById(ecme.getEntrustedCase()).getCode();
+		}
+		return null;
+	}
 	
 	@Override
-	public List<UnreadMessage> getUnressages(String userName) {
+	public List<Message> getUnreadMessages(String userName) {
 		UserEntity user = userDao.getUserByName(userName);
 		List<MessageEntity> mes = messageDao.getUnreadMsgToUser(user);
-		Mapper<MessageEntity, UnreadMessage> mapper = new Mapper<MessageEntity, UnreadMessage>();
-		mapper.setMapping(new Mapping<MessageEntity, UnreadMessage>(){
+		Mapper<MessageEntity, Message> mapper = new Mapper<MessageEntity, Message>();
+		mapper.setMapping(new Mapping<MessageEntity, Message>(){
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			
 			@Override
-			public UnreadMessage onMap(MessageEntity from) throws MappingSkipException, MappingFailedException {
-				UnreadMessage ms = new UnreadMessage();
+			public Message onMap(MessageEntity from) throws MappingSkipException, MappingFailedException {
+				Message ms = new Message();
+				ms.setEcCode(getECCode(from.getEntrustedCaseManager()));
 				ms.setFromId(from.getCome().getId());
 				ms.setFromName(from.getCome().getUsername());
 				ms.setContent(from.getContent());
@@ -168,5 +194,31 @@ public class MessageServiceImpl implements MessageService {
 		me.setSendTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 		messageDao.merge(me);
 		return ErrorCode.OK;
+	}
+
+	@Override
+	public List<Message> getSendMessages(String userName, Integer read) {
+		UserEntity user = userDao.getUserByName(userName);
+		List<MessageEntity> mes = messageDao.getMsgFromUser(user, read);
+		Mapper<MessageEntity, Message> mapper = new Mapper<MessageEntity, Message>();
+		mapper.setMapping(new Mapping<MessageEntity, Message>(){
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			
+			@Override
+			public Message onMap(MessageEntity from) throws MappingSkipException, MappingFailedException {
+				Message ms = new Message();
+				ms.setEcCode(getECCode(from.getEntrustedCaseManager()));
+				ms.setToId(from.getTo().getId());
+				ms.setToName(from.getTo().getUsername());
+				ms.setContent(from.getContent());
+				ms.setMsgId(from.getId());
+				ms.setSendTime(formatter.format(from.getSendTime()));
+				ms.setTitle(from.getTitle());
+				ms.setRead(from.getRead());
+				return ms;
+			}
+			
+		});
+		return mapper.forceMap(mes);
 	}
 }

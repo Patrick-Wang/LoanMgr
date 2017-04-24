@@ -275,6 +275,7 @@ create table `entrusted_case_credit_loan`(
 
 create table `entrusted_case_credit_card`(				
 	`id`	int NOT NULL AUTO_INCREMENT	,--	自增主键
+	`cid`	int	,--	内部管理ID
 	`code` varchar(20),
 	`pch`	varchar(50)	,--	批次号
 	`wwrq`	date	,--	委外日期
@@ -282,8 +283,8 @@ create table `entrusted_case_credit_card`(
 	`wwjig` varchar(50)	,
 	`wwje` double,
 	`yhje` double,
+	`tarq` date,
 	`beiz`	text	,--	备注
-	`cid`	int	,--	内部管理ID
 	`gaxlh`	varchar(50)	,--	个案序列号
 	`xm`	varchar(50)	,--	姓名
 	`wtf`	varchar(50)	,--	委托方

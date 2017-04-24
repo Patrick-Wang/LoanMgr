@@ -90,7 +90,7 @@ public class Xls2JsonMapping implements Mapping<InputStream, JSONArray> {
 	
 	
 	private JSONArray doMapping(InputStream xls) throws IOException, ValidationException{
-		List<Field> fields = BeanUtil.getBeanFieldTypes(beanClass);
+		List<Field> fields = BeanUtil.getDirectFields(beanClass);
 		JSONArray ja = new JSONArray();
 		HSSFWorkbook workbook = new HSSFWorkbook(xls);
 		HSSFSheet sheet = workbook.getSheetAt(0);

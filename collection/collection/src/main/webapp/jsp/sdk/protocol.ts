@@ -18,7 +18,7 @@ module collection.protocol {
         "联络人8关系", "联络人8电话", "联络人9姓名", "联络人9关系", "联络人9电话", "联络人10姓名", "联络人10关系", "联络人10电话"];
 
     export let creditCardTitle:string[] = ["ID", "委案编号", "批次号", "委外日期", "委外状态", "委外机构", "委外金额", "已还金额",
-        "退案日期", "备注", "个案序列号", "姓名", "委托方", "批次号", "案件状态", "证件号", "证件类型", "性别", "催收状态", "外访状态", "开户行", "卡号", "账号",
+        "退案日期", "备注", "个案序列号", "姓名", "委托方", "案件状态", "证件号", "证件类型", "性别", "催收状态", "外访状态", "开户行", "卡号", "账号",
         "账户名称", "卡类", "档案号", "委案日期", "委案金额", "PTP金额", "CP金额", "最新欠款（导入利息后更新）", "人民币", "港币", "外币", "催收员", "催收员ID",
         "催收员部门", "催收区域", "催收小结", "最后通电", "已还款", "分配历史", "分配时间", "下次跟进日期", "跟进次数", "M值系数", "逾期账龄", "邮箱", "QQ", "手机",
         "家庭号码", "单位号码", "单位名称", "单位地址", "单位邮编", "家庭地址", "家庭邮编", "对账单地址", "对账单邮编", "户籍地址", "户籍地邮编", "职位", "部门", "省份",
@@ -131,32 +131,25 @@ module collection.protocol {
 
     export interface Message {
         msgId:number
+        ecCode:string;
         fromId:number;
         fromName:string;
         toId:number;
         toName:string;
+        title:string;
         content:string;
         attachements:string[];
         sendTime:string;//2013-12-11 58:11:23
         read:MessageStatus;
     }
 
-    export interface UnreadMessage {
-        msgId:number;
-        fromId:number;
-        fromName:string;
-        title:string;
-        content:string;
-        sendTime:string;//2013-12-11 58:11:23
-    }
-
-    export interface EC<T> {
+    export interface EC {
         reports:EntrustedCaseReport[];
         messages:Message[];
         managerId:number;
         owner?:string;
         assignee?:string;
-        loan:T;
+        loan:any[];
     }
 
     export interface QueryOption {
@@ -194,13 +187,13 @@ module collection.protocol {
     }
 
     export interface AssignSummary {
-        totoal:number;
+        total:number;
         unassign:number;
         assign:number;
         complete:number;
     }
     export interface AcceptSummary {
-        totoal:number;
+        total:number;
         complete:number;
     }
 }

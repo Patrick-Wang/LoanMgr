@@ -18,6 +18,11 @@ var collection;
         Message.getUnreadMessages = function () {
             return collection.Net.post(collection.Net.BASE_URL + "/message/unread_messages.do");
         };
+        Message.getSendMessages = function (read) {
+            return collection.Net.post(collection.Net.BASE_URL + "/message/send_messages.do", {
+                read: read
+            });
+        };
         Message.getMessages = function (entrusted_case, partner) {
             return collection.Net.post(collection.Net.BASE_URL + "/message/receive.do", {
                 entrusted_case: entrusted_case,

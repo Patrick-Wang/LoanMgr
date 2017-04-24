@@ -8,13 +8,13 @@ import net.sf.json.JSONObject;
 
 public class AcceptSummary  extends ProtocolEntityImpl{
 
-	Integer totoal;
+	Integer total;
 	Integer complete;
-	public Integer getTotoal() {
-		return totoal;
+	public Integer getTotal() {
+		return total;
 	}
-	public void setTotoal(Integer totoal) {
-		this.totoal = totoal;
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 	public Integer getComplete() {
 		return complete;

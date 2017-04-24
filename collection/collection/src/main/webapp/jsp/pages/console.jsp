@@ -1,13 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" session="false"%>
 
-	<style>
-	.dowebok { margin-left:-35px}
-	.dowebok ul { list-style-type: none;}
-	.dowebok li { display: inline-block;}
-	.dowebok li { margin: 10px 0;}
-	.dowebok input.labelauty + label { font: 12px "Microsoft Yahei";}
-	</style>
+<style>
+.dowebok {
+	margin-left: -35px
+}
+
+.dowebok ul {
+	list-style-type: none;
+}
+
+.dowebok li {
+	display: inline-block;
+}
+
+.dowebok li {
+	margin: 10px 0;
+}
+
+.dowebok input.labelauty+label {
+	font: 12px "Microsoft Yahei";
+}
+</style>
 <!-- Page Breadcrumb -->
 <div class="page-breadcrumbs">
 	<ul class="breadcrumb">
@@ -46,7 +60,7 @@
 					</div>
 					<div class="col-lg-5 col-md-8 col-sm-12 profile-info">
 						<div class="header-fullname">${userName}</div>
-						<div class="header-information">${org} ${position} :
+						<div class="header-information">${org}${position} :
 							${userName}</div>
 					</div>
 					<div class="col-lg-5 col-md-12 col-sm-12 col-xs-12 profile-stats">
@@ -69,7 +83,7 @@
 								<i class="glyphicon glyphicon-map-marker"></i> ${org}
 							</div>
 							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
-								综合完成率: <strong>95%</strong>
+								综合完成率: <strong id="completeRate">--</strong>
 							</div>
 							<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 inlinestats-col">
 								${pOrg}： <strong>${position}</strong>
@@ -85,10 +99,8 @@
 										全部委案 </a></li>
 								<li class="tab-red"><a data-toggle="tab"
 									href="#notAssigned"> 未分配委案 </a></li>
-								<li class="tab-palegreen"><a data-toggle="tab"
-									id="contacttab" href="#notRepliedMsg"> 未处理咨询 </a></li>
-								<li class="tab-yellow"><a data-toggle="tab"
-									href="#settings"> 设置 </a></li>
+								<%--<li class="tab-yellow"><a data-toggle="tab"--%>
+									<%--href="#settings"> 设置 </a></li>--%>
 							</ul>
 							<div class="tab-content tabs-flat">
 								<div class="row">
@@ -132,6 +144,17 @@
 											<div class="widget">
 												<div class="widget-body">
 													<div id="tbNotRepliedMsg"></div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div id="waitRepliedMsg" class="tab-pane">
+									<div class="row">
+										<div class="col-xs-12 col-md-12">
+											<div class="widget">
+												<div class="widget-body">
+													<div id="tbWaitRepliedMsg"></div>
 												</div>
 											</div>
 										</div>

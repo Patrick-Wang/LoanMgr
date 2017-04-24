@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,7 +22,6 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.bank.debt.protocol.entity.AcceptSummary;
 import com.bank.debt.protocol.entity.AssignSummary;
-import com.bank.debt.protocol.entity.EC;
 import com.bank.debt.protocol.entity.EntrustedCaseManageInfo;
 import com.bank.debt.protocol.entity.EntrustedCaseReport;
 import com.bank.debt.protocol.entity.PhoneRecordName;
@@ -95,16 +96,31 @@ public class EntrustedCaseServlet {
 		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), new QueryOption(), null);
 		switch(type){
 		case EntrustedCaseType.CAR_LOAN:
-			ecqi = entrustedCaseService.searchCarLoan(userName, qOpt);
+			ecqi = entrustedCaseService.searchCarLoan(qOpt);
 			break;
 		case EntrustedCaseType.CREDIT_CARD:
-			ecqi = entrustedCaseService.searchCreditCard(userName, qOpt);
+			ecqi = entrustedCaseService.searchCreditCard(qOpt);
 			break;
 		case EntrustedCaseType.CREDIT_LOAN:
-			ecqi = entrustedCaseService.searchCreditLoan(userName, qOpt);
+			ecqi = entrustedCaseService.searchCreditLoan(qOpt);
 			break;
 		}		
 		return JsonUtil.toUtf8Json(ecqi);
+	}
+	
+	
+	@RequestMapping(value = "backup.do")
+	public void backup(HttpServletRequest request,
+			HttpServletResponse response) throws IOException, MappingFailedException {
+		response.setContentType("application/octet-stream");
+		String time = new SimpleDateFormat("YYYYMMddHHmmss").format(new Date(Calendar.getInstance().getTimeInMillis()));
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String usr = userDetails.getUsername();
+		response.setHeader("Content-disposition", "attachment;filename=\""
+				+ java.net.URLEncoder.encode("backup_" + time + ".zip", "UTF-8") + "\"");
+		entrustedCaseService.downloadAll(usr, response.getOutputStream());
 	}
 	
 	@RequestMapping(value = "download.do")
@@ -112,19 +128,28 @@ public class EntrustedCaseServlet {
 			HttpServletResponse response, 
 			@RequestParam("type") Integer type,
 			@RequestParam("query") String query) throws IOException, MappingFailedException {
+		response.setContentType("application/octet-stream");
+		String time = new SimpleDateFormat("YYYYMMddHHmmss").format(new Date(Calendar.getInstance().getTimeInMillis()));
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
 		String usr = userDetails.getUsername();
-		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), QueryOption.class, null);
+		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), new QueryOption(), null);
 		switch(type){
 		case EntrustedCaseType.CAR_LOAN:
+			response.setHeader("Content-disposition", "attachment;filename=\""
+					+ java.net.URLEncoder.encode("车贷" + time + ".xls", "UTF-8") + "\"");
 			entrustedCaseService.getDownloadCarLoan(usr, qOpt, response.getOutputStream());
+			
 			break;
 		case EntrustedCaseType.CREDIT_CARD:
+			response.setHeader("Content-disposition", "attachment;filename=\""
+					+ java.net.URLEncoder.encode("信用卡" + time + ".xls", "UTF-8") + "\"");
 			entrustedCaseService.getDownloadCreditCard(usr, qOpt, response.getOutputStream());
 			break;
 		case EntrustedCaseType.CREDIT_LOAN:
+			response.setHeader("Content-disposition", "attachment;filename=\""
+					+ java.net.URLEncoder.encode("信贷" + time + ".xls", "UTF-8") + "\"");
 			entrustedCaseService.getDownloadCreditLoan(usr, qOpt, response.getOutputStream());
 			break;
 		}
@@ -217,7 +242,7 @@ public class EntrustedCaseServlet {
 			    .getPrincipal();
 		String userName = userDetails.getUsername();
 		Result r = ErrorCode.ECR_SUBMIT_FAILED;
-		EntrustedCaseReport ecr = (EntrustedCaseReport) JsonUtil.toObject(JSONObject.fromObject(report), EntrustedCaseReport.class, new PropertyHandler(){
+		EntrustedCaseReport ecr = (EntrustedCaseReport) JsonUtil.toObject(JSONObject.fromObject(report), new EntrustedCaseReport(), new PropertyHandler(){
 
 			@Override
 			public Object toBeanValue(Field beanField, Object jsonObj) {

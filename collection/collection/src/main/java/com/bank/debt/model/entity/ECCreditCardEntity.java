@@ -29,6 +29,7 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	Integer	cid		;
 	String code;
 	String pch;
 	Date wwrq;
@@ -36,8 +37,8 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	String wwjig;
 	Double wwje;
 	Double yhje;
-	String beiz;
-	Integer	cid		;
+	Date tarq;
+	String beiz;	
 	String	gaxlh		;
 	String	xm		;
 	String	wtf		;
@@ -1282,5 +1283,11 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void setBeiz(String beiz) {
 		this.beiz = beiz;
+	}
+	public Date getTarq() {
+		return tarq;
+	}
+	public void setTarq(Date tarq) {
+		this.tarq = tarq;
 	}
 }

@@ -5,7 +5,7 @@ module collection{
     import Result = collection.protocol.Result;
     import Role = collection.protocol.Role;
     import IF = collection.protocol.IF;
-    import UnreadMessage = collection.protocol.UnreadMessage;
+    import MessageStatus = collection.protocol.MessageStatus;
 
     export class Message{
         static getUnreadCount(entrusted_case?:number):Promise<number>{
@@ -20,11 +20,17 @@ module collection{
             });
         }
 
-        static getUnreadMessages():Promise<UnreadMessage[]>{
+        static getUnreadMessages():Promise<collection.protocol.Message[]>{
             return Net.post(Net.BASE_URL + "/message/unread_messages.do");
         }
 
-        static getMessages(entrusted_case:number, partner:number):Promise<Message[]>{
+        static getSendMessages(read?:MessageStatus):Promise<collection.protocol.Message[]>{
+            return Net.post(Net.BASE_URL + "/message/send_messages.do",{
+                read:read
+            });
+        }
+
+        static getMessages(entrusted_case:number, partner:number):Promise<collection.protocol.Message[]>{
             return Net.post(Net.BASE_URL + "/message/receive.do",{
                 entrusted_case:entrusted_case,
                 with:partner

@@ -7,15 +7,15 @@ import com.bank.debt.protocol.tools.JsonUtil;
 import net.sf.json.JSONObject;
 
 public class AssignSummary  extends ProtocolEntityImpl{
-	 Integer totoal;
+	 Integer total;
 	 Integer unassign;
 	 Integer assign;
 	 Integer complete;
-	public Integer getTotoal() {
-		return totoal;
+	public Integer getTotal() {
+		return total;
 	}
-	public void setTotoal(Integer totoal) {
-		this.totoal = totoal;
+	public void setTotal(Integer total) {
+		this.total = total;
 	}
 	public Integer getUnassign() {
 		return unassign;

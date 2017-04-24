@@ -10,9 +10,38 @@ var route;
         }
         MSG.PAGE_REFRESH = route.nextId();
         MSG.NAV_REFRESH = route.nextId();
+        MSG.CONSOLE_ASSIGNER_UNRESPMSGS = route.nextId();
+        MSG.CONSOLE_OWNER_UNREADMSGS = route.nextId();
         return MSG;
     })();
     route.MSG = MSG;
+    var Receiver = (function () {
+        function Receiver(addr, fn) {
+            this.address = addr;
+            this.FN = fn;
+        }
+        Receiver.prototype.getAddr = function () {
+            return this.address;
+        };
+        Receiver.prototype.onEvent = function (e) {
+            return this.FN(e);
+        };
+        return Receiver;
+    })();
+    route.Receiver = Receiver;
+    var AnonymousReceiver = (function () {
+        function AnonymousReceiver(fn) {
+            this.receiverStub = new Receiver(route.nextId() + "", fn);
+        }
+        AnonymousReceiver.prototype.getAddr = function () {
+            return this.receiverStub.getAddr();
+        };
+        AnonymousReceiver.prototype.onEvent = function (e) {
+            return this.receiverStub.onEvent(e);
+        };
+        return AnonymousReceiver;
+    })();
+    route.AnonymousReceiver = AnonymousReceiver;
     route.DELAY_READY = -1;
     var Router = (function () {
         function Router() {

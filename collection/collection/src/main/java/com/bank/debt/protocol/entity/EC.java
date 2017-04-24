@@ -10,13 +10,13 @@ import com.bank.debt.protocol.tools.JsonUtil.PropertyHandler;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
-public class EC<T>  extends ProtocolEntityImpl {
+public class EC  extends ProtocolEntityImpl {
 	Integer managerId;
 	String owner;
 	String assignee;
 	List<EntrustedCaseReport> reports;
 	List<Message> messages;
-	T loan;
+	List<Object> loan;
 	
 	
 	public Integer getManagerId() {
@@ -62,11 +62,11 @@ public class EC<T>  extends ProtocolEntityImpl {
 		});
 	}
 
-	public T getLoan() {
+	public List<Object> getLoan() {
 		return loan;
 	}
 
-	public void setLoan(T loan) {
+	public void setLoan(List<Object> loan) {
 		this.loan = loan;
 	}
 
