@@ -522,6 +522,7 @@ insert into `authority` (intf, role) values
 ((select id from interface where address='/account/org/search.do'), (select id from role where name='ROLE_ADMIN')),
 ((select id from interface where address='/account/org/search.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/account/search.do'), (select id from role where name='ROLE_ADMIN')),
+((select id from interface where address='/account/search.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/account/update.do'), (select id from role where name='ROLE_ADMIN')),
 ((select id from interface where address='/account/create.do'), (select id from role where name='ROLE_ADMIN')),
 ((select id from interface where address='/authority/role.do'), (select id from role where name='ROLE_ADMIN')),

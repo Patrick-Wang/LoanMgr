@@ -106,17 +106,17 @@
 								<div class="row">
 									<div class="col-xs-12 col-md-12">
 										<ul class="dowebok">
-											<li><input type="radio" name="radio" myid="0"
-												data-labelauty="车贷" checked="checked"></li>
-											<li><input type="radio" name="radio" myid="1"
+											<li><input type="radio" checked="checked" name="conRadio" myid="0"
+												data-labelauty="车贷"></li>
+											<li><input type="radio" name="conRadio" myid="1"
 												data-labelauty="信贷"></li>
-											<li><input type="radio" name="radio" myid="2"
+											<li><input type="radio" name="conRadio" myid="2"
 												data-labelauty="信用卡"></li>
 										</ul>
 									</div>
 								</div>
 
-								<div id="allLoans" class="tab-pane active">
+								<div class="tab-pane active">
 									<div class="row">
 										<div class="col-xs-12 col-md-12">
 											<div class="widget">

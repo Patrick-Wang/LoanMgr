@@ -16,12 +16,19 @@ module sidebar {
                 this.pages.push(null);
                 this.items.push(null);
             }
+            $(document).ready(()=>{
+                for (let i = 0; i < this.pages.length; ++i){
+                    if (this.pages[i] != null) {
+                        this.pages[i].refresh();
+                    }
+                }
+            });
         }
 
         static registerPage(type:PageType, page:pages.Page) {
             SiderBar.ins.pages[type] = page;
             SiderBar.ins.items[type] = new SiderItemEvent(type);
-            SiderBar.ins.pages[type].refresh();
+           // SiderBar.ins.pages[type].refresh();
         }
 
         static showPage(type:PageType) {

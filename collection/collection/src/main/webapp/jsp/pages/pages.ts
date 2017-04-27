@@ -35,6 +35,38 @@ module pages{
         }
     }
 
+    export class JQGridAssistantFactory {
+        public static createTable(gridName:string, titles:string[], width:number = 80):JQTable.JQGridAssistant {
+            let nodes = [];
+            for (let i = 0; i < titles.length; ++i) {
+                nodes.push(JQTable.Node.create({
+                    name: titles[i],
+                    width: width,
+                    isSortable: true
+                }));
+            }
+            return new JQTable.JQGridAssistant(nodes, gridName);
+        }
+
+        public static createTableAssist(pName:string, type:collection.protocol.EntrustedCaseType):JQTable.JQGridAssistant {
+            var parent = $("#" + pName);
+            parent.empty();
+            parent.append("<table id='" + pName + "Table'></table><div id='" + pName + "Pager'></div>");
+            let tableAssist:JQTable.JQGridAssistant = null;
+            if (type == collection.protocol.EntrustedCaseType.carLoan) {
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.carLoanTitle);
+            } else if (type == collection.protocol.EntrustedCaseType.creditCard) {
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.creditCardTitle);
+            } else {
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.creditLoanTitle);
+            }
+            return tableAssist;
+        }
+
+    }
+
+
+
     export abstract class PageImpl implements Page{
         page : PageType;
         html: string;
@@ -62,10 +94,7 @@ module pages{
                 //PageUtil.jqPage(this.page).append(this.html);
                 //init();
                 PageUtil.jqPage(this.page).css("display", "");
-                //$("#" + PageUtil.getPageId(this.page) + " #refresh-toggler").click(()=> {
-                //    this.refresh();
-                //    return false;
-                //});
+                this.onShown();
             }
         }
 
@@ -81,6 +110,9 @@ module pages{
             return "none" != PageUtil.jqPage(this.page).css("display");
         }
 
+        protected onShown():void{
+
+        }
         protected abstract onRefresh():void;
     }
 

@@ -8,17 +8,25 @@ var sidebar;
     sidebar.registerPage = registerPage;
     var SiderBar = (function () {
         function SiderBar() {
+            var _this = this;
             this.pages = [];
             this.items = [];
             for (var i = 0; i < PageType.end; ++i) {
                 this.pages.push(null);
                 this.items.push(null);
             }
+            $(document).ready(function () {
+                for (var i = 0; i < _this.pages.length; ++i) {
+                    if (_this.pages[i] != null) {
+                        _this.pages[i].refresh();
+                    }
+                }
+            });
         }
         SiderBar.registerPage = function (type, page) {
             SiderBar.ins.pages[type] = page;
             SiderBar.ins.items[type] = new SiderItemEvent(type);
-            SiderBar.ins.pages[type].refresh();
+            // SiderBar.ins.pages[type].refresh();
         };
         SiderBar.showPage = function (type) {
             if (SiderBar.ins.pages[type] != null) {

@@ -30,6 +30,40 @@ var pages;
         return PageUtil;
     })();
     pages.PageUtil = PageUtil;
+    var JQGridAssistantFactory = (function () {
+        function JQGridAssistantFactory() {
+        }
+        JQGridAssistantFactory.createTable = function (gridName, titles, width) {
+            if (width === void 0) { width = 80; }
+            var nodes = [];
+            for (var i = 0; i < titles.length; ++i) {
+                nodes.push(JQTable.Node.create({
+                    name: titles[i],
+                    width: width,
+                    isSortable: true
+                }));
+            }
+            return new JQTable.JQGridAssistant(nodes, gridName);
+        };
+        JQGridAssistantFactory.createTableAssist = function (pName, type) {
+            var parent = $("#" + pName);
+            parent.empty();
+            parent.append("<table id='" + pName + "Table'></table><div id='" + pName + "Pager'></div>");
+            var tableAssist = null;
+            if (type == collection.protocol.EntrustedCaseType.carLoan) {
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.carLoanTitle);
+            }
+            else if (type == collection.protocol.EntrustedCaseType.creditCard) {
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.creditCardTitle);
+            }
+            else {
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.creditLoanTitle);
+            }
+            return tableAssist;
+        };
+        return JQGridAssistantFactory;
+    })();
+    pages.JQGridAssistantFactory = JQGridAssistantFactory;
     var PageImpl = (function () {
         function PageImpl(page) {
             var _this = this;
@@ -54,6 +88,7 @@ var pages;
                 //PageUtil.jqPage(this.page).append(this.html);
                 //init();
                 PageUtil.jqPage(this.page).css("display", "");
+                this.onShown();
             }
         };
         PageImpl.prototype.hide = function () {
@@ -63,6 +98,8 @@ var pages;
         };
         PageImpl.prototype.isShown = function () {
             return "none" != PageUtil.jqPage(this.page).css("display");
+        };
+        PageImpl.prototype.onShown = function () {
         };
         return PageImpl;
     })();

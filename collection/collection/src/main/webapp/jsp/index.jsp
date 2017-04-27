@@ -185,13 +185,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	border-bottom-color: inherit;
 	border-bottom-style: solid;
 }
-
-/*  .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight  {border: none; background: none; color: none; } */
-/* .ui-state-highlight a, .ui-widget-content .ui-state-highlight a,.ui-widget-header .ui-state-highlight a { color: none; } */
-
-/*  .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: 1px; background: none; font-weight: normal; color: none; } */
-/*  .ui-state-hover a, .ui-state-hover a:hover { color: none; text-decoration: none; } */
-.ui-jqgrid tr.jqgrow td:last-child {
+	.ui-jqgrid tr.jqgrow td:last-child {
 	border-right-width: 0px;
 }
 
@@ -202,6 +196,16 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 .ui-jqgrid tr.jqgrow:last-child td {
 	border-bottom-width: 0px;
 }
+
+.ui-jqgrid input[type=checkbox]{
+	opacity: 100;
+	position: inherit;
+	left:0px;
+	width: 15px;
+	height: 18px;
+	cursor: pointer;
+	margin:0;
+	}
 
 .ui-state-default, .ui-widget-content .ui-state-default,
 	.ui-widget-header .ui-state-default {
@@ -263,24 +267,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
     font-size:12px;
 }
 
-.wicon {
-	background-image:
-		url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAQCAYAAAD52jQlAAAAR0lEQVR42mPYeOnNf2pjhlFD/1MToBhKDRdiNRTdRnL4ZBmauuwWBqaKociAoKHEYGyGUhymJLt0wMKU5Ninejqleo6iNgYATw27GzJD1pEAAAAASUVORK5CYII=");
-	background-repeat: no-repeat;
-	background-size: 26px 20px;
-	background-position: right center;
-}
-
-.workinput {
-	width: 140px;
-	height: 20px;
-	line-height: 20px;
-	border: 1px #A5D2EC solid;
-	padding: 0px 0px 0px 5px;
-	background-color: #fff;
-	float: left;
-	font-size: 14px;
-}
 </style>
 </head>
 <body>
@@ -358,7 +344,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 </body>
 
 <!--Basic Scripts-->
-
 
 <%@include file="basicScript.jsp"%>
 </html>

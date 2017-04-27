@@ -12,23 +12,6 @@ var pages;
 (function (pages) {
     var EntrustedCase = collection.EntrustedCase;
     var AnonymousReceiver = route.AnonymousReceiver;
-    var JQGridAssistantFactory = (function () {
-        function JQGridAssistantFactory() {
-        }
-        JQGridAssistantFactory.createTable = function (gridName, titles, width) {
-            if (width === void 0) { width = 80; }
-            var nodes = [];
-            for (var i = 0; i < titles.length; ++i) {
-                nodes.push(JQTable.Node.create({
-                    name: titles[i],
-                    width: width,
-                    isSortable: true
-                }));
-            }
-            return new JQTable.JQGridAssistant(nodes, gridName);
-        };
-        return JQGridAssistantFactory;
-    })();
     var Console = (function (_super) {
         __extends(Console, _super);
         function Console(page) {
@@ -36,6 +19,7 @@ var pages;
             _super.call(this, page);
             this.isAssigner = false;
             this.isOwner = false;
+            //  $("#" + PageUtil.getPageId(this.page) + " .dowebok input[checked='checked']").prop("checked", true);
             $("#" + pages.PageUtil.getPageId(this.page) + " .dowebok input").labelauty();
             $("#" + pages.PageUtil.getPageId(this.page) + " #myTab11 a").click(function () {
                 setTimeout(function () {
@@ -47,46 +31,35 @@ var pages;
                     case route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS:
                         _this.unRespMsgs = e.data;
                         _this.isAssigner = true;
+                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").unbind("click");
+                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
+                            setTimeout(function () {
+                                _this.doTabRefresh();
+                            }, 0);
+                        });
                         _this.doTabRefresh();
                         break;
                     case route.MSG.CONSOLE_OWNER_UNREADMSGS:
                         _this.unReadMsgs = e.data;
                         _this.isOwner = true;
-                        ;
+                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").unbind("click");
+                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
+                            setTimeout(function () {
+                                _this.doTabRefresh();
+                            }, 0);
+                        });
                         _this.doTabRefresh();
                         break;
                 }
             }));
         }
-        Console.prototype.createTableAssist = function (pName, type) {
-            var parent = $("#" + pName);
-            parent.empty();
-            parent.append("<table id='" + pName + "Table'></table><div id='" + pName + "Pager'></div>");
-            var tableAssist = null;
-            if (type == collection.protocol.EntrustedCaseType.carLoan) {
-                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.carLoanTitle);
-            }
-            else if (type == collection.protocol.EntrustedCaseType.creditCard) {
-                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.creditCardTitle);
-            }
-            else {
-                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.creditLoanTitle);
-            }
-            return tableAssist;
-        };
         Console.prototype.onRefresh = function () {
             var _this = this;
-            $("#" + pages.PageUtil.getPageId(this.page) + " #myTab11 a").unbind("click");
-            var type = $(".dowebok input:checked").attr("myid");
+            var type = pages.PageUtil.jqPage(this.page).find(".dowebok input:checked").attr("myid");
             var opt = {};
             EntrustedCase.search(type, opt).done(function (ecs) {
                 _this.ecs = ecs;
                 _this.ecType = type;
-                $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
-                    setTimeout(function () {
-                        _this.doTabRefresh();
-                    }, 0);
-                });
                 _this.doTabRefresh();
             });
         };
@@ -98,16 +71,19 @@ var pages;
                 if ($("#notAssigned").hasClass("active")) {
                     this.refreshNotAssigned(this.ecType);
                 }
-                if ($("#notRepliedMsg").hasClass("active")) {
-                    this.refreshNotRepliedMsg();
-                }
-                if ($("#waitRepliedMsg").hasClass("active")) {
-                    this.refreshWaitRepliedMsg();
-                }
+            }
+            if ($("#notRepliedMsg").hasClass("active")) {
+                this.refreshNotRepliedMsg();
+            }
+            if ($("#waitRepliedMsg").hasClass("active")) {
+                this.refreshWaitRepliedMsg();
             }
         };
+        Console.prototype.onShown = function () {
+            // this.doTabRefresh();
+        };
         Console.prototype.refreshNotAssigned = function (type) {
-            var tableAssist = this.createTableAssist("tbNotAssigned", type);
+            var tableAssist = pages.JQGridAssistantFactory.createTableAssist("tbNotAssigned", type);
             var loans = [];
             var isLinked = {};
             for (var i = 0; i < this.ecs.length; ++i) {
@@ -187,7 +163,7 @@ var pages;
                 row.push(this.unReadMsgs[i].sendTime);
                 data.push(row);
             }
-            var tableAssist = JQGridAssistantFactory.createTable("tbNotRepliedMsgTable", ["委案编码", "发送人", "标题", "内容", "发送时间"], 0);
+            var tableAssist = pages.JQGridAssistantFactory.createTable("tbNotRepliedMsgTable", ["委案编码", "发送人", "标题", "内容", "发送时间"], 0);
             $("#tbNotRepliedMsgTable").jqGrid(tableAssist.decorate({
                 data: tableAssist.getData(data),
                 datatype: "local",
@@ -212,7 +188,7 @@ var pages;
             }
         };
         Console.prototype.refreshAllLoans = function (type) {
-            var tableAssist = this.createTableAssist("tbAll", type);
+            var tableAssist = pages.JQGridAssistantFactory.createTableAssist("tbAll", type);
             var loans = [];
             var isLinked = {};
             for (var i = 0; i < this.ecs.length; ++i) {
@@ -288,7 +264,7 @@ var pages;
                 row.push(this.unRespMsgs[i].sendTime);
                 data.push(row);
             }
-            var tableAssist = JQGridAssistantFactory.createTable("tbNotRepliedMsgTable", ["委案编码", "回复人", "标题", "内容", "发送时间"], 0);
+            var tableAssist = pages.JQGridAssistantFactory.createTable("tbNotRepliedMsgTable", ["委案编码", "回复人", "标题", "内容", "发送时间"], 0);
             $("#tbWaitRepliedMsgTable").jqGrid(tableAssist.decorate({
                 data: tableAssist.getData(data),
                 datatype: "local",

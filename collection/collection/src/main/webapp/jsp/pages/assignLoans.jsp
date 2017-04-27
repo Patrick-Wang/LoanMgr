@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" session="false"%>
 <!-- Page Breadcrumb -->
+
+	<script src="${pageContext.request.contextPath}/jsp/assets/js/fuelux/treeview/tree-custom.min.js"></script>
 <div class="page-breadcrumbs">
 	<ul class="breadcrumb">
 		<li><i class="fa fa-home"></i> <a href="#">主页</a></li>
@@ -40,328 +42,46 @@
 					class="title">确认分配信息</span> <span class="chevron"></span></li>
 			</ul>
 		</div>
+	<style>
+	.pricing-container .dowebok li{
+		margin:0;
+	}
+	</style>
 		<div class="step-content" id="WiredWizardsteps">
 			<div class="step-pane active" id="wiredstep1">
 				<div class="row pricing-container">
 					<div class="row">
-						<div class="col-xs-12 col-md-12">
-							<div class="buttons-preview">
+						<div class="col-xs-12 col-md-12" >
+							<ul class="dowebok"  style="float:left">
+								<li><input type="radio" name="radio" myid="0"
+									data-labelauty="车贷" checked="checked"></li>
+								<li><input type="radio" name="radio" myid="1"
+									data-labelauty="信贷"></li>
+								<li><input type="radio" name="radio" myid="2"
+									data-labelauty="信用卡"></li>
+							</ul>
+<!-- 							<div class="buttons-preview" style="float:right">
 								<a href="javascript:void(0);" class="btn btn-info">查询</a>
-							</div>
+							</div> -->
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-xs-12 col-md-12">
-							<div class="table-scrollable">
-								<table class="table table-striped table-bordered table-hover"
-									id="simpledatatable">
-									<thead>
-										<tr>
-											<th><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></th>
-											<th>客户号</th>
-											<th>客户姓名</th>
-											<th>账户号</th>
-											<th>性别</th>
-											<th>身份证号</th>
-											<th>放款机构</th>
-											<th>放款时间</th>
-											<th>提前结清金额</th>
-											<th>剩余本金</th>
-											<th>逾期利息</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr class="odd gradeX">
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-										<tr>
-											<td><label> <input type="checkbox"> <span
-													class="text"></span>
-											</label></td>
-											<td><a href="index.html">XD00001226</a></td>
-											<td><a href="index.html">孙七</a></td>
-											<td>2220001119998230</td>
-											<td>男</td>
-											<td>210103198001203322</td>
-											<td>中国农业银行</td>
-											<td>2017-01-01</td>
-											<td>200000</td>
-											<td>108000</td>
-											<td>12000</td>
-										</tr>
-									</tbody>
-								</table>
+							<div class="tabbable">
+								<div class="tab-content tabs-flat">
+									<div id="allLoans" class="tab-pane active">
+										<div class="row">
+											<div class="col-xs-12 col-md-12">
+												<div class="widget">
+													<div class="widget-body">
+														<div id="tbAllLoans"></div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
 							</div>
-
 						</div>
 					</div>
 				</div>
@@ -370,25 +90,10 @@
 				<div class="row">
 					<div class="col-lg-12 col-sm-12 col-xs-12">
 						<div class="widget flat radius-bordered">
-							<div class="widget-header bg-blue">
-								<span class="widget-caption">组织人员列表</span>
-							</div>
 
 							<div class="widget-body">
-								<div id="MyTree2" class="tree tree-plus-minus">
-									<div class="tree-folder" style="display: none;">
-										<div class="tree-folder-header">
-											<i class="fa fa-folder"></i>
-											<div class="tree-folder-name"></div>
-										</div>
-										<div class="tree-folder-content"></div>
-										<div class="tree-loader" style="display: none;"></div>
-									</div>
-									<div class="tree-item" style="display: none;">
-										<i class="tree-dot"></i>
-										<div class="tree-item-name"></div>
-									</div>
-								</div>
+	<div id="treeOrg"></div>
+
 							</div>
 						</div>
 					</div>
@@ -406,313 +111,7 @@
 				<div class="row">
 					<div class="col-xs-12 col-md-12">
 						<div class="table-scrollable">
-							<table class="table table-striped table-bordered table-hover"
-								id="expandabledatatable">
-								<thead>
-									<tr>
-										<th><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></th>
-										<th>客户号</th>
-										<th>客户姓名</th>
-										<th>账户号</th>
-										<th>性别</th>
-										<th>身份证号</th>
-										<th>放款机构</th>
-										<th>放款时间</th>
-										<th>提前结清金额</th>
-										<th>剩余本金</th>
-										<th>逾期利息</th>
-									</tr>
-								</thead>
-								<tbody>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr class="odd gradeX">
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-									<tr>
-										<td><label> <input type="checkbox"> <span
-												class="text"></span>
-										</label></td>
-										<td><a href="index.html">XD00001226</a></td>
-										<td><a href="index.html">孙七</a></td>
-										<td>2220001119998230</td>
-										<td>男</td>
-										<td>210103198001203322</td>
-										<td>中国农业银行</td>
-										<td>2017-01-01</td>
-										<td>200000</td>
-										<td>108000</td>
-										<td>12000</td>
-									</tr>
-								</tbody>
-							</table>
+						
 						</div>
 
 					</div>
