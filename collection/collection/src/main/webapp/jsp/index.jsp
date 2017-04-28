@@ -127,7 +127,10 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <script
 	src="${pageContext.request.contextPath}/jsp/jqgrid/js/jquery-ui-custom.min.js"
 	type="text/javascript"></script>
+	<!--Basic Scripts-->
+	<%@include file="basicScript.jsp"%>
 <%@include file="authority/authFns.jsp"%>
+
 <style>
 .ui-widget {
 	font-family: Microsoft YaHei UI;
@@ -343,8 +346,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<!-- Main Container -->
 </body>
 
-<!--Basic Scripts-->
 
-<%@include file="basicScript.jsp"%>
 </html>
 

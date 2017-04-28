@@ -212,5 +212,15 @@ public class AccountServiceImpl implements AccountService {
 		}
 		return addrs;
 	}
+
+	@Override
+	public List<User> getUsers(List<String> ifList) {
+		List<UserEntity> usrs = userDao.getUserByIfs(ifList);
+		List<User> ret = new ArrayList<User>();
+		for (UserEntity ue : usrs){
+			ret.add(ue2user(ue));
+		}
+		return ret;
+	}
  
 }

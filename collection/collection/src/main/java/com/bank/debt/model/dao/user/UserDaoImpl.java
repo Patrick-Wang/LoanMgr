@@ -36,4 +36,29 @@ public class UserDaoImpl extends AbstractReadWriteDaoImpl<UserEntity> implements
 		}
 		return (UserEntity) r.get(0);
 	}
+
+	@Override
+	public List<UserEntity> getUserByIfs(List<String> ifList) {
+		Query q = this.getEntityManager().createQuery("select role.id from AuthorityEntity where intf.address in :ifs group by role.id");
+		q.setParameter("ifs", ifList);
+		List r = q.getResultList();
+		if (r.isEmpty()){
+			return null;
+		}
+		
+		q = this.getEntityManager().createNativeQuery("select user from user_role where role in :roles");
+		q.setParameter("roles", r);
+		r = q.getResultList();
+		if (r.isEmpty()){
+			return null;
+		}
+		
+		q = this.getEntityManager().createQuery("from UserEntity where id in :uids");
+		q.setParameter("uids", r);
+		r = q.getResultList();
+		if (r.isEmpty()){
+			return null;
+		}
+		return r;
+	}
 }

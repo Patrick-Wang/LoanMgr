@@ -70,20 +70,22 @@ public class ECManagerServiceImpl implements ECManagerService {
 		UserEntity usr = userDao.getUserByName(userName);
 		Result r = ErrorCode.ECM_UPDATE_FAILED;
 		if (usr != null){
-			r = ErrorCode.OK;
+			r = ErrorCode.OK.clone();
 			boolean changed = false;
 			List<EntrustedCaseManagerEntity> ecmes = new ArrayList<EntrustedCaseManagerEntity>();
 			for (EntrustedCaseManageInfo ecmi : ecmis){
 				EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getById(ecmi.getId());
 				
-				if (null != ecme){
+				if (null == ecme){
 					r = ErrorCode.ECM_UPDATE_FAILED;
 					break;
 				}
 				
 				changed = false;
 				
-				if (ecme.getAssignee().getId() != ecmi.getAssigneeId()){
+				if (null != ecmi.getAssigneeId() && 
+						(ecme.getAssignee() == null ||
+						ecme.getAssignee().getId() != ecmi.getAssigneeId())){
 					UserEntity assignee = userDao.getById(ecmi.getAssigneeId());
 					if (null != assignee){
 						ecme.setAssignee(assignee);
@@ -95,7 +97,9 @@ public class ECManagerServiceImpl implements ECManagerService {
 					}
 				}
 				
-				if (ecme.getOwner().getId() != ecmi.getOwnerId()){
+				if (ecmi.getOwnerId() != null && 
+						(ecme.getOwner() == null ||
+						ecme.getOwner().getId() != ecmi.getOwnerId())){
 					UserEntity owner = userDao.getById(ecmi.getOwnerId());
 					if (null != owner){
 						ecme.setAssignee(owner);
@@ -112,7 +116,11 @@ public class ECManagerServiceImpl implements ECManagerService {
 				}
 			}
 			if (r.getCode() == ErrorCode.OK.getCode()){
-				entrustedCaseManagerDao.merge(ecmes);
+				if (ecmes.isEmpty()){
+					r.setMsg("沒有任何更新");
+				}else{
+					entrustedCaseManagerDao.merge(ecmes);
+				}
 			}
 		}
 		

@@ -109,9 +109,9 @@ module collection.protocol {
 
     export interface EntrustedCaseManageInfo {
         id:number;
-        ownerId:number;
+        ownerId?:number;
         ownerName?:string;
-        assigneeId:number;
+        assigneeId?:number;
         assigneeName?:string;
     }
 

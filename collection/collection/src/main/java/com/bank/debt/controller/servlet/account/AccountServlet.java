@@ -34,16 +34,24 @@ public class AccountServlet {
 	@RequestMapping(value = "org/search.do")
 	public @ResponseBody byte[] searchOrg(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {
-
 		List<Organization> orgs = accountService.getOrgs();
+		
 		
 		return JsonUtil.toUtf8Json(orgs);
 	}
 	
 	@RequestMapping(value = "search.do")
 	public @ResponseBody byte[] search(HttpServletRequest request,
-			HttpServletResponse response) throws UnsupportedEncodingException {
-		List<User> usrs = accountService.getAllUsers();
+			HttpServletResponse response,
+			@RequestParam(value="ifs", required=false) String ifs) throws UnsupportedEncodingException {
+		List<String> ifList = (List<String>) JsonUtil.toObjects(JSONArray.fromObject(ifs), String.class, null);
+		List<User> usrs = null;
+		if (null != ifs){
+			usrs = accountService.getUsers(ifList);
+		}else{
+			usrs = accountService.getAllUsers();
+		}
+
 		return JsonUtil.toUtf8Json(usrs);
 	}
 	

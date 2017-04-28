@@ -23,11 +23,11 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/assets/js/datatable/datatables-init.js"></script>
 
-
+	<script src="${pageContext.request.contextPath}/jsp/assets/js/toastr/toastr.js"></script>
 
 <script>
-	InitiateSimpleDataTable.init();
-	InitiateEditableDataTable.init();
-	InitiateExpandableDataTable.init();
-	InitiateSearchableDataTable.init();
+	<%--InitiateSimpleDataTable.init();--%>
+	<%--InitiateEditableDataTable.init();--%>
+	<%--InitiateExpandableDataTable.init();--%>
+	<%--InitiateSearchableDataTable.init();--%>
 </script>

@@ -8,8 +8,10 @@ var collection;
         Account.getOrgs = function () {
             return collection.Net.post(collection.Net.BASE_URL + "/account/org/search.do");
         };
-        Account.getUsers = function () {
-            return collection.Net.post(collection.Net.BASE_URL + "/account/search.do");
+        Account.getUsers = function (ifs) {
+            return collection.Net.post(collection.Net.BASE_URL + "/account/search.do", {
+                ifs: JSON.stringify(ifs),
+            });
         };
         Account.updateUsers = function (users) {
             return collection.Net.post(collection.Net.BASE_URL + "/account/update.do", {

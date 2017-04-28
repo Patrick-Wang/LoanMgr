@@ -11,8 +11,10 @@ module collection{
             return Net.post(Net.BASE_URL + "/account/org/search.do");
         }
 
-        static getUsers():Promise<User[]>{
-            return Net.post(Net.BASE_URL + "/account/search.do");
+        static getUsers(ifs?:string[]):Promise<User[]>{
+            return Net.post(Net.BASE_URL + "/account/search.do",{
+                ifs:JSON.stringify(ifs),
+            });
         }
 
         static updateUsers(users:User[]):Promise<Result>{

@@ -1,4 +1,8 @@
 ///<reference path="../pageSidebar.ts"/>
+
+//eg. 'You Must Worry', 'top-right', '5000', 'warning', 'fa-warning', true
+declare let Notify:(message:string, position:string, timeout:string, theme:string, icon:string, closable:boolean)=>void;
+
 module pages{
 
     export enum PageType{
@@ -48,17 +52,17 @@ module pages{
             return new JQTable.JQGridAssistant(nodes, gridName);
         }
 
-        public static createTableAssist(pName:string, type:collection.protocol.EntrustedCaseType):JQTable.JQGridAssistant {
+        public static createTableAssist(pName:string, type:collection.protocol.EntrustedCaseType, preTitle:string[] = []):JQTable.JQGridAssistant {
             var parent = $("#" + pName);
             parent.empty();
             parent.append("<table id='" + pName + "Table'></table><div id='" + pName + "Pager'></div>");
             let tableAssist:JQTable.JQGridAssistant = null;
             if (type == collection.protocol.EntrustedCaseType.carLoan) {
-                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.carLoanTitle);
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", preTitle.concat(collection.protocol.carLoanTitle));
             } else if (type == collection.protocol.EntrustedCaseType.creditCard) {
-                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.creditCardTitle);
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", preTitle.concat(collection.protocol.creditCardTitle));
             } else {
-                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.creditLoanTitle);
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", preTitle.concat(collection.protocol.creditLoanTitle));
             }
             return tableAssist;
         }

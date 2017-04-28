@@ -22,5 +22,7 @@ public interface AccountService {
 
 	List<String> getUIAuthAddress(String userName);
 
+	List<User> getUsers(List<String> ifList);
+
 
 }

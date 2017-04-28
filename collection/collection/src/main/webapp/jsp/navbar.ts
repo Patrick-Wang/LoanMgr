@@ -4,7 +4,6 @@
 module navbar{
     import Message = collection.Message;
     import Net = collection.Net;
-    import UnreadMessage = collection.protocol.UnreadMessage;
     import Phone = collection.Phone;
     import PhoneRecord = collection.protocol.PhoneRecord;
     import CallStatus = collection.protocol.CallStatus;
@@ -34,7 +33,7 @@ module navbar{
 
         triggerRefreshMessageTips():void{
             Message.getUnreadMessages()
-                .done((mecs : UnreadMessage[])=>{
+                .done((mecs : collection.protocol.Message[])=>{
                     NavBar.ins.onLoadMEC(mecs);
                 });
         }
@@ -80,7 +79,7 @@ module navbar{
             return false;
         }
 
-        buildMessageDetail(detailli : any, um : UnreadMessage){
+        buildMessageDetail(detailli : any, um : collection.protocol.Message){
             let detail = detailli.after(
                 "<li> " +
                     "<a onclick='navbar.NavBar.ins.clickMessage(" + um.msgId + ")' href='#'>" +
@@ -103,7 +102,7 @@ module navbar{
                  "</li>");
         }
 
-        onLoadMEC(ums : UnreadMessage[]):void{
+        onLoadMEC(ums : collection.protocol.Message[]):void{
             $("#msgCount").text(ums.length);
             $("#msgCountDetail").text(ums.length + "条待处理消息");
             for(let i = 0; i < ums.length; ++i){

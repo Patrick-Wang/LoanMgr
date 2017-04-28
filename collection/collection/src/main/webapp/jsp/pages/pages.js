@@ -45,19 +45,20 @@ var pages;
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
         };
-        JQGridAssistantFactory.createTableAssist = function (pName, type) {
+        JQGridAssistantFactory.createTableAssist = function (pName, type, preTitle) {
+            if (preTitle === void 0) { preTitle = []; }
             var parent = $("#" + pName);
             parent.empty();
             parent.append("<table id='" + pName + "Table'></table><div id='" + pName + "Pager'></div>");
             var tableAssist = null;
             if (type == collection.protocol.EntrustedCaseType.carLoan) {
-                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.carLoanTitle);
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", preTitle.concat(collection.protocol.carLoanTitle));
             }
             else if (type == collection.protocol.EntrustedCaseType.creditCard) {
-                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.creditCardTitle);
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", preTitle.concat(collection.protocol.creditCardTitle));
             }
             else {
-                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", collection.protocol.creditLoanTitle);
+                tableAssist = JQGridAssistantFactory.createTable(pName + "Table", preTitle.concat(collection.protocol.creditLoanTitle));
             }
             return tableAssist;
         };
