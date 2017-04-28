@@ -58,7 +58,7 @@ var pages;
                 var treeItem = {
                     name: orgs[i].name + '<div class="tree-actions"></div>',
                     type: 'folder',
-                    additionalParameters: { id: orgs[j].id }
+                    additionalParameters: { id: orgs[i].id }
                 };
                 //if (orgs[i].subOrgs != undefined && orgs[i].subOrgs.length > 0){
                 //    treeItem.additionalParameters.children = this.getTree(usrs, orgs[i].subOrgs);

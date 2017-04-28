@@ -64,7 +64,7 @@ module pages{
                 let treeItem:any = {
                     name : orgs[i].name + '<div class="tree-actions"></div>',
                     type:  'folder',
-                    additionalParameters: { id: orgs[j].id }
+                    additionalParameters: { id: orgs[i].id }
                 };
 
                 //if (orgs[i].subOrgs != undefined && orgs[i].subOrgs.length > 0){
@@ -159,6 +159,7 @@ module pages{
                 jqgrid.setGridWidth($("#" + name).width() );
             }
         }
+
         indexOf(arr, val) {
             for (var i = 0; i < arr.length; i++) {
                 if (arr[i] == val) {
