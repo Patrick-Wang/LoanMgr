@@ -93,6 +93,10 @@ module pages{
             this.onRefresh();
         }
 
+        protected find(q:any){
+            return PageUtil.jqPage(this.page).find(q);
+        }
+
         show():void {
             if (!this.isShown()) {
                 //PageUtil.jqPage(this.page).append(this.html);

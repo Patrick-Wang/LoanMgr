@@ -154,7 +154,8 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					ecm.setType(type);
 					entrustedCaseManagerDao.merge(ecm);
 				}
-				r = ErrorCode.OK;
+				r = ErrorCode.OK.clone();
+				r.setMsg(data.size() + "");
 			}
 		}
 		return r;

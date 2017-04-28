@@ -31,20 +31,20 @@
 <!-- Page Body -->
 <div class="page-body">
 	<div class="col-lg-12 col-sm-12 col-xs-12">
-		<div id="WiredWizard" class="wizard wizard-wired"
-			data-target="#WiredWizardsteps">
+		<div id="il-WiredWizard" class="wizard wizard-wired"
+			data-target="#il-WiredWizardsteps">
 			<ul class="steps">
-				<li id="step1" data-target="#wiredstep1" class="active"><span
+				<li id="step1" data-target="#il-wiredstep1" class="active"><span
 					class="step">1</span><span class="title">选择导入类别</span><span
 					class="chevron"></span></li>
-				<li id="step2" data-target="#wiredstep2"><span class="step">2</span><span
+				<li id="step2" data-target="#il-wiredstep2"><span class="step">2</span><span
 					class="title">导入Excel</span> <span class="chevron"></span></li>
-				<%--<li id="step3" data-target="#wiredstep3"><span class="step">3</span><span--%>
-				<%--class="title">确认导入信息</span> <span class="chevron"></span></li>--%>
+				<li id="step3" data-target="#il-wiredstep3"><span class="step">3</span><span
+				class="title">确认导入信息</span> <span class="chevron"></span></li>
 			</ul>
 		</div>
-		<div class="step-content" id="WiredWizardsteps">
-			<div class="step-pane active" id="wiredstep1">
+		<div class="step-content" id="il-WiredWizardsteps">
+			<div class="step-pane active" id="il-wiredstep1">
 				<div class="row pricing-container">
 					<div class="col-xs-12 col-sm-6 col-md-3">
 						<div class="plan popular-plan animated bounce">
@@ -66,7 +66,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="step-pane" id="wiredstep2">
+			<div class="step-pane" id="il-wiredstep2">
 				<div class="row">
 					<div class="col-lg-12">
 						<div class="well with-header">
@@ -78,164 +78,157 @@
 					</div>
 				</div>
 			</div>
-			<%--<div class="step-pane" id="wiredstep3">--%>
-			<%--<div class="row">--%>
-			<%--<div class="col-xs-12 col-md-12">--%>
-			<%--<div class="alert alert-info fade in">--%>
-			<%--<i class="fa-fw fa fa-info"></i> <strong>请确认！</strong> 共计导入如下 88--%>
-			<%--条委案。--%>
-			<%--</div>--%>
-			<%--</div>--%>
-			<%--</div>--%>
-			<%--<div class="row">--%>
-			<%--<div class="col-xs-12 col-md-12">--%>
-			<%--<div class="widget">--%>
-			<%--<div class="widget-body">--%>
-			<%--<table class="table table-striped table-bordered table-hover"--%>
-			<%--id="simpledatatable">--%>
-			<%--<thead>--%>
-			<%--<tr>--%>
-			<%--<th><label> <input type="checkbox"> <span--%>
-			<%--class="text"></span>--%>
-			<%--</label></th>--%>
-			<%--<th>客户号</th>--%>
-			<%--<th>客户姓名</th>--%>
-			<%--<th>账户号</th>--%>
-			<%--<th>性别</th>--%>
-			<%--<th>身份证号</th>--%>
-			<%--<th>放款机构</th>--%>
-			<%--<th>放款时间</th>--%>
-			<%--<th>提前结清金额</th>--%>
-			<%--<th>剩余本金</th>--%>
-			<%--<th>逾期利息</th>--%>
-			<%--</tr>--%>
-			<%--</thead>--%>
-			<%--<tbody>--%>
-			<%--<tr>--%>
-			<%--<td><label> <input type="checkbox"> <span--%>
-			<%--class="text"></span>--%>
-			<%--</label></td>--%>
-			<%--<td><a href="index.html">XD00001226</a></td>--%>
-			<%--<td><a href="index.html">孙七</a></td>--%>
-			<%--<td>2220001119998230</td>--%>
-			<%--<td>男</td>--%>
-			<%--<td>210103198001203322</td>--%>
-			<%--<td>中国农业银行</td>--%>
-			<%--<td>2017-01-01</td>--%>
-			<%--<td>200000</td>--%>
-			<%--<td>108000</td>--%>
-			<%--<td>12000</td>--%>
-			<%--</tr>--%>
-			<%--<tr>--%>
-			<%--<td><label> <input type="checkbox"> <span--%>
-			<%--class="text"></span>--%>
-			<%--</label></td>--%>
-			<%--<td><a href="index.html">XD00001226</a></td>--%>
-			<%--<td><a href="index.html">孙七</a></td>--%>
-			<%--<td>2220001119998230</td>--%>
-			<%--<td>男</td>--%>
-			<%--<td>210103198001203322</td>--%>
-			<%--<td>中国农业银行</td>--%>
-			<%--<td>2017-01-01</td>--%>
-			<%--<td>200000</td>--%>
-			<%--<td>108000</td>--%>
-			<%--<td>12000</td>--%>
-			<%--</tr>--%>
-			<%--<tr>--%>
-			<%--<td><label> <input type="checkbox"> <span--%>
-			<%--class="text"></span>--%>
-			<%--</label></td>--%>
-			<%--<td><a href="index.html">XD00001226</a></td>--%>
-			<%--<td><a href="index.html">孙七</a></td>--%>
-			<%--<td>2220001119998230</td>--%>
-			<%--<td>男</td>--%>
-			<%--<td>210103198001203322</td>--%>
-			<%--<td>中国农业银行</td>--%>
-			<%--<td>2017-01-01</td>--%>
-			<%--<td>200000</td>--%>
-			<%--<td>108000</td>--%>
-			<%--<td>12000</td>--%>
-			<%--</tr>--%>
-			<%--<tr class="odd gradeX">--%>
-			<%--<td><label> <input type="checkbox"> <span--%>
-			<%--class="text"></span>--%>
-			<%--</label></td>--%>
-			<%--<td><a href="index.html">XD00001226</a></td>--%>
-			<%--<td><a href="index.html">孙七</a></td>--%>
-			<%--<td>2220001119998230</td>--%>
-			<%--<td>男</td>--%>
-			<%--<td>210103198001203322</td>--%>
-			<%--<td>中国农业银行</td>--%>
-			<%--<td>2017-01-01</td>--%>
-			<%--<td>200000</td>--%>
-			<%--<td>108000</td>--%>
-			<%--<td>12000</td>--%>
-			<%--</tr>--%>
-			<%--<tr>--%>
-			<%--<td><label> <input type="checkbox"> <span--%>
-			<%--class="text"></span>--%>
-			<%--</label></td>--%>
-			<%--<td><a href="index.html">XD00001226</a></td>--%>
-			<%--<td><a href="index.html">孙七</a></td>--%>
-			<%--<td>2220001119998230</td>--%>
-			<%--<td>男</td>--%>
-			<%--<td>210103198001203322</td>--%>
-			<%--<td>中国农业银行</td>--%>
-			<%--<td>2017-01-01</td>--%>
-			<%--<td>200000</td>--%>
-			<%--<td>108000</td>--%>
-			<%--<td>12000</td>--%>
-			<%--</tr>--%>
-			<%--<tr>--%>
-			<%--<td><label> <input type="checkbox"> <span--%>
-			<%--class="text"></span>--%>
-			<%--</label></td>--%>
-			<%--<td><a href="index.html">XD00001226</a></td>--%>
-			<%--<td><a href="index.html">孙七</a></td>--%>
-			<%--<td>2220001119998230</td>--%>
-			<%--<td>男</td>--%>
-			<%--<td>210103198001203322</td>--%>
-			<%--<td>中国农业银行</td>--%>
-			<%--<td>2017-01-01</td>--%>
-			<%--<td>200000</td>--%>
-			<%--<td>108000</td>--%>
-			<%--<td>12000</td>--%>
-			<%--</tr>--%>
-			<%--<tr>--%>
-			<%--<td><label> <input type="checkbox"> <span--%>
-			<%--class="text"></span>--%>
-			<%--</label></td>--%>
-			<%--<td><a href="index.html">XD00001226</a></td>--%>
-			<%--<td><a href="index.html">孙七</a></td>--%>
-			<%--<td>2220001119998230</td>--%>
-			<%--<td>男</td>--%>
-			<%--<td>210103198001203322</td>--%>
-			<%--<td>中国农业银行</td>--%>
-			<%--<td>2017-01-01</td>--%>
-			<%--<td>200000</td>--%>
-			<%--<td>108000</td>--%>
-			<%--<td>12000</td>--%>
-			<%--</tr>--%>
+			<div class="step-pane" id="il-wiredstep3">
+			<div class="row">
+			<div class="col-xs-12 col-md-12">
+			<div class="alert alert-info fade in">
+			<i class="fa-fw fa fa-info"></i> <strong>请确认！</strong> 共计导入如下 88
+			条委案。
+			</div>
+			</div>
+			</div>
+			<div class="row">
+			<div class="col-xs-12 col-md-12">
+			<div class="widget">
+			<div class="widget-body">
+			<table class="table table-striped table-bordered table-hover"
+			id="simpledatatable">
+			<thead>
+			<tr>
+			<th><label> <input type="checkbox"> <span
+			class="text"></span>
+			</label></th>
+			<th>客户号</th>
+			<th>客户姓名</th>
+			<th>账户号</th>
+			<th>性别</th>
+			<th>身份证号</th>
+			<th>放款机构</th>
+			<th>放款时间</th>
+			<th>提前结清金额</th>
+			<th>剩余本金</th>
+			<th>逾期利息</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+			<td><label> <input type="checkbox"> <span
+			class="text"></span>
+			</label></td>
+			<td><a href="index.html">XD00001226</a></td>
+			<td><a href="index.html">孙七</a></td>
+			<td>2220001119998230</td>
+			<td>男</td>
+			<td>210103198001203322</td>
+			<td>中国农业银行</td>
+			<td>2017-01-01</td>
+			<td>200000</td>
+			<td>108000</td>
+			<td>12000</td>
+			</tr>
+			<tr>
+			<td><label> <input type="checkbox"> <span
+			class="text"></span>
+			</label></td>
+			<td><a href="index.html">XD00001226</a></td>
+			<td><a href="index.html">孙七</a></td>
+			<td>2220001119998230</td>
+			<td>男</td>
+			<td>210103198001203322</td>
+			<td>中国农业银行</td>
+			<td>2017-01-01</td>
+			<td>200000</td>
+			<td>108000</td>
+			<td>12000</td>
+			</tr>
+			<tr>
+			<td><label> <input type="checkbox"> <span
+			class="text"></span>
+			</label></td>
+			<td><a href="index.html">XD00001226</a></td>
+			<td><a href="index.html">孙七</a></td>
+			<td>2220001119998230</td>
+			<td>男</td>
+			<td>210103198001203322</td>
+			<td>中国农业银行</td>
+			<td>2017-01-01</td>
+			<td>200000</td>
+			<td>108000</td>
+			<td>12000</td>
+			</tr>
+			<tr class="odd gradeX">
+			<td><label> <input type="checkbox"> <span
+			class="text"></span>
+			</label></td>
+			<td><a href="index.html">XD00001226</a></td>
+			<td><a href="index.html">孙七</a></td>
+			<td>2220001119998230</td>
+			<td>男</td>
+			<td>210103198001203322</td>
+			<td>中国农业银行</td>
+			<td>2017-01-01</td>
+			<td>200000</td>
+			<td>108000</td>
+			<td>12000</td>
+			</tr>
+			<tr>
+			<td><label> <input type="checkbox"> <span
+			class="text"></span>
+			</label></td>
+			<td><a href="index.html">XD00001226</a></td>
+			<td><a href="index.html">孙七</a></td>
+			<td>2220001119998230</td>
+			<td>男</td>
+			<td>210103198001203322</td>
+			<td>中国农业银行</td>
+			<td>2017-01-01</td>
+			<td>200000</td>
+			<td>108000</td>
+			<td>12000</td>
+			</tr>
+			<tr>
+			<td><label> <input type="checkbox"> <span
+			class="text"></span>
+			</label></td>
+			<td><a href="index.html">XD00001226</a></td>
+			<td><a href="index.html">孙七</a></td>
+			<td>2220001119998230</td>
+			<td>男</td>
+			<td>210103198001203322</td>
+			<td>中国农业银行</td>
+			<td>2017-01-01</td>
+			<td>200000</td>
+			<td>108000</td>
+			<td>12000</td>
+			</tr>
+			<tr>
+			<td><label> <input type="checkbox"> <span
+			class="text"></span>
+			</label></td>
+			<td><a href="index.html">XD00001226</a></td>
+			<td><a href="index.html">孙七</a></td>
+			<td>2220001119998230</td>
+			<td>男</td>
+			<td>210103198001203322</td>
+			<td>中国农业银行</td>
+			<td>2017-01-01</td>
+			<td>200000</td>
+			<td>108000</td>
+			<td>12000</td>
+			</tr>
 
-			<%--</tbody>--%>
-			<%--</table>--%>
-			<%--</div>--%>
-			<%--</div>--%>
-			<%--</div>--%>
-			<%--</div>--%>
-			<%--</div>--%>
+			</tbody>
+			</table>
+			</div>
+			</div>
+			</div>
+			</div>
+			</div>
 		</div>
-		<div class="actions actions-footer" id="WiredWizard-actions"
-			style="display: none">
+		<div class="actions actions-footer" id="il-WiredWizard-actions" style="display:none">
 			<div class="btn-group">
-				<button id="pre" type="button"
-					class="btn btn-default btn-sm btn-prev">
-					<i class="fa fa-angle-left"></i>返回
-				</button>
-				<%--<button id="next" type="button" class="btn btn-default btn-sm btn-next"--%>
-				<%--data-last="Finish">--%>
-				<%--Next<i class="fa fa-angle-right"></i>--%>
-				<%--</button>--%>
+			<button type="button" class="btn btn-default btn-sm btn-prev"> <i class="fa fa-angle-left"></i>Prev</button>
+			<button type="button" class="btn btn-default btn-sm btn-next" data-last="Finish">Import<i class="fa fa-angle-right"></i></button>
 			</div>
 		</div>
 	</div>

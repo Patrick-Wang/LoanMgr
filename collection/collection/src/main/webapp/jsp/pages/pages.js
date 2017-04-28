@@ -84,6 +84,9 @@ var pages;
         PageImpl.prototype.refresh = function () {
             this.onRefresh();
         };
+        PageImpl.prototype.find = function (q) {
+            return PageUtil.jqPage(this.page).find(q);
+        };
         PageImpl.prototype.show = function () {
             if (!this.isShown()) {
                 //PageUtil.jqPage(this.page).append(this.html);

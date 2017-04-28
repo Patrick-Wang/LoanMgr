@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
 
-import javax.servlet.ServletOutputStream;
-
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.bank.debt.protocol.entity.AcceptSummary;
 import com.bank.debt.protocol.entity.AssignSummary;
@@ -47,5 +45,6 @@ public interface EntrustedCaseService {
 	AcceptSummary getAcceptSummary(String userName);
 
 	void downloadAll(String usr, OutputStream outputStream) throws MappingFailedException, IOException;
+
 
 }

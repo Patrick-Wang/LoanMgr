@@ -21,21 +21,38 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="assignLoans.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/pages/assignLoans.ts">
+      <file leaf-file-name="console.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/pages/console.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.0">
-              <caret line="121" column="17" selection-start-line="121" selection-start-column="17" selection-end-line="121" selection-end-column="17" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="298" column="44" selection-start-line="298" selection-start-column="36" selection-end-line="298" selection-end-column="44" />
               <folding>
-                <element signature="n#!!doc" expanded="true" />
+                <marker date="1493283058450" expanded="true" signature="5928:5953" placeholder="..." />
+                <marker date="1493283058450" expanded="true" signature="6496:6521" placeholder="..." />
+                <marker date="1493283058450" expanded="true" signature="6941:6966" placeholder="..." />
+                <marker date="1493283058450" expanded="true" signature="10906:10931" placeholder="..." />
+                <marker date="1493283058450" expanded="true" signature="11458:11483" placeholder="..." />
+                <marker date="1493283058450" expanded="true" signature="11888:11913" placeholder="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dropzone.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/jsp/assets/js/dropzone/dropzone.js">
+      <file leaf-file-name="importLoans.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsp/pages/importLoans.ts">
           <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.704501">
+              <caret line="57" column="62" selection-start-line="57" selection-start-column="62" selection-end-line="57" selection-end-column="62" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="importLoans.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/pages/importLoans.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-8.821428">
+              <caret line="230" column="72" selection-start-line="230" selection-start-column="64" selection-end-line="230" selection-end-column="72" />
               <folding />
             </state>
           </provider>
@@ -66,28 +83,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="2.4827585">
               <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="navbar.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/navbar.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="92" column="35" selection-start-line="92" selection-start-column="35" selection-end-line="92" selection-end-column="35" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="pageSidebar.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/pageSidebar.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="18" column="35" selection-start-line="18" selection-start-column="35" selection-end-line="18" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -138,7 +133,6 @@
         <option value="$PROJECT_DIR$/jsp/authority/console/summary/manager.ts" />
         <option value="$PROJECT_DIR$/tsconfig.json" />
         <option value="$PROJECT_DIR$/jsp/pages/askSth.ts" />
-        <option value="$PROJECT_DIR$/jsp/pages/importLoans.ts" />
         <option value="$PROJECT_DIR$/jsp/jqgrid/jqassist.ts" />
         <option value="$PROJECT_DIR$/jsp/sdk/entrustedCaseReport.ts" />
         <option value="$PROJECT_DIR$/jsp/authority/console/summary/owner.ts" />
@@ -150,7 +144,6 @@
         <option value="$PROJECT_DIR$/jsp/authority/nav/tips/missed_call.tsx" />
         <option value="$PROJECT_DIR$/jsp/authority/console/summary/assigner.tsx" />
         <option value="$PROJECT_DIR$/jsp/authority/console/summary/owner.tsx" />
-        <option value="$PROJECT_DIR$/jsp/pages/importLoans.jsp" />
         <option value="$PROJECT_DIR$/jsp/sdk/net.ts" />
         <option value="$PROJECT_DIR$/jsp/pageSidebar.ts" />
         <option value="$PROJECT_DIR$/jsp/sdk/entrustedCase.ts" />
@@ -164,9 +157,11 @@
         <option value="$PROJECT_DIR$/jsp/sdk/entrustedCaseManager.ts" />
         <option value="$PROJECT_DIR$/jsp/sdk/protocol.ts" />
         <option value="$PROJECT_DIR$/jsp/login.jsp" />
-        <option value="$PROJECT_DIR$/jsp/pages/pages.ts" />
         <option value="$PROJECT_DIR$/jsp/sdk/account.ts" />
         <option value="$PROJECT_DIR$/jsp/pages/assignLoans.ts" />
+        <option value="$PROJECT_DIR$/jsp/pages/pages.ts" />
+        <option value="$PROJECT_DIR$/jsp/pages/importLoans.jsp" />
+        <option value="$PROJECT_DIR$/jsp/pages/importLoans.ts" />
       </list>
     </option>
   </component>
@@ -345,6 +340,32 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="assets" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fuelux" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -662,26 +683,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/pages/importLoans.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="93" column="9" selection-start-line="93" selection-start-column="9" selection-end-line="93" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/assets/css/beyond.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.5859564">
           <caret line="13531" column="36" selection-start-line="13531" selection-start-column="36" selection-end-line="13531" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/pages/importLoans.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.6785714">
-          <caret line="80" column="8" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -774,21 +779,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/pages/console.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4731978">
-          <caret line="298" column="44" selection-start-line="298" selection-start-column="36" selection-end-line="298" selection-end-column="44" />
-          <folding>
-            <marker date="1493283058450" expanded="true" signature="5928:5953" placeholder="..." />
-            <marker date="1493283058450" expanded="true" signature="6496:6521" placeholder="..." />
-            <marker date="1493283058450" expanded="true" signature="6941:6966" placeholder="..." />
-            <marker date="1493283058450" expanded="true" signature="10906:10931" placeholder="..." />
-            <marker date="1493283058450" expanded="true" signature="11458:11483" placeholder="..." />
-            <marker date="1493283058450" expanded="true" signature="11888:11913" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/assets/js/beyond.min.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334">
@@ -820,7 +810,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="92" column="35" selection-start-line="92" selection-start-column="35" selection-end-line="92" selection-end-column="35" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!doc" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -837,22 +827,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="2.4827585">
           <caret line="5" column="0" selection-start-line="5" selection-start-column="0" selection-end-line="5" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/pages/assignLoans.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.775862">
-          <caret line="47" column="46" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/assets/js/fuelux/wizard/wizard-custom.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.6007828">
-          <caret line="62" column="16" selection-start-line="62" selection-start-column="8" selection-end-line="62" selection-end-column="16" />
           <folding />
         </state>
       </provider>
@@ -883,14 +857,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/sdk/protocol.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="3" column="15" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/typescriptCompiler/external/lib.es6.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33271718">
@@ -909,24 +875,81 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/pages/pages.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22735675">
-          <caret line="91" column="8" selection-start-line="91" selection-start-column="8" selection-end-line="91" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.4731978">
+          <caret line="95" column="22" selection-start-line="95" selection-start-column="18" selection-end-line="95" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/pages/console.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="298" column="44" selection-start-line="298" selection-start-column="36" selection-end-line="298" selection-end-column="44" />
+          <folding>
+            <marker date="1493283058450" expanded="true" signature="5928:5953" placeholder="..." />
+            <marker date="1493283058450" expanded="true" signature="6496:6521" placeholder="..." />
+            <marker date="1493283058450" expanded="true" signature="6941:6966" placeholder="..." />
+            <marker date="1493283058450" expanded="true" signature="10906:10931" placeholder="..." />
+            <marker date="1493283058450" expanded="true" signature="11458:11483" placeholder="..." />
+            <marker date="1493283058450" expanded="true" signature="11888:11913" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/assets/js/fuelux/wizard/wizard-custom.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.10958904">
+          <caret line="26" column="41" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/sdk/protocol.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="3" column="15" selection-start-line="3" selection-start-column="15" selection-end-line="3" selection-end-column="15" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/pages/assignLoans.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.775862">
+          <caret line="47" column="46" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/pages/assignLoans.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.0">
-          <caret line="121" column="17" selection-start-line="121" selection-start-column="17" selection-end-line="121" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.81146026">
+          <caret line="256" column="87" selection-start-line="256" selection-start-column="20" selection-end-line="256" selection-end-column="87" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/pages/importLoans.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.821428">
+          <caret line="230" column="72" selection-start-line="230" selection-start-column="64" selection-end-line="230" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/assets/js/dropzone/dropzone.js">
       <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.518591">
+          <caret line="1410" column="24" selection-start-line="1410" selection-start-column="19" selection-end-line="1410" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/pages/importLoans.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.704501">
+          <caret line="57" column="62" selection-start-line="57" selection-start-column="62" selection-end-line="57" selection-end-column="62" />
           <folding />
         </state>
       </provider>

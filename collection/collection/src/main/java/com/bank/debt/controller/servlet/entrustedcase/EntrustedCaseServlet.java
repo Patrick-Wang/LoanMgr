@@ -82,6 +82,9 @@ public class EntrustedCaseServlet {
 		}
 		return r.toUtf8Json();
 	}
+
+	
+	
 	
 	@RequestMapping(value = "search.do")
 	public @ResponseBody byte[] search(HttpServletRequest request,
