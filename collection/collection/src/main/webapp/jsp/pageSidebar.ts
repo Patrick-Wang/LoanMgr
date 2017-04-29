@@ -23,6 +23,35 @@ module sidebar {
                     }
                 }
             });
+            $("body").children().eq(0).before("<div id='mloading' style='z-index:999;position:absolute;width:100%;height:100%'></div>")
+            $("#mloading").mLoading({
+                //text:"",//加载文字，默认值：加载中...
+               // icon:"",//加载图标，默认值：一个小型的base64的gif图片
+               // html:false,//设置加载内容是否是html格式，默认值是false
+                //content:"",//忽略icon和text的值，直接在加载框中显示此值
+               // mask:true//是否显示遮罩效果，默认显示
+            });
+
+            let startTime = Date.now();
+
+            $(document).bind("ajaxSend", function(){
+                $("#mloading").show();
+                $("#mloading").mLoading("show");
+                startTime = Date.now();
+            }).bind("ajaxComplete", function(){
+                let endTime = Date.now();
+
+                if (endTime - startTime < 1500){
+                    setTimeout(()=>{
+                        $("#mloading").mLoading("hide");
+                        $("#mloading").hide();
+                    }, 1500 - (endTime - startTime));
+                }else{
+                    $("#mloading").mLoading("hide");
+                    $("#mloading").hide();
+                }
+
+            });
         }
 
         static refreshPage(type:PageType){

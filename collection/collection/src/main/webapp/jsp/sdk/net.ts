@@ -25,5 +25,27 @@ module collection{
             });
             return deferred.promise();
         }
+
+        static postLocal(url:string,data?:any):Promise<any>{
+            let deferred = $.Deferred();
+            $.ajax({
+                type: 'POST',
+                url: url,
+                global:false,
+                data: data
+            }).done((obj:string)=>{
+                let jobj = JSON.parse(obj);
+                if (jobj != undefined &&
+                    jobj.redirect != undefined &&
+                    jobj.error == "invalidate session"){
+                    window.location.href = jobj.redirect;
+                }else {
+                    deferred.resolve(jobj);
+                }
+            }).fail((err:any)=>{
+                deferred.reject(err);
+            });
+            return deferred.promise();
+        }
     }
 }

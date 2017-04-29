@@ -9,7 +9,7 @@ module collection{
 
     export class Message{
         static getUnreadCount(entrusted_case?:number):Promise<number>{
-            return Net.post(Net.BASE_URL + "/message/unread.do",{
+            return Net.postLocal(Net.BASE_URL + "/message/unread.do",{
                 entrusted_case:entrusted_case
             });
         }
@@ -20,11 +20,19 @@ module collection{
             });
         }
 
-        static getUnreadMessages():Promise<collection.protocol.Message[]>{
+        static getUnreadMessages(local:boolean=true):Promise<collection.protocol.Message[]>{
+            if (local){
+                return Net.postLocal(Net.BASE_URL + "/message/unread_messages.do");
+            }
             return Net.post(Net.BASE_URL + "/message/unread_messages.do");
         }
 
-        static getSendMessages(read?:MessageStatus):Promise<collection.protocol.Message[]>{
+        static getSendMessages(read?:MessageStatus, local:boolean=true):Promise<collection.protocol.Message[]>{
+            if (local){
+                return  Net.postLocal(Net.BASE_URL + "/message/send_messages.do",{
+                    read:read
+                });
+            }
             return Net.post(Net.BASE_URL + "/message/send_messages.do",{
                 read:read
             });

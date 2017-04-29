@@ -18,10 +18,10 @@ var collection;
             });
         };
         EntrustedCase.getAssignSummary = function () {
-            return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/assign/summary.do");
+            return collection.Net.postLocal(collection.Net.BASE_URL + "/entrusted_case/assign/summary.do");
         };
         EntrustedCase.getAcceptSummary = function () {
-            return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/accept/summary.do");
+            return collection.Net.postLocal(collection.Net.BASE_URL + "/entrusted_case/accept/summary.do");
         };
         return EntrustedCase;
     })();

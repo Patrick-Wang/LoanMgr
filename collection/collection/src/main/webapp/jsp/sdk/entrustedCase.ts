@@ -24,10 +24,10 @@ module collection{
         }
 
         static getAssignSummary():Promise<AssignSummary>{
-            return Net.post(Net.BASE_URL + "/entrusted_case/assign/summary.do");
+            return Net.postLocal(Net.BASE_URL + "/entrusted_case/assign/summary.do");
         }
         static getAcceptSummary():Promise<AcceptSummary>{
-            return Net.post(Net.BASE_URL + "/entrusted_case/accept/summary.do");
+            return Net.postLocal(Net.BASE_URL + "/entrusted_case/accept/summary.do");
         }
     }
 }

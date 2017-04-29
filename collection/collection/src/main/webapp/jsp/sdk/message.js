@@ -6,7 +6,7 @@ var collection;
         function Message() {
         }
         Message.getUnreadCount = function (entrusted_case) {
-            return collection.Net.post(collection.Net.BASE_URL + "/message/unread.do", {
+            return collection.Net.postLocal(collection.Net.BASE_URL + "/message/unread.do", {
                 entrusted_case: entrusted_case
             });
         };
@@ -15,10 +15,20 @@ var collection;
                 mids: JSON.stringify(mids)
             });
         };
-        Message.getUnreadMessages = function () {
+        Message.getUnreadMessages = function (local) {
+            if (local === void 0) { local = true; }
+            if (local) {
+                return collection.Net.postLocal(collection.Net.BASE_URL + "/message/unread_messages.do");
+            }
             return collection.Net.post(collection.Net.BASE_URL + "/message/unread_messages.do");
         };
-        Message.getSendMessages = function (read) {
+        Message.getSendMessages = function (read, local) {
+            if (local === void 0) { local = true; }
+            if (local) {
+                return collection.Net.postLocal(collection.Net.BASE_URL + "/message/send_messages.do", {
+                    read: read
+                });
+            }
             return collection.Net.post(collection.Net.BASE_URL + "/message/send_messages.do", {
                 read: read
             });
