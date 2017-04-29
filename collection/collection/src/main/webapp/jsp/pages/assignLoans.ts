@@ -34,13 +34,13 @@ module pages {
                     if (data.step == 1) {
                         this.selectedEcs = this.getSelectedEC();
                         if (this.selectedEcs.length == 0){
-                            Notify('请选择要分配的委案', 'top-right', '5000', 'warning', 'fa-warning', true);
+                            Toast.warning('请选择要分配的委案');
                             evt.preventDefault();
                         }
                     } else if (data.step == 2) {
                         let opts = $('#treeOrg').tree("selectedItems");
                         if (opts.length == 0){
-                            Notify('请选指定接收人', 'top-right', '5000', 'warning', 'fa-warning', true);
+                            Toast.warning('请选指定接收人');
                             evt.preventDefault();
                         }
                     }
@@ -254,7 +254,7 @@ module pages {
             }
             EntrustedCaseManager.update(ecmis).done((ret:Result)=>{
                 if (ret.code == 0){
-                    Notify('委案分配成功', 'top-right', '5000', 'success', 'fa-check', true);
+                    Toast.success('委案分配成功');
                     this.refresh();
                 }
             });

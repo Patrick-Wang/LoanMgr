@@ -20,7 +20,7 @@ var pages;
             this.isAssigner = false;
             this.isOwner = false;
             //  $("#" + PageUtil.getPageId(this.page) + " .dowebok input[checked='checked']").prop("checked", true);
-            $("#" + pages.PageUtil.getPageId(this.page) + " .dowebok input").labelauty();
+            this.find(".dowebok input").labelauty();
             $("#" + pages.PageUtil.getPageId(this.page) + " #myTab11 a").click(function () {
                 setTimeout(function () {
                     _this.doTabRefresh();
@@ -55,7 +55,7 @@ var pages;
         }
         Console.prototype.onRefresh = function () {
             var _this = this;
-            var type = pages.PageUtil.jqPage(this.page).find(".dowebok input:checked").attr("myid");
+            var type = this.find(".dowebok input:checked").attr("myid");
             var opt = {};
             EntrustedCase.search(type, opt).done(function (ecs) {
                 _this.ecs = ecs;
@@ -116,7 +116,7 @@ var pages;
                 autoScroll: true,
                 pager: '#tbNotAssignedPager',
                 onCellSelect: function (rowid, iCol, cellcontent, e) {
-                    if (iCol == 1) {
+                    if (iCol == 1 && isLinked[rowid]) {
                         alert(rowid + " " + iCol);
                     }
                 },

@@ -17,16 +17,23 @@ var sidebar;
             }
             $(document).ready(function () {
                 for (var i = 0; i < _this.pages.length; ++i) {
-                    if (_this.pages[i] != null) {
+                    if (_this.pages[i] != null && _this.pages[i].isShown()) {
                         _this.pages[i].refresh();
                     }
                 }
             });
         }
+        SiderBar.refreshPage = function (type) {
+            SiderBar.ins.pages[type].refresh();
+        };
         SiderBar.registerPage = function (type, page) {
             SiderBar.ins.pages[type] = page;
-            SiderBar.ins.items[type] = new SiderItemEvent(type);
-            // SiderBar.ins.pages[type].refresh();
+            if (page.isShown()) {
+                SiderBar.ins.items[type] = new SiderItemEvent(type, true);
+            }
+            else {
+                SiderBar.ins.items[type] = new SiderItemEvent(type);
+            }
         };
         SiderBar.showPage = function (type) {
             if (SiderBar.ins.pages[type] != null) {
@@ -44,11 +51,17 @@ var sidebar;
         return SiderBar;
     })();
     var SiderItemEvent = (function () {
-        function SiderItemEvent(page) {
+        function SiderItemEvent(page, inited) {
             var _this = this;
+            if (inited === void 0) { inited = false; }
+            this.inited = inited;
             this.page = page;
             $("#" + PageType[page]).click(function () {
                 SiderBar.hideAllBut(_this.page);
+                if (!inited) {
+                    SiderBar.refreshPage(page);
+                    inited = true;
+                }
                 SiderBar.showPage(_this.page);
                 return false;
             });

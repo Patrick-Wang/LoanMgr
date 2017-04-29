@@ -29,6 +29,21 @@ module pages{
         refresh():void;
     }
 
+    export class Toast{
+        static success(msg:string, closeAble:boolean = true):void{
+            Notify(msg, 'top-right', '3000', 'success', 'fa-check', closeAble);
+        }
+
+        static warning(msg:string, closeAble:boolean = true):void{
+            Notify(msg, 'top-right', '3000', 'warning', 'fa-warning', closeAble);
+        }
+
+        static failed(msg:string, closeAble:boolean = true):void{
+            Notify(msg, 'top-right', '3000', 'danger', 'fa-bolt', closeAble);
+        }
+
+    }
+
     export class PageUtil{
         static getPageId(type:PageType):string{
             return PageType[type] + "Page";
@@ -37,6 +52,11 @@ module pages{
         static jqPage(type:PageType):any{
             return $("#" + PageUtil.getPageId(type));
         }
+
+        static toastSuccess(msg:string, closeAble:boolean = false){
+
+        }
+
     }
 
     export class JQGridAssistantFactory {

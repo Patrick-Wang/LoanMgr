@@ -18,6 +18,24 @@ var pages;
         PageType[PageType["end"] = 13] = "end";
     })(pages.PageType || (pages.PageType = {}));
     var PageType = pages.PageType;
+    var Toast = (function () {
+        function Toast() {
+        }
+        Toast.success = function (msg, closeAble) {
+            if (closeAble === void 0) { closeAble = true; }
+            Notify(msg, 'top-right', '3000', 'success', 'fa-check', closeAble);
+        };
+        Toast.warning = function (msg, closeAble) {
+            if (closeAble === void 0) { closeAble = true; }
+            Notify(msg, 'top-right', '3000', 'warning', 'fa-warning', closeAble);
+        };
+        Toast.failed = function (msg, closeAble) {
+            if (closeAble === void 0) { closeAble = true; }
+            Notify(msg, 'top-right', '3000', 'danger', 'fa-bolt', closeAble);
+        };
+        return Toast;
+    })();
+    pages.Toast = Toast;
     var PageUtil = (function () {
         function PageUtil() {
         }
@@ -26,6 +44,9 @@ var pages;
         };
         PageUtil.jqPage = function (type) {
             return $("#" + PageUtil.getPageId(type));
+        };
+        PageUtil.toastSuccess = function (msg, closeAble) {
+            if (closeAble === void 0) { closeAble = false; }
         };
         return PageUtil;
     })();

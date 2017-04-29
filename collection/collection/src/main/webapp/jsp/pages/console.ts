@@ -22,7 +22,7 @@ module pages {
         constructor(page:pages.PageType) {
             super(page);
           //  $("#" + PageUtil.getPageId(this.page) + " .dowebok input[checked='checked']").prop("checked", true);
-            $("#" + PageUtil.getPageId(this.page) + " .dowebok input").labelauty();
+            this.find(".dowebok input").labelauty();
             $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").click(()=> {
                 setTimeout(()=>{
                     this.doTabRefresh();
@@ -58,7 +58,7 @@ module pages {
 
         protected onRefresh():void {
 
-            let type = PageUtil.jqPage(this.page).find(".dowebok input:checked").attr("myid");
+            let type = this.find(".dowebok input:checked").attr("myid");
             let opt:QueryOption = {};
             EntrustedCase.search(type, opt).done((ecs:EC[])=> {
                 this.ecs = ecs;
@@ -126,7 +126,7 @@ module pages {
                     autoScroll: true,
                     pager: '#tbNotAssignedPager',
                     onCellSelect:(rowid,iCol,cellcontent,e)=>{
-                        if (iCol == 1){
+                        if (iCol == 1 &&  isLinked[rowid]){
                             alert(rowid + " " +  iCol);
                         }
                     },
