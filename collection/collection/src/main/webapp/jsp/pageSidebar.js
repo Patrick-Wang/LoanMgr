@@ -2,6 +2,7 @@
 var sidebar;
 (function (sidebar) {
     var PageType = pages.PageType;
+    var Loading = pages.Loading;
     function registerPage(type, page) {
         SiderBar.registerPage(type, page);
     }
@@ -22,25 +23,12 @@ var sidebar;
                     }
                 }
             });
-            $("body").children().eq(0).before("<div id='mloading' style='z-index:999;position:absolute;width:100%;height:100%'></div>");
-            $("#mloading").mLoading({});
-            var startTime = Date.now();
-            $(document).bind("ajaxSend", function () {
-                $("#mloading").show();
-                $("#mloading").mLoading("show");
-                startTime = Date.now();
-            }).bind("ajaxComplete", function () {
-                var endTime = Date.now();
-                if (endTime - startTime < 1500) {
-                    setTimeout(function () {
-                        $("#mloading").mLoading("hide");
-                        $("#mloading").hide();
-                    }, 1500 - (endTime - startTime));
-                }
-                else {
-                    $("#mloading").mLoading("hide");
-                    $("#mloading").hide();
-                }
+            Loading.init();
+            $(document).bind("ajaxStart ", function (e, xhr, o) {
+                Loading.start();
+            }).bind("ajaxComplete", function (e, xhr, o) {
+                Loading.stop();
+                console.log(o.url);
             });
         }
         SiderBar.refreshPage = function (type) {
