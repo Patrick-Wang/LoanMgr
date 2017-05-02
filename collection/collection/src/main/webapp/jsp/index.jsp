@@ -351,9 +351,9 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				<div id="askSthPage" style="display: none">
 					<%@include file="pages/askSth.jsp"%>
 				</div>
-				<div id="reportTaskPage" style="display: none">
+<%-- 				<div id="reportTaskPage" style="display: none">
 					<%@include file="pages/reportTask.jsp"%>
-				</div>
+				</div> --%>
 			</div>
 			<!-- /Page Content -->
 		</div>

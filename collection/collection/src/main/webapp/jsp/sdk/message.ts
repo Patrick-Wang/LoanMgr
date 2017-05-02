@@ -38,7 +38,7 @@ module collection{
             });
         }
 
-        static getMessages(entrusted_case:number, partner:number):Promise<collection.protocol.Message[]>{
+        static getMessages(entrusted_case?:number, partner?:number):Promise<collection.protocol.Message[]>{
             return Net.post(Net.BASE_URL + "/message/receive.do",{
                 entrusted_case:entrusted_case,
                 with:partner

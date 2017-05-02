@@ -41,11 +41,24 @@ public class MessageDaoImpl extends AbstractReadWriteDaoImpl<MessageEntity> impl
 	}
 
 	@Override
-	public List<MessageEntity> getMsgWithUser(Integer entrustedCase, Integer with) {
-		Query q = this.getEntityManager().createQuery("from MessageEntity where entrustedCaseManager.id = :entrustedCase and to.id = :with or come.id = :with "
-				+ " order by sendTime");
-		q.setParameter("with", with);
-		q.setParameter("entrustedCase", entrustedCase);
+	public List<MessageEntity> getMsgWithUser(Integer entrustedCase, UserEntity user, Integer with) {
+		String sql = "from MessageEntity where (to.id = :usr or come.id = :usr) ";
+		if (entrustedCase != null){
+			sql += "and entrustedCaseManager.id = :entrustedCase ";
+		}
+		if (with != null){
+			sql += "and (to.id = :with or come.id = :with) ";
+		}
+		
+		sql += " order by sendTime ";
+		Query q = this.getEntityManager().createQuery(sql);
+		q.setParameter("usr", user.getId());
+		if (entrustedCase != null){
+			q.setParameter("entrustedCase", entrustedCase);
+		}
+		if (with != null){
+			q.setParameter("with", with);
+		}
 		return q.getResultList();
 	}
 

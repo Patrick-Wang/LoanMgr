@@ -131,8 +131,9 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<Message> getMsgsWith(Integer entrustedCase, Integer with) {
-		List<MessageEntity> entities = messageDao.getMsgWithUser(entrustedCase, with);
+	public List<Message> getMsgsWith(String userName, Integer entrustedCase, Integer with) {
+		UserEntity user = userDao.getUserByName(userName);
+		List<MessageEntity> entities = messageDao.getMsgWithUser(entrustedCase, user, with);
 		List<Message> msgs = new ArrayList<Message>();
 		for (MessageEntity entity : entities){
 			msgs.add(mse2ms(entity));
@@ -149,8 +150,22 @@ public class MessageServiceImpl implements MessageService {
 		msg.setToId(entity.getTo().getId());
 		msg.setToName(entity.getTo().getUsername());
 		msg.setContent(entity.getContent());
+		msg.setEcMgrId(entity.getEntrustedCaseManager().getId());
+		switch(entity.getEntrustedCaseManager().getType()){
+		case EntrustedCaseType.CAR_LOAN:
+			msg.setEcCode(eCCarLoanDao.getById(entity.getEntrustedCaseManager().getEntrustedCase()).getCode());
+			break;
+		case EntrustedCaseType.CREDIT_CARD:
+			msg.setEcCode(eCCreditCardDao.getById(entity.getEntrustedCaseManager().getEntrustedCase()).getCode());
+			break;
+		case EntrustedCaseType.CREDIT_LOAN:
+			msg.setEcCode(eCCreditLoanDao.getById(entity.getEntrustedCaseManager().getEntrustedCase()).getCode());
+			break;
+		}
+		msg.setTitle(entity.getTitle());
 		msg.setRead(entity.getRead());
 		msg.setSendTime(formatter.format(entity.getSendTime()));
+		msg.setMsgId(entity.getId());
 		if (Checking.isExist(entity.getAttachements())){
 			msg.setAttachements(JsonUtil.toObjects(JSONArray.fromObject(entity.getAttachements()), String.class, null));
 		}

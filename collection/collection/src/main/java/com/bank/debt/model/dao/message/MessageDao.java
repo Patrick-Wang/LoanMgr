@@ -13,7 +13,7 @@ public interface MessageDao extends AbstractReadWriteDao<MessageEntity> {
 
 	List<MessageEntity> getUnreadMsgToUser(UserEntity user);
 
-	List<MessageEntity> getMsgWithUser(Integer entrustedCase, Integer with);
+	List<MessageEntity> getMsgWithUser(Integer entrustedCase, UserEntity user, Integer with);
 
 	Integer getUnreadCount(Integer to);
 

@@ -47,9 +47,9 @@
 					</a></li>
 				</c:if> --%>
 
-				<li><a id="reportTask" href="reportTask.html"> <span
+<!-- 				<li><a id="reportTask" href="reportTask.html"> <span
 						class="menu-text">委案工作汇报</span>
-				</a></li>
+				</a></li> -->
 
 				<li><a id="askSth" href="askSth.html"> <span
 						class="menu-text">委案咨询</span>

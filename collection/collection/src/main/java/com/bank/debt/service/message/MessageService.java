@@ -16,7 +16,7 @@ public interface MessageService {
 
 	List<Message> getUnreadMessages(String userName);
 
-	List<Message> getMsgsWith(Integer entrustedCase, Integer with);
+	List<Message> getMsgsWith(String userName, Integer entrustedCase, Integer with);
 
 	Result sendMessage(Integer entrustedCase, String userName, Integer to, String message,
 			CommonsMultipartFile[] attachements) throws IOException;

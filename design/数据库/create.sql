@@ -659,9 +659,10 @@ insert into user (username, password, org, position, status) values
 ('insideMgr', '1', 1, '内勤管理', 0),
 ('outsideMgr', '1', 1, '外勤管理', 0);
 
-insert into `message` (come, `to`, entrustedCaseManager, title, content, sendTime)
+insert into `message` (come, `to`, entrustedCaseManager, title, content, sendTime, `attachements`)
 values
-(2, 1, 1, 'test', 'test detail', current_time());
+(2, 1, 1, 'test', 'test detail', current_time(), '["test1.pdf", "test2.xls", "test3.doc"]'),
+(1, 2, 1, 'RE:1', 'you are right', current_time(), null);
 
 insert into `entrusted_case_manager` (owner, assignee, modifier, type, entrustedCase, createdTime, lastModifiedTime)
 values

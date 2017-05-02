@@ -13,6 +13,7 @@ import net.sf.json.JSONObject;
 public class Message  extends ProtocolEntityImpl{
 	Integer msgId;
 	String ecCode;
+	Integer ecMgrId;
 	Integer fromId;
 	String fromName;
 	Integer toId;
@@ -170,5 +171,17 @@ public class Message  extends ProtocolEntityImpl{
 
 	public void setAttachements(List<String> attachements) {
 		this.attachements = attachements;
+	}
+
+
+
+	public Integer getEcMgrId() {
+		return ecMgrId;
+	}
+
+
+
+	public void setEcMgrId(Integer ecMgrId) {
+		this.ecMgrId = ecMgrId;
 	}
 }

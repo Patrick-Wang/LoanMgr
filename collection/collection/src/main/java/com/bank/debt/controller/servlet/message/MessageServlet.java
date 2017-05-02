@@ -104,14 +104,17 @@ public class MessageServlet {
 		
 		return JsonUtil.toUtf8Json(ums);
 	}
-	
+
 	@RequestMapping(value = "receive.do")
 	public @ResponseBody byte[] receive(HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("entrusted_case") Integer entrustedCase,
-			@RequestParam("with") Integer with) throws UnsupportedEncodingException {
-		List<Message> msgs = messageService.getMsgsWith(entrustedCase, with);
-		
+			@RequestParam(value="entrusted_case",required = false) Integer entrustedCase,
+			@RequestParam(value="with", required = false) Integer with) throws UnsupportedEncodingException {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
+		List<Message> msgs = messageService.getMsgsWith(userName, entrustedCase, with);
 		return JsonUtil.toUtf8Json(msgs);
 	}
 	

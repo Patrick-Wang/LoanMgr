@@ -85,14 +85,16 @@ var pages;
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
         }
-        JQGridAssistantFactory.createTable = function (gridName, titles, width) {
+        JQGridAssistantFactory.createTable = function (gridName, titles, width, align) {
             if (width === void 0) { width = 80; }
+            if (align === void 0) { align = JQTable.TextAlign.Right; }
             var nodes = [];
             for (var i = 0; i < titles.length; ++i) {
                 nodes.push(JQTable.Node.create({
                     name: titles[i],
                     width: width,
-                    isSortable: true
+                    isSortable: true,
+                    align: align,
                 }));
             }
             return new JQTable.JQGridAssistant(nodes, gridName);

@@ -132,6 +132,7 @@ module collection.protocol {
     export interface Message {
         msgId:number
         ecCode:string;
+        ecMgrId:number;
         fromId:number;
         fromName:string;
         toId:number;

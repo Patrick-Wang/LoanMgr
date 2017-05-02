@@ -4,7 +4,6 @@
 declare let Notify:(message:string, position:string, timeout:string, theme:string, icon:string, closable:boolean)=>void;
 
 module pages{
-
     export enum PageType{
         reportTask,
         askSth,
@@ -95,13 +94,14 @@ module pages{
     }
 
     export class JQGridAssistantFactory {
-        public static createTable(gridName:string, titles:string[], width:number = 80):JQTable.JQGridAssistant {
+        public static createTable(gridName:string, titles:string[], width:number = 80, align:JQTable.TextAlign = JQTable.TextAlign.Right):JQTable.JQGridAssistant {
             let nodes = [];
             for (let i = 0; i < titles.length; ++i) {
                 nodes.push(JQTable.Node.create({
                     name: titles[i],
                     width: width,
-                    isSortable: true
+                    isSortable: true,
+                    align: align,
                 }));
             }
             return new JQTable.JQGridAssistant(nodes, gridName);
