@@ -10,8 +10,7 @@ module pages{
         constructor(page:pages.PageType) {
             super(page);
             this.find(".dowebok input").labelauty();
-
-            route.router.register(new route.AnonymousReceiver((e:route.Event)=> {
+            route.router.register(new route.Receiver("loansMgr", (e:route.Event)=> {
                 switch (e.id) {
                     case route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS:
                         this.isAssigner = true;
@@ -19,13 +18,38 @@ module pages{
                     case route.MSG.CONSOLE_OWNER_UNREADMSGS:
                         this.isOwner = true;
                         break;
+                    case route.MSG.LOANMGR_GET_QOPT:
+                        return this.getQOpt();
+                        break;
+                    case route.MSG.LOANMGR_GET_TYPE:
+                        return this.find(".dowebok input:checked").attr("myid");
                 }
             }));
         }
 
+        private qOpt(id:string):string{
+            let optVal : string =  this.find("#" + id).val();
+            if (optVal != undefined && optVal != "" && optVal != "none" && optVal.indexOf("____") < 0){
+                return optVal;
+            }
+            return undefined;
+        }
+
+        private getQOpt(){
+            let opt:collection.protocol.QueryOption = {};
+            opt.name = this.qOpt("qName");
+            opt.code = this.qOpt("qCode");
+            opt.PIN = this.qOpt("qPIN");
+            opt.wwjg = this.qOpt("qWwjg");
+            opt.wwrq = this.qOpt("qDate");
+            opt.wwzt = this.qOpt("qStatus");
+            return opt;
+        }
+
         protected onRefresh():void {
             let ecType = this.find(".dowebok input:checked").attr("myid");
-            let opt:collection.protocol.QueryOption = {};
+            let opt:collection.protocol.QueryOption = this.getQOpt();
+
             collection.EntrustedCase.search(ecType, opt).done((ecs:collection.protocol.EC[])=> {
                 this.ecs = ecs;
                 this.ecType = ecType;
@@ -50,12 +74,12 @@ module pages{
                 }
                 loans.push(this.ecs[i].loan);
             }
-
+            let lastSel;
             this.find("#lm-tableTable").jqGrid(
                 tableAssist.decorate({
                     data: tableAssist.getDataWithId(loans),
                     datatype: "local",
-                    multiselect: false,
+                    multiselect: true,
                     drag: false,
                     resize: false,
                     autowidth: true,
@@ -71,6 +95,15 @@ module pages{
                             if (isLinked[rowid]){
                                 alert(rowid + " " +  iCol);
                             }
+                        }
+                    },
+                    onSelectRow: (id)=>{
+                        if(id && id!==lastSel){
+                            let ids = [].concat(this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
+                            if (ids.indexOf(lastSel) >= 0){
+                                this.find("#lm-tableTable").setSelection(lastSel);
+                            }
+                            lastSel=id;
                         }
                     },
                     onSortCol:(index,iCol,sortorder)=>{
@@ -91,9 +124,11 @@ module pages{
                                     $("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
                                 }
                             }
-                        }, 0);
+                        }, 0)
+                        lastSel = undefined;
                     }
                 }));
+            this.find("th input[role='checkbox']").hide();
             let rids = this.find("#lm-tableTable").getDataIDs();
             for (let i =0; i < rids.length; ++i){
                 if (undefined != isLinked[rids[i]]) {

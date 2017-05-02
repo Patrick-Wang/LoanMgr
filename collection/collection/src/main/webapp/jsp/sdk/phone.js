@@ -6,7 +6,7 @@ var collection;
         function Phone() {
         }
         Phone.getRecords = function () {
-            return collection.Net.post(collection.Net.BASE_URL + "/phone/records.do");
+            return collection.Net.postLocal(collection.Net.BASE_URL + "/phone/records.do");
         };
         return Phone;
     })();

@@ -15,7 +15,7 @@ var pages;
             this.isAssigner = false;
             this.isOwner = false;
             this.find(".dowebok input").labelauty();
-            route.router.register(new route.AnonymousReceiver(function (e) {
+            route.router.register(new route.Receiver("loansMgr", function (e) {
                 switch (e.id) {
                     case route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS:
                         _this.isAssigner = true;
@@ -23,13 +23,35 @@ var pages;
                     case route.MSG.CONSOLE_OWNER_UNREADMSGS:
                         _this.isOwner = true;
                         break;
+                    case route.MSG.LOANMGR_GET_QOPT:
+                        return _this.getQOpt();
+                        break;
+                    case route.MSG.LOANMGR_GET_TYPE:
+                        return _this.find(".dowebok input:checked").attr("myid");
                 }
             }));
         }
+        LoansMgr.prototype.qOpt = function (id) {
+            var optVal = this.find("#" + id).val();
+            if (optVal != undefined && optVal != "" && optVal != "none" && optVal.indexOf("____") < 0) {
+                return optVal;
+            }
+            return undefined;
+        };
+        LoansMgr.prototype.getQOpt = function () {
+            var opt = {};
+            opt.name = this.qOpt("qName");
+            opt.code = this.qOpt("qCode");
+            opt.PIN = this.qOpt("qPIN");
+            opt.wwjg = this.qOpt("qWwjg");
+            opt.wwrq = this.qOpt("qDate");
+            opt.wwzt = this.qOpt("qStatus");
+            return opt;
+        };
         LoansMgr.prototype.onRefresh = function () {
             var _this = this;
             var ecType = this.find(".dowebok input:checked").attr("myid");
-            var opt = {};
+            var opt = this.getQOpt();
             collection.EntrustedCase.search(ecType, opt).done(function (ecs) {
                 _this.ecs = ecs;
                 _this.ecType = ecType;
@@ -40,6 +62,7 @@ var pages;
             this.adjustWidth("lm-table", this.find("#lm-tableTable"));
         };
         LoansMgr.prototype.refreshLoans = function (type) {
+            var _this = this;
             var tableAssist = pages.JQGridAssistantFactory.createTableAssist("lm-table", type);
             var loans = [];
             var isLinked = {};
@@ -52,10 +75,11 @@ var pages;
                 }
                 loans.push(this.ecs[i].loan);
             }
+            var lastSel;
             this.find("#lm-tableTable").jqGrid(tableAssist.decorate({
                 data: tableAssist.getDataWithId(loans),
                 datatype: "local",
-                multiselect: false,
+                multiselect: true,
                 drag: false,
                 resize: false,
                 autowidth: true,
@@ -71,6 +95,15 @@ var pages;
                         if (isLinked[rowid]) {
                             alert(rowid + " " + iCol);
                         }
+                    }
+                },
+                onSelectRow: function (id) {
+                    if (id && id !== lastSel) {
+                        var ids = [].concat(_this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
+                        if (ids.indexOf(lastSel) >= 0) {
+                            _this.find("#lm-tableTable").setSelection(lastSel);
+                        }
+                        lastSel = id;
                     }
                 },
                 onSortCol: function (index, iCol, sortorder) {
@@ -92,8 +125,10 @@ var pages;
                             }
                         }
                     }, 0);
+                    lastSel = undefined;
                 }
             }));
+            this.find("th input[role='checkbox']").hide();
             var rids = this.find("#lm-tableTable").getDataIDs();
             for (var i = 0; i < rids.length; ++i) {
                 if (undefined != isLinked[rids[i]]) {

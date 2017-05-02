@@ -1,6 +1,6 @@
 ///<reference path="../../../navbar.ts"/>
 ///<reference path="../../registry.ts"/>
-module navbar {
+module authority.nav.tips.missedCall {
     import Receiver = route.Receiver;
     let ADDR:string = "/nav/tips/missed_call";
     authority.register(ADDR, function () {

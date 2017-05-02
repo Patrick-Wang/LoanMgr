@@ -1,12 +1,3 @@
-<script
-	src="${pageContext.request.contextPath}/jsp/assets/js/bootstrap.min.js"></script>
-<script
-	src="${pageContext.request.contextPath}/jsp/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
-
-
-    <!--Page Related Scripts-->
-    <script src="${pageContext.request.contextPath}/jsp/assets/js/fuelux/wizard/wizard-custom.js"></script>
-<script src="${pageContext.request.contextPath}/jsp/assets/js/dropzone/dropzone.js"></script>
 
 <!--Beyond Scripts-->
 <script
@@ -23,11 +14,4 @@
 <script
 	src="${pageContext.request.contextPath}/jsp/assets/js/datatable/datatables-init.js"></script>
 
-	<script src="${pageContext.request.contextPath}/jsp/assets/js/toastr/toastr.js"></script>
 
-<script>
-	<%--InitiateSimpleDataTable.init();--%>
-	<%--InitiateEditableDataTable.init();--%>
-	<%--InitiateExpandableDataTable.init();--%>
-	<%--InitiateSearchableDataTable.init();--%>
-</script>

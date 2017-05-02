@@ -1,6 +1,7 @@
 package com.bank.debt.model.dao.eccreditloan;
 
 
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -70,7 +71,7 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 		}
 		
 		if (qOpt.getWwrq() != null){
-			q.setParameter("wwrq", qOpt.getWwrq());
+			q.setParameter("wwrq", Date.valueOf(qOpt.getWwrq()));
 		}
 		
 		if (qOpt.getWwjg() != null){

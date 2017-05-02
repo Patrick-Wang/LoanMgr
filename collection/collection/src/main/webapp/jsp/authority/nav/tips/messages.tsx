@@ -1,5 +1,5 @@
 ///<reference path="../../registry.ts"/>
-module navbar{
+module authority.nav.tips.messages{
     import Receiver = route.Receiver;
     let ADDR:string = "/nav/tips/messages";
     authority.register(ADDR, () => {

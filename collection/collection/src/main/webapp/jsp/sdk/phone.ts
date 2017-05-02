@@ -6,7 +6,7 @@ module collection{
 
     export class Phone{
         static getRecords():Promise<PhoneRecord[]>{
-            return Net.post(Net.BASE_URL + "/phone/records.do");
+            return Net.postLocal(Net.BASE_URL + "/phone/records.do");
         }
     }
 }

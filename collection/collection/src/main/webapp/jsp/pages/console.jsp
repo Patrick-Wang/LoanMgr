@@ -14,10 +14,6 @@
 	display: inline-block;
 }
 
-.dowebok li {
-	margin: 10px 0;
-}
-
 .dowebok input.labelauty+label {
 	font: 12px "Microsoft Yahei";
 }

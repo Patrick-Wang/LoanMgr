@@ -21,7 +21,8 @@ module route {
         static NAV_REFRESH:number = nextId();
         static CONSOLE_ASSIGNER_UNRESPMSGS:number = route.nextId();
         static CONSOLE_OWNER_UNREADMSGS:number = route.nextId();
-
+        static LOANMGR_GET_QOPT:number = route.nextId();
+        static LOANMGR_GET_TYPE:number = route.nextId();
     }
 
     export interface Endpoint {
@@ -165,9 +166,6 @@ module route {
                         }
                     }, delay);
                 }
-
-
-
             }
             this.mCurEvent = undefined;
             return Router.OK;

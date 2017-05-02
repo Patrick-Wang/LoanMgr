@@ -5,7 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-<script src="${pageContext.request.contextPath}/jsp/sdk/route/route.js"></script>
+
 <script
 	src="${pageContext.request.contextPath}/jsp/authority/registry.js"></script>
 

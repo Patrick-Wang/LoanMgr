@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" session="false"%>
-
+<style>
+#qStatus{
+	border-radius: 0px;
+}
+</style>
 <!-- Page Breadcrumb -->
 <div class="page-breadcrumbs">
 	<ul class="breadcrumb">
@@ -31,8 +35,7 @@
 <div class="page-body">
 	<div class="tab-content tabs-flat">
 		<div class="row">
-			<div class="col-xs-12 col-md-8">
-
+			<div class="col-xs-12 col-md-6">
 				<ul class="dowebok">
 					<li><input type="radio" checked="checked" name="lm-Radio"
 						myid="0" data-labelauty="车贷"></li>
@@ -41,19 +44,62 @@
 					<li><input type="radio" name="lm-Radio" myid="2"
 						data-labelauty="信用卡"></li>
 				</ul>
-
 			</div>
-			<div class="col-xs-12 col-md-4">
-				<div class="buttons-preview">
+			<div class="col-xs-12 col-md-6">
+				<div class="buttons-preview" style="float:right">
 					<a href="javascript:void(0);" class="btn btn-default">编辑委案信息</a> <a
-						href="javascript:void(0);" class="btn btn-primary">修改回款额</a>
+						href="javascript:void(0);" class="btn btn-default">修改回款额</a>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-2 col-md-2">
+				<div class="form-group">
+					<label class="control-label">姓名</label> <input id="qName" type="text"
+						class="form-control" placeholder="姓名">
+				</div>
+			</div>
+			<div class="col-xs-2 col-md-2">
+				<div class="form-group">
+					<label class="control-label">身份证</label> <input id="qPIN" type="text"
+						class="form-control">
+				</div>
+			</div>
+			<div class="col-xs-2 col-md-2">
+				<div class="form-group">
+					<label class="control-label">卡号</label> <input id="qCode" type="text"
+						class="form-control">
+				</div>
+			</div>
+			<div class="col-xs-2 col-md-2">
+				<div class="form-group">
+					<label class="control-label">委外日期</label> <input id="qDate" type="text"
+						data-mask="9999-99-99" class="form-control"
+						placeholder="YYYY-MM-DD">
+				</div>
+			</div>
+			<div class="col-xs-2 col-md-2">
+				<div class="form-group">
+					<label class="control-label">委外机构</label> <input id="qWwjg" type="text"
+						class="form-control">
+				</div>
+			</div>
+			<div class="col-xs-2 col-md-2">
+			<div class="form-group">
+				<label class="control-label">委外状态</label>
+					<select id="qStatus" style="width:100%;" class="form-control">
+						<option value="none" />
+	                    <option value="未分配" >未分配</option>
+						<option value="已分配" >已分配</option>
+						<option value="已结束" >已结案</option>
+					</select>
 				</div>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12 col-md-12">
 				<div class="widget">
-					<div class="widget-body">
+					<div class="widget-body" style="margin-bottom:0px">
 						<div id="lm-table"></div>
 					</div>
 				</div>
@@ -61,7 +107,6 @@
 			</div>
 		</div>
 	</div>
-
 </div>
 <!-- /Page Body -->
 <script src="${pageContext.request.contextPath}/jsp/pages/loansMgr.js"></script>

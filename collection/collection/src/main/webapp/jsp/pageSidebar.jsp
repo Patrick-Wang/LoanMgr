@@ -41,11 +41,11 @@
 						class="menu-text">委案信息查询和维护</span>
 				</a></li>
 
-				<c:if test='${address.contains("/ec/export")}'>
+<%-- 				<c:if test='${address.contains("/ec/export")}'>
 					<li><a id="exportLoans" href="exportLoans.html"> <span
 							class="menu-text">委案备份</span>
 					</a></li>
-				</c:if>
+				</c:if> --%>
 
 				<li><a id="reportTask" href="reportTask.html"> <span
 						class="menu-text">委案工作汇报</span>

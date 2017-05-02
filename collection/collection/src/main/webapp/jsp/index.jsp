@@ -132,8 +132,20 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<script
 	src="${pageContext.request.contextPath}/jsp/assets/mloading/jquery.mloading.js"></script>
 	<!--Basic Scripts-->
-	<%@include file="basicScript.jsp"%>
-<%@include file="authority/authFns.jsp"%>
+	
+		<script src="${pageContext.request.contextPath}/jsp/assets/js/toastr/toastr.js"></script>
+		<script
+	src="${pageContext.request.contextPath}/jsp/assets/js/bootstrap.min.js"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
+
+
+    <!--Page Related Scripts-->
+    <script src="${pageContext.request.contextPath}/jsp/assets/js/fuelux/wizard/wizard-custom.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/assets/js/dropzone/dropzone.js"></script>
+	<script src="${pageContext.request.contextPath}/jsp/assets/js/bootbox/bootbox.js"></script>
+	<script src="${pageContext.request.contextPath}/jsp/assets/js/inputmask/jasny-bootstrap.min.js"></script>
+	<script src="${pageContext.request.contextPath}/jsp/sdk/route/route.js"></script>
 
 <style>
 .ui-widget {
@@ -274,6 +286,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
     font-size:12px;
 }
 
+
 </style>
 </head>
 <body>
@@ -309,9 +322,9 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				<div id="loansMgrPage" style="display: none">
 					<%@include file="pages/loansMgr.jsp"%>
 				</div>
-				<div id="exportLoansPage" style="display: none">
-					<%@include file="pages/exportLoans.jsp"%>
-				</div>
+				<%--<div id="exportLoansPage" style="display: none">--%>
+					<%--<%@include file="pages/exportLoans.jsp"%>--%>
+				<%--</div>--%>
 				<c:if test='${address.contains("/phone/call")}'>
 					<div id="callCenterPage" style="display: none">
 						<%@include file="pages/callCenter.jsp"%>
@@ -349,7 +362,15 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	</div>
 	<!-- Main Container -->
 </body>
+	<%@include file="authority/authFns.jsp"%>
 
+	<%@include file="basicScript.jsp"%>
 
+	<script>
+	InitiateSimpleDataTable.init();
+	InitiateEditableDataTable.init();
+	InitiateExpandableDataTable.init();
+	InitiateSearchableDataTable.init();
+	</script>
 </html>
 

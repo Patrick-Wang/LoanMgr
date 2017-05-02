@@ -158,7 +158,7 @@ module collection.protocol {
         code?:string;//卡号，客户号、车牌号
         wwrq?:string;//委外日期
         wwjg?:string;//委外机构
-        wwzt?:string;//委外状态：未分配、已分配、已结束
+        wwzt?:string;//委外状态：未分配、已分配、已结案
     }
 
     export interface Promise<S> {

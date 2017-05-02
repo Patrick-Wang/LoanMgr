@@ -12,6 +12,8 @@ var route;
         MSG.NAV_REFRESH = route.nextId();
         MSG.CONSOLE_ASSIGNER_UNRESPMSGS = route.nextId();
         MSG.CONSOLE_OWNER_UNREADMSGS = route.nextId();
+        MSG.LOANMGR_GET_QOPT = route.nextId();
+        MSG.LOANMGR_GET_TYPE = route.nextId();
         return MSG;
     })();
     route.MSG = MSG;
