@@ -7,6 +7,10 @@ var sidebar;
         SiderBar.registerPage(type, page);
     }
     sidebar.registerPage = registerPage;
+    function switchPage(type) {
+        $("#" + PageType[type]).click();
+    }
+    sidebar.switchPage = switchPage;
     var SiderBar = (function () {
         function SiderBar() {
             var _this = this;

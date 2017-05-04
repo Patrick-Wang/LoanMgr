@@ -5,12 +5,10 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <script
 	src="${pageContext.request.contextPath}/jsp/authority/registry.js"></script>
 
 <c:if test='${address.contains("/nav/tips/missed_call")}'>
-
 	<script
 		src="${pageContext.request.contextPath}/jsp/authority/nav/tips/missed_call.js"></script>
 

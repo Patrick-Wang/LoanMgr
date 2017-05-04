@@ -7,6 +7,10 @@ module sidebar {
         SiderBar.registerPage(type, page);
     }
 
+    export function switchPage(type:PageType){
+        $("#" + PageType[type]).click();
+    }
+
     class SiderBar {
         pages:pages.Page[] = [];
         items:SiderItemEvent[] = [];

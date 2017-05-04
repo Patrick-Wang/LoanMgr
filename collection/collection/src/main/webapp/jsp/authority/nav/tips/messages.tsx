@@ -1,6 +1,7 @@
 ///<reference path="../../registry.ts"/>
 module authority.nav.tips.messages{
     import Receiver = route.Receiver;
+    import PageType = pages.PageType;
     let ADDR:string = "/nav/tips/messages";
     authority.register(ADDR, () => {
         let html = ReactDOMServer.renderToStaticMarkup(
@@ -23,12 +24,13 @@ module authority.nav.tips.messages{
             </li>
         );
 
-        let msgTip:MsgTip = new MsgTip();
+        let msgTip:MsgTip = null;
         route.router.register(new Receiver(ADDR, (e:route.Event)=>{
             switch (e.id){
                 case route.MSG.NAV_REFRESH:
                     if (html != null){
                         $("#accountarea").children(":last").before(html);
+                        msgTip = new MsgTip();
                         html = null;
                     }
                     setInterval(()=>{
@@ -45,7 +47,6 @@ module authority.nav.tips.messages{
         constructor(){
             $("#queryAllMsgs").click(()=>{
                 this.onClickQueryAllMessage();
-                return false;
             });
         }
 
@@ -78,12 +79,11 @@ module authority.nav.tips.messages{
         }
 
         onClickQueryAllMessage(){
-            alert("onClickQueryAllMessage");
+            sidebar.switchPage(PageType.askSth);
         }
 
         clickMessage(msgId:number){
-            alert(msgId);
-            return false;
+            sidebar.switchPage(PageType.askSth);
         }
 
         buildMessageDetail(um):string {

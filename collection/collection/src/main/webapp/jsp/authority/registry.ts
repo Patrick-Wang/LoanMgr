@@ -6,13 +6,16 @@ module authority{
 
     import Endpoint = route.Endpoint;
 
-
-    export function register(address:string, fn:()=>void){
+    export function register(address:string, fn:()=>void):void{
         route.router.to(REG_ADDR).send(EvId.REGISTER, {addr : address, fn: fn});
     }
 
-    export function call(address:string){
+    export function call(address:string):void{
         route.router.to(REG_ADDR).send(EvId.CALL, address);
+    }
+
+    export function ping(address:string):boolean{
+        return route.router.to(REG_ADDR).send(EvId.PING, address);
     }
 
     let REG_ADDR : string = "_auth_reg";
@@ -24,7 +27,8 @@ module authority{
 
     enum EvId{
         REGISTER, // data : AuthFn
-        CALL // data : string  -- address
+        CALL,
+        PING// data : string  -- address
     }
 
     class Registry implements route.Endpoint{
@@ -33,7 +37,6 @@ module authority{
         constructor(){
             route.router.register(this);
         }
-
 
         private reg : any = {};
 
@@ -53,6 +56,8 @@ module authority{
                         this.reg[addr]();
                     }
                     break;
+                case EvId.PING:
+                    return this.reg[e.data] != undefined;
             }
         }
     }

@@ -4,16 +4,35 @@ module pages{
 
     import Message = collection.Message;
 
-    class AskSth extends PageImpl {
+
+    export class AskSth extends PageImpl {
         static ins = new AskSth(PageType.askSth);
 
         createTableAssist(pName:string):JQTable.JQGridAssistant {
             var parent = this.find("#" + pName);
             parent.empty();
             parent.append("<table id='" + pName + "Table'></table><div id='" + pName + "Pager'></div>");
-            let tableAssist:JQTable.JQGridAssistant = null;
-            tableAssist = JQGridAssistantFactory.createTable(pName + "Table", ["委案编码", "责任内勤", "回复时间", "咨询标题", "咨询内容", "回复内容", "相关附件"], 0, JQTable.TextAlign.Left);
-            return tableAssist;
+            let titles = ["委案编码", "责任内勤", "回复时间", "咨询标题", "咨询内容", "回复内容", "相关附件"];
+            let nodes = [];
+            for (let i = 0; i < titles.length; ++i) {
+                nodes.push(JQTable.Node.create({
+                    name: titles[i],
+                    width: 0,
+                    isSortable: true,
+                    align: JQTable.TextAlign.Left,
+                }));
+            }
+
+            if (authority.ping("/ec/answer")){
+                nodes.push(JQTable.Node.create({
+                    name: "",
+                    width: 0,
+                    isSortable: false,
+                    align: JQTable.TextAlign.Center,
+                }));
+            }
+
+            return new JQTable.JQGridAssistant(nodes, pName + "Table");
         }
 
         constructor(page:PageType) {
@@ -75,6 +94,31 @@ module pages{
             return row;
         }
 
+        private clickAnswer(msgId:any){
+            alert(msgId);
+        }
+
+        private updateAnswer(data:string[][]){
+            if (authority.ping("/ec/answer")){
+                let rids = this.find("#as-msgsTable").getDataIDs();
+                for (let i = 0; i < rids.length; ++i){
+                    for (var j = 0; j < data.length; ++j){
+                        if (data[j][0] == rids[i]){
+                            let html = ReactDOMServer.renderToStaticMarkup(<div>
+                                <a id={data[j][0]} className="btn btn-default btn-xs purple" ><i className="fa fa-share"></i>回复</a>
+                                </div>
+                            );
+                            this.find("#as-msgsTable").setCell(rids[i], 7, html);
+                            this.find("#as-msgsTable #" + data[j][0] + " a").click(()=>{
+                                this.clickAnswer(data[j][0]);
+                            });
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         private updateAttachement(data:string[][]){
             let rids = this.find("#as-msgsTable").getDataIDs();
             for (let i = 0; i < rids.length; ++i){
@@ -111,16 +155,19 @@ module pages{
                     onSortCol:(index,iCol,sortorder)=>{
                         setTimeout(()=>{
                             this.updateAttachement(data);
+                            this.updateAnswer(data);
                         }, 0);
                     },
                     onPaging:(btn)=>{
                         setTimeout(()=>{
                            this.updateAttachement(data);
+                            this.updateAnswer(data);
                         }, 0);
                     }
                 }));
 
            this.updateAttachement(data);
+            this.updateAnswer(data);
         }
 
     }

@@ -87,10 +87,6 @@ module pages{
             return $("#" + PageUtil.getPageId(type));
         }
 
-        static toastSuccess(msg:string, closeAble:boolean = false){
-
-        }
-
     }
 
     export class JQGridAssistantFactory {

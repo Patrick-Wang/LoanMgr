@@ -76,9 +76,6 @@ var pages;
         PageUtil.jqPage = function (type) {
             return $("#" + PageUtil.getPageId(type));
         };
-        PageUtil.toastSuccess = function (msg, closeAble) {
-            if (closeAble === void 0) { closeAble = false; }
-        };
         return PageUtil;
     })();
     pages.PageUtil = PageUtil;

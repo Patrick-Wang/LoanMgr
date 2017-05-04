@@ -41,19 +41,11 @@
 						class="menu-text">委案信息查询和维护</span>
 				</a></li>
 
-<%-- 				<c:if test='${address.contains("/ec/export")}'>
-					<li><a id="exportLoans" href="exportLoans.html"> <span
-							class="menu-text">委案备份</span>
+				<c:if test='${address.contains("/ec/ask") || address.contains("/ec/answer")}'>
+					<li><a id="askSth" href="askSth.html"> <span
+							class="menu-text">委案咨询</span>
 					</a></li>
-				</c:if> --%>
-
-<!-- 				<li><a id="reportTask" href="reportTask.html"> <span
-						class="menu-text">委案工作汇报</span>
-				</a></li> -->
-
-				<li><a id="askSth" href="askSth.html"> <span
-						class="menu-text">委案咨询</span>
-				</a></li>
+				</c:if>
 
 				<c:if test='${address.contains("/phone/call")}'>
 					<li><a id="callCenter" href="callCenter.html"> <span
@@ -96,7 +88,7 @@
 										class="menu-text">调整内勤人员</span>
 								</a></li>
 							</c:if>
-							
+
 							<c:if test='${address.contains("/user/ec/assign")}'>
 								<li><a id="rearangeBussiness" href="rearangeBusiness.html">
 										<i class="menu-icon fa fa-user"></i> <span class="menu-text">调整业务人员</span>

@@ -1,0 +1,3 @@
+authority.register("/ec/report", () => {
+
+});

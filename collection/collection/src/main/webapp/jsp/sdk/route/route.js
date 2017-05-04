@@ -60,9 +60,13 @@ var route;
         };
         Router.prototype.sendInternal = function (e, delay) {
             var toEndpoint = this.mEndpoints[e.to];
-            if (toEndpoint != undefined) {
+            var result = Router.FAILED;
+            if (toEndpoint == undefined) {
+                result = Router.UNKNOWNADDR;
+            }
+            else {
                 if (undefined == delay) {
-                    return toEndpoint.onEvent(e);
+                    result = toEndpoint.onEvent(e);
                 }
                 else {
                     if (route.DELAY_READY == delay) {
@@ -75,10 +79,10 @@ var route;
                             toEndpoint.onEvent(e);
                         }, delay);
                     }
-                    return Router.OK;
+                    result = Router.OK;
                 }
             }
-            return Router.FAILED;
+            return result;
         };
         Router.prototype.fromEp = function (from) {
             return this.from(from.getAddr());
@@ -172,6 +176,7 @@ var route;
         };
         Router.OK = "Route.OK";
         Router.FAILED = "Route.FAILED";
+        Router.UNKNOWNADDR = "Route.UNKNOWNADDR";
         return Router;
     })();
     route.Router = Router;

@@ -7,7 +7,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 ///<reference path="../pageSidebar.ts"/>
 ///<reference path="../sdk/route/route.ts"/>
 ///<reference path="importLoans.ts"/>
-///<reference path="askSth.ts"/>
+///<reference path="askSth.tsx"/>
 var pages;
 (function (pages) {
     var EntrustedCase = collection.EntrustedCase;

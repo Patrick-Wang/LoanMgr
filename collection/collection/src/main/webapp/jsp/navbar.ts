@@ -11,7 +11,7 @@ module navbar{
 
         static ins = new NavBar();
         constructor(){
-            route.router.broadcast(route.MSG.NAV_REFRESH);
+            route.router.broadcast(route.MSG.NAV_REFRESH, null, route.DELAY_READY);
         }
 
         static openMessageTips(){

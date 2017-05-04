@@ -9,11 +9,16 @@ var authority;
         route.router.to(REG_ADDR).send(EvId.CALL, address);
     }
     authority.call = call;
+    function ping(address) {
+        return route.router.to(REG_ADDR).send(EvId.PING, address);
+    }
+    authority.ping = ping;
     var REG_ADDR = "_auth_reg";
     var EvId;
     (function (EvId) {
         EvId[EvId["REGISTER"] = 0] = "REGISTER";
-        EvId[EvId["CALL"] = 1] = "CALL"; // data : string  -- address
+        EvId[EvId["CALL"] = 1] = "CALL";
+        EvId[EvId["PING"] = 2] = "PING"; // data : string  -- address
     })(EvId || (EvId = {}));
     var Registry = (function () {
         function Registry() {
@@ -35,6 +40,8 @@ var authority;
                         this.reg[addr]();
                     }
                     break;
+                case EvId.PING:
+                    return this.reg[e.data] != undefined;
             }
         };
         Registry.ins = new Registry();

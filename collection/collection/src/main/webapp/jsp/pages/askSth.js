@@ -17,9 +17,25 @@ var pages;
             var parent = this.find("#" + pName);
             parent.empty();
             parent.append("<table id='" + pName + "Table'></table><div id='" + pName + "Pager'></div>");
-            var tableAssist = null;
-            tableAssist = pages.JQGridAssistantFactory.createTable(pName + "Table", ["委案编码", "责任内勤", "回复时间", "咨询标题", "咨询内容", "回复内容", "相关附件"], 0, JQTable.TextAlign.Left);
-            return tableAssist;
+            var titles = ["委案编码", "责任内勤", "回复时间", "咨询标题", "咨询内容", "回复内容", "相关附件"];
+            var nodes = [];
+            for (var i = 0; i < titles.length; ++i) {
+                nodes.push(JQTable.Node.create({
+                    name: titles[i],
+                    width: 0,
+                    isSortable: true,
+                    align: JQTable.TextAlign.Left,
+                }));
+            }
+            if (authority.ping("/ec/answer")) {
+                nodes.push(JQTable.Node.create({
+                    name: "",
+                    width: 0,
+                    isSortable: false,
+                    align: JQTable.TextAlign.Center,
+                }));
+            }
+            return new JQTable.JQGridAssistant(nodes, pName + "Table");
         };
         AskSth.prototype.onRefresh = function () {
             var _this = this;
@@ -72,6 +88,27 @@ var pages;
             row.push(msg.attachements);
             return row;
         };
+        AskSth.prototype.clickAnswer = function (msgId) {
+            alert(msgId);
+        };
+        AskSth.prototype.updateAnswer = function (data) {
+            var _this = this;
+            if (authority.ping("/ec/answer")) {
+                var rids = this.find("#as-msgsTable").getDataIDs();
+                for (var i = 0; i < rids.length; ++i) {
+                    for (var j = 0; j < data.length; ++j) {
+                        if (data[j][0] == rids[i]) {
+                            var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", null, React.createElement("a", {"id": data[j][0], "className": "btn btn-default btn-xs purple"}, React.createElement("i", {"className": "fa fa-share"}), "回复")));
+                            this.find("#as-msgsTable").setCell(rids[i], 7, html);
+                            this.find("#as-msgsTable #" + data[j][0] + " a").click(function () {
+                                _this.clickAnswer(data[j][0]);
+                            });
+                            break;
+                        }
+                    }
+                }
+            }
+        };
         AskSth.prototype.updateAttachement = function (data) {
             var rids = this.find("#as-msgsTable").getDataIDs();
             for (var i = 0; i < rids.length; ++i) {
@@ -107,17 +144,21 @@ var pages;
                 onSortCol: function (index, iCol, sortorder) {
                     setTimeout(function () {
                         _this.updateAttachement(data);
+                        _this.updateAnswer(data);
                     }, 0);
                 },
                 onPaging: function (btn) {
                     setTimeout(function () {
                         _this.updateAttachement(data);
+                        _this.updateAnswer(data);
                     }, 0);
                 }
             }));
             this.updateAttachement(data);
+            this.updateAnswer(data);
         };
         AskSth.ins = new AskSth(pages.PageType.askSth);
         return AskSth;
     })(pages.PageImpl);
+    pages.AskSth = AskSth;
 })(pages || (pages = {}));

@@ -8,15 +8,17 @@ var authority;
             var messages;
             (function (messages) {
                 var Receiver = route.Receiver;
+                var PageType = pages.PageType;
                 var ADDR = "/nav/tips/messages";
                 authority.register(ADDR, function () {
                     var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", null, React.createElement("a", {"className": "dropdown-toggle", "data-toggle": "dropdown", "title": "Tasks", "href": "#"}, React.createElement("i", {"className": "icon fa fa-tasks"}), React.createElement("span", {"id": "msgCount", "className": "badge"}, "0")), React.createElement("ul", {"className": "pull-right dropdown-menu dropdown-messages dropdown-arrow "}, React.createElement("li", {"id": "msgCountDetail", "className": "dropdown-header bordered-darkorange"}, React.createElement("i", {"className": "fa fa-tasks"}), "0 条待处理消息"), React.createElement("li", {"className": "dropdown-footer"}, React.createElement("a", {"id": "queryAllMsgs", "href": "#"}, "查看全部咨询信息")))));
-                    var msgTip = new MsgTip();
+                    var msgTip = null;
                     route.router.register(new Receiver(ADDR, function (e) {
                         switch (e.id) {
                             case route.MSG.NAV_REFRESH:
                                 if (html != null) {
                                     $("#accountarea").children(":last").before(html);
+                                    msgTip = new MsgTip();
                                     html = null;
                                 }
                                 setInterval(function () {
@@ -32,7 +34,6 @@ var authority;
                         var _this = this;
                         $("#queryAllMsgs").click(function () {
                             _this.onClickQueryAllMessage();
-                            return false;
                         });
                     }
                     MsgTip.prototype.updateTips = function () {
@@ -62,11 +63,10 @@ var authority;
                         return time;
                     };
                     MsgTip.prototype.onClickQueryAllMessage = function () {
-                        alert("onClickQueryAllMessage");
+                        sidebar.switchPage(PageType.askSth);
                     };
                     MsgTip.prototype.clickMessage = function (msgId) {
-                        alert(msgId);
-                        return false;
+                        sidebar.switchPage(PageType.askSth);
                     };
                     MsgTip.prototype.buildMessageDetail = function (um) {
                         var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": "navMsgTmp"}, React.createElement("a", {"id": um.msgId, "href": '#'}, React.createElement("img", {"src": collection.Net.BASE_URL + "/jsp/assets/img/avatars/bing.png", "className": "message-avatar", "alt": "Microsoft Bing"}), React.createElement("div", {"className": "message"}, React.createElement("span", {"className": "message-sender"}, um.fromName), React.createElement("span", {"className": "message-time"}, this.getDateFromTime(um.sendTime)), React.createElement("span", {"className": "message-subject"}, um.title), React.createElement("span", {"className": "message-body"}, um.content)))));

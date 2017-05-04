@@ -40,7 +40,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/jsp/assets/mloading/jquery.mloading.css">
 	
-<script src="${pageContext.request.contextPath}/jsp/react/react.min.js"></script>
+<script src="${pageContext.request.contextPath}/jsp/react/react.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/react/react-dom.min.js"></script>
 <script

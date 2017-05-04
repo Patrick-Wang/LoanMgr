@@ -9,7 +9,7 @@ var navbar;
     var CallStatus = collection.protocol.CallStatus;
     var NavBar = (function () {
         function NavBar() {
-            route.router.broadcast(route.MSG.NAV_REFRESH);
+            route.router.broadcast(route.MSG.NAV_REFRESH, null, route.DELAY_READY);
         }
         NavBar.openMessageTips = function () {
             NavBar.ins.triggerRefreshMessageTips();

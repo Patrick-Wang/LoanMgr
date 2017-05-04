@@ -2,6 +2,7 @@
 ///<reference path="../../registry.ts"/>
 module authority.nav.tips.missedCall {
     import Receiver = route.Receiver;
+    import PageType = pages.PageType;
     let ADDR:string = "/nav/tips/missed_call";
     authority.register(ADDR, function () {
         let html = ReactDOMServer.renderToStaticMarkup(
@@ -20,12 +21,13 @@ module authority.nav.tips.missedCall {
             </li>
         );
 
-        let missedCall:MissedCall = new MissedCall();
+        let missedCall:MissedCall;
         route.router.register(new Receiver(ADDR, (e:route.Event)=> {
             switch (e.id) {
                 case route.MSG.NAV_REFRESH:
                     if (html != null) {
                         $("#accountarea").children(":first").before(html);
+                        missedCall = new MissedCall();
                         html = null;
                     }
                     setInterval(()=>{
@@ -35,21 +37,13 @@ module authority.nav.tips.missedCall {
                     break;
             }
         }));
-
-        MissedCall.createInstance();
     });
 
     class MissedCall {
-        static ins:MissedCall;
-
-        static createInstance():void {
-            MissedCall.ins = new MissedCall();
-        }
 
         constructor() {
             $("#navCallCenter").click(()=> {
                 this.onClickCallCenter();
-                return false;
             });
         }
 
@@ -61,7 +55,7 @@ module authority.nav.tips.missedCall {
         }
 
         onClickCallCenter() {
-            alert("onClickCallCenter");
+            sidebar.switchPage(PageType.callCenter);
         }
 
         buildCallCenter(detailli:any, pr:collection.protocol.PhoneRecord) {

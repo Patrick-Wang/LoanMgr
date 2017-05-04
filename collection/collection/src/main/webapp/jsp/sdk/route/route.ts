@@ -64,6 +64,8 @@ module route {
     export class Router {
         static OK:string = "Route.OK";
         static FAILED:string = "Route.FAILED";
+        static UNKNOWNADDR:string = "Route.UNKNOWNADDR";
+
 
         private mEndpoints:any = {};
         private mEplist:string[] = [];
@@ -81,9 +83,12 @@ module route {
 
         private sendInternal(e:Event, delay?:number):any {
             let toEndpoint = this.mEndpoints[e.to];
-            if (toEndpoint != undefined) {
+            let result = Router.FAILED;
+            if (toEndpoint == undefined) {
+                result = Router.UNKNOWNADDR;
+            }else{
                 if (undefined == delay){
-                    return toEndpoint.onEvent(e);
+                    result = toEndpoint.onEvent(e);
                 }else{
                     if (DELAY_READY == delay){
                         $(document).ready(()=>{
@@ -94,11 +99,10 @@ module route {
                             toEndpoint.onEvent(e);
                         }, delay);
                     }
-                    return Router.OK;
+                    result = Router.OK;
                 }
-
             }
-            return Router.FAILED;
+            return result;
         }
 
         public fromEp(from:Endpoint):Router {

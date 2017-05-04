@@ -9,15 +9,17 @@ var authority;
             var missedCall;
             (function (missedCall_1) {
                 var Receiver = route.Receiver;
+                var PageType = pages.PageType;
                 var ADDR = "/nav/tips/missed_call";
                 authority.register(ADDR, function () {
                     var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", null, React.createElement("a", {"className": " dropdown-toggle", "data-toggle": "dropdown", "title": "Notifications", "href": "#"}, React.createElement("i", {"className": "icon fa fa-warning red"}), React.createElement("span", {"id": "navCallCount", "className": "badge"}, "0")), React.createElement("ul", {"id": "navCallDetail", "className": "pull-right dropdown-menu dropdown-arrow dropdown-notifications"}, React.createElement("li", {"className": "dropdown-footer "}, React.createElement("div", {"id": "navCallCenter"}, "前往呼叫中心")))));
-                    var missedCall = new MissedCall();
+                    var missedCall;
                     route.router.register(new Receiver(ADDR, function (e) {
                         switch (e.id) {
                             case route.MSG.NAV_REFRESH:
                                 if (html != null) {
                                     $("#accountarea").children(":first").before(html);
+                                    missedCall = new MissedCall();
                                     html = null;
                                 }
                                 setInterval(function () {
@@ -27,19 +29,14 @@ var authority;
                                 break;
                         }
                     }));
-                    MissedCall.createInstance();
                 });
                 var MissedCall = (function () {
                     function MissedCall() {
                         var _this = this;
                         $("#navCallCenter").click(function () {
                             _this.onClickCallCenter();
-                            return false;
                         });
                     }
-                    MissedCall.createInstance = function () {
-                        MissedCall.ins = new MissedCall();
-                    };
                     MissedCall.prototype.updateTips = function () {
                         var _this = this;
                         collection.Phone.getRecords().done(function (prs) {
@@ -47,7 +44,7 @@ var authority;
                         });
                     };
                     MissedCall.prototype.onClickCallCenter = function () {
-                        alert("onClickCallCenter");
+                        sidebar.switchPage(PageType.callCenter);
                     };
                     MissedCall.prototype.buildCallCenter = function (detailli, pr) {
                         detailli.before(ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": "navMissedTmp"}, React.createElement("a", {"href": "#"}, React.createElement("div", {"className": "clearfix"}, React.createElement("div", {"className": "notification-icon"}, React.createElement("i", {"className": "fa fa-phone bg-themeprimary white"})), React.createElement("div", {"className": "notification-body"}, React.createElement("span", {"className": "title red"}, "未接来电 ", pr.phoneNum), React.createElement("span", {"className": "description"}, " ", pr.time)))))));

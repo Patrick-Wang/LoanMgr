@@ -2,7 +2,7 @@
 ///<reference path="../pageSidebar.ts"/>
 ///<reference path="../sdk/route/route.ts"/>
 ///<reference path="importLoans.ts"/>
-///<reference path="askSth.ts"/>
+///<reference path="askSth.tsx"/>
 module pages {
     import EntrustedCase = collection.EntrustedCase;
     import QueryOption = collection.protocol.QueryOption;
