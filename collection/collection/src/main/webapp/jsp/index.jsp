@@ -146,6 +146,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<script src="${pageContext.request.contextPath}/jsp/assets/js/bootbox/bootbox.js"></script>
 	<script src="${pageContext.request.contextPath}/jsp/assets/js/inputmask/jasny-bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/jsp/sdk/route/route.js"></script>
+<script
+	src="${pageContext.request.contextPath}/jsp/assets/js/bootbox/bootbox.js"></script>
 
 <style>
 .ui-widget {

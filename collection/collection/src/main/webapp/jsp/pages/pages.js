@@ -76,6 +76,19 @@ var pages;
         PageUtil.jqPage = function (type) {
             return $("#" + PageUtil.getPageId(type));
         };
+        PageUtil.randomNum = function (min, max) {
+            var rg = max - min;
+            var rd = Math.random();
+            return (min + Math.round(rd * rg));
+        };
+        PageUtil.shuffle = function (arr) {
+            for (var i = arr.length - 1; i > 0; --i) {
+                var j = PageUtil.randomNum(0, i);
+                var tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+            }
+        };
         return PageUtil;
     })();
     pages.PageUtil = PageUtil;

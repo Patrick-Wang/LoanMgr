@@ -5,7 +5,7 @@ var collection;
     var EntrustedCaseManager = (function () {
         function EntrustedCaseManager() {
         }
-        EntrustedCaseManager.getManagerInfo = function (type, qOpt) {
+        EntrustedCaseManager.getManagerInfo = function () {
             return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/manager/search.do");
         };
         EntrustedCaseManager.update = function (data) {

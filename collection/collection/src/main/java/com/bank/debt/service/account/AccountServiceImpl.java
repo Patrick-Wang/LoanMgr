@@ -140,7 +140,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Result createUser(CreateUser usr) {
 		UserEntity ue = userDao.getUserByName(usr.getName());
-		if (null == ue){
+		if (null != ue){
 			return ErrorCode.ACCOUNT_USER_EXIST;
 		}
 		OrganizationEntity org = organizationDao.getById(usr.getOrgId());
@@ -192,7 +192,14 @@ public class AccountServiceImpl implements AccountService {
 		usr.setName(ue.getUsername());
 		usr.setOrgId(ue.getOrg().getId());
 		usr.setOrgName(ue.getOrg().getName());
-		usr.setStatus(ue.getStatus());		
+		usr.setStatus(ue.getStatus());	
+		usr.setPassword(ue.getPassword());
+		usr.setPosition(ue.getPosition());
+		List<Integer> roles = new ArrayList<Integer>();
+		for (RoleEntity role : ue.getRoles()){
+			roles.add(role.getId());
+		}
+		usr.setRoles(roles);
 		return usr;
 	}
 

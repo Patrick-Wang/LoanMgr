@@ -28,7 +28,7 @@
 
 	<!-- 自定义权限不足处理程序 -->
 	<beans:bean id="accessDeniedHandler" class="com.spring.session.AjaxAccessDeniedHandler">
-		<beans:property name="errorPage" value="/home/index.do"></beans:property>
+		<beans:property name="errorPage" value="/home/noright.do"></beans:property>
 	</beans:bean>
 
 <!-- 	<authentication-manager>

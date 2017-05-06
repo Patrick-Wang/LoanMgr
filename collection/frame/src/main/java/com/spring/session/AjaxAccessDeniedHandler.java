@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 
@@ -23,6 +24,8 @@ public class AjaxAccessDeniedHandler extends AccessDeniedHandlerImpl {
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException)  
             throws IOException, ServletException {  
+    	LoggerFactory.getLogger("rights").info("access deny : " + accessDeniedException.getMessage());
+    	LoggerFactory.getLogger("rights").info("access deny : " + request.getRequestURL());
         if(ControllerTools.isAjaxRequest(request)){
         	AjaxRedirect ar = new AjaxRedirect(accessDeniedException.getMessage(), this.redirectPage);
         		PrintWriter pw = response.getWriter();

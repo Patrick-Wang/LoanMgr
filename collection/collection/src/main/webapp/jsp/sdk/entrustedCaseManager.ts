@@ -8,7 +8,7 @@ module collection{
 
     export class EntrustedCaseManager{
 
-        static getManagerInfo(type:number, qOpt:QueryOption):Promise<EntrustedCaseManageInfo[]>{
+        static getManagerInfo():Promise<EntrustedCaseManageInfo[]>{
             return Net.post(Net.BASE_URL + "/entrusted_case/manager/search.do");
         }
 

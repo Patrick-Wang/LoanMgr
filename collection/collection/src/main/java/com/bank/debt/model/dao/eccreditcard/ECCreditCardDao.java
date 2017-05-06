@@ -10,7 +10,7 @@ import com.speed.frame.model.dao.AbstractReadWriteDao;
 
 public interface ECCreditCardDao extends AbstractReadWriteDao<ECCreditCardEntity> {
 
-	List<Object[]> search(QueryOption qOpt);
+	List<Object[]> search(UserEntity ue, QueryOption qOpt);
 
 	int getCompleteForOwner(UserEntity ue);
 

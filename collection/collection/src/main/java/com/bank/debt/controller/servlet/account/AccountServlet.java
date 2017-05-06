@@ -75,9 +75,9 @@ public class AccountServlet {
 			Checking.isExist(usr.getPassword()) &&
 			Checking.isExist(usr.getOrgId()) &&
 			Checking.isExist(usr.getRoles())){
-			return ErrorCode.ACCOUNT_USER_INFO_ERROR.toUtf8Json();
-		}else{
 			return accountService.createUser(usr).toUtf8Json();
+		}else{
+			return ErrorCode.ACCOUNT_USER_INFO_ERROR.toUtf8Json();
 		}
 	}
 }

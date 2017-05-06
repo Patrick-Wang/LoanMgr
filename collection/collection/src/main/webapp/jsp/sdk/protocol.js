@@ -48,6 +48,7 @@ var collection;
             UseStatus[UseStatus["stop"] = 1] = "stop";
         })(protocol.UseStatus || (protocol.UseStatus = {}));
         var UseStatus = protocol.UseStatus;
+        protocol.ROLE = ["none", "管理员", "内勤管理员", "业务管理员", "内勤", "业务员"];
         (function (EntrustedCaseType) {
             EntrustedCaseType[EntrustedCaseType["carLoan"] = 0] = "carLoan";
             EntrustedCaseType[EntrustedCaseType["creditLoan"] = 1] = "creditLoan";

@@ -93,7 +93,7 @@ var pages;
                     tree.push({
                         name: orgs[i].name + '<div class="tree-actions"></div>',
                         type: 'folder',
-                        additionalParameters: { id: orgs[i].id }
+                        additionalParameters: { org: orgs[i] }
                     });
                 }
             }
@@ -114,15 +114,11 @@ var pages;
             var _this = this;
             this.goStep1();
             var type = pages.PageUtil.jqPage(this.page).find(".dowebok input:checked").attr("myid");
-            var opt = {};
-            EntrustedCase.search(type, opt).done(function (ecs) {
-                _this.ecs = [];
+            var opt = { myOwn: true };
+            EntrustedCase.search(type, opt)
+                .done(function (ecs) {
+                _this.ecs = ecs;
                 _this.ecType = type;
-                for (var i = 0; i < ecs.length; ++i) {
-                    if (ecs[i].owner == context.userName) {
-                        _this.ecs.push(ecs[i]);
-                    }
-                }
                 _this.doRefresh();
             });
             $.when(Account.getUsers(["/ec/ask"]), Account.getOrgs())
@@ -135,12 +131,7 @@ var pages;
                             callback({ data: _this.getTree(usrs, orgs) });
                         }
                         else {
-                            for (var i = 0; i < orgs.length; ++i) {
-                                if (orgs[i].id == options.additionalParameters.id) {
-                                    callback({ data: _this.getTree(usrs, orgs[i].subOrgs, orgs[i]) });
-                                    break;
-                                }
-                            }
+                            callback({ data: _this.getTree(usrs, options.additionalParameters.org.subOrgs, options.additionalParameters.org) });
                         }
                     }
                 };
@@ -168,29 +159,29 @@ var pages;
             return -1;
         };
         AssignLoans.prototype.getSelectedEC = function () {
-            if (this.selAll) {
-                return this.ecs;
-            }
-            else {
-                var ids = [].concat($("#tbAllLoansTable").jqGrid('getGridParam', 'selarrrow'));
-                var ret = [];
-                for (var i = 0; i < this.ecs.length; ++i) {
-                    var index = this.indexOf(ids, this.ecs[i].loan[0]);
-                    if (index >= 0) {
-                        ids.splice(index, 1);
-                        ret.push(this.ecs[i]);
-                    }
+            //if (this.selAll) {
+            //    return this.ecs;
+            //} else {
+            var ids = [].concat($("#tbAllLoansTable").jqGrid('getGridParam', 'selarrrow'));
+            var ret = [];
+            for (var i = 0; i < this.ecs.length; ++i) {
+                var index = this.indexOf(ids, this.ecs[i].loan[0]);
+                if (index >= 0) {
+                    ids.splice(index, 1);
+                    ret.push(this.ecs[i]);
                 }
-                return ret;
             }
+            return ret;
+            //}
         };
         AssignLoans.prototype.doRefresh = function () {
             var _this = this;
-            var tableAssist = pages.JQGridAssistantFactory.createTableAssist("tbAllLoans", this.ecType, ["指派人", "完成人"]);
+            var tableAssist = pages.JQGridAssistantFactory.createTableAssist("tbAllLoans", this.ecType, ["内勤人员", "业务员"]);
             var loans = [];
             for (var i = 0; i < this.ecs.length; ++i) {
                 loans.push([this.ecs[i].loan[0], this.ecs[i].owner, this.ecs[i].assignee].concat(this.ecs[i].loan.slice(1)));
             }
+            pages.PageUtil.shuffle(loans);
             $("#tbAllLoansTable").jqGrid(tableAssist.decorate({
                 data: tableAssist.getDataWithId(loans),
                 datatype: "local",

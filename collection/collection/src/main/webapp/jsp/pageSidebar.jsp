@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" session="false"%>
 <!-- Page Sidebar -->
->
 <div class="page-sidebar" id="sidebar">
 	<!-- Page Sidebar Header-->
 	<div class="sidebar-header-wrapper">
-		<input type="text" class="searchinput" /> <i
+<!-- 		<input type="text" class="searchinput" /> <i
 			class="searchicon fa fa-search"></i>
-		<div class="searchhelper">搜索含有该关键字的委案</div>
+		<div class="searchhelper">搜索含有该关键字的委案</div> -->
 	</div>
 	<!-- /Page Sidebar Header -->
 	<!-- Sidebar Menu -->
@@ -20,7 +19,7 @@
 		</a></li>
 
 		<!--委案管理-->
-		<li class="active open"><a href="#" class="menu-dropdown"> <i
+		<li class="active"><a href="#" class="menu-dropdown"> <i
 				class="menu-icon fa fa-table"></i> <span class="menu-text">
 					委案管理 </span> <i class="menu-expand"></i>
 		</a>
@@ -41,7 +40,8 @@
 						class="menu-text">委案信息查询和维护</span>
 				</a></li>
 
-				<c:if test='${address.contains("/ec/ask") || address.contains("/ec/answer")}'>
+				<c:if
+					test='${address.contains("/ec/ask") || address.contains("/ec/answer")}'>
 					<li><a id="askSth" href="askSth.html"> <span
 							class="menu-text">委案咨询</span>
 					</a></li>
@@ -54,51 +54,40 @@
 				</c:if>
 			</ul></li>
 		<!--系统管理-->
-		<li><a href="#" class="menu-dropdown"> <i
-				class="menu-icon glyphicon glyphicon-link"></i> <span
-				class="menu-text"> 系统管理 </span> <i class="menu-expand"></i>
-		</a>
 
-			<ul class="submenu">
-				<c:if test='${address.contains("/user/manager")}'>
-					<li><a id="userMgr" href="userMgr.html"> <span
-							class="menu-text">用户管理</span>
-					</a></li>
-				</c:if>
+		<c:if
+			test='${address.contains("/user/manager") || address.contains("/ec/backup")}'>
+			<li><a href="#" class="menu-dropdown"> <i
+					class="menu-icon glyphicon glyphicon-link"></i> <span
+					class="menu-text"> 系统管理 </span> <i class="menu-expand"></i>
+			</a>
 
-				<li><a id="propertyMgr" href="propertyMgr.html"> <span
+				<ul class="submenu">
+					<c:if test='${address.contains("/user/manager")}'>
+						<li><a id="userMgr" href="userMgr.html"> <span
+								class="menu-text">用户管理</span>
+						</a></li>
+					</c:if>
+
+					<!-- 				<li><a id="propertyMgr" href="propertyMgr.html"> <span
 						class="menu-text">权限配置</span>
-				</a></li>
+				</a></li> -->
 
-				<c:if test='${address.contains("/ec/backup")}'>
-					<li><a id="backup" href="backup.html"> <span
-							class="menu-text">数据备份</span>
-					</a></li>
-				</c:if>
+					<c:if test='${address.contains("/ec/backup")}'>
+						<li><a id="backup" href="backup.html"> <span
+								class="menu-text">数据备份</span>
+						</a></li>
+					</c:if>
 
-				<c:if
-					test='${address.contains("/user/manager") || address.contains("/user/ec/assign")}'>
-					<li><a href="#" class="menu-dropdown"> <span
-							class="menu-text">人员调配 </span> <i class="menu-expand"></i>
-					</a>
-						<ul class="submenu">
-							<c:if test='${address.contains("/user/manager")}'>
-								<li><a id="rearangeOffice" href="rearangeOffice.html">
-										<i class="menu-icon fa fa-user-md"></i> <span
-										class="menu-text">调整内勤人员</span>
-								</a></li>
-							</c:if>
+					<c:if test='${address.contains("/user/manager")}'>
+						<li><a id="rearangeOffice" href="backup.html"> <span
+								class="menu-text">调整内勤人员</span>
+						</a></li>
+					</c:if>
 
-							<c:if test='${address.contains("/user/ec/assign")}'>
-								<li><a id="rearangeBussiness" href="rearangeBusiness.html">
-										<i class="menu-icon fa fa-user"></i> <span class="menu-text">调整业务人员</span>
-								</a></li>
-							</c:if>
-						</ul></li>
-				</c:if>
-			</ul></li>
-
-		<li><a href="index.html"> <i
+				</ul></li>
+		</c:if>
+		<li><a href="#"> <i
 				class="menu-icon glyphicon glyphicon-gift themesecondary"></i> <span
 				class="menu-text"> 贷款委案管理平台 v1.0 </span>
 		</a></li>

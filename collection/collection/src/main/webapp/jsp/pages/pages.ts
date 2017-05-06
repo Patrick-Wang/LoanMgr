@@ -2,7 +2,7 @@
 
 //eg. 'You Must Worry', 'top-right', '5000', 'warning', 'fa-warning', true
 declare let Notify:(message:string, position:string, timeout:string, theme:string, icon:string, closable:boolean)=>void;
-
+declare let bootbox:any;
 module pages{
     export enum PageType{
         reportTask,
@@ -87,6 +87,20 @@ module pages{
             return $("#" + PageUtil.getPageId(type));
         }
 
+        static randomNum(min:number,max:number){
+            var rg = max - min;
+            var rd = Math.random();
+            return (min + Math.round(rd * rg));
+        }
+
+        static shuffle(arr:any[]){
+            for(let i = arr.length - 1; i > 0; --i){
+                let j = PageUtil.randomNum(0, i);
+                let tmp = arr[i];
+                arr[i] = arr[j];
+                arr[j] = tmp;
+            }
+        }
     }
 
     export class JQGridAssistantFactory {

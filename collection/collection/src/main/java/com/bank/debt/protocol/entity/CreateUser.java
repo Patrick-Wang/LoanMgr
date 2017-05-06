@@ -2,6 +2,7 @@ package com.bank.debt.protocol.entity;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.List;
 
 import com.bank.debt.protocol.tools.JsonUtil;
 import com.bank.debt.protocol.tools.JsonUtil.PropertyHandler;
@@ -14,7 +15,7 @@ public class CreateUser extends ProtocolEntityImpl{
 	String password;
 	Integer orgId;
     String position;
-	Integer[] roles;
+	List<Integer> roles;
 	public String getName() {
 		return name;
 	}
@@ -33,10 +34,10 @@ public class CreateUser extends ProtocolEntityImpl{
 	public void setOrgId(Integer orgId) {
 		this.orgId = orgId;
 	}
-	public Integer[] getRoles() {
+	public List<Integer> getRoles() {
 		return roles;
 	}
-	public void setRoles(Integer[] role) {
+	public void setRoles(List<Integer> role) {
 		this.roles = role;
 	}
 	public String getPosition() {
@@ -54,7 +55,7 @@ public class CreateUser extends ProtocolEntityImpl{
 			@Override
 			public Object toBeanValue(Field beanField, Object jsonObj) {
 				if (beanField.getName().equals("roles")){
-					JsonUtil.toObjects((JSONArray) jsonObj, Integer.class, null);
+					return JsonUtil.toObjects((JSONArray) jsonObj, Integer.class, null);
 				}
 				return null;
 			}

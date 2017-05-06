@@ -102,7 +102,7 @@ public class ECManagerServiceImpl implements ECManagerService {
 						ecme.getOwner().getId() != ecmi.getOwnerId())){
 					UserEntity owner = userDao.getById(ecmi.getOwnerId());
 					if (null != owner){
-						ecme.setAssignee(owner);
+						ecme.setOwner(owner);
 						changed = true;
 					}else{
 						r = ErrorCode.ECM_UPDATE_FAILED.clone();

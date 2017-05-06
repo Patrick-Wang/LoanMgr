@@ -28,7 +28,7 @@ module pages.console {
                     break;
                 case MSG_REFRESH:
                     let html = ReactDOMServer.renderToStaticMarkup(
-                        <li class="tab-palegreen">
+                        <li className="tab-palegreen">
                             <a data-toggle="tab" id="contacttab" href="#notRepliedMsg"> 未处理咨询 </a>
                         </li>
                     );

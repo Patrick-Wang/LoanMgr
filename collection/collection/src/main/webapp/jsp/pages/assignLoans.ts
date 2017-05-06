@@ -117,7 +117,7 @@ module pages {
                     tree.push({
                         name: orgs[i].name + '<div class="tree-actions"></div>',
                         type: 'folder',
-                        additionalParameters: {id: orgs[i].id}
+                        additionalParameters: {org: orgs[i]}
                     });
                 }
             }
@@ -139,17 +139,13 @@ module pages {
         protected onRefresh():void {
             this.goStep1();
             let type = PageUtil.jqPage(this.page).find(".dowebok input:checked").attr("myid");
-            let opt:QueryOption = {};
-            EntrustedCase.search(type, opt).done((ecs:EC[])=> {
-                this.ecs = [];
-                this.ecType = type;
-                for (let i = 0; i < ecs.length; ++i) {
-                    if (ecs[i].owner == context.userName) {
-                        this.ecs.push(ecs[i]);
-                    }
-                }
-                this.doRefresh();
-            });
+            let opt:QueryOption = {myOwn:true};
+            EntrustedCase.search(type, opt)
+                .done((ecs:EC[])=> {
+                    this.ecs = ecs;
+                    this.ecType = type;
+                    this.doRefresh();
+                });
 
             $.when(Account.getUsers(["/ec/ask"]), Account.getOrgs())
                 .done((usrs:User[], orgs:Organization[])=> {
@@ -160,12 +156,7 @@ module pages {
                             if (options.additionalParameters == undefined) {
                                 callback({data: this.getTree(usrs, orgs)});
                             } else {
-                                for (let i = 0; i < orgs.length; ++i) {
-                                    if (orgs[i].id == options.additionalParameters.id) {
-                                        callback({data: this.getTree(usrs, orgs[i].subOrgs, orgs[i])});
-                                        break;
-                                    }
-                                }
+                                callback({data: this.getTree(usrs, options.additionalParameters.org.subOrgs, options.additionalParameters.org)});
                             }
                         }
                     };
@@ -199,9 +190,9 @@ module pages {
         }
 
         private getSelectedEC():EC[] {
-            if (this.selAll) {
-                return this.ecs;
-            } else {
+            //if (this.selAll) {
+            //    return this.ecs;
+            //} else {
                 let ids = [].concat($("#tbAllLoansTable").jqGrid('getGridParam', 'selarrrow'));
                 let ret:EC[] = [];
                 for (let i = 0; i < this.ecs.length; ++i) {
@@ -212,15 +203,17 @@ module pages {
                     }
                 }
                 return ret;
-            }
+            //}
         }
 
         private doRefresh():void {
-            let tableAssist:JQTable.JQGridAssistant = pages.JQGridAssistantFactory.createTableAssist("tbAllLoans", this.ecType, ["指派人","完成人"]);
+            let tableAssist:JQTable.JQGridAssistant = pages.JQGridAssistantFactory.createTableAssist("tbAllLoans", this.ecType, ["内勤人员","业务员"]);
             let loans = [];
             for (let i = 0; i < this.ecs.length; ++i) {
                 loans.push([this.ecs[i].loan[0], this.ecs[i].owner, this.ecs[i].assignee].concat(this.ecs[i].loan.slice(1)));
             }
+
+            PageUtil.shuffle(loans);
 
             $("#tbAllLoansTable").jqGrid(
                 tableAssist.decorate({

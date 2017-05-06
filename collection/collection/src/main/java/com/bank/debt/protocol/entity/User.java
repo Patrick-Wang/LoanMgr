@@ -18,12 +18,12 @@ public class User  extends ProtocolEntityImpl{
 	Integer status;
 	String password;
     String position;
-	Integer[] roles;
+	List<Integer> roles;
 	
-	public Integer[] getRoles() {
+	public List<Integer> getRoles() {
 		return roles;
 	}
-	public void setRoles(Integer[] roles) {
+	public void setRoles(List<Integer> roles) {
 		this.roles = roles;
 	}
 	public String getPassword() {

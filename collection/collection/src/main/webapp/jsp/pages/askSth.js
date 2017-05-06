@@ -4,7 +4,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 ///<reference path="pages.ts"/>
-///<reference path="../pageSidebar.ts"/>
+///<reference path="importLoans.ts"/>
 var pages;
 (function (pages) {
     var Message = collection.Message;
@@ -44,6 +44,7 @@ var pages;
             });
         };
         AskSth.prototype.trans = function (msgs) {
+            this.msgs = msgs;
             var ret = [];
             var ecMap = {};
             var index = [];
@@ -109,6 +110,18 @@ var pages;
                 }
             }
         };
+        AskSth.prototype.onclickAttachement = function (msgId, attach) {
+            for (var i = 0; i < this.msgs.length; ++i) {
+                if (msgId == this.msgs[i].msgId) {
+                    this.find("#as-downloadForm [name=entrusted_case]").val(this.msgs[i].ecMgrId);
+                    this.find("#as-downloadForm [name=from]").val(this.msgs[i].fromId);
+                    this.find("#as-downloadForm [name=to]").val(this.msgs[i].toId);
+                    this.find("#as-downloadForm [name=attachement]").val(attach);
+                    this.find("#as-downloadForm").submit();
+                    break;
+                }
+            }
+        };
         AskSth.prototype.updateAttachement = function (data) {
             var rids = this.find("#as-msgsTable").getDataIDs();
             for (var i = 0; i < rids.length; ++i) {
@@ -116,7 +129,9 @@ var pages;
                     if (data[j][0] == rids[i]) {
                         var html = "";
                         for (var k = 0; k < data[j][7].length; ++k) {
-                            html += "<div style='color:blue;cursor:pointer' >" + data[j][7][k] + "</div>";
+                            html += "<div style='color:blue;cursor:pointer' onclick='pages.AskSth.ins.onclickAttachement(" +
+                                data[j][0] + ",\"" +
+                                data[j][7][k] + "\")'>" + data[j][7][k] + "</div>";
                         }
                         this.find("#as-msgsTable").setCell(rids[i], 6, html);
                         break;

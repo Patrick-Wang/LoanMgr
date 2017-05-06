@@ -531,6 +531,8 @@ insert into `authority` (intf, role) values
 ((select id from interface where address='/authority/delete.do'), (select id from role where name='ROLE_ADMIN')),
 ((select id from interface where address='/authority/add.do'), (select id from role where name='ROLE_ADMIN')),
 ((select id from interface where address='/entrusted_case/import.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
+((select id from interface where address='/entrusted_case/search.do'), (select id from role where name='ROLE_INSIDE_MANAGER')),
+((select id from interface where address='/entrusted_case/search.do'), (select id from role where name='ROLE_OUTSIDE_MANAGER')),
 ((select id from interface where address='/entrusted_case/search.do'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/entrusted_case/search.do'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
 ((select id from interface where address='/entrusted_case/search.do'), (select id from role where name='ROLE_ADMIN')),
@@ -648,7 +650,18 @@ delete from authority where intf = 1601 and role = (select id from role where na
 
 
 insert into organization (parent, name, status) values
-(null, 'testorg', 0);
+(null, '总公司', 0),
+(1, '上海分公司', 0),
+(1, '北京分公司', 0),
+(1, '沈阳分公司', 0),
+(2, '上海分公司第一分部', 0),
+(2, '上海分公司第二分部', 0),
+(3, '北京分公司第一分部', 0),
+(3, '北京分公司第二分部', 0),
+(3, '北京分公司第三分部', 0),
+(4, '沈阳分公司第一分部', 0),
+(4, '沈阳分公司第二分部', 0),
+(4, '沈阳分公司第三分部', 0);
 
 insert into user (username, password, org, position, status) values
 ('test', '1', 1, '测试职位1', 0),

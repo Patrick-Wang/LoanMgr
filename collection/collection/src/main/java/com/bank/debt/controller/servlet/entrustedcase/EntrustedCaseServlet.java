@@ -99,13 +99,13 @@ public class EntrustedCaseServlet {
 		QueryOption qOpt = (QueryOption) JsonUtil.toObject(JSONObject.fromObject(query), new QueryOption(), null);
 		switch(type){
 		case EntrustedCaseType.CAR_LOAN:
-			ecqi = entrustedCaseService.searchCarLoan(qOpt);
+			ecqi = entrustedCaseService.searchCarLoan(userName, qOpt);
 			break;
 		case EntrustedCaseType.CREDIT_CARD:
-			ecqi = entrustedCaseService.searchCreditCard(qOpt);
+			ecqi = entrustedCaseService.searchCreditCard(userName, qOpt);
 			break;
 		case EntrustedCaseType.CREDIT_LOAN:
-			ecqi = entrustedCaseService.searchCreditLoan(qOpt);
+			ecqi = entrustedCaseService.searchCreditLoan(userName, qOpt);
 			break;
 		}		
 		return JsonUtil.toUtf8Json(ecqi);

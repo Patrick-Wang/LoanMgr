@@ -60,6 +60,9 @@ public class JsonUtil {
 			if (String.class.isAssignableFrom(cls)){
 				return jsonObj.toString();
 			}
+			if (Boolean.class.isAssignableFrom(cls) || cls.getName().equals("boolean")){
+				return Boolean.valueOf(jsonObj.toString());
+			}			
 			if (Integer.class.isAssignableFrom(cls) || cls.getName().equals("int")){
 				return Integer.valueOf(jsonObj.toString());
 			}

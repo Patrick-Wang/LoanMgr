@@ -53,15 +53,18 @@ module collection.protocol {
         stop
     }
 
+    export let ROLE = ["none", "管理员","内勤管理员","业务管理员","内勤","业务员"];
+
+
     export interface User {
         id:number;
-        name:string;
+        name?:string;
         orgId:number;
         orgName?:string;
-        passwrod?:string;
-        rol?:number[];
+        password?:string;
+        roles?:number[];
         position:string;
-        status:UseStatus;
+        status?:UseStatus;
     }
 
     export interface CreateUser {
@@ -160,6 +163,8 @@ module collection.protocol {
         wwrq?:string;//委外日期
         wwjg?:string;//委外机构
         wwzt?:string;//委外状态：未分配、已分配、已结案
+        assignToMe?:boolean;
+        myOwn?:boolean;
     }
 
     export interface Promise<S> {

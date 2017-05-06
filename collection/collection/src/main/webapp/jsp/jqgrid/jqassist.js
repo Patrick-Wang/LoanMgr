@@ -1194,10 +1194,51 @@ var JQTable;
             if (option.assistEditable) {
                 $.extend(option, this.enablePageEdit(option.rowNum, option.pager));
             }
+            if (option.singleselect) {
+                option.multiselect = true;
+                $.extend(option, this.enableSingleSelect(option));
+            }
             this.mOnMergedRows = option.onMergedRows;
             this.mOnMergedColums = option.onMergedColums;
             this.mOnMergedTitles = option.onMergedTitles;
             return option;
+        };
+        JQGridAssistant.prototype.getSelRows = function () {
+            var grid = $("#" + this.mGridName + "");
+            return [].concat(grid.jqGrid('getGridParam', 'selarrrow'));
+        };
+        JQGridAssistant.prototype.enableSingleSelect = function (option) {
+            var grid = $("#" + this.mGridName + "");
+            var lastSel = "";
+            var onSelectRow = option.onSelectRow;
+            var onSortCol = option.onSortCol;
+            var onPaging = option.onPaging;
+            var opt = {
+                onSelectRow: function (id) {
+                    if (id && id !== lastSel) {
+                        var ids = [].concat(grid.jqGrid('getGridParam', 'selarrrow'));
+                        if (ids.indexOf(lastSel) >= 0) {
+                            grid.setSelection(lastSel);
+                        }
+                        lastSel = id;
+                    }
+                    if (onSelectRow) {
+                        onSelectRow(id);
+                    }
+                },
+                onSortCol: function (index, iCol, sortorder) {
+                    if (onSortCol) {
+                        onSortCol(index, iCol, sortorder);
+                    }
+                },
+                onPaging: function (btn) {
+                    lastSel = undefined;
+                    if (onPaging) {
+                        onPaging(btn);
+                    }
+                }
+            };
+            return opt;
         };
         return JQGridAssistant;
     })();

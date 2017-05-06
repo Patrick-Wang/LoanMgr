@@ -27,7 +27,7 @@ var pages;
                         }
                         break;
                     case MSG_REFRESH:
-                        var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"class": "tab-palegreen"}, React.createElement("a", {"data-toggle": "tab", "id": "contacttab", "href": "#notRepliedMsg"}, " 未处理咨询 ")));
+                        var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": "tab-palegreen"}, React.createElement("a", {"data-toggle": "tab", "id": "contacttab", "href": "#notRepliedMsg"}, " 未处理咨询 ")));
                         PageUtil.jqPage(pages.PageType.console).find("#myTab11").append(html);
                         break;
                 }

@@ -1,5 +1,5 @@
 ///<reference path="pages.ts"/>
-///<reference path="../pageSidebar.ts"/>
+///<reference path="importLoans.ts"/>
 module pages{
 
     import Message = collection.Message;
@@ -7,7 +7,7 @@ module pages{
 
     export class AskSth extends PageImpl {
         static ins = new AskSth(PageType.askSth);
-
+        msgs:collection.protocol.Message[];
         createTableAssist(pName:string):JQTable.JQGridAssistant {
             var parent = this.find("#" + pName);
             parent.empty();
@@ -46,6 +46,7 @@ module pages{
         }
 
         private trans(msgs:collection.protocol.Message[]):any {
+            this.msgs = msgs;
             let ret:any = [];
             let ecMap:any = {};
             let index:any[] = [];
@@ -119,6 +120,19 @@ module pages{
             }
         }
 
+        onclickAttachement(msgId:number, attach:string){
+            for (let i = 0; i < this.msgs.length; ++i){
+                if (msgId == this.msgs[i].msgId){
+                    this.find("#as-downloadForm [name=entrusted_case]").val(this.msgs[i].ecMgrId);
+                    this.find("#as-downloadForm [name=from]").val(this.msgs[i].fromId);
+                    this.find("#as-downloadForm [name=to]").val(this.msgs[i].toId);
+                    this.find("#as-downloadForm [name=attachement]").val(attach);
+                    this.find("#as-downloadForm").submit();
+                    break;
+                }
+            }
+        }
+
         private updateAttachement(data:string[][]){
             let rids = this.find("#as-msgsTable").getDataIDs();
             for (let i = 0; i < rids.length; ++i){
@@ -126,7 +140,9 @@ module pages{
                     if (data[j][0] == rids[i]){
                         let html = "";
                         for (let k = 0; k < data[j][7].length; ++k){
-                            html += "<div style='color:blue;cursor:pointer' >" + data[j][7][k] + "</div>"
+                            html += "<div style='color:blue;cursor:pointer' onclick='pages.AskSth.ins.onclickAttachement(" +
+                                data[j][0] + ",\"" +
+                                data[j][7][k] + "\")'>" + data[j][7][k] + "</div>"
                         }
                         this.find("#as-msgsTable").setCell(rids[i], 6, html);
                         break;

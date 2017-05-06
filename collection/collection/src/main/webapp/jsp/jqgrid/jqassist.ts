@@ -1331,12 +1331,56 @@ module JQTable {
                 $.extend(option, this.enablePageEdit(option.rowNum, option.pager));
             }
 
+            if (option.singleselect){
+                option.multiselect = true;
+                $.extend(option, this.enableSingleSelect(option));
+            }
+
 
             this.mOnMergedRows = option.onMergedRows;
             this.mOnMergedColums = option.onMergedColums;
             this.mOnMergedTitles = option.onMergedTitles;
 
             return option;
+        }
+
+        getSelRows():any[]{
+            let grid : any = $("#" + this.mGridName + "");
+            return [].concat(grid.jqGrid('getGridParam', 'selarrrow'));
+        }
+
+        private enableSingleSelect(option:any): any{
+            let grid : any = $("#" + this.mGridName + "");
+            let lastSel : any = "";
+            let onSelectRow = option.onSelectRow;
+            let onSortCol = option.onSortCol;
+            let onPaging = option.onPaging;
+            let opt = {
+                onSelectRow: (id)=>{
+                    if(id && id!==lastSel){
+                        let ids = [].concat(grid.jqGrid('getGridParam', 'selarrrow'));
+                        if (ids.indexOf(lastSel) >= 0){
+                            grid.setSelection(lastSel);
+                        }
+                        lastSel=id;
+                    }
+                    if (onSelectRow){
+                        onSelectRow(id);
+                    }
+                },
+                onSortCol:(index,iCol,sortorder)=>{
+                    if (onSortCol){
+                        onSortCol(index,iCol,sortorder);
+                    }
+                },
+                onPaging:(btn)=>{
+                    lastSel = undefined;
+                    if (onPaging){
+                        onPaging(btn);
+                    }
+                }
+            }
+            return opt;
         }
     }
 }

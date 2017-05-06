@@ -56,7 +56,7 @@
 			<div class="col-xs-2 col-md-2">
 				<div class="form-group">
 					<label class="control-label">姓名</label> <input id="qName" type="text"
-						class="form-control" placeholder="姓名">
+						class="form-control">
 				</div>
 			</div>
 			<div class="col-xs-2 col-md-2">

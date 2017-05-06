@@ -28,11 +28,11 @@ public interface EntrustedCaseService {
 
 	void getDownloadCreditLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException;
 
-	List<EC> searchCarLoan(QueryOption qOpt);
+	List<EC> searchCarLoan(String userName, QueryOption qOpt);
 
-	List<EC> searchCreditCard(QueryOption qOpt);
+	List<EC> searchCreditCard(String userName, QueryOption qOpt);
 
-	List<EC> searchCreditLoan(QueryOption qOpt);
+	List<EC> searchCreditLoan(String userName, QueryOption qOpt);
 
 	Result updateCreditLoan(String userName, JSONArray jdata) throws IOException;
 

@@ -29,19 +29,28 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 	}
 
 	@Override
-	public List<Object[]> search(QueryOption qOpt) {
+	public List<Object[]> search(UserEntity ue, QueryOption qOpt) {
 		String sql = "select ecme, eccle from ECCreditLoanEntity eccle, EntrustedCaseManagerEntity ecme";
 		String where = " where ecme.entrustedCase = eccle.id  and type=1";
+		
+		if (qOpt.getAssignToMe()){
+			where += " and ecme.assignee.id=:me ";
+		}
+		
+		if (qOpt.getMyOwn()){
+			where += " and ecme.owner.id=:me ";
+		}
+		
 		if (qOpt.getName() != null){
-			where += " and khxm=:name ";
+			where += " and khxm like :name ";
 		}
 		
 		if (qOpt.getPIN() != null){
-			where += " and  khsfzh = :pin ";
+			where += " and  khsfzh like :pin ";
 		}
 		
 		if (qOpt.getCode() != null){
-			where += " and  code = :code ";
+			where += " and  code like :code ";
 		}
 		
 		if (qOpt.getWwrq() != null){
@@ -49,25 +58,25 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 		}
 		
 		if (qOpt.getWwjg() != null){
-			where += " and  wwjg = :wwjg ";
+			where += " and  wwjg like :wwjg ";
 		}
 		
 		if (qOpt.getWwzt() != null){
-			where += " and  wwzt = :wwzt ";
+			where += " and  wwzt like :wwzt ";
 		}
 
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
 		if (qOpt.getName() != null){
-			q.setParameter("name", qOpt.getName());
+			q.setParameter("name", "%" + qOpt.getName() + "%");
 		}
 		
 		if (qOpt.getPIN() != null){
-			q.setParameter("pin", qOpt.getPIN());
+			q.setParameter("pin", "%" + qOpt.getPIN() + "%");
 		}
 		
 		if (qOpt.getCode() != null){
-			q.setParameter("code", qOpt.getCode());
+			q.setParameter("code", "%" + qOpt.getCode() + "%");
 		}
 		
 		if (qOpt.getWwrq() != null){
@@ -75,11 +84,15 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 		}
 		
 		if (qOpt.getWwjg() != null){
-			q.setParameter("wwjg", qOpt.getWwjg());
+			q.setParameter("wwjg", "%" + qOpt.getWwjg() + "%");
 		}
 		
 		if (qOpt.getWwzt() != null){
-			q.setParameter("wwzt", qOpt.getWwzt());
+			q.setParameter("wwzt", "%" + qOpt.getWwzt() + "%");
+		}
+		
+		if (qOpt.getAssignToMe() || qOpt.getMyOwn()){
+			q.setParameter("me", ue.getId());
 		}
 		
 		return q.getResultList();

@@ -293,7 +293,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	@Override
 	public void getDownloadCarLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
-		List<EC> ecs = (List)searchCarLoan(qOpt);
+		List<EC> ecs = (List)searchCarLoan(null, qOpt);
 		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.carLoanTitle));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper2.map(ecs);
 		outputStream.write(os.toByteArray());
@@ -310,7 +310,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	@Override
 	public void getDownloadCreditCard(String userName, QueryOption qOpt, OutputStream outputStream) throws IOException, MappingFailedException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
-		List<EC> ecs = (List)searchCreditCard(qOpt);
+		List<EC> ecs = (List)searchCreditCard(null, qOpt);
 		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditCardTitle));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper2.map(ecs);
 		outputStream.write(os.toByteArray());
@@ -324,7 +324,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	@Override
 	public void getDownloadCreditLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
-		List<EC> ecs = (List)searchCreditLoan(qOpt);
+		List<EC> ecs = (List)searchCreditLoan(null, qOpt);
 		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditLoanTitle));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper2.map((List<EC>)ecs);
 		outputStream.write(os.toByteArray());
@@ -338,7 +338,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	@Override
 	public void downloadAll(String usr, OutputStream outputStream) throws MappingFailedException, IOException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
-		List<EC> ecs = (List)searchCreditLoan(new QueryOption());
+		List<EC> ecs = (List)searchCreditLoan(null, new QueryOption());
 		Mapper<List<EC>, OutputStream> mapper = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditLoanTitle));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper.map((List<EC>)ecs);
 		zipOut.putNextEntry(new ZipEntry("信贷.xls"));
@@ -348,7 +348,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 			zipAttachement(zipOut, ecs.get(i).getReports());				
 		}
 		
-		ecs = (List)searchCreditCard(new QueryOption());
+		ecs = (List)searchCreditCard(null, new QueryOption());
 		mapper.setMapping(new EC2XlsMapping(EC2XlsMapping.creditCardTitle));
 		os = (ByteArrayOutputStream) mapper.map(ecs);
 		zipOut.putNextEntry(new ZipEntry("信用卡.xls"));
@@ -359,7 +359,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 		}
 
 		
-		ecs = (List)searchCarLoan(new QueryOption());
+		ecs = (List)searchCarLoan(null, new QueryOption());
 		mapper.setMapping(new EC2XlsMapping(EC2XlsMapping.carLoanTitle));
 		os = (ByteArrayOutputStream) mapper.map(ecs);
 		zipOut.putNextEntry(new ZipEntry("车贷.xls"));
@@ -372,69 +372,82 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	}
 	
 	@Override
-	public List<EC> searchCarLoan(QueryOption qOpt) {
-			List<Object[]> objs = eCCarLoanDao.search(qOpt);
-			List<EC> eccls = new ArrayList<EC>();
-			for (Object[] row : objs){
-				EC eccl = new EC();
-				EntrustedCaseManagerEntity ecme = (EntrustedCaseManagerEntity) row[0];
-				ECCarLoanEntity eccle = (ECCarLoanEntity) row[1];
-				eccl.setManagerId(ecme.getId());
-				eccl.setLoan(new Mapper<ECCarLoanEntity, List<Object>>(new Mapping<ECCarLoanEntity, List<Object>>(){
-					@Override
-					public List<Object> onMap(ECCarLoanEntity from) throws MappingSkipException, MappingFailedException {
-						List<Field> fds = BeanUtil.getFields(from.getClass());
-						List<Object> rets = new ArrayList<Object>();
-						for (Field fd : fds){
-							if (!fd.getName().equals("entityVersion")){
-								rets.add(BeanUtil.doGet(from, fd.getName()));
-							};
-						}
-						return rets;
+	public List<EC> searchCarLoan(String userName, QueryOption qOpt) {
+		UserEntity ue = null;
+		if (qOpt.getAssignToMe() || qOpt.getMyOwn()){
+			ue = userDao.getUserByName(userName);
+		}
+	
+		List<Object[]> objs = eCCarLoanDao.search(ue, qOpt);
+		List<EC> eccls = new ArrayList<EC>();
+		for (Object[] row : objs){
+			EC eccl = new EC();
+			EntrustedCaseManagerEntity ecme = (EntrustedCaseManagerEntity) row[0];
+			ECCarLoanEntity eccle = (ECCarLoanEntity) row[1];
+			eccl.setManagerId(ecme.getId());
+			eccl.setLoan(new Mapper<ECCarLoanEntity, List<Object>>(new Mapping<ECCarLoanEntity, List<Object>>(){
+				@Override
+				public List<Object> onMap(ECCarLoanEntity from) throws MappingSkipException, MappingFailedException {
+					List<Field> fds = BeanUtil.getFields(from.getClass());
+					List<Object> rets = new ArrayList<Object>();
+					for (Field fd : fds){
+						if (!fd.getName().equals("entityVersion")){
+							rets.add(BeanUtil.doGet(from, fd.getName()));
+						};
 					}
-				}).forceMap(eccle));
-				eccl.setOwner(ecme.getOwner().getUsername());
-				eccl.setAssignee(ecme.getAssignee() != null ? ecme.getAssignee().getUsername() : null);
-				eccl.setReports(eCReportService.getECReports(ecme.getId()));
-				eccls.add(eccl);
-			}
-			return eccls;
+					return rets;
+				}
+			}).forceMap(eccle));
+			eccl.setOwner(ecme.getOwner().getUsername());
+			eccl.setAssignee(ecme.getAssignee() != null ? ecme.getAssignee().getUsername() : null);
+			eccl.setReports(eCReportService.getECReports(ecme.getId()));
+			eccls.add(eccl);
+		}
+		return eccls;
 	}
 
 	@Override
-	public List<EC> searchCreditCard(QueryOption qOpt) {
-			List<Object[]> objs = eCCreditCardDao.search(qOpt);			
-			List<EC> eccls = new ArrayList<EC>();
-			for (Object[] row : objs){
-				EC eccl = new EC();
-				EntrustedCaseManagerEntity ecme = (EntrustedCaseManagerEntity) row[0];
-				ECCreditCardEntity eccle = (ECCreditCardEntity) row[1];
-				eccl.setManagerId(ecme.getId());
-				eccl.setLoan(new Mapper<ECCreditCardEntity, List<Object>>(new Mapping<ECCreditCardEntity, List<Object>>(){
-					@Override
-					public List<Object> onMap(ECCreditCardEntity from) throws MappingSkipException, MappingFailedException {
-						List<Field> fds = BeanUtil.getFields(from.getClass());
-						List<Object> rets = new ArrayList<Object>();
-						for (Field fd : fds){
-							if (!fd.getName().equals("entityVersion")){
-								rets.add(BeanUtil.doGet(from, fd.getName()));
-							};
-						}
-						return rets;
+	public List<EC> searchCreditCard(String userName, QueryOption qOpt) {
+		UserEntity ue = null;
+		if (qOpt.getAssignToMe() || qOpt.getMyOwn()){
+			ue = userDao.getUserByName(userName);
+		}
+		List<Object[]> objs = eCCreditCardDao.search(ue, qOpt);			
+		List<EC> eccls = new ArrayList<EC>();
+		for (Object[] row : objs){
+			EC eccl = new EC();
+			EntrustedCaseManagerEntity ecme = (EntrustedCaseManagerEntity) row[0];
+			ECCreditCardEntity eccle = (ECCreditCardEntity) row[1];
+			eccl.setManagerId(ecme.getId());
+			eccl.setLoan(new Mapper<ECCreditCardEntity, List<Object>>(new Mapping<ECCreditCardEntity, List<Object>>(){
+				@Override
+				public List<Object> onMap(ECCreditCardEntity from) throws MappingSkipException, MappingFailedException {
+					List<Field> fds = BeanUtil.getFields(from.getClass());
+					List<Object> rets = new ArrayList<Object>();
+					for (Field fd : fds){
+						if (!fd.getName().equals("entityVersion")){
+							rets.add(BeanUtil.doGet(from, fd.getName()));
+						};
 					}
-				}).forceMap(eccle));
-				eccl.setOwner(ecme.getOwner().getUsername());
-				eccl.setAssignee(ecme.getAssignee() != null ? ecme.getAssignee().getUsername() : null);
-				eccl.setReports(eCReportService.getECReports(ecme.getId()));
-				eccls.add(eccl);
-			}
-			return eccls;
+					return rets;
+				}
+			}).forceMap(eccle));
+			eccl.setOwner(ecme.getOwner().getUsername());
+			eccl.setAssignee(ecme.getAssignee() != null ? ecme.getAssignee().getUsername() : null);
+			eccl.setReports(eCReportService.getECReports(ecme.getId()));
+			eccls.add(eccl);
+		}
+		return eccls;
 
 	}
 
 	@Override
-	public List<EC> searchCreditLoan(QueryOption qOpt) {
-		List<Object[]> objs = eCCreditLoanDao.search(qOpt);		
+	public List<EC> searchCreditLoan(String userName, QueryOption qOpt) {
+		UserEntity ue = null;
+		if (qOpt.getAssignToMe() || qOpt.getMyOwn()){
+			ue = userDao.getUserByName(userName);
+		}
+		List<Object[]> objs = eCCreditLoanDao.search(ue, qOpt);		
 		List<EC> eccls = new ArrayList<EC>();
 		for (Object[] row : objs){
 			EC eccl = new EC();

@@ -14,6 +14,8 @@ public class QueryOption extends ProtocolEntityImpl {
 	 String wwrq;//委外日期
 	 String wwjg;//委外机构
 	 String wwzt;//委外状态：未分配、已分配、已结束
+	 Boolean assignToMe = false;
+	 Boolean myOwn = false;
 	public String getName() {
 		return name;
 	}
@@ -53,5 +55,17 @@ public class QueryOption extends ProtocolEntityImpl {
 	}
 	public void setWwzt(String wwzt) {
 		this.wwzt = wwzt;
+	}
+	public Boolean getAssignToMe() {
+		return assignToMe;
+	}
+	public void setAssignToMe(Boolean assignToMe) {
+		this.assignToMe = assignToMe;
+	}
+	public Boolean getMyOwn() {
+		return myOwn;
+	}
+	public void setMyOwn(Boolean myOwn) {
+		this.myOwn = myOwn;
 	}
 }

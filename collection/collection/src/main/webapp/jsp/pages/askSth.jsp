@@ -35,6 +35,12 @@
 		</div>
 	</div>
 </div>
+	<form id="as-downloadForm" style="display:none" action="${pageContext.request.contextPath}/message/download.do">
+		<input type="text" name="entrusted_case" />
+		<input type="text" name="from" />
+		<input type="text" name="to" />
+		<input type="text" name="attachement" />
+	</form>
 <!-- /Page Body -->
 
 <script src="${pageContext.request.contextPath}/jsp/pages/askSth.js"></script>
