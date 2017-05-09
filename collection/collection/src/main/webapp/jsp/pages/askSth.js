@@ -27,14 +27,12 @@ var pages;
                     align: JQTable.TextAlign.Left,
                 }));
             }
-            if (authority.ping("/ec/answer")) {
-                nodes.push(JQTable.Node.create({
-                    name: "",
-                    width: 0,
-                    isSortable: false,
-                    align: JQTable.TextAlign.Center,
-                }));
-            }
+            nodes.push(JQTable.Node.create({
+                name: "",
+                width: 0,
+                isSortable: false,
+                align: JQTable.TextAlign.Center,
+            }));
             return new JQTable.JQGridAssistant(nodes, pName + "Table");
         };
         AskSth.prototype.onRefresh = function () {
@@ -70,12 +68,31 @@ var pages;
                     }
                 }
             }
+            this.msgPairs = [];
             for (var i = 0; i < index.length; ++i) {
                 for (var j = 0; j < ecMap[index[i]].length; ++j) {
-                    ret.push(this.convertQA(ecMap[index[i]][j][0], ecMap[index[i]][j][1]));
+                    var pair = {
+                        ecId: index[i],
+                        ask: ecMap[index[i]][j][0],
+                        answer: ecMap[index[i]][j][1]
+                    };
+                    this.msgPairs.push(pair);
+                    ret.push(this.convertQA(pair.ask, pair.answer));
                 }
             }
+            this.data = ret;
             return ret;
+        };
+        AskSth.prototype.updateReplay = function (msgPair) {
+            var _this = this;
+            $(this.data).each(function (i, e) {
+                if (e[0] == msgPair.ask.msgId) {
+                    var row = _this.convertQA(msgPair.ask, msgPair.answer);
+                    _this.data[i] = row;
+                    return false;
+                }
+            });
+            this.updateTable(this.data);
         };
         AskSth.prototype.convertQA = function (msg, reMsg) {
             var row = [];
@@ -86,26 +103,135 @@ var pages;
             row.push(msg.title);
             row.push(msg.content);
             row.push(reMsg != undefined ? reMsg.content : "--");
-            row.push(msg.attachements);
+            var atts = [];
+            $(msg.attachements).each(function (i, e) {
+                atts.push(e.display);
+            });
+            row.push(atts);
+            row.push("");
             return row;
         };
         AskSth.prototype.clickAnswer = function (msgId) {
+            var _this = this;
+            $("#as-replyDialog").children(0).attr("id", "as-reply");
+            var msgPair = this.findMsgPair(msgId);
+            var attachCount = 0;
+            var dialog = bootbox.dialog({
+                message: $("#as-replyDialog").html(),
+                title: "咨询回复",
+                className: "modal-darkorange",
+                buttons: {
+                    success: {
+                        label: "回复",
+                        className: "btn-blue",
+                        callback: function () {
+                            var param = {
+                                entrusted_case: msgPair.ecId,
+                                to: msgPair.ask.fromId,
+                                title: "RE:" + msgPair.ask.msgId,
+                                message: $("#as-reply").find("#content").val()
+                            };
+                            attachCount = _this.dropz.getQueuedFiles();
+                            if (_this.dropz.getQueuedFiles().length > 0) {
+                                _this.dropz.options.params = param;
+                                _this.dropz.processQueue();
+                            }
+                            else {
+                                Message.sendMessage(param.entrusted_case, param.to, param.title, param.message).done(function (ret) {
+                                    if (ret.code == 0) {
+                                        pages.Toast.success("发送成功");
+                                        msgPair.answer = JSON.parse(ret.msg);
+                                        _this.updateReplay(msgPair);
+                                    }
+                                    else {
+                                        pages.Toast.failed("发送失败");
+                                    }
+                                    dialog.modal("hide");
+                                });
+                            }
+                            return false;
+                        }
+                    },
+                    "取消": {
+                        className: "btn-default",
+                        callback: function () {
+                        }
+                    }
+                }
+            });
+            $("#as-replyDialog").children(0).removeAttr("id");
+            this.dropz = new Dropzone("#as-reply #as-dropzone", {
+                url: collection.Net.BASE_URL + "/message/send.do",
+                maxFiles: 5,
+                parallelUploads: 5,
+                maxFilesize: 1024 * 100,
+                uploadMultiple: true,
+                paramName: "attachements",
+                autoProcessQueue: false
+            });
+            this.dropz.on("successmultiple", function (file, result, e) {
+                if (result.code == 0) {
+                    pages.Toast.success("发送成功");
+                    msgPair.answer = JSON.parse(result.msg);
+                    _this.updateReplay(msgPair);
+                }
+                else {
+                    pages.Toast.failed("发送失败");
+                }
+            });
+            this.dropz.on("errormultiple", function (file, message, xhr) {
+                if (message == _this.dropz.options.dictMaxFilesExceeded) {
+                    pages.Toast.failed(message);
+                }
+                else if (message == _this.dropz.options.dictInvalidFileType) {
+                    pages.Toast.failed(message);
+                }
+                else {
+                    pages.Toast.failed("发送失败");
+                }
+            });
+            this.dropz.on("completemultiple", function (file) {
+                dialog.modal("hide");
+            });
+        };
+        AskSth.prototype.findMsgPair = function (msgId) {
+            var msgPair;
+            $(this.msgPairs).each(function (i, e) {
+                if (e.ask.msgId == msgId) {
+                    msgPair = e;
+                    return false;
+                }
+            });
+            return msgPair;
+        };
+        AskSth.prototype.clickGo = function (msgId) {
             alert(msgId);
         };
-        AskSth.prototype.updateAnswer = function (data) {
+        AskSth.prototype.updateAnswerGo = function (data) {
             var _this = this;
-            if (authority.ping("/ec/answer")) {
-                var rids = this.find("#as-msgsTable").getDataIDs();
-                for (var i = 0; i < rids.length; ++i) {
-                    for (var j = 0; j < data.length; ++j) {
-                        if (data[j][0] == rids[i]) {
+            var rids = this.find("#as-msgsTable").getDataIDs();
+            for (var i = 0; i < rids.length; ++i) {
+                var msgPair = this.findMsgPair(rids[i]);
+                if (msgPair.answer != undefined) {
+                    continue;
+                }
+                for (var j = 0; j < data.length; ++j) {
+                    if (data[j][0] == rids[i]) {
+                        if (authority.ping("/ec/answer")) {
                             var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", null, React.createElement("a", {"id": data[j][0], "className": "btn btn-default btn-xs purple"}, React.createElement("i", {"className": "fa fa-share"}), "回复")));
                             this.find("#as-msgsTable").setCell(rids[i], 7, html);
                             this.find("#as-msgsTable #" + data[j][0] + " a").click(function () {
                                 _this.clickAnswer(data[j][0]);
                             });
-                            break;
                         }
+                        else {
+                            var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", null, React.createElement("a", {"id": data[j][0], "className": "btn btn-default btn-xs purple"}, React.createElement("i", {"className": "fa fa-share"}), "前往")));
+                            this.find("#as-msgsTable").setCell(rids[i], 7, html);
+                            this.find("#as-msgsTable #" + data[j][0] + " a").click(function () {
+                                _this.clickGo(data[j][0]);
+                            });
+                        }
+                        break;
                     }
                 }
             }
@@ -159,18 +285,18 @@ var pages;
                 onSortCol: function (index, iCol, sortorder) {
                     setTimeout(function () {
                         _this.updateAttachement(data);
-                        _this.updateAnswer(data);
+                        _this.updateAnswerGo(data);
                     }, 0);
                 },
                 onPaging: function (btn) {
                     setTimeout(function () {
                         _this.updateAttachement(data);
-                        _this.updateAnswer(data);
+                        _this.updateAnswerGo(data);
                     }, 0);
                 }
             }));
             this.updateAttachement(data);
-            this.updateAnswer(data);
+            this.updateAnswerGo(data);
         };
         AskSth.ins = new AskSth(pages.PageType.askSth);
         return AskSth;

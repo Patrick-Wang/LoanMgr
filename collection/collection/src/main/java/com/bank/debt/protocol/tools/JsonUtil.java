@@ -11,8 +11,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.bank.debt.protocol.entity.ProtocolEntity;
 
 import net.sf.json.JSONArray;

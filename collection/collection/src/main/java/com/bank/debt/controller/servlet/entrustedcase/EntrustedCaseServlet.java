@@ -22,9 +22,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.bank.debt.protocol.entity.AcceptSummary;
 import com.bank.debt.protocol.entity.AssignSummary;
+import com.bank.debt.protocol.entity.Attachement;
 import com.bank.debt.protocol.entity.EntrustedCaseManageInfo;
 import com.bank.debt.protocol.entity.EntrustedCaseReport;
-import com.bank.debt.protocol.entity.PhoneRecordName;
 import com.bank.debt.protocol.entity.QueryOption;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
@@ -237,9 +237,8 @@ public class EntrustedCaseServlet {
 	public @ResponseBody byte[] reportSubmit(
 			HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("report") String report,
-			@RequestParam("phones") String phones,
-			@RequestParam(value = "attachements", required = false) CommonsMultipartFile[] attachements) throws IOException {
+			@RequestParam(value="report", required=false) String report) throws IOException {
+		CommonsMultipartFile[] attachements = Checking.getMultipartFiles(request, "attachements");
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
@@ -251,17 +250,16 @@ public class EntrustedCaseServlet {
 			public Object toBeanValue(Field beanField, Object jsonObj) {
 				if (beanField.getName().equals("attachements")){
 					JSONArray ja = (JSONArray) jsonObj;
-					return JsonUtil.toObjects(ja, String.class, null);
+					return JsonUtil.toObjects(ja, Attachement.class);
 				}
 				return null;
 			}
-			
 		});
-		List<String> phoneNames = JsonUtil.toObjects(JSONArray.fromObject(phones), String.class, null);
+		
 		if (Checking.isExist(ecr.getId())){
-			r = eCReportService.updateReport(userName, ecr, phoneNames, attachements);
+			r = eCReportService.updateReport(userName, ecr, attachements);
 		}else if (Checking.isExist(ecr.getEntrustedCaseId())){
-			r = eCReportService.createReport(userName, ecr, phoneNames, attachements);
+			r = eCReportService.createReport(userName, ecr, attachements);
 		}
 		return r.toUtf8Json();
 	}
@@ -282,16 +280,8 @@ public class EntrustedCaseServlet {
 	
 	@RequestMapping(value = "report/download.do")
 	public void reportDownload(HttpServletRequest request, HttpServletResponse response,
-			@RequestParam("report") Integer report, @RequestParam("attachement") String attachement)
+			@RequestParam("attachement") Integer attachement)
 			throws IOException {
-		response.setContentType("application/octet-stream");
-		if (PhoneRecordName.isPhoneAttach(attachement)) {
-			response.setHeader("Content-disposition", "attachment;filename=\""
-					+ java.net.URLEncoder.encode(PhoneRecordName.parse(attachement).getName(), "UTF-8") + "\"");
-		} else {
-			response.setHeader("Content-disposition",
-					"attachment;filename=\"" + java.net.URLEncoder.encode(attachement, "UTF-8") + "\"");
-		}
-		eCReportService.downloadAttachement(report, attachement, response.getOutputStream());
+			eCReportService.downloadAttachement(attachement, response);
 	}
 }

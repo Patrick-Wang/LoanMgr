@@ -7,10 +7,12 @@ import com.bank.debt.protocol.tools.JsonUtil;
 import net.sf.json.JSONObject;
 
 public class PhoneRecord  extends ProtocolEntityImpl{
+	Integer recId;
 	Integer status;
 	String phoneNum;
 	String time;
-	Integer ecid;
+	Integer ecId;
+	String ecCode;
 	public Integer getStatus() {
 		return status;
 	}
@@ -29,14 +31,26 @@ public class PhoneRecord  extends ProtocolEntityImpl{
 	public void setTime(String time) {
 		this.time = time;
 	}
-	public Integer getEcid() {
-		return ecid;
+	public Integer getEcId() {
+		return ecId;
 	}
-	public void setEcid(Integer ecid) {
-		this.ecid = ecid;
+	public void setEcId(Integer ecid) {
+		this.ecId = ecid;
 	}
 	@Override
 	public ProtocolEntity fromJson(JSONObject jo) throws IOException {
 		return (ProtocolEntity) JsonUtil.toObject(jo, this, null);
+	}
+	public String getEcCode() {
+		return ecCode;
+	}
+	public void setEcCode(String ecCode) {
+		this.ecCode = ecCode;
+	}
+	public Integer getRecId() {
+		return recId;
+	}
+	public void setRecId(Integer recId) {
+		this.recId = recId;
 	}
 }

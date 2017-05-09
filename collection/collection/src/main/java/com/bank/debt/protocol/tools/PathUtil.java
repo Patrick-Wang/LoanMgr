@@ -2,8 +2,6 @@ package com.bank.debt.protocol.tools;
 
 import java.text.SimpleDateFormat;
 
-import com.bank.debt.protocol.entity.PhoneRecordName;
-
 public class PathUtil {
 	
 	static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

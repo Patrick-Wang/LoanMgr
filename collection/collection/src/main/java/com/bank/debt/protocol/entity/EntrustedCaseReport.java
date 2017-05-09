@@ -16,7 +16,7 @@ public class EntrustedCaseReport  extends ProtocolEntityImpl{
 	String date;
 	String title;
 	String content;
-	List<String> attachements;
+	List<Attachement> attachements;
 
 	public Integer getId() {
 		return id;
@@ -50,11 +50,11 @@ public class EntrustedCaseReport  extends ProtocolEntityImpl{
 		this.content = content;
 	}
 
-	public List<String> getAttachements() {
+	public List<Attachement> getAttachements() {
 		return attachements;
 	}
 
-	public void setAttachements(List<String> attachements) {
+	public void setAttachements(List<Attachement> attachements) {
 		this.attachements = attachements;
 	}
 
@@ -73,7 +73,7 @@ public class EntrustedCaseReport  extends ProtocolEntityImpl{
 			@Override
 			public Object toBeanValue(Field beanField, Object jsonObj) {
 				if (beanField.getName().equals("attachements")){
-					return JsonUtil.toObjects((JSONArray) jsonObj, String.class, null);
+					return JsonUtil.toObjects((JSONArray) jsonObj, Attachement.class);
 				}
 				return null;
 			}

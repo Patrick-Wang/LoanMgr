@@ -22,7 +22,7 @@ public class Message  extends ProtocolEntityImpl{
 	String Content;
 	String sendTime;
 	Integer read;
-	List<String> attachements;
+	List<Attachement> attachements;
 
 
 
@@ -163,13 +163,13 @@ public class Message  extends ProtocolEntityImpl{
 
 
 
-	public List<String> getAttachements() {
+	public List<Attachement> getAttachements() {
 		return attachements;
 	}
 
 
 
-	public void setAttachements(List<String> attachements) {
+	public void setAttachements(List<Attachement> attachements) {
 		this.attachements = attachements;
 	}
 

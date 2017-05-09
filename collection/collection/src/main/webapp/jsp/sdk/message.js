@@ -33,6 +33,14 @@ var collection;
                 read: read
             });
         };
+        Message.sendMessage = function (entrusted_case, to, title, message) {
+            return collection.Net.post(collection.Net.BASE_URL + "/message/send.do", {
+                entrusted_case: entrusted_case,
+                to: to,
+                title: title,
+                message: message
+            });
+        };
         Message.getMessages = function (entrusted_case, partner) {
             return collection.Net.post(collection.Net.BASE_URL + "/message/receive.do", {
                 entrusted_case: entrusted_case,

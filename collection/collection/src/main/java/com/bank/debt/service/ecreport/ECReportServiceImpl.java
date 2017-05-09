@@ -8,33 +8,43 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.bank.debt.model.dao.attachement.AttachementDao;
 import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDao;
 import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDaoImpl;
 import com.bank.debt.model.dao.entrustedcasereport.EntrustedCaseReportDao;
 import com.bank.debt.model.dao.entrustedcasereport.EntrustedCaseReportDaoImpl;
+import com.bank.debt.model.dao.phonerecord.PhoneRecordDao;
 import com.bank.debt.model.dao.user.UserDao;
 import com.bank.debt.model.dao.user.UserDaoImpl;
+import com.bank.debt.model.entity.AttachementEntity;
 import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
 import com.bank.debt.model.entity.EntrustedCaseReportEntity;
+import com.bank.debt.model.entity.PhoneRecordEntity;
 import com.bank.debt.model.entity.UserEntity;
+import com.bank.debt.protocol.entity.Attachement;
 import com.bank.debt.protocol.entity.EntrustedCaseReport;
-import com.bank.debt.protocol.entity.PhoneRecordName;
+import com.bank.debt.protocol.entity.PhoneRecordStatus;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.PathUtil;
+import com.bank.debt.protocol.tools.map.AttachMapping;
 import com.bank.debt.protocol.tools.map.Mapper;
 import com.bank.debt.protocol.tools.map.Mapping;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
 import com.bank.debt.protocol.tools.map.MappingSkipException;
+import com.bank.debt.service.attachement.AttachementService;
+import com.bank.debt.service.attachement.AttachementService.OnGetAttachement;
 import com.bank.debt.service.phone.PhoneService;
 import com.bank.debt.service.service.ftp.FtpService;
 
@@ -58,9 +68,19 @@ public class ECReportServiceImpl implements ECReportService {
 	@Autowired
 	PhoneService phoneService;
 	
+	@Autowired
+	AttachementService attachementService;
+	
+	@Autowired
+	AttachementDao attachementDao;
+	
+	@Autowired
+	PhoneRecordDao phoneRecordDao;
+	
 	Mapping<EntrustedCaseReportEntity, EntrustedCaseReport> reportMapping = new Mapping<EntrustedCaseReportEntity, EntrustedCaseReport>(){
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		Mapper<AttachementEntity, Attachement> attachMapper = new Mapper<AttachementEntity, Attachement>(AttachMapping.ae2aMapping);
 		
 		@Override
 		public EntrustedCaseReport onMap(EntrustedCaseReportEntity from)
@@ -70,12 +90,7 @@ public class ECReportServiceImpl implements ECReportService {
 			ecr.setContent(from.getContent());
 			ecr.setDate(formatter.format(from.getDate()));
 			ecr.setEntrustedCaseId(from.getEntrustedCaseManager().getId());
-			List<String> attachs = new ArrayList<String>();
-			JSONArray ja = from.jsonAttachements();
-			for (int i = 0; i < ja.size(); ++i){
-				attachs.add(ja.getString(i));
-			}
-			ecr.setAttachements(attachs);
+			ecr.setAttachements(attachMapper.forceMap(from.getAttachements()));
 			ecr.setTitle(from.getTitle());
 			return ecr;
 		}
@@ -100,23 +115,23 @@ public class ECReportServiceImpl implements ECReportService {
 	}
 
 	@Override
-	public boolean downloadAttachement(Integer report, String attachement, OutputStream outputStream) throws IOException {
+	public boolean downloadAttachement(Integer attachement, HttpServletResponse response) throws IOException {
 		
-		if (PhoneRecordName.isPhoneAttach(attachement)){
-			return ErrorCode.OK == phoneService.donwloandRecord(PhoneRecordName.parse(attachement), outputStream);
-		}else{
-			EntrustedCaseReportEntity ecre = entrustedCaseReportDao.getById(report);
-			if (ecre != null){
-				ftpService.downloadFile(
-						PathUtil.reportAttachementPath(ecre.getEntrustedCaseManager().getId(), ecre.getCreator().getId(), report), attachement, outputStream);
-				return true;
-			}
-		}
-		return false;
+		Attachement acch = attachementService.getAttachement(attachement);
+		response.setContentType("application/octet-stream");
+		response.setHeader("Content-disposition", "attachment;filename=\""
+				+ java.net.URLEncoder.encode(acch.getDisplay(), "UTF-8") + "\"");
+		return downloadAttachement(attachement, response.getOutputStream());
 	}
+	
+	@Override
+	public boolean downloadAttachement(Integer attachement, OutputStream os) throws IOException {
+		return attachementService.downloadAttachement(attachement, os);
+	}
+	
 
 	@Override
-	public Result updateReport(String userName, EntrustedCaseReport ecr, List<String> phoneNames, CommonsMultipartFile[] attachements) throws IOException {
+	public Result updateReport(String userName, EntrustedCaseReport ecr, CommonsMultipartFile[] attachements) throws IOException {
 		UserEntity usr = userDao.getUserByName(userName);
 		EntrustedCaseReportEntity ecre = entrustedCaseReportDao.getById(ecr.getId());
 		if (ecre != null && usr != null){
@@ -136,19 +151,30 @@ public class ECReportServiceImpl implements ECReportService {
 				ecre.setDate(Date.valueOf(ecr.getDate()));
 			}
 			
+			
+			
 			if (Checking.isExist(attachements)){
-				JSONArray jattachs = ecre.jsonAttachements();
-				for (CommonsMultipartFile attach : attachements){
-					ftpService.updoadFile(
-							PathUtil.reportAttachementPath(ecre.getEntrustedCaseManager().getId(), ecre.getCreator().getId(), ecre.getId()), 
-							attach.getName(), 
-							attach.getInputStream());
-					jattachs.add(attach.getName());
+				List<AttachementEntity> aes = ecre.getAttachements();
+				if (null == ecre){
+					aes = new ArrayList<AttachementEntity>();
 				}
-				ecre.setAttachements(jattachs.toString());
+				
+				Attachement atta = new Attachement();
+				for (CommonsMultipartFile attach : attachements){
+					atta.setDisplay(Checking.getFileName(attach));
+					atta.setFileAddress(PathUtil.reportAttachementPath(
+							ecre.getEntrustedCaseManager().getId(), 
+							ecre.getCreator().getId(), 
+							ecre.getId()) + UUID.randomUUID() + atta.getDisplay());
+					Integer attaId = attachementService.uploadAttachement(atta, attach.getInputStream());
+					if (attaId != null){
+						aes.add(attachementDao.getById(attaId));
+					}
+				}
+				
+				ecre.setAttachements(aes);
 			}
 			
-
 			entrustedCaseReportDao.merge(ecre);
 			return ErrorCode.OK;
 
@@ -156,8 +182,38 @@ public class ECReportServiceImpl implements ECReportService {
 		return ErrorCode.ECR_NOT_EXIST;
 	}
 
+	
+	class OnGetAttachListener implements OnGetAttachement{
+		
+		PhoneRecordEntity pre;
+		EntrustedCaseReportEntity ecre;
+		
+		public OnGetAttachListener(PhoneRecordEntity pre, EntrustedCaseReportEntity ecre) {
+			super();
+			this.pre = pre;
+			this.ecre = ecre;
+		}
+
+		@Override
+		public void onGetAttachement(AttachementEntity attach) {
+			if (attach != null){
+				pre = phoneRecordDao.getById(pre.getId());
+				pre.setAttachement(attach.getId());
+				phoneRecordDao.merge(pre);
+				ecre = entrustedCaseReportDao.getById(ecre.getId());
+				List<AttachementEntity> aes = ecre.getAttachements();
+				if (null == ecre){
+					aes = new ArrayList<AttachementEntity>();
+				}
+				aes.add(attach);
+				ecre.setAttachements(aes);
+				entrustedCaseReportDao.merge(ecre);
+			}
+		}
+	};
+	
 	@Override
-	public Result createReport(String userName, EntrustedCaseReport ecr, List<String> phoneNames, CommonsMultipartFile[] attachements) throws IOException {
+	public Result createReport(String userName, EntrustedCaseReport ecr, CommonsMultipartFile[] attachements) throws IOException {
 		UserEntity usr = userDao.getUserByName(userName);
 		EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getById(ecr.getEntrustedCaseId());
 		if (ecme != null && usr != null){
@@ -167,7 +223,6 @@ public class ECReportServiceImpl implements ECReportService {
 			ecre.setCreator(usr);
 			ecre.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 			ecre.setTitle(ecr.getTitle());
-			ecre.setContent(ecr.getContent());
 			ecre.setModifier(usr);			
 			if (ecr.getDate() != null){
 				ecre.setDate(Date.valueOf(ecr.getDate()));
@@ -175,24 +230,51 @@ public class ECReportServiceImpl implements ECReportService {
 				ecre.setDate(new Date(Calendar.getInstance().getTimeInMillis()));
 			}
 			
-			JSONArray jattachs = ecre.jsonAttachements();
-			if (Checking.isExist(attachements)){
-				for (CommonsMultipartFile attach : attachements){
-					ftpService.updoadFile(
-							PathUtil.reportAttachementPath(ecre.getEntrustedCaseManager().getId(), ecre.getCreator().getId(), ecre.getId()), 
-							attach.getName(), 
-							attach.getInputStream());
-					jattachs.add(attach.getName());
+			
+			if (ecr.getAttachements() != null && ecr.getAttachements().size() == 1){
+				//由 拨打电话 产生的 report
+				//content 为 [内容，电话号码，记录状态，附件名称]
+				JSONArray content = JSONArray.fromObject(ecr.getContent());
+				ecre.setContent(content.getString(0));
+				PhoneRecordEntity pre = new PhoneRecordEntity();
+				pre.setEntrustedCaseManager(ecme);
+				pre.setNumber(content.getString(1));
+				if (PhoneRecordStatus.callin == content.getInt(2)){
+					pre.setStatus(PhoneRecordStatus.callin);
+				}else{
+					pre.setStatus(PhoneRecordStatus.callout);
 				}
-			}
-
-			for (String name : phoneNames){
-				if (!jattachs.contains("phone:" + name)){
-					jattachs.add("phone:" + name);
+				pre.setStartTime(new Timestamp(System.currentTimeMillis()));			
+				pre = phoneRecordDao.merge(pre);
+				ecre = entrustedCaseReportDao.merge(ecre);
+				attachementService.getAttachementAsync(content.getString(3), new OnGetAttachListener(pre, ecre));				
+			}else{
+				ecre.setContent(ecr.getContent());
+				if (Checking.isExist(attachements)){
+					List<AttachementEntity> aes = ecre.getAttachements();
+					if (null == ecre){
+						aes = new ArrayList<AttachementEntity>();
+					}
+					
+					Attachement atta = new Attachement();
+					for (CommonsMultipartFile attach : attachements){
+						atta.setDisplay(Checking.getFileName(attach));
+						atta.setFileAddress(PathUtil.reportAttachementPath(
+								ecre.getEntrustedCaseManager().getId(), 
+								ecre.getCreator().getId(), 
+								ecre.getId()) + UUID.randomUUID() + atta.getDisplay());
+						Integer attaId = attachementService.uploadAttachement(atta, attach.getInputStream());
+						if (attaId != null){
+							aes.add(attachementDao.getById(attaId));
+						}
+					}
+					
+					ecre.setAttachements(aes);
+					
 				}
+				entrustedCaseReportDao.merge(ecre);
 			}
-			ecre.setAttachements(jattachs.toString());
-			entrustedCaseReportDao.merge(ecre);
+			
 			return ErrorCode.OK;
 		}
 		return ErrorCode.ECR_SUBMIT_FAILED;

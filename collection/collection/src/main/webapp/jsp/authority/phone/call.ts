@@ -1,3 +1,7 @@
-authority.register("/phone/call", () => {
+///<reference path="../../sdk/phone.ts"/>
+if (collection.phone.isAvailable()){
+    authority.register("/phone/call", () => {
 
-});
+    });
+}
+

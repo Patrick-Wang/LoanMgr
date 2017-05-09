@@ -3,7 +3,9 @@ package com.bank.debt.model.entity;
 import java.io.Serializable;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +13,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -41,11 +45,11 @@ public class EntrustedCaseReportEntity extends AbstractReadWriteEntity implement
 	Date date;
 	String title;
 	String content;
-	String attachements;
 	EntrustedCaseManagerEntity entrustedCaseManager;
 	Timestamp createdTime;
 	Timestamp lastModifiedTime;
 	UserEntity modifier;
+	List<AttachementEntity> attachements;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "creator")
@@ -75,12 +79,26 @@ public class EntrustedCaseReportEntity extends AbstractReadWriteEntity implement
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getAttachements() {
+	
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(
+		name = "entrusted_case_report_attachement",
+		joinColumns = { 
+			@JoinColumn(name = "entrustedCaseReport", referencedColumnName = "id") 
+		}, 
+		inverseJoinColumns = { 
+			@JoinColumn(name = "attachement", referencedColumnName = "id") 
+		})
+	
+	public List<AttachementEntity> getAttachements() {
 		return attachements;
 	}
-	public void setAttachements(String attachements) {
+	
+	public void setAttachements(List<AttachementEntity> attachements) {
 		this.attachements = attachements;
 	}
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "entrustedCaseManager")
 	public EntrustedCaseManagerEntity getEntrustedCaseManager() {
@@ -110,16 +128,4 @@ public class EntrustedCaseReportEntity extends AbstractReadWriteEntity implement
 	public void setModifier(UserEntity modifier) {
 		this.modifier = modifier;
 	}
-	
-	public JSONArray jsonAttachements(){
-		String attachs = this.getAttachements();
-		JSONArray jattachs = null;
-		if (Checking.isExist(attachs)){
-			jattachs = JSONArray.fromObject(attachs);
-		}else{
-			jattachs = new JSONArray();
-		}
-		return jattachs;
-	}
-
 }

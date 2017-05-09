@@ -38,6 +38,15 @@ module collection{
             });
         }
 
+        static sendMessage(entrusted_case:number, to:number, title:string, message:string):Promise<Result>{
+            return Net.post(Net.BASE_URL + "/message/send.do",{
+                entrusted_case:entrusted_case,
+                to:to,
+                title:title,
+                message:message
+            });
+        }
+
         static getMessages(entrusted_case?:number, partner?:number):Promise<collection.protocol.Message[]>{
             return Net.post(Net.BASE_URL + "/message/receive.do",{
                 entrusted_case:entrusted_case,

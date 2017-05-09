@@ -15,14 +15,16 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.bank.debt.protocol.entity.Attachement;
 import com.bank.debt.protocol.entity.Message;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
-import com.bank.debt.protocol.tools.PathUtil;
+import com.bank.debt.service.attachement.AttachementService;
 import com.bank.debt.service.message.MessageService;
 import com.bank.debt.service.message.MessageServiceImpl;
 import com.bank.debt.service.service.ftp.FtpService;
@@ -36,6 +38,9 @@ public class MessageServlet {
 	MessageService messageService;
 
 	@Autowired
+	AttachementService attachementService;
+	
+	@Autowired
 	FtpService ftpService;
 	
 	@RequestMapping(value = "send.do")
@@ -43,14 +48,15 @@ public class MessageServlet {
 			HttpServletResponse response,
 			@RequestParam("entrusted_case") Integer entrustedCase, 
 			@RequestParam("to") Integer to,
-			@RequestParam(value = "message", required = false) String message,
-			@RequestParam(value = "attachements", required = false) CommonsMultipartFile[] attachements)
+			@RequestParam("title") String title, 
+			@RequestParam(value = "message", required = false) String message)
 			throws IOException {
+		CommonsMultipartFile[] attachements = Checking.getMultipartFiles(request, "attachements");
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String userName = userDetails.getUsername();
 		Result r = ErrorCode.MESSAGE_SEND_FALIED;
 		if (Checking.isExist(entrustedCase) && Checking.isExist(to)){
-			r = messageService.sendMessage(entrustedCase, userName, to, message, attachements);
+			r = messageService.sendMessage(entrustedCase, userName, to, title, message, attachements);
 		}
 		return r.toUtf8Json();
 	}
@@ -125,10 +131,11 @@ public class MessageServlet {
 			@RequestParam("entrusted_case") Integer entrustedCase,
 			@RequestParam("from") Integer from,
 			@RequestParam("to") Integer to,
-			@RequestParam("attachement") String attachement) throws IOException {
+			@RequestParam("attachement") Integer attachement) throws IOException {
+		Attachement attach = attachementService.getAttachement(attachement);
 		response.setContentType("application/octet-stream");
-		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(attachement, "UTF-8")  +"\"");
-		ftpService.downloadFile(PathUtil.msgAttachementPath(entrustedCase, from, to), attachement, response.getOutputStream());
+		response.setHeader("Content-disposition","attachment;filename=\""+ java.net.URLEncoder.encode(attach.getDisplay(), "UTF-8")  +"\"");
+		attachementService.downloadAttachement(attachement, response.getOutputStream());
 	}
 
 }

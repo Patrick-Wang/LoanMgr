@@ -35,12 +35,27 @@
 		</div>
 	</div>
 </div>
-	<form id="as-downloadForm" style="display:none" action="${pageContext.request.contextPath}/message/download.do">
-		<input type="text" name="entrusted_case" />
-		<input type="text" name="from" />
-		<input type="text" name="to" />
-		<input type="text" name="attachement" />
-	</form>
+<form id="as-downloadForm" style="display: none"
+	action="${pageContext.request.contextPath}/message/download.do">
+	<input type="text" name="entrusted_case" /> <input type="text"
+		name="from" /> <input type="text" name="to" /> <input type="text"
+		name="attachement" />
+</form>
+
+<div id="as-replyDialog" style="display: none;">
+	<div class="row">
+		<div class="col-md-12">
+			<form role="form">
+				<div class="form-group">
+					<textarea id="content" class="form-control" placeholder="Content" rows="5" required=""></textarea>
+				</div>
+				<div class="form-group">
+					<div id="as-dropzone"	class="dropzone"></div>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 <!-- /Page Body -->
 
 <script src="${pageContext.request.contextPath}/jsp/pages/askSth.js"></script>

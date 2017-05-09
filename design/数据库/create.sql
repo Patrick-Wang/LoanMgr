@@ -40,10 +40,16 @@ create table `entrusted_case_report`(
 	`entrustedCaseManager` int not null,
 	`title`	text,
 	`content`	text,
-	`attachements`	text,
 	`createdTime` datetime,
 	`lastModifiedTime` datetime,
 	`modifier` int,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+create table `entrusted_case_report_attachement`(
+	`id` int NOT NULL AUTO_INCREMENT,
+	`entrustedCaseReport` int NOT NULL,
+	`attachement`	int not null,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
@@ -51,15 +57,30 @@ create table `entrusted_case_report`(
 create table `message`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`come` int NOT NULL,
-	`to` int NOT NULL,
+	`dest` int NOT NULL,
 	`entrustedCaseManager` int not null,
 	`title`	text,
 	`content`	text,
-	`attachements`	text,
 	`sendTime` datetime,
-	`read` int default 0,
+	`isRead` int default 0,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+create table `message_attach_attachement`(
+	`id` int NOT NULL AUTO_INCREMENT,
+	`msgId` int NOT NULL,
+	`attachement`	int not null,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
+create table `attachements`(
+	`id` int NOT NULL AUTO_INCREMENT,
+	`fileAddress` text NOT NULL,
+	`display`	text not null,
+	`uploadTime` datetime not null,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
+
 
 create table `role`(
 	`id` int NOT NULL AUTO_INCREMENT,
@@ -94,8 +115,9 @@ create table `phone_records`(
 	`status` int,
 	`number` varchar(30) NOT NULL,
 	`entrustedCase` int,
+	`attachement` int,
 	`startTime` datetime,
-	`elapse` int,
+	`endTime` datetime,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
@@ -672,25 +694,32 @@ insert into user (username, password, org, position, status) values
 ('insideMgr', '1', 1, '内勤管理', 0),
 ('outsideMgr', '1', 1, '外勤管理', 0);
 
-insert into `message` (come, `to`, entrustedCaseManager, title, content, sendTime, `attachements`)
+insert into `message` (come, dest, entrustedCaseManager, title, content, sendTime)
 values
-(2, 1, 1, 'test', 'test detail', current_time(), '["test1.pdf", "test2.xls", "test3.doc"]'),
-(1, 2, 1, 'RE:1', 'you are right', current_time(), null);
+(5, 1, 1, 'test', 'test detail', current_time()),
+(1, 5, 1, 'RE:1', 'you are right', current_time()),
+(5, 1, 1, 'test', 'test new detail123332', current_time());
 
 insert into `entrusted_case_manager` (owner, assignee, modifier, type, entrustedCase, createdTime, lastModifiedTime)
 values
 (1, 2, 1, 0, 1, current_time(), current_time());
 
 
-insert into `entrusted_case_car_loan` (khxm)
+insert into `entrusted_case_car_loan` (code, khxm)
 values
-('test');
+('01225412', 'test');
 
-insert into `phone_records` (`number`, `status`, `startTime`)
+insert into `phone_records` (`number`, `status`, `entrustedCase`, `startTime`)
 values
-('15968542364', 2, '2010-11-12 18:58:25'),
-('15968542364', 2, '2010-10-12 18:44:25'),
-('15968542364', 2, '2010-12-12 18:36:25');
+('15968542364', 2, null, '2010-11-12 18:58:25'),
+('15968542364', 2, null, '2010-10-12 18:44:25'),
+('15968542364', 2, null, '2010-12-12 18:36:25'),
+('15968542364', 1, 1, '2010-11-12 18:58:25'),
+('15968542364', 1, 1, '2010-10-12 18:44:25'),
+('15968542364', 1, 1, '2010-12-12 18:36:25'),
+('15968542364', 0, 1, '2010-11-12 18:58:25'),
+('15968542364', 0, null, '2010-10-12 18:44:25'),
+('15968542364', 0, 1, '2010-12-12 18:36:25');
 
 insert into user_role (user, role) values
 (1, 1),

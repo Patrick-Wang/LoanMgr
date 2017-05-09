@@ -2,7 +2,9 @@ package com.bank.debt.model.entity;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -32,13 +36,13 @@ public class MessageEntity extends AbstractReadWriteEntity implements Serializab
 	 */
 	private static final long serialVersionUID = 1L;
 	UserEntity come;
-	UserEntity to;
+	UserEntity dest;
 	EntrustedCaseManagerEntity entrustedCaseManager;
 	String content;
 	String title;
-	String attachements;
+	List<AttachementEntity> attachements;
 	Timestamp sendTime;
-	Integer read;
+	Integer isRead;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "come")
@@ -52,12 +56,12 @@ public class MessageEntity extends AbstractReadWriteEntity implements Serializab
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "to")
-	public UserEntity getTo() {
-		return to;
+	@JoinColumn(name = "dest")
+	public UserEntity getDest() {
+		return dest;
 	}
-	public void setTo(UserEntity to) {
-		this.to = to;
+	public void setDest(UserEntity to) {
+		this.dest = to;
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -74,10 +78,20 @@ public class MessageEntity extends AbstractReadWriteEntity implements Serializab
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public String getAttachements() {
+	
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinTable(
+		name = "message_attach_attachement",
+		joinColumns = { 
+			@JoinColumn(name = "msgId", referencedColumnName = "id") 
+		}, 
+		inverseJoinColumns = { 
+			@JoinColumn(name = "attachement", referencedColumnName = "id") 
+		})	
+	public List<AttachementEntity> getAttachements() {
 		return attachements;
 	}
-	public void setAttachements(String attachements) {
+	public void setAttachements(List<AttachementEntity> attachements) {
 		this.attachements = attachements;
 	}
 	public Timestamp getSendTime() {
@@ -86,11 +100,12 @@ public class MessageEntity extends AbstractReadWriteEntity implements Serializab
 	public void setSendTime(Timestamp sendTime) {
 		this.sendTime = sendTime;
 	}
-	public Integer getRead() {
-		return read;
+	
+	public Integer getIsRead() {
+		return isRead;
 	}
-	public void setRead(Integer read) {
-		this.read = read;
+	public void setIsRead(Integer read) {
+		this.isRead = read;
 	}
 
 

@@ -13,7 +13,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletOutputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +33,7 @@ import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDao;
 import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDaoImpl;
 import com.bank.debt.model.dao.user.UserDao;
 import com.bank.debt.model.dao.user.UserDaoImpl;
+import com.bank.debt.model.entity.AttachementEntity;
 import com.bank.debt.model.entity.ECCarLoanEntity;
 import com.bank.debt.model.entity.ECCreditCardEntity;
 import com.bank.debt.model.entity.ECCreditLoanEntity;
@@ -60,6 +60,7 @@ import com.bank.debt.protocol.tools.map.MappingSkipException;
 import com.bank.debt.protocol.tools.map.Xls2JsonMapping;
 import com.bank.debt.protocol.tools.map.Xlsx2JsonMapping;
 import com.bank.debt.protocol.type.EntrustedCaseType;
+import com.bank.debt.service.attachement.AttachementService;
 import com.bank.debt.service.ecreport.ECReportService;
 
 import net.sf.json.JSONArray;
@@ -92,6 +93,9 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	@Autowired
 	ECReportService eCReportService;
 	
+	@Autowired
+	AttachementService attachementService;
+	
 	
 	Mapping<IntfEntity, IF> ifMapping = new Mapping<IntfEntity, IF>(){
 
@@ -113,7 +117,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 		if (null != usr){
 			JSONArray data = null;
 			try {
-				String fileName = file.getOriginalFilename();
+				String fileName = Checking.getFileName(file);
 				if (fileName.endsWith("xls")){
 					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
 					mapper.setMapping(new Xls2JsonMapping(ECCarLoanEntity.class));
@@ -168,11 +172,12 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 		if (null != usr){
 			JSONArray data = null;
 			try {
-				if (file.getOriginalFilename().endsWith("xls")){
+				String fName = Checking.getFileName(file);
+				if (fName.endsWith("xls")){
 					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
 					mapper.setMapping(new Xls2JsonMapping(ECCreditCardEntity.class));
 					data = mapper.map(file.getInputStream());
-				}else if (file.getOriginalFilename().endsWith("xlsx")){
+				}else if (fName.endsWith("xlsx")){
 					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
 					mapper.setMapping(new Xlsx2JsonMapping(ECCreditCardEntity.class));
 					data = mapper.map(file.getInputStream());
@@ -220,11 +225,12 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 		if (null != usr){
 			JSONArray data = null;
 			try {
-				if (file.getOriginalFilename().endsWith("xls")){
+				String fName = Checking.getFileName(file);
+				if (fName.endsWith("xls")){
 					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
 					mapper.setMapping(new Xls2JsonMapping(ECCreditLoanEntity.class));
 					data = mapper.map(file.getInputStream());
-				}else if (file.getOriginalFilename().endsWith("xlsx")){
+				}else if (fName.endsWith("xlsx")){
 					Mapper<InputStream, JSONArray> mapper = new Mapper<InputStream, JSONArray>();
 					mapper.setMapping(new Xlsx2JsonMapping(ECCreditLoanEntity.class));
 					data = mapper.map(file.getInputStream());
@@ -278,11 +284,11 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	private void zipAttachement(ZipOutputStream zipOut, List<EntrustedCaseReport> reports) throws IOException{
 		for (EntrustedCaseReport ecr : reports){
 			if (Checking.isExist(ecr.getAttachements())){
-				for (String attach : ecr.getAttachements()){
+				for (AttachementEntity attach : ecr.getAttachements()){
 					ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					eCReportService.downloadAttachement(ecr.getId(), attach, baos);
+					eCReportService.downloadAttachement(attach.getId(), baos);
 					zipOut.putNextEntry(new ZipEntry(PathUtil.zipReportAttachementPath(
-							ecr.getDate(), ecr.getId(), ecr.getTitle(), attach)));
+							ecr.getDate(), ecr.getId(), ecr.getTitle(), attach.getDisplay())));
 					zipOut.write(baos.toByteArray());
 					zipOut.closeEntry();
 				}

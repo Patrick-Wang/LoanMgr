@@ -6,8 +6,8 @@ import java.io.OutputStream;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
@@ -15,20 +15,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.bank.debt.model.dao.eccarloan.ECCarLoanDao;
+import com.bank.debt.model.dao.eccarloan.ECCarLoanDaoImpl;
+import com.bank.debt.model.dao.eccreditcard.ECCreditCardDao;
+import com.bank.debt.model.dao.eccreditcard.ECCreditCardDaoImpl;
+import com.bank.debt.model.dao.eccreditloan.ECCreditLoanDao;
+import com.bank.debt.model.dao.eccreditloan.ECCreditLoanDaoImpl;
 import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDao;
+import com.bank.debt.model.dao.entrustedcasereport.EntrustedCaseReportDao;
 import com.bank.debt.model.dao.phonerecord.PhoneRecordDao;
 import com.bank.debt.model.dao.phonerecord.PhoneRecordDaoImpl;
-import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
 import com.bank.debt.model.entity.PhoneRecordEntity;
+import com.bank.debt.protocol.entity.Attachement;
 import com.bank.debt.protocol.entity.PhoneRecord;
-import com.bank.debt.protocol.entity.PhoneRecordName;
+import com.bank.debt.protocol.entity.PhoneRecordStatus;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
-import com.bank.debt.protocol.tools.PathUtil;
 import com.bank.debt.protocol.tools.map.Mapper;
 import com.bank.debt.protocol.tools.map.Mapping;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
 import com.bank.debt.protocol.tools.map.MappingSkipException;
+import com.bank.debt.protocol.type.EntrustedCaseType;
+import com.bank.debt.service.attachement.AttachementService;
 import com.bank.debt.service.service.ftp.FtpService;
 
 
@@ -38,11 +46,29 @@ public class PhoneServiceImpl implements PhoneService {
 	@Resource(name=PhoneRecordDaoImpl.NAME)
 	PhoneRecordDao phoneRecordDao;
 
+	
+	@Autowired
+	EntrustedCaseReportDao ecrDao;
+	
+	@Autowired
+	AttachementService attachementService;
+	
 	@Autowired
 	FtpService ftpService;
 	
 	@Autowired 
 	EntrustedCaseManagerDao ecmDao;
+	
+	
+	@Resource(name=ECCarLoanDaoImpl.NAME)
+	ECCarLoanDao eCCarLoanDao;
+
+	@Resource(name=ECCreditLoanDaoImpl.NAME)
+	ECCreditLoanDao eCCreditLoanDao;
+
+	@Resource(name=ECCreditCardDaoImpl.NAME)
+	ECCreditCardDao eCCreditCardDao;
+	
 	
 	public final static String NAME = "PhoneServiceImpl";
 
@@ -56,8 +82,22 @@ public class PhoneServiceImpl implements PhoneService {
 			@Override
 			public PhoneRecord onMap(PhoneRecordEntity from) throws MappingSkipException, MappingFailedException {
 				PhoneRecord pr = new PhoneRecord();
+				pr.setRecId(from.getId());
 				pr.setPhoneNum(from.getNumber());
-				pr.setEcid(from.getEntrustedCase());
+				if (from.getEntrustedCaseManager() != null){
+					pr.setEcId(from.getEntrustedCaseManager().getId());
+					switch (from.getEntrustedCaseManager().getType()){
+					case EntrustedCaseType.CAR_LOAN:
+						pr.setEcCode(eCCarLoanDao.getById(from.getEntrustedCaseManager().getEntrustedCase()).getCode());
+						break;
+					case EntrustedCaseType.CREDIT_CARD:
+						pr.setEcCode(eCCreditLoanDao.getById(from.getEntrustedCaseManager().getEntrustedCase()).getCode());
+						break;
+					case EntrustedCaseType.CREDIT_LOAN:
+						pr.setEcCode(eCCreditCardDao.getById(from.getEntrustedCaseManager().getEntrustedCase()).getCode());
+						break;
+					}
+				}
 				pr.setStatus(from.getStatus());
 				if (from.getStartTime() != null){
 					pr.setTime(formatter.format(from.getStartTime()));
@@ -70,20 +110,15 @@ public class PhoneServiceImpl implements PhoneService {
 	}
 
 	@Override
-	public Result uploadRecord(PhoneRecordName un, InputStream inputStream) throws IOException {
-		if (ftpService.updoadFile(PathUtil.phoneRecordPath(un.getNumber()), un.getName(), inputStream)){
-			EntrustedCaseManagerEntity ecm = ecmDao.getById(un.getEcId());
-			PhoneRecordEntity pre = new PhoneRecordEntity();
-			if (null != ecm){
-				pre.setEntrustedCase(ecm.getId());
-				pre.setStatus(1);	
-			}else{
-				pre.setStatus(0);		
-			}
-			pre.setNumber(un.getNumber());
-			pre.setStartTime(un.getTime());
-			phoneRecordDao.merge(pre);
-			return ErrorCode.OK;
+	public Result uploadRecord(String name, InputStream inputStream) throws IOException {
+		Attachement attach  = new Attachement();
+		attach.setDisplay(name);
+		attach.setFileAddress("/PHONE_RECORDS/" + UUID.randomUUID().toString());
+		Integer attachId = attachementService.uploadAttachement(attach, inputStream);
+		if (null != attachId){			
+			Result ok = ErrorCode.OK.clone();
+			ok.setMsg(attachId + "");
+			return ok;
 		}
 		return ErrorCode.PHONE_UPLOAD_FAILED;
 	}
@@ -92,18 +127,29 @@ public class PhoneServiceImpl implements PhoneService {
 	public Result recordMissedCall(String number, String time) {
 		PhoneRecordEntity pre = new PhoneRecordEntity();
 		pre.setNumber(number);
-		pre.setStatus(1);
+		pre.setStatus(PhoneRecordStatus.missed);
 		pre.setStartTime(new Timestamp(Date.valueOf(time).getTime()));
 		phoneRecordDao.merge(pre);
 		return ErrorCode.OK;
 	}
 
 	@Override
-	public Result donwloandRecord(PhoneRecordName un, OutputStream os) throws IOException {
-		if (ftpService.downloadFile(PathUtil.phoneRecordPath(un.getNumber()),  un.getName(), os)){
+	public Result donwloandRecord(Integer attachId, OutputStream os) throws IOException {
+		if (attachementService.downloadAttachement(attachId, os)){
 			return ErrorCode.OK;
 		}
 		return ErrorCode.PHONE_DOWNLOAD_FAILED;
+	}
+
+	@Override
+	public Result updateStatus(Integer recId, Integer status) {
+		PhoneRecordEntity pre = phoneRecordDao.getById(recId);
+		if (null != pre && null != status){
+			pre.setStatus(status);
+			phoneRecordDao.merge(pre);
+			return ErrorCode.OK;
+		}
+		return ErrorCode.PHONE_UPDATESTATUS_FAILED;
 	}
 
 

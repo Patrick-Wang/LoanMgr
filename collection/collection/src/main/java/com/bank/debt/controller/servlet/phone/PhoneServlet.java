@@ -14,14 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bank.debt.protocol.entity.PhoneRecord;
-import com.bank.debt.protocol.entity.PhoneRecordName;
 import com.bank.debt.protocol.tools.JsonUtil;
+import com.bank.debt.service.attachement.AttachementService;
+import com.bank.debt.service.attachement.AttachementServiceImpl;
 import com.bank.debt.service.phone.PhoneService;
 import com.bank.debt.service.phone.PhoneServiceImpl;
 
 @Controller
 @RequestMapping(value = "phone")
 public class PhoneServlet {
+	@Resource(name=AttachementServiceImpl.NAME)
+	AttachementService attachementService;
+
 	@Resource(name=PhoneServiceImpl.NAME)
 	PhoneService phoneService;
 	
@@ -31,16 +35,12 @@ public class PhoneServlet {
 		List<PhoneRecord> recrods = phoneService.getCallRecords();
 		return JsonUtil.toUtf8Json(recrods);
 	}
-	
-	//Call out
-	//name : ecid_phonenumber_time   eg.   2_15966832154_895421214
-	//Call in
-	//name : phonenumber_time   eg.   15966832154_895421214
+
 	@RequestMapping(value = "upload.do")
 	public @ResponseBody byte[] upload(HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("name") String name) throws IOException {
-		return phoneService.uploadRecord(PhoneRecordName.parse(name), request.getInputStream()).toUtf8Json();
+			@RequestParam("name") String displayName) throws IOException {
+		return phoneService.uploadRecord(displayName, request.getInputStream()).toUtf8Json();
 	}
 	
 	@RequestMapping(value = "missed_call.do")
@@ -49,5 +49,13 @@ public class PhoneServlet {
 			@RequestParam("number") String number,
 			@RequestParam("time") String time) throws UnsupportedEncodingException {
 		return phoneService.recordMissedCall(number, time).toUtf8Json();
+	}
+	
+	@RequestMapping(value = "update_status.do")
+	public @ResponseBody byte[] updateStatus(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam("record") Integer recId,
+			@RequestParam("status") Integer status) throws UnsupportedEncodingException {
+		return phoneService.updateStatus(recId, status).toUtf8Json();
 	}
 }

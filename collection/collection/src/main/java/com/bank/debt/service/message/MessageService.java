@@ -18,8 +18,8 @@ public interface MessageService {
 
 	List<Message> getMsgsWith(String userName, Integer entrustedCase, Integer with);
 
-	Result sendMessage(Integer entrustedCase, String userName, Integer to, String message,
-			CommonsMultipartFile[] attachements) throws IOException;
+	Result sendMessage(Integer entrustedCase, String userName, Integer to, String title,
+			String message, CommonsMultipartFile[] attachements) throws IOException;
 
 	List<Message> getSendMessages(String userName, Integer read);
 

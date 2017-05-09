@@ -19,4 +19,5 @@ public class ErrorCode {
 	public final static Result ECR_SUBMIT_FAILED = new Result(baseCode++, "报告提交失败");
 	public final static Result PHONE_UPLOAD_FAILED = new Result(baseCode++, "電話記錄上傳失敗");
 	public final static Result PHONE_DOWNLOAD_FAILED = new Result(baseCode++, "電話記錄上傳失敗");
+	public final static Result PHONE_UPDATESTATUS_FAILED = new Result(baseCode++, "更新状态失败");
 }

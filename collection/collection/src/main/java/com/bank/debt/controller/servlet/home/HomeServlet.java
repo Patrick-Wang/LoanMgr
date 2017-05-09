@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,9 @@ import com.bank.debt.service.account.AccountServiceImpl;
 public class HomeServlet {
 	@Resource(name=AccountServiceImpl.NAME)
 	AccountService accountService;
+	
+	@Value("${sip.server.ip}")
+    private String sipServerIp;
 	
 	private String getUserName(){
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
@@ -55,6 +59,7 @@ public class HomeServlet {
 		mp.put("roles", getRoles(ue.getRoles()));
 		mp.put("position", ue.getPosition());
 		mp.put("org", ue.getOrg().getName());
+		mp.put("sipServerIP", sipServerIp);
 		if (null != ue.getOrg().getParent()){
 			mp.put("pOrg", ue.getOrg().getParent().getName());
 		}else{

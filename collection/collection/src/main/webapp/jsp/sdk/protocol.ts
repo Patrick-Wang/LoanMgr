@@ -124,13 +124,22 @@ module collection.protocol {
         date:string;//2012-3-4
         title:string;
         content:string;
-        attachements:string[];
+        attachements:Attachement[];
+    }
+
+    export interface Attachement{
+        id:number;
+        fileAddress:string;
+        display:string;
+        uploadTime:string;
     }
 
     export enum MessageStatus{
         unread,
         read
     }
+
+
 
     export interface Message {
         msgId:number
@@ -142,7 +151,7 @@ module collection.protocol {
         toName:string;
         title:string;
         content:string;
-        attachements:string[];
+        attachements:Attachement[];
         sendTime:string;//2013-12-11 58:11:23
         read:MessageStatus;
     }
@@ -175,14 +184,17 @@ module collection.protocol {
     export enum CallStatus{
         callin,
         callout,
-        missed
+        missed,
+        missedSkip
     }
 
     export interface PhoneRecord {
+        recId:number;
         status : CallStatus;
         phoneNum:string;
         time:string;
         ecId:string;
+        ecCode:string;
     }
 
     export interface ServerContext {
@@ -190,6 +202,7 @@ module collection.protocol {
         position:string;
         org:string;
         pOrg:string;
+        sipServerIP:string;
     }
 
     export interface AssignSummary {

@@ -30,7 +30,7 @@ module pages.console {
                     break;
                 case MSG_REFRESH:
                     let html = ReactDOMServer.renderToStaticMarkup(
-                        <li class="tab-palegreen">
+                        <li className="tab-palegreen">
                             <a data-toggle="tab"  id="contacttab2" href="#waitRepliedMsg"> 待回复咨询 </a>
                         </li>
                     );
@@ -56,8 +56,6 @@ module pages.console {
                         $("#completeRate")
                             .text(parseFloat("" + (as.complete / as.total * 100)).toFixed(1) + "%");
                     }
-
-
                 });
             Message.getUnreadCount()
                 .done((count:number)=> {

@@ -78,7 +78,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			position : '${position}',
 			userName : '${userName}',
 			org : '${org}',
-			pOrg : '${pOrg}'
+			pOrg : '${pOrg}',
+			sipServerIP: '${sipServerIP}',
 		}
 	</script>
 

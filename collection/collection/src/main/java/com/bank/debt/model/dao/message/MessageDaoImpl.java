@@ -27,27 +27,27 @@ public class MessageDaoImpl extends AbstractReadWriteDaoImpl<MessageEntity> impl
 	}
 
 	@Override
-	public Integer getUnreadCount(Integer to) {
-		Query q = this.getEntityManager().createQuery("select count(*) from MessageEntity where read = 0 and to.id = :to");
-		q.setParameter("to", to);
+	public Integer getUnreadCount(Integer dest) {
+		Query q = this.getEntityManager().createQuery("select count(*) from MessageEntity where isRead = 0 and dest.id = :dest");
+		q.setParameter("dest", dest);
 		return ((Long)q.getResultList().get(0)).intValue();
 	}
 
 	@Override
 	public List<MessageEntity> getUnreadMsgToUser(UserEntity user) {
-		Query q = this.getEntityManager().createQuery("from MessageEntity where to.id =  :uid and read = 0");
+		Query q = this.getEntityManager().createQuery("from MessageEntity where dest.id =  :uid and isRead = 0");
 		q.setParameter("uid", user.getId());
 		return q.getResultList();
 	}
 
 	@Override
 	public List<MessageEntity> getMsgWithUser(Integer entrustedCase, UserEntity user, Integer with) {
-		String sql = "from MessageEntity where (to.id = :usr or come.id = :usr) ";
+		String sql = "from MessageEntity where (dest.id = :usr or come.id = :usr) ";
 		if (entrustedCase != null){
 			sql += "and entrustedCaseManager.id = :entrustedCase ";
 		}
 		if (with != null){
-			sql += "and (to.id = :with or come.id = :with) ";
+			sql += "and (dest.id = :with or come.id = :with) ";
 		}
 		
 		sql += " order by sendTime ";
@@ -63,23 +63,23 @@ public class MessageDaoImpl extends AbstractReadWriteDaoImpl<MessageEntity> impl
 	}
 
 	@Override
-	public Integer getUnreadCount(Integer ecid, Integer to) {
-		Query q = this.getEntityManager().createQuery("select count(*) from MessageEntity where read = 0 and to.id=:to and entrustedCaseManager.id = :ecid");
-		q.setParameter("to", to);
+	public Integer getUnreadCount(Integer ecid, Integer dest) {
+		Query q = this.getEntityManager().createQuery("select count(*) from MessageEntity where isRead = 0 and dest.id=:dest and entrustedCaseManager.id = :ecid");
+		q.setParameter("dest", dest);
 		q.setParameter("ecid", ecid);
 		return ((Long)q.getResultList().get(0)).intValue();
 	}
 
 	@Override
-	public List<MessageEntity> getMsgFromUser(UserEntity user, Integer read) {
-		if (read == null){
+	public List<MessageEntity> getMsgFromUser(UserEntity user, Integer isRead) {
+		if (isRead == null){
 			Query q = this.getEntityManager().createQuery("from MessageEntity where come.id =  :uid");
 			q.setParameter("uid", user.getId());
 			return q.getResultList();
 		}else{
-			Query q = this.getEntityManager().createQuery("from MessageEntity where come.id =  :uid and read = :read");
+			Query q = this.getEntityManager().createQuery("from MessageEntity where come.id =  :uid and isRead = :isRead");
 			q.setParameter("uid", user.getId());
-			q.setParameter("read", read);
+			q.setParameter("isRead", isRead);
 			return q.getResultList();
 		}
 	}

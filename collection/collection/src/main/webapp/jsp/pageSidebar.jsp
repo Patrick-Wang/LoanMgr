@@ -61,7 +61,6 @@
 					class="menu-icon glyphicon glyphicon-link"></i> <span
 					class="menu-text"> 系统管理 </span> <i class="menu-expand"></i>
 			</a>
-
 				<ul class="submenu">
 					<c:if test='${address.contains("/user/manager")}'>
 						<li><a id="userMgr" href="userMgr.html"> <span
