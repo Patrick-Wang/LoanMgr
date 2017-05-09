@@ -611,8 +611,7 @@ insert into `authority` (intf, role) values
 ((select id from interface where address='/ec/report'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/user/manager'), (select id from role where name='ROLE_ADMIN')),
 ((select id from interface where address='/user/ec/assign'), (select id from role where name='ROLE_ADMIN')),
-((select id from interface where address='/phone/call'), (select id from role where name='ROLE_OUTSIDE_STAFF'))
-;
+((select id from interface where address='/phone/call'), (select id from role where name='ROLE_OUTSIDE_STAFF'));
 /*
 DROP procedure IF EXISTS `initDataIf`;
 USE `collection`;
@@ -669,7 +668,7 @@ delete from authority where intf = 1601 and role = (select id from role where na
 delete from authority where intf = 1601 and role = (select id from role where name='ROLE_MANAGER');
 */
 
-
+/*++++++++++++++++++++++++++++++++++++++++++++++测试数据 +++++++++++++++++++++++++++++++++++++++++++++*/
 
 insert into organization (parent, name, status) values
 (null, '总公司', 0),

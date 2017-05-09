@@ -37,8 +37,8 @@
       <file leaf-file-name="callCenter.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/jsp/pages/callCenter.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.021164">
-              <caret line="171" column="63" selection-start-line="171" selection-start-column="63" selection-end-line="171" selection-end-column="63" />
+            <state vertical-scroll-proportion="0.5696649">
+              <caret line="164" column="8" selection-start-line="164" selection-start-column="8" selection-end-line="166" selection-end-column="9" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <marker date="1494318105506" expanded="true" signature="3387:3412" placeholder="..." />
@@ -70,6 +70,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="callCenter.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/pages/callCenter.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-0.6785714">
+              <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="messages.tsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/authority/nav/tips/messages.tsx">
           <provider selected="true" editor-type-id="text-editor">
@@ -96,18 +106,6 @@
             <state vertical-scroll-proportion="0.0">
               <caret line="15" column="62" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="62" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="importLoans.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/pages/importLoans.ts">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="6" column="24" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="24" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -444,7 +442,7 @@
     <frame x="-8" y="-8" width="1452" height="886" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21004243" sideWeight="0.7718121" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21004243" sideWeight="0.7718121" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32802126" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20849934" sideWeight="0.21205357" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34138486" sideWeight="0.7879464" order="7" side_tool="true" content_ui="tabs" />
@@ -718,14 +716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/pages/callCenter.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.0689656">
-          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/sdk/phone.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -897,10 +887,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/pages/callCenter.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6785714">
+          <caret line="46" column="0" selection-start-line="46" selection-start-column="0" selection-end-line="46" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/pages/callCenter.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.021164">
-          <caret line="171" column="63" selection-start-line="171" selection-start-column="63" selection-end-line="171" selection-end-column="63" />
+        <state vertical-scroll-proportion="0.5696649">
+          <caret line="164" column="8" selection-start-line="164" selection-start-column="8" selection-end-line="166" selection-end-column="9" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <marker date="1494318105506" expanded="true" signature="3387:3412" placeholder="..." />
