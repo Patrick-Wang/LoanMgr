@@ -169,6 +169,7 @@ var pages;
                         }
                     });
                     _this.updateMissed("cc-callMissed");
+                    route.router.broadcast(route.MSG.NAV_REFRESH);
                 }
             });
         };

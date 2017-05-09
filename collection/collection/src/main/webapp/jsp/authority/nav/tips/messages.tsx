@@ -33,9 +33,6 @@ module authority.nav.tips.messages{
                         msgTip = new MsgTip();
                         html = null;
                     }
-                    setInterval(()=>{
-                        msgTip.updateTips();
-                    }, 30000)
                     msgTip.updateTips();
                     break;
             }

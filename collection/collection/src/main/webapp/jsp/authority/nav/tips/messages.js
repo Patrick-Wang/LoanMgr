@@ -21,9 +21,6 @@ var authority;
                                     msgTip = new MsgTip();
                                     html = null;
                                 }
-                                setInterval(function () {
-                                    msgTip.updateTips();
-                                }, 30000);
                                 msgTip.updateTips();
                                 break;
                         }

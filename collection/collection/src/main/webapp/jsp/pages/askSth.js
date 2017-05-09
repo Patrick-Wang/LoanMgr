@@ -142,6 +142,9 @@ var pages;
                                         pages.Toast.success("发送成功");
                                         msgPair.answer = JSON.parse(ret.msg);
                                         _this.updateReplay(msgPair);
+                                        Message.setMessageRead([msgPair.ask.msgId]).done(function (ret) {
+                                            route.router.broadcast(route.MSG.NAV_REFRESH);
+                                        });
                                     }
                                     else {
                                         pages.Toast.failed("发送失败");
@@ -174,6 +177,9 @@ var pages;
                     pages.Toast.success("发送成功");
                     msgPair.answer = JSON.parse(result.msg);
                     _this.updateReplay(msgPair);
+                    Message.setMessageRead([msgPair.ask.msgId]).done(function (ret) {
+                        route.router.broadcast(route.MSG.NAV_REFRESH);
+                    });
                 }
                 else {
                     pages.Toast.failed("发送失败");

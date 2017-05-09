@@ -30,9 +30,6 @@ module authority.nav.tips.missedCall {
                         missedCall = new MissedCall();
                         html = null;
                     }
-                    setInterval(()=>{
-                        missedCall.updateTips();
-                    }, 30000)
                     missedCall.updateTips();
                     break;
             }

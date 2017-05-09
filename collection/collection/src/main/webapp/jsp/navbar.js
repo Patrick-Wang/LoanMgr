@@ -10,6 +10,12 @@ var navbar;
     var NavBar = (function () {
         function NavBar() {
             route.router.broadcast(route.MSG.NAV_REFRESH, null, route.DELAY_READY);
+            $(document).ready(function () {
+                route.router.broadcast(route.MSG.NAV_REFRESH);
+                setInterval(function () {
+                    route.router.broadcast(route.MSG.NAV_REFRESH);
+                }, 30000);
+            });
         }
         NavBar.openMessageTips = function () {
             NavBar.ins.triggerRefreshMessageTips();

@@ -15,7 +15,7 @@ module collection{
         }
 
         static setMessageRead(mids:number[]):Promise<Result>{
-            return Net.post(Net.BASE_URL + "/message/read_message.do",{
+            return Net.postLocal(Net.BASE_URL + "/message/read_message.do",{
                 mids:JSON.stringify(mids)
             });
         }

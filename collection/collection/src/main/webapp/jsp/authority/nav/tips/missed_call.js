@@ -22,9 +22,6 @@ var authority;
                                     missedCall = new MissedCall();
                                     html = null;
                                 }
-                                setInterval(function () {
-                                    missedCall.updateTips();
-                                }, 30000);
                                 missedCall.updateTips();
                                 break;
                         }

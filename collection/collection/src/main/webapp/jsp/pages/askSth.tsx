@@ -155,6 +155,9 @@ module pages {
                                         Toast.success("发送成功");
                                         msgPair.answer = JSON.parse(ret.msg);
                                         this.updateReplay(msgPair);
+                                        Message.setMessageRead([msgPair.ask.msgId]).done((ret:collection.protocol.Result)=>{
+                                            route.router.broadcast(route.MSG.NAV_REFRESH);
+                                        });
                                     } else {
                                         Toast.failed("发送失败");
                                     }
@@ -188,6 +191,9 @@ module pages {
                     Toast.success("发送成功");
                     msgPair.answer = JSON.parse(result.msg);
                     this.updateReplay(msgPair);
+                    Message.setMessageRead([msgPair.ask.msgId]).done((ret:collection.protocol.Result)=>{
+                        route.router.broadcast(route.MSG.NAV_REFRESH);
+                    });
                 } else {
                     Toast.failed("发送失败");
                 }

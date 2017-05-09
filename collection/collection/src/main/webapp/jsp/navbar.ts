@@ -12,10 +12,16 @@ module navbar{
         static ins = new NavBar();
         constructor(){
             route.router.broadcast(route.MSG.NAV_REFRESH, null, route.DELAY_READY);
+            $(document).ready(()=>{
+                route.router.broadcast(route.MSG.NAV_REFRESH);
+                setInterval(()=>{
+                    route.router.broadcast(route.MSG.NAV_REFRESH);
+                }, 30000)
+            })
+
         }
 
         static openMessageTips(){
-
             NavBar.ins.triggerRefreshMessageTips();
             $("#queryAllMsgs").click(()=>{
                 NavBar.ins.onClickQueryAllMessage();

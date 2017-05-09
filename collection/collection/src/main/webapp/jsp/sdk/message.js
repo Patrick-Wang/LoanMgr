@@ -11,7 +11,7 @@ var collection;
             });
         };
         Message.setMessageRead = function (mids) {
-            return collection.Net.post(collection.Net.BASE_URL + "/message/read_message.do", {
+            return collection.Net.postLocal(collection.Net.BASE_URL + "/message/read_message.do", {
                 mids: JSON.stringify(mids)
             });
         };
