@@ -293,6 +293,9 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 </style>
 </head>
 <body>
+<div style="display:none">
+	<object id="softPhone" classid="clsid:D62393A3-B447-4603-B56D-521CE6DDDABE"></object>
+</div>
 	<!-- Loading Container -->
 	<div class="loading-container">
 		<div class="loader"></div>
@@ -365,6 +368,9 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	</div>
 	<!-- Main Container -->
 </body>
+
+	
+
 	<%@include file="authority/authFns.jsp"%>
 
 	<%@include file="basicScript.jsp"%>

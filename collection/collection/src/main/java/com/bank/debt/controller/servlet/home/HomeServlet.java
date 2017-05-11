@@ -26,8 +26,8 @@ import com.bank.debt.service.account.AccountServiceImpl;
 public class HomeServlet {
 	@Resource(name=AccountServiceImpl.NAME)
 	AccountService accountService;
-	
-	@Value("${sip.server.ip}")
+		
+	@Value("${sip.server}")
     private String sipServerIp;
 	
 	private String getUserName(){

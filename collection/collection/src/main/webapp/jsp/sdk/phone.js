@@ -23,46 +23,51 @@ var collection;
     collection.Phone = Phone;
     var ActiveXPhone = (function () {
         function ActiveXPhone() {
-            try {
-                this.activeX = new ActiveXObject("phone");
-            }
-            catch (e) {
-                console.log(e);
-            }
-        }
-        ActiveXPhone.prototype.isAvailable = function () {
-            return true; //this.activeX != undefined;
-        };
-        ActiveXPhone.prototype.start = function (onCall) {
             var _this = this;
-            if (this.activeX.init(context.sipServerIP)) {
-                this.onCall = onCall;
-                this.activeX.onHaveCall = function (num, fileName) {
+            $(document).ready(function () {
+                var obj = document.getElementById("softPhone");
+                window["__onHaveCall"] = function (num, fileName) {
                     _this.fileName = fileName;
                     _this.onCall(num);
                 };
-                this.activeX.onHangUp = function () {
+                window["__onHangUp"] = function () {
                     if (_this.disConnected) {
                         _this.disConnected(_this.fileName);
                         _this.disConnected = undefined;
                     }
                 };
+                try {
+                    obj.RegIncomingCallJs(window, "__onHaveCall");
+                    obj.RegHangupJs(window, "__onHangUp");
+                    _this.activeX = obj;
+                }
+                catch (e) {
+                    console.log(e);
+                }
+            });
+        }
+        ActiveXPhone.prototype.isAvailable = function () {
+            return true; //this.activeX != undefined;
+        };
+        ActiveXPhone.prototype.start = function (onCall) {
+            if (this.activeX && this.activeX.Init(context.sipServerIP)) {
+                this.onCall = onCall;
                 return true;
             }
             return false;
         };
         ActiveXPhone.prototype.pickUp = function (onDisconnected) {
             this.disConnected = onDisconnected;
-            return this.activeX.pickUp();
+            return this.activeX && this.activeX.PickUp();
         };
         ActiveXPhone.prototype.ringUp = function (num, fileName, onDisconnected) {
             this.disConnected = onDisconnected;
             this.fileName = fileName;
-            return this.activeX.callOut(num, fileName);
+            return this.activeX && this.activeX.CallOut(num, fileName);
         };
         ;
         ActiveXPhone.prototype.hangUp = function () {
-            return this.activeX.hangUp();
+            return this.activeX && this.activeX.HangUp();
         };
         return ActiveXPhone;
     })();

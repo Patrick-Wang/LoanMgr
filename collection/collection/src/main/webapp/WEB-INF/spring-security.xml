@@ -9,6 +9,8 @@
 	<http pattern="/webservice/*" security="none" />
 	<http pattern="/session/invalidSession.do*" security="none" />
 	<http pattern="/jsp/login.jsp" security="none" />
+	<http pattern="/phone/missed_call.do" security="none" />
+	<http pattern="/phone/upload.do" security="none" />
 
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="authenticationProvider">
