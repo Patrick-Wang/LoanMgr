@@ -12,13 +12,51 @@ var pages;
     var CallCenter = (function (_super) {
         __extends(CallCenter, _super);
         function CallCenter(page) {
+            var _this = this;
             if (collection.phone.isAvailable()) {
                 _super.call(this, page);
+                collection.phone.start(function (num) {
+                    return _this.onCallIn(num);
+                });
             }
             else {
                 $("#callCenter").hide();
             }
         }
+        CallCenter.prototype.onHangUp = function (fileName) {
+            if (fileName) {
+                alert(fileName);
+            }
+        };
+        CallCenter.prototype.onCallIn = function (num) {
+            var _this = this;
+            var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", {"className": "row"}, React.createElement("div", {"className": "col-md-4"}, React.createElement("div", {"className": "form-group", "id": "cc-callInNum"}, "来电话了 : ", num))));
+            var dialog = bootbox.dialog({
+                message: html,
+                title: "来电话了",
+                className: "modal-darkorange",
+                buttons: {
+                    success: {
+                        label: "接听",
+                        className: "btn-blue",
+                        callback: function () {
+                            $("#cc-callInNum").text("正在通话 : " + num);
+                            return false;
+                        }
+                    },
+                    "挂断": {
+                        className: "btn-danger",
+                        callback: function () {
+                            collection.phone.hangUp();
+                        }
+                    }
+                }
+            });
+            return function (fileName) {
+                dialog.modal("hide");
+                _this.onHangUp(fileName);
+            };
+        };
         CallCenter.prototype.onRefresh = function () {
             var _this = this;
             collection.Phone.getRecords(false).done(function (records) {
@@ -152,11 +190,47 @@ var pages;
             enableSkipClick();
         };
         CallCenter.prototype.onclickRelate = function (recId) {
-            alert(recId);
+            var _this = this;
+            var record;
+            $(this.records).each(function (i, e) {
+                if (e.recId == recId) {
+                    record = e;
+                    return false;
+                }
+            });
+            route.router.register(new route.Receiver(pages.PageUtil.getPageId(this.page), function (e) {
+                switch (e.id) {
+                    case route.MSG.EC_SELECT_RESPONSE:
+                        sidebar.enable();
+                        sidebar.switchPage(_this.page);
+                        if (e.data) {
+                            collection.EntrustedCaseReport.createPhoneReport(e.data, record.phoneNum, record.recId)
+                                .done(function (ret) {
+                                if (ret.code == 0) {
+                                    record.ecId = e.data;
+                                    _this.updateCallInNoEC("cc-callInNoec");
+                                }
+                            });
+                        }
+                        break;
+                }
+            }));
+            route.router
+                .from(pages.PageUtil.getPageId(this.page))
+                .to(pages.PageUtil.getPageId(pages.PageType.loansMgr))
+                .send(route.MSG.EC_SELECT_REQUEST);
+            sidebar.switchPage(pages.PageType.loansMgr);
+            sidebar.disable();
         };
         CallCenter.prototype.onclickECCode = function (recId) {
+            var record;
+            $(this.records).each(function (i, e) {
+                if (e.recId == recId) {
+                    record = e;
+                    return false;
+                }
+            });
             alert(recId);
-            ;
         };
         CallCenter.prototype.onclickSkip = function (recId) {
             var _this = this;
@@ -227,7 +301,6 @@ var pages;
             var _this = this;
             var tbAssist = this.createTableAssist(tbName, ["电话号码", "呼叫时间", "关联委案"]);
             var data = [];
-            var ecCodeMap = {};
             $(this.records).each(function (i, e) {
                 var row = [];
                 if (e.status == CallStatus.callin && !e.ecId) {

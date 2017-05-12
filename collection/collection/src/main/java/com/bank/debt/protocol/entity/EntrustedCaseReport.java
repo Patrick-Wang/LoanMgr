@@ -16,6 +16,7 @@ public class EntrustedCaseReport  extends ProtocolEntityImpl{
 	String date;
 	String title;
 	String content;
+	Integer phoneRecId;
 	List<Attachement> attachements;
 
 	public Integer getId() {
@@ -79,5 +80,13 @@ public class EntrustedCaseReport  extends ProtocolEntityImpl{
 			}
 			
 		});
+	}
+
+	public Integer getPhoneRecId() {
+		return phoneRecId;
+	}
+
+	public void setPhoneRecId(Integer phoneRecId) {
+		this.phoneRecId = phoneRecId;
 	}
 }

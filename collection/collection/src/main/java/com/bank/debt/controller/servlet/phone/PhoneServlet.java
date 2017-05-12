@@ -39,8 +39,10 @@ public class PhoneServlet {
 	@RequestMapping(value = "upload.do")
 	public @ResponseBody byte[] upload(HttpServletRequest request,
 			HttpServletResponse response,
+			@RequestParam("number") String number,
+			@RequestParam("status") Integer status,
 			@RequestParam("name") String displayName) throws IOException {
-		return phoneService.uploadRecord(displayName, request.getInputStream()).toUtf8Json();
+		return phoneService.uploadRecord(number,status, displayName, request.getInputStream()).toUtf8Json();
 	}
 	
 	@RequestMapping(value = "missed_call.do")

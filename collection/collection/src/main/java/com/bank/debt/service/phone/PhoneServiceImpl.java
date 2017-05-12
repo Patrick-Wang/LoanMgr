@@ -110,12 +110,19 @@ public class PhoneServiceImpl implements PhoneService {
 	}
 
 	@Override
-	public Result uploadRecord(String name, InputStream inputStream) throws IOException {
+	public Result uploadRecord(String number, Integer status, String name, InputStream inputStream) throws IOException {
+		PhoneRecordEntity pre = new PhoneRecordEntity();
+		pre.setNumber(number);
+		pre.setStatus(status);
+		pre.setStartTime(new Timestamp(System.currentTimeMillis()));
 		Attachement attach  = new Attachement();
 		attach.setDisplay(name);
 		attach.setFileAddress("/PHONE_RECORDS/" + UUID.randomUUID().toString());
 		Integer attachId = attachementService.uploadAttachement(attach, inputStream);
-		if (null != attachId){			
+		if (null != attachId){	
+			pre.setAttachement(attachId);
+			pre.setEndTime(new Timestamp(System.currentTimeMillis()));
+			this.phoneRecordDao.merge(pre);
 			Result ok = ErrorCode.OK.clone();
 			ok.setMsg(attachId + "");
 			return ok;

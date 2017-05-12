@@ -11,8 +11,8 @@ module authority.ec.exporter{
             </form>
         );
 
-        pages.PageUtil.jqPage(pages.PageType.loansMgr).find(".buttons-preview").append(html);
-        pages.PageUtil.jqPage(pages.PageType.loansMgr).find(".buttons-preview").append(ReactDOMServer.renderToStaticMarkup(
+        pages.PageUtil.jqPage(pages.PageType.loansMgr).find(".buttons-preview:eq(0)").append(html);
+        pages.PageUtil.jqPage(pages.PageType.loansMgr).find(".buttons-preview:eq(0)").append(ReactDOMServer.renderToStaticMarkup(
             <a id="lm-export-Btn" className="btn btn-default">导出</a>
         ));
 

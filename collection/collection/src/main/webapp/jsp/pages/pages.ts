@@ -158,6 +158,10 @@ module pages{
             this.onRefresh();
         }
 
+        protected pageName():string{
+            return PageUtil.getPageId(this.page);
+        }
+
         protected find(q:any){
             return PageUtil.jqPage(this.page).find(q);
         }

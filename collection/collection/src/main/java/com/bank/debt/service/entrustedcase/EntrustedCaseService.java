@@ -44,7 +44,7 @@ public interface EntrustedCaseService {
 
 	AcceptSummary getAcceptSummary(String userName);
 
-	void downloadAll(String usr, OutputStream outputStream) throws MappingFailedException, IOException;
+	void downloadAll(String usr, String batchNo, OutputStream outputStream) throws MappingFailedException, IOException;
 
 
 }

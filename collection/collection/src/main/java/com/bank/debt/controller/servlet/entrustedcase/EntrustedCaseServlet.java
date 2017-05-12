@@ -114,7 +114,8 @@ public class EntrustedCaseServlet {
 	
 	@RequestMapping(value = "backup.do")
 	public void backup(HttpServletRequest request,
-			HttpServletResponse response) throws IOException, MappingFailedException {
+			HttpServletResponse response,
+			@RequestParam("batchNo") String batchNo) throws IOException, MappingFailedException {
 		response.setContentType("application/octet-stream");
 		String time = new SimpleDateFormat("YYYYMMddHHmmss").format(new Date(Calendar.getInstance().getTimeInMillis()));
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
@@ -122,8 +123,8 @@ public class EntrustedCaseServlet {
 			    .getPrincipal();
 		String usr = userDetails.getUsername();
 		response.setHeader("Content-disposition", "attachment;filename=\""
-				+ java.net.URLEncoder.encode("backup_" + time + ".zip", "UTF-8") + "\"");
-		entrustedCaseService.downloadAll(usr, response.getOutputStream());
+				+ java.net.URLEncoder.encode("backup_" + time + "_" + batchNo + ".zip", "UTF-8") + "\"");
+		entrustedCaseService.downloadAll(usr, batchNo, response.getOutputStream());
 	}
 	
 	@RequestMapping(value = "download.do")

@@ -185,24 +185,21 @@ public class ECReportServiceImpl implements ECReportService {
 	
 	class OnGetAttachListener implements OnGetAttachement{
 		
-		PhoneRecordEntity pre;
 		EntrustedCaseReportEntity ecre;
-		
-		public OnGetAttachListener(PhoneRecordEntity pre, EntrustedCaseReportEntity ecre) {
+
+		public OnGetAttachListener(EntrustedCaseReportEntity ecre) {
 			super();
-			this.pre = pre;
 			this.ecre = ecre;
 		}
 
 		@Override
 		public void onGetAttachement(AttachementEntity attach) {
 			if (attach != null){
-				pre = phoneRecordDao.getById(pre.getId());
-				pre.setAttachement(attach.getId());
+				PhoneRecordEntity pre = phoneRecordDao.getByAttachement(attach.getId());
+				pre.setEntrustedCaseManager(ecre.getEntrustedCaseManager());
 				phoneRecordDao.merge(pre);
-				ecre = entrustedCaseReportDao.getById(ecre.getId());
 				List<AttachementEntity> aes = ecre.getAttachements();
-				if (null == ecre){
+				if (null == aes){
 					aes = new ArrayList<AttachementEntity>();
 				}
 				aes.add(attach);
@@ -223,54 +220,45 @@ public class ECReportServiceImpl implements ECReportService {
 			ecre.setCreator(usr);
 			ecre.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 			ecre.setTitle(ecr.getTitle());
-			ecre.setModifier(usr);			
+			ecre.setModifier(usr);
+			ecre.setContent(ecr.getContent());
 			if (ecr.getDate() != null){
 				ecre.setDate(Date.valueOf(ecr.getDate()));
 			}else{
 				ecre.setDate(new Date(Calendar.getInstance().getTimeInMillis()));
 			}
 			
-			
-			if (ecr.getAttachements() != null && ecr.getAttachements().size() == 1){
-				//由 拨打电话 产生的 report
-				//content 为 [内容，电话号码，记录状态，附件名称]
-				JSONArray content = JSONArray.fromObject(ecr.getContent());
-				ecre.setContent(content.getString(0));
-				PhoneRecordEntity pre = new PhoneRecordEntity();
+
+			if (ecr.getPhoneRecId() != null) {
+				// 由 接电话 产生的 report
+				PhoneRecordEntity pre = phoneRecordDao.getById(ecr.getPhoneRecId());
 				pre.setEntrustedCaseManager(ecme);
-				pre.setNumber(content.getString(1));
-				if (PhoneRecordStatus.callin == content.getInt(2)){
-					pre.setStatus(PhoneRecordStatus.callin);
-				}else{
-					pre.setStatus(PhoneRecordStatus.callout);
-				}
-				pre.setStartTime(new Timestamp(System.currentTimeMillis()));			
-				pre = phoneRecordDao.merge(pre);
+				phoneRecordDao.merge(pre);
+
+				List<AttachementEntity> aes = new ArrayList<AttachementEntity>();
+				AttachementEntity ae = attachementDao.getById(pre.getAttachement());
+				aes.add(ae);
+				ecre.setAttachements(aes);
+				entrustedCaseReportDao.merge(ecre);
+			} else if (ecr.getAttachements() != null && ecr.getAttachements().size() == 1) {
+				// 由 打电话 产生的 report
 				ecre = entrustedCaseReportDao.merge(ecre);
-				attachementService.getAttachementAsync(content.getString(3), new OnGetAttachListener(pre, ecre));				
-			}else{
-				ecre.setContent(ecr.getContent());
-				if (Checking.isExist(attachements)){
-					List<AttachementEntity> aes = ecre.getAttachements();
-					if (null == ecre){
-						aes = new ArrayList<AttachementEntity>();
-					}
-					
+				attachementService.getAttachementAsync(ecr.getAttachements().get(0).getDisplay(),
+						new OnGetAttachListener(ecre));
+			} else {
+				if (Checking.isExist(attachements)) {
+					List<AttachementEntity> aes = new ArrayList<AttachementEntity>();
 					Attachement atta = new Attachement();
-					for (CommonsMultipartFile attach : attachements){
+					for (CommonsMultipartFile attach : attachements) {
 						atta.setDisplay(Checking.getFileName(attach));
-						atta.setFileAddress(PathUtil.reportAttachementPath(
-								ecre.getEntrustedCaseManager().getId(), 
-								ecre.getCreator().getId(), 
-								ecre.getId()) + UUID.randomUUID() + atta.getDisplay());
+						atta.setFileAddress(PathUtil.reportAttachementPath(ecre.getEntrustedCaseManager().getId(),
+								ecre.getCreator().getId(), ecre.getId()) + UUID.randomUUID() + atta.getDisplay());
 						Integer attaId = attachementService.uploadAttachement(atta, attach.getInputStream());
-						if (attaId != null){
+						if (attaId != null) {
 							aes.add(attachementDao.getById(attaId));
 						}
 					}
-					
 					ecre.setAttachements(aes);
-					
 				}
 				entrustedCaseReportDao.merge(ecre);
 			}

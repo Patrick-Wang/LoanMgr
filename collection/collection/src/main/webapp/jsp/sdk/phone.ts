@@ -33,7 +33,7 @@ module collection {
     export class ActiveXPhone {
         activeX:ActiveX;
         disConnected:(fileName:string)=>void;
-        onCall:(num:string)=>void;
+        onCall:(num:string)=>((fileName:string)=>void);
         fileName:string;
 
         constructor() {
@@ -41,7 +41,7 @@ module collection {
                 let obj:any = document.getElementById("softPhone");
                 window["__onHaveCall"] = (num:string, fileName:string)=> {
                     this.fileName = fileName;
-                    this.onCall(num);
+                    this.disConnected = this.onCall(num);
                 };
                 window["__onHangUp"] = ()=> {
                     if (this.disConnected) {
@@ -63,7 +63,8 @@ module collection {
             return true;//this.activeX != undefined;
         }
 
-        start(onCall:(num:string)=>void):boolean {
+        start(onCall:(num:string)=>((fileName:string)=>void)):boolean {
+            this.onCall = onCall;
             if (this.activeX && this.activeX.Init(context.sipServerIP)) {
                 this.onCall = onCall;
                 return true;
@@ -81,7 +82,6 @@ module collection {
             this.fileName = fileName;
             return this.activeX && this.activeX.CallOut(num, fileName);
         }
-        ;
 
         hangUp():boolean {
             return this.activeX && this.activeX.HangUp();

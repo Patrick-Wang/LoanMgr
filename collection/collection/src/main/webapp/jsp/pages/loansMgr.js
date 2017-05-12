@@ -15,7 +15,7 @@ var pages;
             this.isAssigner = false;
             this.isOwner = false;
             this.find(".dowebok input").labelauty();
-            route.router.register(new route.Receiver("loansMgr", function (e) {
+            route.router.register(new route.Receiver(pages.PageUtil.getPageId(this.page), function (e) {
                 switch (e.id) {
                     case route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS:
                         _this.isAssigner = true;
@@ -28,8 +28,31 @@ var pages;
                         break;
                     case route.MSG.LOANMGR_GET_TYPE:
                         return _this.find(".dowebok input:checked").attr("myid");
+                    case route.MSG.EC_SELECT_REQUEST:
+                        _this.requestEvent = e;
+                        break;
                 }
             }));
+            this.find(".buttons-preview:eq(1) a:eq(0)").click(function () {
+                var ids = [].concat(_this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
+                if (ids.length == 0) {
+                    pages.Toast.warning("请选择委案");
+                }
+                else {
+                    $(_this.ecs).each(function (i, e) {
+                        if (e.loan[0] == ids[0]) {
+                            route.router.from(pages.PageUtil.getPageId(_this.page)).to(_this.requestEvent.from).send(route.MSG.EC_SELECT_RESPONSE, e.managerId);
+                            _this.requestEvent = undefined;
+                            return false;
+                        }
+                    });
+                }
+                return false;
+            });
+            this.find(".buttons-preview:eq(1) a:eq(1)").click(function () {
+                route.router.from(pages.PageUtil.getPageId(_this.page)).to(_this.requestEvent.from).send(route.MSG.EC_SELECT_RESPONSE);
+                return false;
+            });
         }
         LoansMgr.prototype.qOpt = function (id) {
             var optVal = this.find("#" + id).val();
@@ -50,6 +73,14 @@ var pages;
         };
         LoansMgr.prototype.onRefresh = function () {
             var _this = this;
+            if (this.requestEvent) {
+                this.find(".buttons-preview").hide();
+                this.find(".buttons-preview:eq(1)").show();
+            }
+            else {
+                this.find(".buttons-preview").hide();
+                this.find(".buttons-preview:eq(0)").show();
+            }
             var ecType = this.find(".dowebok input:checked").attr("myid");
             var opt = this.getQOpt();
             collection.EntrustedCase.search(ecType, opt).done(function (ecs) {
@@ -59,11 +90,21 @@ var pages;
             });
         };
         LoansMgr.prototype.onShown = function () {
+            if (this.requestEvent) {
+                this.find(".buttons-preview").hide();
+                this.find(".buttons-preview:eq(1)").show();
+            }
+            else {
+                this.find(".buttons-preview").hide();
+                this.find(".buttons-preview:eq(0)").show();
+            }
             this.adjustWidth("lm-table", this.find("#lm-tableTable"));
         };
+        LoansMgr.prototype.onClickLink = function (rid) {
+            alert(rid);
+        };
         LoansMgr.prototype.refreshLoans = function (type) {
-            var _this = this;
-            var tableAssist = pages.JQGridAssistantFactory.createTableAssist("lm-table", type);
+            this.tableAssist = pages.JQGridAssistantFactory.createTableAssist("lm-table", type);
             var loans = [];
             var isLinked = {};
             for (var i = 0; i < this.ecs.length; ++i) {
@@ -75,11 +116,9 @@ var pages;
                 }
                 loans.push(this.ecs[i].loan);
             }
-            var lastSel;
-            this.find("#lm-tableTable").jqGrid(tableAssist.decorate({
-                data: tableAssist.getDataWithId(loans),
+            this.find("#lm-tableTable").jqGrid(this.tableAssist.decorate({
+                data: this.tableAssist.getDataWithId(loans),
                 datatype: "local",
-                multiselect: true,
                 drag: false,
                 resize: false,
                 autowidth: true,
@@ -89,29 +128,22 @@ var pages;
                 shrinkToFit: false,
                 rowNum: 10,
                 autoScroll: true,
+                singleselect: true,
                 pager: '#lm-tablePager',
-                onCellSelect: function (rowid, iCol, cellcontent, e) {
-                    if (iCol == 1) {
-                        if (isLinked[rowid]) {
-                            alert(rowid + " " + iCol);
-                        }
-                    }
-                },
-                onSelectRow: function (id) {
-                    if (id && id !== lastSel) {
-                        var ids = [].concat(_this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
-                        if (ids.indexOf(lastSel) >= 0) {
-                            _this.find("#lm-tableTable").setSelection(lastSel);
-                        }
-                        lastSel = id;
-                    }
-                },
+                //onCellSelect:(rowid,iCol,cellcontent,e)=>{
+                //    if (iCol == 1){
+                //        if (isLinked[rowid]){
+                //            alert(rowid + " " +  iCol);
+                //        }
+                //    }
+                //},
                 onSortCol: function (index, iCol, sortorder) {
                     setTimeout(function () {
                         var rids = $("#lm-tableTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
+                                $("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                    "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
                     }, 0);
@@ -121,18 +153,19 @@ var pages;
                         var rids = $("#lm-tableTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
+                                $("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                    "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
                     }, 0);
-                    lastSel = undefined;
                 }
             }));
             this.find("th input[role='checkbox']").hide();
             var rids = this.find("#lm-tableTable").getDataIDs();
             for (var i = 0; i < rids.length; ++i) {
                 if (undefined != isLinked[rids[i]]) {
-                    this.find("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
+                    this.find("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                        "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                 }
             }
             this.adjustWidth("lm-table", this.find("#lm-tableTable"));
@@ -145,4 +178,5 @@ var pages;
         LoansMgr.ins = new LoansMgr(pages.PageType.loansMgr);
         return LoansMgr;
     })(pages.PageImpl);
+    pages.LoansMgr = LoansMgr;
 })(pages || (pages = {}));

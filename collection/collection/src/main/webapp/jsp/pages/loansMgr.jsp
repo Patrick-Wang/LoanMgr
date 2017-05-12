@@ -50,6 +50,10 @@
 					<a href="javascript:void(0);" class="btn btn-default">编辑委案信息</a> <a
 						href="javascript:void(0);" class="btn btn-default">修改回款额</a>
 				</div>
+				<div class="buttons-preview" style="float:right;display:none">
+					<a href="javascript:void(0);" class="btn btn-blue">确定</a>
+					<a href="javascript:void(0);" class="btn btn-default">取消</a>
+				</div>
 			</div>
 		</div>
 		<div class="row">
@@ -103,7 +107,6 @@
 						<div id="lm-table"></div>
 					</div>
 				</div>
-
 			</div>
 		</div>
 	</div>

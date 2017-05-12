@@ -342,7 +342,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	}
  
 	@Override
-	public void downloadAll(String usr, OutputStream outputStream) throws MappingFailedException, IOException {
+	public void downloadAll(String usr, String batchNo, OutputStream outputStream) throws MappingFailedException, IOException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
 		List<EC> ecs = (List)searchCreditLoan(null, new QueryOption());
 		Mapper<List<EC>, OutputStream> mapper = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditLoanTitle));

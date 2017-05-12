@@ -11,6 +11,18 @@ module sidebar {
         $("#" + PageType[type]).click();
     }
 
+    export function disable(){
+        $(SiderBar.ins.items).each((i,e)=>{
+            e && e.disable();
+        });
+    }
+
+    export function enable(){
+        $(SiderBar.ins.items).each((i,e)=>{
+            e && e.enable();
+        });
+    }
+
     class SiderBar {
         pages:pages.Page[] = [];
         items:SiderItemEvent[] = [];
@@ -70,16 +82,27 @@ module sidebar {
     class SiderItemEvent {
         page : PageType;
         inited:boolean;
+        disabled:boolean=false;
+
+        disable(){
+            this.disabled = true;
+        }
+        enable(){
+            this.disabled = false;
+        }
+
         constructor(page : PageType,inited:boolean = false) {
             this.inited = inited;
             this.page = page;
             $("#" + PageType[page]).click(()=> {
-                SiderBar.hideAllBut(this.page);
-                if (!inited){
-                    SiderBar.refreshPage(page);
-                    inited = true;
+                if (!this.disabled){
+                    SiderBar.hideAllBut(this.page);
+                    if (!inited){
+                        SiderBar.refreshPage(page);
+                        inited = true;
+                    }
+                    SiderBar.showPage(this.page);
                 }
-                SiderBar.showPage(this.page);
                 return false;
             });
         }

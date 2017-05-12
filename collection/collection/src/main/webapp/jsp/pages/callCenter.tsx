@@ -6,16 +6,60 @@ module pages{
     import PhoneRecord = collection.protocol.PhoneRecord;
     export class CallCenter extends PageImpl{
         static ins = new CallCenter(PageType.callCenter);
-
+        records:collection.protocol.PhoneRecord[];
         constructor(page:pages.PageType) {
             if (collection.phone.isAvailable()){
                 super(page);
+
+                collection.phone.start((num:string)=>{
+                    return this.onCallIn(num);
+                });
             }else{
                 $("#callCenter").hide();
             }
         }
 
-        records:collection.protocol.PhoneRecord[];
+        private onHangUp(fileName:String):void {
+            if (fileName){
+                alert(fileName);
+            }
+        }
+
+        onCallIn(num:string){
+            let html =  ReactDOMServer.renderToStaticMarkup(
+                    <div className="row">
+                        <div className="col-md-4">
+                            <div className="form-group"  id="cc-callInNum">
+                               来电话了 : {num}
+                            </div>
+                        </div>
+                    </div>);
+            let dialog = bootbox.dialog({
+                message: html,
+                title: "来电话了",
+                className: "modal-darkorange",
+                buttons: {
+                    success: {
+                        label: "接听",
+                        className: "btn-blue",
+                        callback: ()=>{
+                            $("#cc-callInNum").text("正在通话 : " + num);
+                            return false;
+                        }
+                    },
+                    "挂断": {
+                        className: "btn-danger",
+                        callback: ()=>{
+                            collection.phone.hangUp();
+                        }
+                    }
+                }
+            });
+            return (fileName:string) =>{
+                dialog.modal("hide");
+                this.onHangUp(fileName);
+            };
+        }
 
         protected onRefresh():void {
             collection.Phone.getRecords(false).done((records:collection.protocol.PhoneRecord[])=>{
@@ -159,11 +203,48 @@ module pages{
         }
 
         onclickRelate(recId:number){
-            alert(recId);
+            let record:PhoneRecord;
+            $( this.records).each((i, e:PhoneRecord)=>{
+                if (e.recId == recId){
+                    record = e;
+                    return false;
+                }
+            });
+
+            route.router.register(new route.Receiver(PageUtil.getPageId(this.page), (e:route.Event)=> {
+                switch (e.id) {
+                    case route.MSG.EC_SELECT_RESPONSE:
+                        sidebar.enable();
+                        sidebar.switchPage(this.page);
+                        if (e.data){
+                            collection.EntrustedCaseReport.createPhoneReport(e.data, record.phoneNum, record.recId)
+                                .done((ret:collection.protocol.Result)=>{
+                                    if (ret.code == 0){
+                                        record.ecId = e.data;
+                                        this.updateCallInNoEC("cc-callInNoec");
+                                    }
+                                });
+                        }
+                        break;
+                }
+            }));
+            route.router
+                .from(PageUtil.getPageId(this.page))
+                .to(PageUtil.getPageId(PageType.loansMgr))
+                .send(route.MSG.EC_SELECT_REQUEST);
+            sidebar.switchPage(PageType.loansMgr);
+            sidebar.disable();
         }
 
         onclickECCode(recId:number){
-            alert(recId);;
+            let record:PhoneRecord;
+            $( this.records).each((i, e:PhoneRecord)=>{
+                if (e.recId == recId){
+                    record = e;
+                    return false;
+                }
+            });
+            alert(recId);
         }
 
         onclickSkip(recId:number){
@@ -237,7 +318,6 @@ module pages{
         private updateCallInNoEC(tbName:string):void {
             let tbAssist:JQTable.JQGridAssistant = this.createTableAssist(tbName, ["电话号码" , "呼叫时间", "关联委案"]);
             let data = [];
-            let ecCodeMap={};
             $(this.records).each((i, e:collection.protocol.PhoneRecord)=>{
                 let row = [];
                 if (e.status == CallStatus.callin && !e.ecId){
@@ -288,5 +368,7 @@ module pages{
                 }));
             enableECRelateClick();
         }
+
+
     }
 }

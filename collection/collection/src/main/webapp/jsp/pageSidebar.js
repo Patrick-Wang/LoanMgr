@@ -11,6 +11,18 @@ var sidebar;
         $("#" + PageType[type]).click();
     }
     sidebar.switchPage = switchPage;
+    function disable() {
+        $(SiderBar.ins.items).each(function (i, e) {
+            e && e.disable();
+        });
+    }
+    sidebar.disable = disable;
+    function enable() {
+        $(SiderBar.ins.items).each(function (i, e) {
+            e && e.enable();
+        });
+    }
+    sidebar.enable = enable;
     var SiderBar = (function () {
         function SiderBar() {
             var _this = this;
@@ -66,18 +78,27 @@ var sidebar;
         function SiderItemEvent(page, inited) {
             var _this = this;
             if (inited === void 0) { inited = false; }
+            this.disabled = false;
             this.inited = inited;
             this.page = page;
             $("#" + PageType[page]).click(function () {
-                SiderBar.hideAllBut(_this.page);
-                if (!inited) {
-                    SiderBar.refreshPage(page);
-                    inited = true;
+                if (!_this.disabled) {
+                    SiderBar.hideAllBut(_this.page);
+                    if (!inited) {
+                        SiderBar.refreshPage(page);
+                        inited = true;
+                    }
+                    SiderBar.showPage(_this.page);
                 }
-                SiderBar.showPage(_this.page);
                 return false;
             });
         }
+        SiderItemEvent.prototype.disable = function () {
+            this.disabled = true;
+        };
+        SiderItemEvent.prototype.enable = function () {
+            this.disabled = false;
+        };
         return SiderItemEvent;
     })();
 })(sidebar || (sidebar = {}));

@@ -23,6 +23,8 @@ module route {
         static CONSOLE_OWNER_UNREADMSGS:number = route.nextId();
         static LOANMGR_GET_QOPT:number = route.nextId();
         static LOANMGR_GET_TYPE:number = route.nextId();
+        static EC_SELECT_REQUEST:number = route.nextId();
+        static EC_SELECT_RESPONSE:number = route.nextId();
     }
 
     export interface Endpoint {

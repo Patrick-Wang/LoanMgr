@@ -148,6 +148,9 @@ var pages;
         PageImpl.prototype.refresh = function () {
             this.onRefresh();
         };
+        PageImpl.prototype.pageName = function () {
+            return PageUtil.getPageId(this.page);
+        };
         PageImpl.prototype.find = function (q) {
             return PageUtil.jqPage(this.page).find(q);
         };

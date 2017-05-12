@@ -28,7 +28,7 @@ var collection;
                 var obj = document.getElementById("softPhone");
                 window["__onHaveCall"] = function (num, fileName) {
                     _this.fileName = fileName;
-                    _this.onCall(num);
+                    _this.disConnected = _this.onCall(num);
                 };
                 window["__onHangUp"] = function () {
                     if (_this.disConnected) {
@@ -50,6 +50,7 @@ var collection;
             return true; //this.activeX != undefined;
         };
         ActiveXPhone.prototype.start = function (onCall) {
+            this.onCall = onCall;
             if (this.activeX && this.activeX.Init(context.sipServerIP)) {
                 this.onCall = onCall;
                 return true;
@@ -65,7 +66,6 @@ var collection;
             this.fileName = fileName;
             return this.activeX && this.activeX.CallOut(num, fileName);
         };
-        ;
         ActiveXPhone.prototype.hangUp = function () {
             return this.activeX && this.activeX.HangUp();
         };

@@ -14,6 +14,8 @@ var route;
         MSG.CONSOLE_OWNER_UNREADMSGS = route.nextId();
         MSG.LOANMGR_GET_QOPT = route.nextId();
         MSG.LOANMGR_GET_TYPE = route.nextId();
+        MSG.EC_SELECT_REQUEST = route.nextId();
+        MSG.EC_SELECT_RESPONSE = route.nextId();
         return MSG;
     })();
     route.MSG = MSG;

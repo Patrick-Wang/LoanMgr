@@ -119,19 +119,20 @@ module collection.protocol {
     }
 
     export interface EntrustedCaseReport {
-        id:number;
+        id?:number;
         entrustedCaseId:number;
-        date:string;//2012-3-4
-        title:string;
-        content:string;
-        attachements:Attachement[];
+        date?:string;//2012-3-4
+        title?:string;
+        content?:string;
+        phoneRecId?:number;
+        attachements?:Attachement[];
     }
 
     export interface Attachement{
-        id:number;
-        fileAddress:string;
+        id?:number;
+        fileAddress?:string;
         display:string;
-        uploadTime:string;
+        uploadTime?:string;
     }
 
     export enum MessageStatus{
