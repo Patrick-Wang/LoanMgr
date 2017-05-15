@@ -112,10 +112,10 @@ public class EntrustedCaseServlet {
 	}
 	
 	
-	@RequestMapping(value = "backup.do")
+	@RequestMapping(value = "manager/backup.do")
 	public void backup(HttpServletRequest request,
 			HttpServletResponse response,
-			@RequestParam("batchNo") String batchNo) throws IOException, MappingFailedException {
+			@RequestParam("batchNo") Integer batchNo) throws IOException, MappingFailedException {
 		response.setContentType("application/octet-stream");
 		String time = new SimpleDateFormat("YYYYMMddHHmmss").format(new Date(Calendar.getInstance().getTimeInMillis()));
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
@@ -127,6 +127,13 @@ public class EntrustedCaseServlet {
 		entrustedCaseService.downloadAll(usr, batchNo, response.getOutputStream());
 	}
 	
+	@RequestMapping(value = "manager/batch.do")
+	public @ResponseBody byte[] getBatch(HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		List<Integer> batchs = entrustedCaseService.getBatchs();
+		return JsonUtil.toUtf8Json(batchs);
+	}
+
 	@RequestMapping(value = "download.do")
 	public void download(HttpServletRequest request,
 			HttpServletResponse response, 

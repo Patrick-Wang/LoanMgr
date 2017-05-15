@@ -13,6 +13,9 @@ var collection;
                 data: JSON.stringify(data)
             });
         };
+        EntrustedCaseManager.getBatchNOs = function () {
+            return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/manager/batch.do");
+        };
         return EntrustedCaseManager;
     })();
     collection.EntrustedCaseManager = EntrustedCaseManager;

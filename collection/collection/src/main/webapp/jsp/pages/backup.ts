@@ -9,7 +9,9 @@ module pages{
         }
 
         protected onRefresh():void {
+            collection.EntrustedCaseManager.getBatchNOs().done((batchNOs:number[])=>{
 
+            });
         }
     }
 }

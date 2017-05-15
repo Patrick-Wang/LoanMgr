@@ -65,4 +65,10 @@ public class EntrustedCaseManagerDaoImpl extends AbstractReadWriteDaoImpl<Entrus
 		return ((Long)(ret.get(0))).intValue();
 	}
 
+	@Override
+	public List<Integer> getBatchNOs() {
+		Query q = this.getEntityManager().createQuery("select distinct batchNo from EntrustedCaseManagerEntity");
+		return q.getResultList();
+	}
+
 }

@@ -17,4 +17,6 @@ public interface EntrustedCaseManagerDao extends AbstractReadWriteDao<EntrustedC
 
 	Integer getTotalForOwner(UserEntity ue);
 
+	List<Integer> getBatchNOs();
+
 }

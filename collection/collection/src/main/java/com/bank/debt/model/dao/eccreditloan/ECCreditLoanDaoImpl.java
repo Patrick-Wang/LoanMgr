@@ -64,6 +64,10 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 		if (qOpt.getWwzt() != null){
 			where += " and  wwzt like :wwzt ";
 		}
+		
+		if (qOpt.getBatchNo() != null){
+			where += " and  batchNo = :batchNo ";
+		}
 
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
@@ -91,9 +95,15 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 			q.setParameter("wwzt", "%" + qOpt.getWwzt() + "%");
 		}
 		
+		if (qOpt.getBatchNo() != null){
+			q.setParameter("batchNo", qOpt.getBatchNo());
+		}
+		
 		if (qOpt.getAssignToMe() || qOpt.getMyOwn()){
 			q.setParameter("me", ue.getId());
 		}
+		
+		
 		
 		return q.getResultList();
 	}

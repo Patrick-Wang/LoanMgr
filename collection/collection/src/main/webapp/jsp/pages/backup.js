@@ -13,6 +13,8 @@ var pages;
             _super.call(this, page);
         }
         Backup.prototype.onRefresh = function () {
+            collection.EntrustedCaseManager.getBatchNOs().done(function (batchNOs) {
+            });
         };
         Backup.ins = new Backup(pages.PageType.backup);
         return Backup;

@@ -342,9 +342,9 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	}
  
 	@Override
-	public void downloadAll(String usr, String batchNo, OutputStream outputStream) throws MappingFailedException, IOException {
+	public void downloadAll(String usr, Integer batchNo, OutputStream outputStream) throws MappingFailedException, IOException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
-		List<EC> ecs = (List)searchCreditLoan(null, new QueryOption());
+		List<EC> ecs = (List)searchCreditLoan(null, new QueryOption(batchNo));
 		Mapper<List<EC>, OutputStream> mapper = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditLoanTitle));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper.map((List<EC>)ecs);
 		zipOut.putNextEntry(new ZipEntry("信贷.xls"));
@@ -354,7 +354,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 			zipAttachement(zipOut, ecs.get(i).getReports());				
 		}
 		
-		ecs = (List)searchCreditCard(null, new QueryOption());
+		ecs = (List)searchCreditCard(null, new QueryOption(batchNo));
 		mapper.setMapping(new EC2XlsMapping(EC2XlsMapping.creditCardTitle));
 		os = (ByteArrayOutputStream) mapper.map(ecs);
 		zipOut.putNextEntry(new ZipEntry("信用卡.xls"));
@@ -365,7 +365,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 		}
 
 		
-		ecs = (List)searchCarLoan(null, new QueryOption());
+		ecs = (List)searchCarLoan(null, new QueryOption(batchNo));
 		mapper.setMapping(new EC2XlsMapping(EC2XlsMapping.carLoanTitle));
 		os = (ByteArrayOutputStream) mapper.map(ecs);
 		zipOut.putNextEntry(new ZipEntry("车贷.xls"));
@@ -568,6 +568,11 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 				+ eCCarLoanDao.getCompleteForAssignee(ue)
 				+ eCCreditCardDao.getCompleteForAssignee(ue));
 		return as;
+	}
+
+	@Override
+	public List<Integer> getBatchs() {
+		return entrustedCaseManagerDao.getBatchNOs();
 	}
 
 

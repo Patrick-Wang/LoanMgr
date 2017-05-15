@@ -1,4 +1,5 @@
 SET SQL_SAFE_UPDATES=0;
+drop table if exists`organization`;
 create table `organization`(
 	 `id` int NOT NULL AUTO_INCREMENT,
 	 `parent` int default NULL,
@@ -7,7 +8,7 @@ create table `organization`(
 	  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-
+drop table if exists `user`;
 create table `user`(
 	 `id` int NOT NULL AUTO_INCREMENT,
 	 `username` varchar(20) NOT NULL,
@@ -18,7 +19,7 @@ create table `user`(
 	  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-
+drop table if exists  `entrusted_case_manager`;
 create table `entrusted_case_manager`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`owner` int NOT NULL,
@@ -32,7 +33,7 @@ create table `entrusted_case_manager`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-
+drop table if exists  `entrusted_case_report`;
 create table `entrusted_case_report`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`creator` int NOT NULL,
@@ -46,6 +47,7 @@ create table `entrusted_case_report`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+drop table if exists  `entrusted_case_report_attachement`;
 create table `entrusted_case_report_attachement`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`entrustedCaseReport` int NOT NULL,
@@ -53,7 +55,7 @@ create table `entrusted_case_report_attachement`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-
+drop table if exists  `message`;
 create table `message`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`come` int NOT NULL,
@@ -66,6 +68,7 @@ create table `message`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+drop table if exists  `message_attach_attachement`;
 create table `message_attach_attachement`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`msgId` int NOT NULL,
@@ -73,6 +76,7 @@ create table `message_attach_attachement`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+drop table if exists  `attachements`;
 create table `attachements`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`fileAddress` text NOT NULL,
@@ -81,14 +85,14 @@ create table `attachements`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-
+drop table if exists  `role`;
 create table `role`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`name` varchar(20) NOT NULL,
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
-
+drop table if exists  `interface`;
 create table `interface`(
 	`id` int NOT NULL,
 	`address` varchar(250) NOT NULL UNIQUE,
@@ -96,6 +100,8 @@ create table `interface`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+drop table if exists  `user_role`;
 create table `user_role`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`user` int NOT NULL,
@@ -103,6 +109,7 @@ create table `user_role`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+drop table if exists  `authority`;
 create table `authority`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`role` int NOT NULL,
@@ -110,6 +117,7 @@ create table `authority`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+drop table if exists  `phone_records`;
 create table `phone_records`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`status` int,
@@ -121,6 +129,7 @@ create table `phone_records`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+drop table if exists  `entrusted_case_batch_creator`;
 create table `entrusted_case_batch_creator`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`createdTime` datetime,
@@ -129,7 +138,7 @@ create table `entrusted_case_batch_creator`(
 
 
 
-
+drop table if exists  `entrusted_case_car_loan`;
 create table `entrusted_case_car_loan`(				
 	`id`	int NOT NULL AUTO_INCREMENT	,--	自增主键
 	`code` varchar(20),
@@ -212,7 +221,7 @@ create table `entrusted_case_car_loan`(
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;	
 
-
+drop table if exists  `entrusted_case_credit_loan`;
 create table `entrusted_case_credit_loan`(				
 	`id`	int NOT NULL AUTO_INCREMENT	,--	自增主键
 	`xh`	int,
@@ -295,6 +304,7 @@ create table `entrusted_case_credit_loan`(
 	PRIMARY KEY (`id`)
 )ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+drop table if exists  `entrusted_case_credit_card`;
 create table `entrusted_case_credit_card`(				
 	`id`	int NOT NULL AUTO_INCREMENT	,--	自增主键
 	`cid`	int	,--	内部管理ID
@@ -708,17 +718,22 @@ insert into `entrusted_case_car_loan` (code, khxm)
 values
 ('01225412', 'test');
 
-insert into `phone_records` (`number`, `status`, `entrustedCase`, `startTime`)
+insert into `phone_records` (`number`, `status`, `entrustedCase`, `startTime`, attachement)
 values
-('15968542364', 2, null, '2010-11-12 18:58:25'),
-('15968542364', 2, null, '2010-10-12 18:44:25'),
-('15968542364', 2, null, '2010-12-12 18:36:25'),
-('15968542364', 1, 1, '2010-11-12 18:58:25'),
-('15968542364', 1, 1, '2010-10-12 18:44:25'),
-('15968542364', 1, 1, '2010-12-12 18:36:25'),
-('15968542364', 0, 1, '2010-11-12 18:58:25'),
-('15968542364', 0, null, '2010-10-12 18:44:25'),
-('15968542364', 0, 1, '2010-12-12 18:36:25');
+('15968542364', 2, null, '2010-11-12 18:58:25', 1),
+('15968542364', 2, null, '2010-10-12 18:44:25', 1),
+('15968542364', 2, null, '2010-12-12 18:36:25', 1),
+('15968542364', 1, 1, '2010-11-12 18:58:25', 1),
+('15968542364', 1, 1, '2010-10-12 18:44:25', 1),
+('15968542364', 1, 1, '2010-12-12 18:36:25', 1),
+('15968542364', 0, 1, '2010-11-12 18:58:25', 1),
+('15968542364', 0, null, '2010-10-12 18:44:25', 1),
+('15968542364', 0, 1, '2010-12-12 18:36:25', 1);
+
+insert into `attachements` (`fileAddress`, `display`, `uploadTime`)
+values
+('PHONES/faet', "asdfasdfasdf.mp3", current_time());
+
 
 insert into user_role (user, role) values
 (1, 1),
