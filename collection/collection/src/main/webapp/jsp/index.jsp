@@ -328,9 +328,9 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 				<div id="loansMgrPage" style="display: none">
 					<%@include file="pages/loansMgr.jsp"%>
 				</div>
-				<%--<div id="exportLoansPage" style="display: none">--%>
-					<%--<%@include file="pages/exportLoans.jsp"%>--%>
-				<%--</div>--%>
+				<div id="loansDetailPage" style="display: none">
+					<%@include file="pages/loansDetail.jsp"%>
+				</div>
 				<c:if test='${address.contains("/phone/call")}'>
 					<div id="callCenterPage" style="display: none">
 						<%@include file="pages/callCenter.jsp"%>

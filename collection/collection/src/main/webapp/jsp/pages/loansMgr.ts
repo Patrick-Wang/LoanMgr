@@ -31,6 +31,21 @@ module pages{
                 }
             }));
 
+            this.find(".dowebok input").click(()=>{
+                let ecType = this.find(".dowebok input:checked").attr("myid");
+                switch(parseInt(ecType)){
+                    case collection.protocol.EntrustedCaseType.carLoan:
+                        this.find("#qCode").prev().text("卡号");
+                        break;
+                    case collection.protocol.EntrustedCaseType.creditCard:
+                        this.find("#qCode").prev().text("客户号");
+                        break;
+                    case collection.protocol.EntrustedCaseType.creditLoan:
+                        this.find("#qCode").prev().text("车牌号");
+                        break;
+                }
+            });
+
             this.find(".buttons-preview:eq(1) a:eq(0)").click(()=>{
                 let ids = [].concat(this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
                 if (ids.length == 0){
@@ -46,6 +61,8 @@ module pages{
                 }
                 return false;
             });
+
+
             this.find(".buttons-preview:eq(1) a:eq(1)").click(()=>{
                 route.router.from(PageUtil.getPageId(this.page)).to(this.requestEvent.from).send(route.MSG.EC_SELECT_RESPONSE);
                 return false;

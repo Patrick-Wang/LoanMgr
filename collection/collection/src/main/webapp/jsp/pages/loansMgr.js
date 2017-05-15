@@ -33,6 +33,20 @@ var pages;
                         break;
                 }
             }));
+            this.find(".dowebok input").click(function () {
+                var ecType = _this.find(".dowebok input:checked").attr("myid");
+                switch (parseInt(ecType)) {
+                    case collection.protocol.EntrustedCaseType.carLoan:
+                        _this.find("#qCode").prev().text("卡号");
+                        break;
+                    case collection.protocol.EntrustedCaseType.creditCard:
+                        _this.find("#qCode").prev().text("客户号");
+                        break;
+                    case collection.protocol.EntrustedCaseType.creditLoan:
+                        _this.find("#qCode").prev().text("车牌号");
+                        break;
+                }
+            });
             this.find(".buttons-preview:eq(1) a:eq(0)").click(function () {
                 var ids = [].concat(_this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
                 if (ids.length == 0) {

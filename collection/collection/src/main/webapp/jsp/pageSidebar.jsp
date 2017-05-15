@@ -39,6 +39,10 @@
 				<li><a id="loansMgr" href="loansMgr.html"> <span
 						class="menu-text">委案信息查询和维护</span>
 				</a></li>
+				
+				<li><a id="loansDetail" href="loansMgr.html"> <span
+						class="menu-text">委案详细信息</span>
+				</a></li>
 
 				<c:if
 					test='${address.contains("/ec/ask") || address.contains("/ec/answer")}'>

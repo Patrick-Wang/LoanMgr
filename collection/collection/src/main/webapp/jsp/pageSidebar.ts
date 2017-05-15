@@ -108,6 +108,9 @@ module sidebar {
             this.page = page;
             $("#" + PageType[page]).click(()=> {
                 if (!this.disabled){
+                    let pgLast = SiderBar.hideAllBut(this.page);
+                    if (pgLast){
+                        SiderBar.ins.lastPage = pgLast;
                     }
                     if (!inited){
                         SiderBar.refreshPage(this.page);

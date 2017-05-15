@@ -18,6 +18,7 @@ module pages{
         backup,
         rearangeOffice,
         rearangeBussiness,
+        loansDetail,
         end
     }
 

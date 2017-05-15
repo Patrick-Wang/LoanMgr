@@ -15,7 +15,8 @@ var pages;
         PageType[PageType["backup"] = 10] = "backup";
         PageType[PageType["rearangeOffice"] = 11] = "rearangeOffice";
         PageType[PageType["rearangeBussiness"] = 12] = "rearangeBussiness";
-        PageType[PageType["end"] = 13] = "end";
+        PageType[PageType["loansDetail"] = 13] = "loansDetail";
+        PageType[PageType["end"] = 14] = "end";
     })(pages.PageType || (pages.PageType = {}));
     var PageType = pages.PageType;
     var Toast = (function () {
