@@ -35,6 +35,7 @@ var pages;
                 message: html,
                 title: "来电话了",
                 className: "modal-darkorange",
+                closeButton: false,
                 buttons: {
                     success: {
                         label: "接听",

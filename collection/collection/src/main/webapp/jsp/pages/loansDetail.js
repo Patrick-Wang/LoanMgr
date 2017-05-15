@@ -50,76 +50,6 @@ var pages;
                     }
                 });
             });
-            $("#bootbox-record-work").on('click', function () {
-                bootbox.dialog({
-                    message: $("#myModal").html(),
-                    title: "工作记录录入",
-                    className: "modal-darkorange",
-                    buttons: {
-                        success: {
-                            label: "确定",
-                            className: "btn-blue",
-                            callback: function () {
-                            }
-                        },
-                        "取消": {
-                            className: "btn-danger",
-                            callback: function () {
-                            }
-                        }
-                    }
-                });
-            });
-            $("#bootbox-record-work-timeline").on('click', function () {
-                bootbox.dialog({
-                    message: $("#myModal").html(),
-                    title: "工作记录录入",
-                    className: "modal-darkorange",
-                    buttons: {
-                        success: {
-                            label: "确定",
-                            className: "btn-blue",
-                            callback: function () {
-                            }
-                        },
-                        "取消": {
-                            className: "btn-danger",
-                            callback: function () {
-                            }
-                        }
-                    }
-                });
-            });
-            $("#bootbox-record-ask-timeline").on('click', function () {
-                bootbox.dialog({
-                    message: $("#myModal").html(),
-                    title: "工作记录录入",
-                    className: "modal-darkorange",
-                    buttons: {
-                        success: {
-                            label: "确定",
-                            className: "btn-blue",
-                            callback: function () {
-                            }
-                        },
-                        "取消": {
-                            className: "btn-danger",
-                            callback: function () {
-                            }
-                        }
-                    }
-                });
-            });
-            function generateUUID() {
-                var d = new Date().getTime();
-                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-                    var r = (d + Math.random() * 16) % 16 | 0;
-                    d = Math.floor(d / 16);
-                    return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-                });
-                return uuid;
-            }
-            ;
             $("#bootbox-record-by-phone").on('click', function () {
                 var dialog = bootbox.dialog({
                     message: $("#myModal").html(),
@@ -132,12 +62,17 @@ var pages;
                             callback: function () {
                                 var _this = this;
                                 var num = "123123";
-                                collection.phone.ringUp(num, generateUUID() + ".MP3", function (fName) {
+                                collection.phone.ringUp(num, route.UUID() + ".MP3", function (fName) {
                                     if (fName) {
                                         collection.EntrustedCaseReport.createPhoneOutReport(_this.ec.managerId, num, fName)
                                             .done(function (ret) {
                                             if (ret.code != 0) {
                                                 pages.Toast.failed("电话关联失败");
+                                            }
+                                            else {
+                                                collection.EntrustedCase.search(_this.ecType, { mgrId: _this.ec.managerId }).done(function (ec) {
+                                                    _this.ec = ec[0];
+                                                });
                                             }
                                         });
                                     }
@@ -154,26 +89,140 @@ var pages;
                     }
                 });
             });
-            $("#bootbox-confirm").on('click', function () {
-                bootbox.confirm("Are you sure?", function (result) {
-                    if (result) {
+            $("#bootbox-record-work").on('click', function () {
+                bootbox.dialog({
+                    message: $("#template_report_work").html(),
+                    title: "委案工作记录录入",
+                    className: "modal-blue",
+                    buttons: {
+                        "取消": {
+                            className: "btn-default",
+                            callback: function () {
+                            }
+                        },
+                        success: {
+                            label: "上传记录",
+                            className: "btn-blue",
+                            callback: function () {
+                            }
+                        }
                     }
                 });
             });
-            $("#bootbox-options").on('click', function () {
+            $("#bootbox-record-work-by-phone").on('click', function () {
                 bootbox.dialog({
-                    message: $("#myModal").html(),
+                    message: $("#template_report_work_by_phone").html(),
+                    title: "电话催收记录录入",
+                    className: "modal-blue",
+                    buttons: {
+                        "取消": {
+                            className: "btn-default",
+                            callback: function () {
+                            }
+                        },
+                        success: {
+                            label: "上传记录",
+                            className: "btn-blue",
+                            callback: function () {
+                            }
+                        }
+                    }
+                });
+            });
+            $("#bootbox-record-work-timeline").on('click', function () {
+                bootbox.dialog({
+                    message: $("#template_report_work").html(),
+                    title: "工作记录录入",
+                    className: "modal-blue",
+                    buttons: {
+                        "取消": {
+                            className: "btn-default",
+                            callback: function () {
+                            }
+                        },
+                        success: {
+                            label: "上传记录",
+                            className: "btn-blue",
+                            callback: function () {
+                            }
+                        }
+                    }
+                });
+            });
+            $("#bootbox-loans-consulting-timeline").on('click', function () {
+                bootbox.dialog({
+                    message: $("#template_consulting").html(),
+                    title: "工作记录录入",
+                    className: "modal-darkorange",
+                    buttons: {
+                        "取消": {
+                            className: "btn-danger",
+                            callback: function () {
+                            }
+                        },
+                        success: {
+                            label: "确定",
+                            className: "btn-blue",
+                            callback: function () {
+                            }
+                        }
+                    }
+                });
+            });
+            $("#bootbox-loans-consulting").on('click', function () {
+                bootbox.dialog({
+                    message: $("#template_consulting").html(),
                     title: "咨询委案信息",
                     className: "modal-darkorange",
                     buttons: {
+                        "取消": {
+                            className: "btn-danger",
+                            callback: function () {
+                            }
+                        },
                         success: {
                             label: "咨询",
                             className: "btn-blue",
                             callback: function () {
                             }
-                        },
+                        }
+                    }
+                });
+            });
+            $("#bootbox-modify-repayment").on('click', function () {
+                bootbox.dialog({
+                    message: $("#template_modify_repayment").html(),
+                    title: "修改委案回款额",
+                    className: "modal-blue",
+                    buttons: {
                         "取消": {
-                            className: "btn-danger",
+                            className: "btn-default",
+                            callback: function () {
+                            }
+                        },
+                        success: {
+                            label: "确定",
+                            className: "btn-blue",
+                            callback: function () {
+                            }
+                        }
+                    }
+                });
+            });
+            $("#bootbox-modify-attachment-property").on('click', function () {
+                bootbox.dialog({
+                    message: $("#template_modify_attachment_property").html(),
+                    title: "修改委案回款额",
+                    className: "modal-darkorange",
+                    buttons: {
+                        "取消": {
+                            className: "btn-default",
+                            callback: function () {
+                            }
+                        },
+                        success: {
+                            label: "确定",
+                            className: "btn-blue",
                             callback: function () {
                             }
                         }
@@ -187,45 +236,138 @@ var pages;
                     className: "",
                 });
             });
-            $("#bootbox-modify").on('click', function () {
-                bootbox.dialog({
-                    message: $("#myModal").html(),
-                    title: "修改委案回款额",
-                    className: "modal-darkorange",
-                    buttons: {
-                        success: {
-                            label: "确定",
-                            className: "btn-blue",
-                            callback: function () {
+            $(document).ready(function () {
+                bootbox.setDefaults('locale', 'zh_CN');
+                $("#registrationForm").bootstrapValidator();
+                $('#togglingForm').bootstrapValidator({
+                    message: 'This value is not valid',
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    submitHandler: function (validator, form, submitButton) {
+                        // Do nothing
+                    },
+                    fields: {
+                        firstName: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The first name is required'
+                                }
                             }
                         },
-                        "取消": {
-                            className: "btn-danger",
-                            callback: function () {
+                        lastName: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The last name is required'
+                                }
+                            }
+                        },
+                        company: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The company name is required'
+                                }
+                            }
+                        },
+                        // These fields will be validated when being visible
+                        job: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The job title is required'
+                                }
+                            }
+                        },
+                        department: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The department name is required'
+                                }
+                            }
+                        },
+                        mobilePhone: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The mobile phone number is required'
+                                },
+                                digits: {
+                                    message: 'The mobile phone number is not valid'
+                                }
+                            }
+                        },
+                        // These fields will be validated when being visible
+                        homePhone: {
+                            validators: {
+                                digits: {
+                                    message: 'The home phone number is not valid'
+                                }
+                            }
+                        },
+                        officePhone: {
+                            validators: {
+                                digits: {
+                                    message: 'The office phone number is not valid'
+                                }
+                            }
+                        }
+                    }
+                })
+                    .find('button[data-toggle]')
+                    .on('click', function () {
+                    var $target = $($(this).attr('data-toggle'));
+                    // Show or hide the additional fields
+                    // They will or will not be validated based on their visibilities
+                    $target.toggle();
+                    if (!$target.is(':visible')) {
+                        // Enable the submit buttons in case additional fields are not valid
+                        $('#togglingForm').data('bootstrapValidator').disableSubmitButtons(false);
+                    }
+                });
+                $('#accountForm').bootstrapValidator({
+                    // Only disabled elements are excluded
+                    // The invisible elements belonging to inactive tabs must be validated
+                    excluded: [':disabled'],
+                    feedbackIcons: {
+                        valid: 'glyphicon glyphicon-ok',
+                        invalid: 'glyphicon glyphicon-remove',
+                        validating: 'glyphicon glyphicon-refresh'
+                    },
+                    submitHandler: function (validator, form, submitButton) {
+                        // Do nothing
+                    },
+                    fields: {
+                        fullName: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The full name is required'
+                                }
+                            }
+                        },
+                        company: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The company name is required'
+                                }
+                            }
+                        },
+                        address: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The address is required'
+                                }
+                            }
+                        },
+                        city: {
+                            validators: {
+                                notEmpty: {
+                                    message: 'The city is required'
+                                }
                             }
                         }
                     }
                 });
-            });
-            $("#bootbox-modify-attach").on('click', function () {
-                bootbox.dialog({
-                    message: $("#myModal").html(),
-                    title: "修改委案回款额",
-                    className: "modal-darkorange",
-                    buttons: {
-                        success: {
-                            label: "确定",
-                            className: "btn-blue",
-                            callback: function () {
-                            }
-                        },
-                        "取消": {
-                            className: "btn-danger",
-                            callback: function () {
-                            }
-                        }
-                    }
-                });
+                $('#html5Form').bootstrapValidator();
             });
         }
         LoansDetail.prototype.onShown = function () {
