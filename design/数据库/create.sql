@@ -709,9 +709,13 @@ values
 (1, 5, 1, 'RE:1', 'you are right', current_time()),
 (5, 1, 1, 'test', 'test new detail123332', current_time());
 
-insert into `entrusted_case_manager` (owner, assignee, modifier, type, entrustedCase, createdTime, lastModifiedTime)
+insert into `entrusted_case_manager` (owner, assignee, modifier, type, entrustedCase, createdTime, lastModifiedTime, batchNo)
 values
-(1, 2, 1, 0, 1, current_time(), current_time());
+(1, 2, 1, 0, 1, current_time(), current_time(), 1);
+
+insert into `entrusted_case_batch_creator` (createdTime)
+values
+(current_time());
 
 
 insert into `entrusted_case_car_loan` (code, khxm)

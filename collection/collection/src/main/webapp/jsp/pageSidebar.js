@@ -11,6 +11,10 @@ var sidebar;
         $("#" + PageType[type]).click();
     }
     sidebar.switchPage = switchPage;
+    function getLastPage() {
+        return SiderBar.ins.lastPage;
+    }
+    sidebar.getLastPage = getLastPage;
     function disable() {
         $(SiderBar.ins.items).each(function (i, e) {
             e && e.disable();
@@ -36,6 +40,7 @@ var sidebar;
                 for (var i = 0; i < _this.pages.length; ++i) {
                     if (_this.pages[i] != null && _this.pages[i].isShown()) {
                         _this.pages[i].refresh();
+                        _this.lastPage = i;
                     }
                 }
             });
@@ -65,11 +70,16 @@ var sidebar;
             }
         };
         SiderBar.hideAllBut = function (but) {
+            var ret;
             for (var i = 0; i < SiderBar.ins.pages.length; ++i) {
                 if (i != but && SiderBar.ins.pages[i] != null) {
-                    SiderBar.ins.pages[i].hide();
+                    if (SiderBar.ins.pages[i].isShown()) {
+                        ret = i;
+                        SiderBar.ins.pages[i].hide();
+                    }
                 }
             }
+            return ret;
         };
         SiderBar.ins = new SiderBar();
         return SiderBar;
@@ -83,9 +93,12 @@ var sidebar;
             this.page = page;
             $("#" + PageType[page]).click(function () {
                 if (!_this.disabled) {
-                    SiderBar.hideAllBut(_this.page);
+                    var pgLast = SiderBar.hideAllBut(_this.page);
+                    if (pgLast) {
+                        SiderBar.ins.lastPage = pgLast;
+                    }
                     if (!inited) {
-                        SiderBar.refreshPage(page);
+                        SiderBar.refreshPage(_this.page);
                         inited = true;
                     }
                     SiderBar.showPage(_this.page);

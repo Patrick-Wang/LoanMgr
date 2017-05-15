@@ -11,6 +11,11 @@ module sidebar {
         $("#" + PageType[type]).click();
     }
 
+    export function getLastPage():PageType{
+        return SiderBar.ins.lastPage;
+    }
+
+
     export function disable(){
         $(SiderBar.ins.items).each((i,e)=>{
             e && e.disable();
@@ -26,6 +31,7 @@ module sidebar {
     class SiderBar {
         pages:pages.Page[] = [];
         items:SiderItemEvent[] = [];
+        lastPage : pages.PageType;
         static ins:SiderBar = new SiderBar();
 
         constructor() {
@@ -37,6 +43,7 @@ module sidebar {
                 for (let i = 0; i < this.pages.length; ++i){
                     if (this.pages[i] != null && this.pages[i].isShown()) {
                         this.pages[i].refresh();
+                        this.lastPage = i;
                     }
                 }
             });
@@ -70,12 +77,17 @@ module sidebar {
             }
         }
 
-        static hideAllBut(but:PageType) {
+        static hideAllBut(but:PageType):pages.PageType {
+            let ret : pages.PageType;
             for (let i = 0; i < SiderBar.ins.pages.length; ++i) {
                 if (i != but && SiderBar.ins.pages[i] != null) {
-                    SiderBar.ins.pages[i].hide();
+                    if (SiderBar.ins.pages[i].isShown()){
+                        ret = i;
+                        SiderBar.ins.pages[i].hide();
+                    }
                 }
             }
+            return ret;
         }
     }
 
@@ -96,9 +108,9 @@ module sidebar {
             this.page = page;
             $("#" + PageType[page]).click(()=> {
                 if (!this.disabled){
-                    SiderBar.hideAllBut(this.page);
+                    }
                     if (!inited){
-                        SiderBar.refreshPage(page);
+                        SiderBar.refreshPage(this.page);
                         inited = true;
                     }
                     SiderBar.showPage(this.page);
