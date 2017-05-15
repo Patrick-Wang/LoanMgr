@@ -40,7 +40,7 @@
 						class="menu-text">委案信息查询和维护</span>
 				</a></li>
 				
-				<li><a id="loansDetail" href="loansMgr.html"> <span
+				<li><a id="loansDetail" href="loansMgr.html" style="display:none"> <span
 						class="menu-text">委案详细信息</span>
 				</a></li>
 

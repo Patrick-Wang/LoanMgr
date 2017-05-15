@@ -5,7 +5,7 @@ module route {
         from:string;
         to:string;
         road?:string[];
-        data:any;
+        data?:any;
         isBroadcast?:boolean;
     }
 
@@ -25,6 +25,7 @@ module route {
         static LOANMGR_GET_TYPE:number = route.nextId();
         static EC_SELECT_REQUEST:number = route.nextId();
         static EC_SELECT_RESPONSE:number = route.nextId();
+        static EC_DETAIL_ECINFO:number = route.nextId();
     }
 
     export interface Endpoint {

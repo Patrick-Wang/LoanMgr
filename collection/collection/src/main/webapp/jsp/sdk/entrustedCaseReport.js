@@ -5,7 +5,7 @@ var collection;
     var EntrustedCaseReport = (function () {
         function EntrustedCaseReport() {
         }
-        EntrustedCaseReport.createPhoneReport = function (entrustedCaseId, num, recId) {
+        EntrustedCaseReport.createPhoneInReport = function (entrustedCaseId, num, recId) {
             var dt = new Date();
             var ecr = {
                 entrustedCaseId: entrustedCaseId,
@@ -13,6 +13,21 @@ var collection;
                 title: "呼入电话",
                 content: num,
                 phoneRecId: recId
+            };
+            return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/report/submit.do", {
+                report: JSON.stringify(ecr)
+            });
+        };
+        EntrustedCaseReport.createPhoneOutReport = function (entrustedCaseId, num, fileName) {
+            var dt = new Date();
+            var ecr = {
+                entrustedCaseId: entrustedCaseId,
+                date: dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDate(),
+                title: "呼出电话",
+                content: num,
+                attachements: [{
+                        display: fileName
+                    }]
             };
             return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/report/submit.do", {
                 report: JSON.stringify(ecr)

@@ -69,6 +69,9 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 			where += " and  batchNo = :batchNo ";
 		}
 
+		if (qOpt.getMgrId() != null){
+			where += " and  mgrId = :mgrId ";
+		}
 
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
@@ -98,6 +101,10 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 		
 		if (qOpt.getBatchNo() != null){
 			q.setParameter("batchNo", qOpt.getBatchNo());
+		}
+		
+		if (qOpt.getMgrId() != null){
+			q.setParameter("mgrId", qOpt.getMgrId());
 		}
 		
 		if (qOpt.getAssignToMe() || qOpt.getMyOwn()){

@@ -24,6 +24,7 @@ public class QueryOption extends ProtocolEntityImpl {
 	String wwjg;// 委外机构
 	String wwzt;// 委外状态：未分配、已分配、已结束
 	Integer batchNo;
+	Integer mgrId;
 	Boolean assignToMe = false;
 	Boolean myOwn = false;
 
@@ -102,5 +103,13 @@ public class QueryOption extends ProtocolEntityImpl {
 
 	public void setBatchNo(Integer batchNo) {
 		this.batchNo = batchNo;
+	}
+
+	public Integer getMgrId() {
+		return mgrId;
+	}
+
+	public void setMgrId(Integer mgrId) {
+		this.mgrId = mgrId;
 	}
 }

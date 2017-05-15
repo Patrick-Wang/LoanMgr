@@ -217,7 +217,7 @@ module pages{
                         sidebar.enable();
                         sidebar.switchPage(this.page);
                         if (e.data){
-                            collection.EntrustedCaseReport.createPhoneReport(e.data, record.phoneNum, record.recId)
+                            collection.EntrustedCaseReport.createPhoneInReport(e.data, record.phoneNum, record.recId)
                                 .done((ret:collection.protocol.Result)=>{
                                     if (ret.code == 0){
                                         record.ecId = e.data;

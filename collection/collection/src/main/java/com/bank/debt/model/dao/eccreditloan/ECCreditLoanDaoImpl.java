@@ -68,7 +68,11 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 		if (qOpt.getBatchNo() != null){
 			where += " and  batchNo = :batchNo ";
 		}
-
+		
+		if (qOpt.getMgrId() != null){
+			where += " and  mgrId = :mgrId ";
+		}
+		
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
 		if (qOpt.getName() != null){
@@ -103,7 +107,9 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 			q.setParameter("me", ue.getId());
 		}
 		
-		
+		if (qOpt.getMgrId() != null){
+			q.setParameter("mgrId", qOpt.getMgrId());
+		}
 		
 		return q.getResultList();
 	}

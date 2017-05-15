@@ -16,6 +16,7 @@ var route;
         MSG.LOANMGR_GET_TYPE = route.nextId();
         MSG.EC_SELECT_REQUEST = route.nextId();
         MSG.EC_SELECT_RESPONSE = route.nextId();
+        MSG.EC_DETAIL_ECINFO = route.nextId();
         return MSG;
     })();
     route.MSG = MSG;

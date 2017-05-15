@@ -10,16 +10,43 @@ var pages;
     var LoansDetail = (function (_super) {
         __extends(LoansDetail, _super);
         function LoansDetail(page) {
+            var _this = this;
             _super.call(this, page);
+            route.router.register(new route.Receiver(pages.PageUtil.getPageId(this.page), function (e) {
+                switch (e.id) {
+                    case route.MSG.EC_DETAIL_ECINFO:
+                        _this.ec = e.data.ec;
+                        _this.ecType = e.data.ecType;
+                        break;
+                }
+            }));
             $("#bootbox-clieck-to-working").on('click', function () {
                 bootbox.confirm("是否将委案状态修改为工作中？", function (result) {
                     if (result) {
+                        collection.EntrustedCase.update(this.ecType, [{ id: this.ec.loan[0], wwzt: "工作中" }])
+                            .done(function (ret) {
+                            if (ret.code == 0) {
+                                pages.Toast.success("状态修改成功");
+                            }
+                            else {
+                                pages.Toast.failed(ret.msg);
+                            }
+                        });
                     }
                 });
             });
             $("#bootbox-clieck-to-done").on('click', function () {
                 bootbox.confirm("是否将委案状态修改为已退案？", function (result) {
                     if (result) {
+                        collection.EntrustedCase.update(this.ecType, [{ id: this.ec.loan[0], wwzt: "已退案" }])
+                            .done(function (ret) {
+                            if (ret.code == 0) {
+                                pages.Toast.success("状态修改成功");
+                            }
+                            else {
+                                pages.Toast.failed(ret.msg);
+                            }
+                        });
                     }
                 });
             });
@@ -83,8 +110,18 @@ var pages;
                     }
                 });
             });
+            function generateUUID() {
+                var d = new Date().getTime();
+                var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                    var r = (d + Math.random() * 16) % 16 | 0;
+                    d = Math.floor(d / 16);
+                    return (c == 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+                });
+                return uuid;
+            }
+            ;
             $("#bootbox-record-by-phone").on('click', function () {
-                bootbox.dialog({
+                var dialog = bootbox.dialog({
                     message: $("#myModal").html(),
                     title: "电话访谈",
                     className: "modal-darkorange",
@@ -93,6 +130,20 @@ var pages;
                             label: "拨打电话",
                             className: "btn-blue",
                             callback: function () {
+                                var _this = this;
+                                var num = "123123";
+                                collection.phone.ringUp(num, generateUUID() + ".MP3", function (fName) {
+                                    if (fName) {
+                                        collection.EntrustedCaseReport.createPhoneOutReport(_this.ec.managerId, num, fName)
+                                            .done(function (ret) {
+                                            if (ret.code != 0) {
+                                                pages.Toast.failed("电话关联失败");
+                                            }
+                                        });
+                                    }
+                                    dialog.modal("hide");
+                                });
+                                return false;
                             }
                         },
                         "取消": {

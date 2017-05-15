@@ -69,6 +69,10 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 			where += " and batchNo = :batchNo ";
 		}
 		
+		if (qOpt.getMgrId() != null){
+			where += " and ecme.id = :mgrId ";
+		}
+		
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
 		if (qOpt.getName() != null){
@@ -97,6 +101,10 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 		
 		if (qOpt.getBatchNo() != null){
 			q.setParameter("batchNo", qOpt.getBatchNo());
+		}
+		
+		if (qOpt.getMgrId() != null){
+			q.setParameter("mgrId", qOpt.getMgrId());
 		}
 		
 		if (qOpt.getAssignToMe() || qOpt.getMyOwn()){

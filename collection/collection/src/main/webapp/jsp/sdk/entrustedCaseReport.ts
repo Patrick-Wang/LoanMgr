@@ -10,7 +10,7 @@ module collection{
 
     export class EntrustedCaseReport{
 
-        static createPhoneReport(entrustedCaseId:number, num:string, recId:number):Promise<Result>{
+        static createPhoneInReport(entrustedCaseId:number, num:string, recId:number):Promise<Result>{
             let dt = new Date();
             let ecr : collection.protocol.EntrustedCaseReport = {
                 entrustedCaseId : entrustedCaseId,
@@ -18,6 +18,22 @@ module collection{
                 title:"呼入电话",
                 content:num,
                 phoneRecId:recId
+            };
+            return Net.post(Net.BASE_URL + "/entrusted_case/report/submit.do",{
+                report:JSON.stringify(ecr)
+            });
+        }
+
+        static createPhoneOutReport(entrustedCaseId:number, num:string, fileName:string):Promise<Result>{
+            let dt = new Date();
+            let ecr : collection.protocol.EntrustedCaseReport = {
+                entrustedCaseId : entrustedCaseId,
+                date: dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDate(),
+                title:"呼出电话",
+                content:num,
+                attachements:[{
+                    display:fileName
+                }]
             };
             return Net.post(Net.BASE_URL + "/entrusted_case/report/submit.do",{
                 report:JSON.stringify(ecr)

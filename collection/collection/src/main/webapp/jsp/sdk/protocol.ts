@@ -173,6 +173,7 @@ module collection.protocol {
         wwrq?:string;//委外日期
         wwjg?:string;//委外机构
         wwzt?:string;//委外状态：未分配、已分配、已结案
+        mgrId?:number;
         assignToMe?:boolean;
         myOwn?:boolean;
     }
