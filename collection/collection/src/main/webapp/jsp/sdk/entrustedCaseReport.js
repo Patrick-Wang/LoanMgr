@@ -33,6 +33,28 @@ var collection;
                 report: JSON.stringify(ecr)
             });
         };
+        EntrustedCaseReport.createReport = function (entrustedCaseId, title, content) {
+            var dt = new Date();
+            var ecr = {
+                entrustedCaseId: entrustedCaseId,
+                date: dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDate(),
+                title: title,
+                content: content
+            };
+            return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/report/submit.do", {
+                report: JSON.stringify(ecr)
+            });
+        };
+        EntrustedCaseReport.reportParams = function (entrustedCaseId, title, content) {
+            var dt = new Date();
+            var ecr = {
+                entrustedCaseId: entrustedCaseId,
+                date: dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDate(),
+                title: title,
+                content: content
+            };
+            return JSON.stringify(ecr);
+        };
         return EntrustedCaseReport;
     })();
     collection.EntrustedCaseReport = EntrustedCaseReport;

@@ -47,6 +47,44 @@ var collection;
                 with: partner
             });
         };
+        Message.pairs = function (msgs) {
+            var ecMap = {};
+            var index = [];
+            for (var i = 0; i < msgs.length; ++i) {
+                if (!ecMap[msgs[i].ecMgrId] && (msgs[i].title == undefined || msgs[i].title.indexOf("RE:") < 0)) {
+                    ecMap[msgs[i].ecMgrId] = [];
+                    index.push(msgs[i].ecMgrId);
+                }
+                if (ecMap[msgs[i].ecMgrId]) {
+                    if (msgs[i].title != undefined && msgs[i].title.indexOf("RE:") == 0) {
+                        var msgId = msgs[i].title.substring(3);
+                        for (var j = 0; j < index.length; ++j) {
+                            for (var k = 0; k < ecMap[index[j]].length; ++k) {
+                                if (ecMap[index[j]][k][0].msgId == msgId) {
+                                    ecMap[index[j]][k].push(msgs[i]);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        ecMap[msgs[i].ecMgrId].push([msgs[i]]);
+                    }
+                }
+            }
+            var msgPairs = [];
+            for (var i = 0; i < index.length; ++i) {
+                for (var j = 0; j < ecMap[index[i]].length; ++j) {
+                    var pair = {
+                        ecId: index[i],
+                        ask: ecMap[index[i]][j][0],
+                        answer: ecMap[index[i]][j][1]
+                    };
+                    msgPairs.push(pair);
+                }
+            }
+            return msgPairs;
+        };
         return Message;
     })();
     collection.Message = Message;

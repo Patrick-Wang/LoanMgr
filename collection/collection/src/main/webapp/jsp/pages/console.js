@@ -115,17 +115,18 @@ var pages;
                 rowNum: 10,
                 autoScroll: true,
                 pager: '#tbNotAssignedPager',
-                onCellSelect: function (rowid, iCol, cellcontent, e) {
-                    if (iCol == 1 && isLinked[rowid]) {
-                        alert(rowid + " " + iCol);
-                    }
-                },
+                //onCellSelect:(rowid,iCol,cellcontent,e)=>{
+                //    if (iCol == 1 &&  isLinked[rowid]){
+                //        alert(rowid + " " +  iCol);
+                //    }
+                //},
                 onSortCol: function (index, iCol, sortorder) {
                     setTimeout(function () {
                         var rids = $("#tbNotAssignedTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
+                                $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                    "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
                     }, 0);
@@ -135,7 +136,8 @@ var pages;
                         var rids = $("#tbNotAssignedTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
+                                $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                    "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
                     }, 0);
@@ -144,7 +146,8 @@ var pages;
             var rids = $("#tbNotAssignedTable").getDataIDs();
             for (var i = 0; i < rids.length; ++i) {
                 if (undefined != isLinked[rids[i]]) {
-                    $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
+                    $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                        "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                 }
             }
             this.adjustWidth("tbNotAssigned", $("#tbNotAssignedTable"));
@@ -187,6 +190,22 @@ var pages;
                 jqgrid.setGridWidth($("#" + name).width());
             }
         };
+        Console.prototype.getEcByRid = function (rid) {
+            for (var i = 0; i < this.ecs.length; ++i) {
+                if (this.ecs[i].loan[0] == rid) {
+                    return this.ecs[i];
+                }
+            }
+            return undefined;
+        };
+        Console.prototype.onClickLink = function (rid) {
+            var ec = this.getEcByRid(rid);
+            route.router.to(pages.PageUtil.getPageId(pages.PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
+                ec: ec,
+                ecType: this.ecType
+            });
+            sidebar.switchPage(pages.PageType.loansDetail);
+        };
         Console.prototype.refreshAllLoans = function (type) {
             var tableAssist = pages.JQGridAssistantFactory.createTableAssist("tbAll", type);
             var loans = [];
@@ -216,17 +235,18 @@ var pages;
                 rowNum: 10,
                 autoScroll: true,
                 pager: '#tbAllPager',
-                onCellSelect: function (rowid, iCol, cellcontent, e) {
-                    if (iCol == 1) {
-                        alert(rowid + " " + iCol);
-                    }
-                },
+                //onCellSelect:(rowid,iCol,cellcontent,e)=>{
+                //    if (iCol == 1){
+                //        alert(rowid + " " +  iCol);
+                //    }
+                //},
                 onSortCol: function (index, iCol, sortorder) {
                     setTimeout(function () {
                         var rids = $("#tbAllTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
+                                $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                    "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
                     }, 0);
@@ -236,7 +256,8 @@ var pages;
                         var rids = $("#tbAllTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
+                                $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                    "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
                     }, 0);
@@ -245,7 +266,8 @@ var pages;
             var rids = $("#tbAllTable").getDataIDs();
             for (var i = 0; i < rids.length; ++i) {
                 if (undefined != isLinked[rids[i]]) {
-                    $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' >" + isLinked[rids[i]] + "</div>");
+                    $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                        "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                 }
             }
             this.adjustWidth("tbAll", $("#tbAllTable"));

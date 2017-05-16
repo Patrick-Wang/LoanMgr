@@ -3,13 +3,10 @@
 module pages {
 
     import Message = collection.Message;
+    import MsgPair = collection.MsgPair;
     import Attachement = collection.protocol.Attachement;
 
-    interface MsgPair {
-        ecId:number;
-        ask:collection.protocol.Message;
-        answer:collection.protocol.Message;
-    }
+
 
     export class AskSth extends PageImpl {
         static ins = new AskSth(PageType.askSth);
@@ -73,7 +70,6 @@ module pages {
                                     break;
                                 }
                             }
-
                         }
                     } else {
                         ecMap[msgs[i].ecMgrId].push([msgs[i]]);

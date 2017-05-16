@@ -489,10 +489,13 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 				JSONObject jec = jdata.getJSONObject(i);
 				if (jec.containsKey("id")){
 					EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getByECId(EntrustedCaseType.CREDIT_LOAN, jec.getInt("id"));
-					ECCarLoanEntity entity = eCCarLoanDao.getById(jec.getInt("id"));
+					ECCreditLoanEntity entity = eCCreditLoanDao.getById(ecme.getEntrustedCase());
 					if (entity != null){
 						JsonUtil.toObject(jec, entity, null);
-						eCCarLoanDao.merge(entity);
+						eCCreditLoanDao.merge(entity);
+						ecme.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+						ecme.setModifier(usr);
+						entrustedCaseManagerDao.merge(ecme);
 					}
 				}
 			}
@@ -509,7 +512,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 				JSONObject jec = jdata.getJSONObject(i);
 				if (jec.containsKey("id")){
 					EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getByECId(EntrustedCaseType.CREDIT_CARD, jec.getInt("id"));
-					ECCreditCardEntity entity = eCCreditCardDao.getById(jec.getInt("id"));
+					ECCreditCardEntity entity = eCCreditCardDao.getById(ecme.getEntrustedCase());
 					if (entity != null){
 						JsonUtil.toObject(jec, entity, null);
 						eCCreditCardDao.merge(entity);
@@ -532,10 +535,10 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 				JSONObject jec = jdata.getJSONObject(i);
 				if (jec.containsKey("id")){
 					EntrustedCaseManagerEntity ecme = entrustedCaseManagerDao.getByECId(EntrustedCaseType.CAR_LOAN, jec.getInt("id"));
-					ECCreditLoanEntity entity = eCCreditLoanDao.getById(jec.getInt("id"));
+					ECCarLoanEntity entity = eCCarLoanDao.getById(ecme.getEntrustedCase());
 					if (entity != null && ecme != null){
 						JsonUtil.toObject(jec, entity, null);
-						eCCreditLoanDao.merge(entity);
+						eCCarLoanDao.merge(entity);
 						ecme.setLastModifiedTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 						ecme.setModifier(usr);
 						entrustedCaseManagerDao.merge(ecme);

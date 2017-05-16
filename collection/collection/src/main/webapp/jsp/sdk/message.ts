@@ -7,6 +7,12 @@ module collection{
     import IF = collection.protocol.IF;
     import MessageStatus = collection.protocol.MessageStatus;
 
+    export interface MsgPair {
+        ecId:number;
+        ask:collection.protocol.Message;
+        answer:collection.protocol.Message;
+    }
+
     export class Message{
         static getUnreadCount(entrusted_case?:number):Promise<number>{
             return Net.postLocal(Net.BASE_URL + "/message/unread.do",{
@@ -52,6 +58,45 @@ module collection{
                 entrusted_case:entrusted_case,
                 with:partner
             });
+        }
+
+        static pairs(msgs :collection.protocol.Message[]):MsgPair[]{
+            let ecMap:any = {};
+            let index:any[] = [];
+            for (let i = 0; i < msgs.length; ++i) {
+                if (!ecMap[msgs[i].ecMgrId] && (msgs[i].title == undefined || msgs[i].title.indexOf("RE:") < 0)) {
+                    ecMap[msgs[i].ecMgrId] = [];
+                    index.push(msgs[i].ecMgrId);
+                }
+                if (ecMap[msgs[i].ecMgrId]) {
+                    if (msgs[i].title != undefined && msgs[i].title.indexOf("RE:") == 0) {
+                        let msgId = msgs[i].title.substring(3);
+                        for (let j = 0; j < index.length; ++j) {
+                            for (let k = 0; k < ecMap[index[j]].length; ++k) {
+                                if (ecMap[index[j]][k][0].msgId == msgId) {
+                                    ecMap[index[j]][k].push(msgs[i]);
+                                    break;
+                                }
+                            }
+
+                        }
+                    } else {
+                        ecMap[msgs[i].ecMgrId].push([msgs[i]]);
+                    }
+                }
+            }
+            let msgPairs = [];
+            for (let i = 0; i < index.length; ++i) {
+                for (let j = 0; j < ecMap[index[i]].length; ++j) {
+                    let pair:MsgPair = {
+                        ecId: index[i],
+                        ask: ecMap[index[i]][j][0],
+                        answer: ecMap[index[i]][j][1]
+                    };
+                    msgPairs.push(pair);
+                }
+            }
+            return msgPairs;
         }
     }
 }

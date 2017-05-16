@@ -33,6 +33,18 @@ module collection.protocol {
         "是否主卡", "副卡卡人", "贷款日期", "剩余本金", "逾期期数", "曾逾期次数", "贷款利率", "每月还款", "逾期金额", "逾期本金", "逾期罚息", "逾期管理费", "违约金",
         "超限费", "贷款截止日", "保证金", "社保电脑号", "社保卡号", "实际退案日", "车型", "牌照号", "车架号", "警告", "自定义信息", "最新催记"];
 
+    export function getTitles(type):string[]{
+        let titles = undefined;
+        if (type == collection.protocol.EntrustedCaseType.carLoan){
+            titles = collection.protocol.carLoanTitle;
+        }else if(type == collection.protocol.EntrustedCaseType.creditCard){
+            titles = collection.protocol.creditCardTitle;
+        }else if(type == collection.protocol.EntrustedCaseType.creditLoan){
+            titles = collection.protocol.creditLoanTitle;
+        }
+        return titles;
+    }
+
     export class PhoneRecordName {
         ecId:number;
         numb:string;
@@ -138,8 +150,6 @@ module collection.protocol {
         unread,
         read
     }
-
-
 
     export interface Message {
         msgId:number

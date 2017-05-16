@@ -114,8 +114,21 @@ var pages;
             }
             this.adjustWidth("lm-table", this.find("#lm-tableTable"));
         };
+        LoansMgr.prototype.getEcByRid = function (rid) {
+            for (var i = 0; i < this.ecs.length; ++i) {
+                if (this.ecs[i].loan[0] == rid) {
+                    return this.ecs[i];
+                }
+            }
+            return undefined;
+        };
         LoansMgr.prototype.onClickLink = function (rid) {
-            alert(rid);
+            var ec = this.getEcByRid(rid);
+            route.router.to(pages.PageUtil.getPageId(pages.PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
+                ec: ec,
+                ecType: this.ecType
+            });
+            sidebar.switchPage(pages.PageType.loansDetail);
         };
         LoansMgr.prototype.refreshLoans = function (type) {
             this.tableAssist = pages.JQGridAssistantFactory.createTableAssist("lm-table", type);

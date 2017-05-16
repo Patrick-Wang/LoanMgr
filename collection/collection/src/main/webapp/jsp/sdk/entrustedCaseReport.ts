@@ -39,5 +39,29 @@ module collection{
                 report:JSON.stringify(ecr)
             });
         }
+
+        static createReport(entrustedCaseId:number, title:string, content:string):Promise<Result>{
+            let dt = new Date();
+            let ecr : collection.protocol.EntrustedCaseReport = {
+                entrustedCaseId : entrustedCaseId,
+                date: dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDate(),
+                title:title,
+                content:content
+            };
+            return Net.post(Net.BASE_URL + "/entrusted_case/report/submit.do",{
+                report:JSON.stringify(ecr)
+            });
+        }
+
+        static reportParams(entrustedCaseId:number, title:string, content:string):string{
+            let dt = new Date();
+            let ecr : collection.protocol.EntrustedCaseReport = {
+                entrustedCaseId : entrustedCaseId,
+                date: dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDate(),
+                title:title,
+                content:content
+            };
+            return JSON.stringify(ecr);
+        }
     }
 }

@@ -68,7 +68,7 @@
 			</div>
 		</div>
 		<hr class="wide" />
-		<div class="row fontawesome-icon-list">
+		<div class="row fontawesome-icon-list" id="ld-common">
 			<div class="fa-hover col-md-4 col-sm-6">
 				<i class="fa fa-square-o darkpink"></i><b>批次号：</b>PT002311
 			</div>
@@ -95,7 +95,7 @@
 			</div>
 		</div>
 		<hr class="wide" />
-		<div class="row fontawesome-icon-list">
+		<div class="row fontawesome-icon-list" id="ld-special">
 			<div class="fa-hover col-md-4 col-sm-6">
 				<i class="fa fa-caret-right darkpink"></i><b>客户姓名：</b>赵六
 			</div>
@@ -151,7 +151,7 @@
 		<hr class="wide" />
 		<div class="row">
 			<div class="col-sm-12">
-				<ul class="timeline">
+				<ul class="timeline" id="ld-timeline">
 					<li class="timeline-node"><a class="btn btn-lg btn-blue"
 						id="bootbox-record-work-timeline">工作记录 +</a></li>
 					<li>
@@ -326,8 +326,7 @@
 				<textarea class="form-control" placeholder="内容" rows="8" required=""></textarea>
 			</div>
 			<div>
-				<span class="file-input btn btn-darkorange btn-file">附件<input
-					type="file" multiple></span>
+				<div id="ld-dropzone"	class="dropzone"></div>
 			</div>
 		</div>
 	</div>
@@ -479,7 +478,8 @@
 
 <script
 	src="${pageContext.request.contextPath}/jsp/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
-	
-<script src="${pageContext.request.contextPath}/jsp/assets/js/validation/bootstrapvalidator.js"></script>
+
+<script
+	src="${pageContext.request.contextPath}/jsp/assets/js/validation/bootstrapvalidator.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/pages/loansDetail.js"></script>

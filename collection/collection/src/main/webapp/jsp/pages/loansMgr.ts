@@ -118,8 +118,22 @@ module pages{
             this.adjustWidth("lm-table", this.find("#lm-tableTable"));
         }
 
+        getEcByRid(rid:string):collection.protocol.EC{
+            for (let i = 0; i < this.ecs.length; ++i){
+               if (this.ecs[i].loan[0] == rid){
+                   return this.ecs[i];
+               }
+            }
+            return undefined;
+        }
+
         onClickLink(rid:string){
-            alert(rid);
+            let ec = this.getEcByRid(rid);
+            route.router.to(PageUtil.getPageId(PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
+                ec : ec,
+                ecType : this.ecType
+            });
+            sidebar.switchPage(PageType.loansDetail);
         }
 
         private refreshLoans(type:any):void {
