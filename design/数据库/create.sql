@@ -148,6 +148,7 @@ create table `entrusted_case_car_loan`(
 	`wwjig` varchar(50)	,
 	`wwje` double,
 	`yhje` double,
+	`syje` double,
 	`bz`	text	,--	备注
 	`xh`	int	,--	序号
 	`wwdqr`	date	,--	委外到期日
@@ -232,6 +233,7 @@ create table `entrusted_case_credit_loan`(
 	`wwjig` varchar(50)	,
 	`wwje` double,
 	`yhje` double,
+	`syje` double,
 	`bz`	text	,--	备注
 	`khh`	varchar(50)	,--	客户号
 	`khxm`	varchar(50)	,--	客户姓名
@@ -315,6 +317,7 @@ create table `entrusted_case_credit_card`(
 	`wwjig` varchar(50)	,
 	`wwje` double,
 	`yhje` double,
+	`syje` double,
 	`tarq` date,
 	`beiz`	text	,--	备注
 	`gaxlh`	varchar(50)	,--	个案序列号

@@ -37,6 +37,7 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	String wwjig;
 	Double wwje;
 	Double yhje;
+	Double syje;
 	String bz;
 	Date	wwdqr	;
 	Date	jarq	;
@@ -574,5 +575,11 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	}
 	public void setYhje(Double yhje) {
 		this.yhje = yhje;
+	}
+	public Double getSyje() {
+		return syje;
+	}
+	public void setSyje(Double syje) {
+		this.syje = syje;
 	}
 }

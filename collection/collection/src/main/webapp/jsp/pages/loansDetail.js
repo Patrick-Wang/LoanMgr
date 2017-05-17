@@ -5,6 +5,7 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 ///<reference path="pages.ts"/>
 ///<reference path="../pageSidebar.ts"/>
+///<reference path="askSth.tsx"/>
 var pages;
 (function (pages) {
     var Message = collection.Message;
@@ -55,46 +56,7 @@ var pages;
                     }
                 });
             });
-            $("#bootbox-record-by-phone").on('click', function () {
-                var dialog = bootbox.dialog({
-                    message: $("#myModal").html(),
-                    title: "电话访谈",
-                    className: "modal-darkorange",
-                    buttons: {
-                        success: {
-                            label: "拨打电话",
-                            className: "btn-blue",
-                            callback: function () {
-                                var num = "123123";
-                                collection.phone.ringUp(num, route.UUID() + ".MP3", function (fName) {
-                                    if (fName) {
-                                        collection.EntrustedCaseReport.createPhoneOutReport(_this.ec.managerId, num, fName)
-                                            .done(function (ret) {
-                                            if (ret.code != 0) {
-                                                pages.Toast.failed("电话关联失败");
-                                            }
-                                            else {
-                                                collection.EntrustedCase.search(_this.ecType, { mgrId: _this.ec.managerId }).done(function (ec) {
-                                                    _this.ec = ec[0];
-                                                    _this.refresh();
-                                                });
-                                            }
-                                        });
-                                    }
-                                    dialog.modal("hide");
-                                });
-                                return false;
-                            }
-                        },
-                        "取消": {
-                            className: "btn-danger",
-                            callback: function () {
-                            }
-                        }
-                    }
-                });
-            });
-            $("#bootbox-record-work,#bootbox-record-work-timeline").on('click', function () {
+            $("#bootbox-record-work, #bootbox-record-work-timeline").on('click', function () {
                 $("#template_report_work").children().attr("id", "record-work");
                 var dropzs = [];
                 var dialog = bootbox.dialog({
@@ -173,46 +135,74 @@ var pages;
                 });
             });
             $("#bootbox-record-work-by-phone").on('click', function () {
-                bootbox.dialog({
+                $("#template_report_work_by_phone").children().attr("id", "report_work_by_phone_");
+                var fNewName = route.UUID() + ".MP3";
+                var dialog = bootbox.dialog({
                     message: $("#template_report_work_by_phone").html(),
                     title: "电话催收记录录入",
                     className: "modal-blue",
+                    closeButton: false,
                     buttons: {
                         "取消": {
-                            className: "btn-default",
+                            className: "btn-default mycancel",
                             callback: function () {
                             }
                         },
                         success: {
                             label: "上传记录",
-                            className: "btn-blue",
+                            className: "btn-blue myupload",
                             callback: function () {
+                                if ($("#report_work_by_phone_ input:eq(0)").val() && $("#report_work_by_phone_ textarea").val()) {
+                                    collection.EntrustedCaseReport.createPhoneOutReport(_this.ec.managerId, $("#report_work_by_phone_ input:eq(0)").val(), $("#report_work_by_phone_ textarea").val(), fNewName)
+                                        .done(function (ret) {
+                                        if (ret.code != 0) {
+                                            pages.Toast.failed("电话关联失败");
+                                        }
+                                        else {
+                                            _this.refresh();
+                                            pages.Toast.success("上传报告成功");
+                                        }
+                                    });
+                                }
+                                else {
+                                    pages.Toast.warning("请填写记录信息");
+                                }
                             }
                         }
                     }
                 });
-            });
-            $("#bootbox-loans-consulting-timeline").on('click', function () {
-                bootbox.dialog({
-                    message: $("#template_consulting").html(),
-                    title: "工作记录录入",
-                    className: "modal-darkorange",
-                    buttons: {
-                        "取消": {
-                            className: "btn-danger",
-                            callback: function () {
+                $("#template_report_work_by_phone").children().removeAttr("id");
+                $(".myupload").prop("disabled", true);
+                $("#report_work_by_phone_ a:eq(0)").hide();
+                $("#report_work_by_phone_ a:eq(0)").click(function () {
+                    collection.phone.hangUp();
+                });
+                $("#report_work_by_phone_ a:eq(1)").click(function () {
+                    var num = $("#report_work_by_phone_ input:eq(1)").val();
+                    if (num) {
+                        $(".mycancel, .myupload").prop("disabled", true);
+                        $("#report_work_by_phone_ a:eq(1)").hide();
+                        $("#report_work_by_phone_ a:eq(0)").show();
+                        collection.phone.ringUp(num.replace(/-/g, ""), fNewName, function (fName) {
+                            $(".mycancel, .myupload").prop("disabled", false);
+                            if (fName) {
+                                $("#report_work_by_phone_ a").hide();
+                                $(".mycancel, .myupload").prop("disabled", false);
                             }
-                        },
-                        success: {
-                            label: "确定",
-                            className: "btn-blue",
-                            callback: function () {
+                            else {
+                                $("#report_work_by_phone_ a:eq(0)").hide();
+                                $("#report_work_by_phone_ a:eq(1)").show();
+                                $(".mycancel, .myupload").prop("disabled", true);
                             }
-                        }
+                        });
+                    }
+                    else {
+                        pages.Toast.warning("请填写电话号码");
                     }
                 });
             });
-            $("#bootbox-loans-consulting").on('click', function () {
+            $("#bootbox-loans-consulting-timeline, #bootbox-loans-consulting").on('click', function () {
+                $("#template_consulting").children().attr("id", "template_consulting_sub");
                 bootbox.dialog({
                     message: $("#template_consulting").html(),
                     title: "咨询委案信息",
@@ -227,11 +217,31 @@ var pages;
                             label: "咨询",
                             className: "btn-blue",
                             callback: function () {
+                                if ($("#template_consulting_sub input:eq(0)").val() || $("#template_consulting_sub textarea:eq(0)").val()) {
+                                    Message.sendMessage(_this.ec.managerId, _this.ec.ownerId, $("#template_consulting_sub input:eq(0)").val(), $("#template_consulting_sub textarea:eq(0)").val())
+                                        .done(function (r) {
+                                        if (r.code == 0) {
+                                            pages.Toast.success("咨询提交成功");
+                                            _this.refresh();
+                                        }
+                                        else {
+                                            pages.Toast.failed(r.msg);
+                                        }
+                                    });
+                                }
+                                else {
+                                    pages.Toast.warning("请填完整写信息");
+                                    return false;
+                                }
                             }
                         }
                     }
                 });
+                $("#template_consulting").children().removeAttr("id");
             });
+            //if (this.ec.assigneeId != context.userId){
+            //    $("#bootbox-loans-consulting-timeline, #bootbox-loans-consulting").prop("disabled", true);
+            //}
             $("#bootbox-modify-repayment").on('click', function () {
                 $("#template_modify_repayment").children().attr("id", "modify_repayment");
                 $("#modify_repayment #exampleInputyhje").attr("value", _this.ec.loan[collection.protocol.getTitles(_this.ecType).indexOf("已还金额") + 1]);
@@ -250,7 +260,10 @@ var pages;
                             className: "btn-blue",
                             callback: function () {
                                 if ($("#modify_repayment #exampleInputyhje").val() || $("#modify_repayment #exampleInputsyje").val()) {
-                                    collection.EntrustedCase.update(_this.ecType, [{ id: _this.ec.loan[0], yhje: $("#modify_repayment #exampleInputyhje").val() }])
+                                    collection.EntrustedCase.update(_this.ecType, [{
+                                            id: _this.ec.loan[0],
+                                            yhje: $("#modify_repayment #exampleInputyhje").val(),
+                                            syje: $("#modify_repayment #exampleInputsyje").val() }])
                                         .done(function (r) {
                                         if (r.code == 0) {
                                             _this.refresh();
@@ -272,7 +285,13 @@ var pages;
                 $("#template_modify_repayment").children().removeAttr("id");
             });
             $("#bootbox-modify-attachment-property").on('click', function () {
-                bootbox.dialog({
+                $("#template_modify_attachment_property").empty();
+                $(".attachement__").each(function (i, e) {
+                    var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", {"className": "row", "data-id": $(e).attr("value")}, React.createElement("div", {"className": "col-md-12"}, React.createElement("div", {"className": "form-group"}, React.createElement("label", {"className": "col-sm-4 control-label no-padding-right"}, $(e).text()), React.createElement("div", {"className": "col-sm-4"}, React.createElement("input", {"className": "form-control", "placeholder": $(e).text(), "data-edit": "false"})), React.createElement("div", {"className": "col-sm-4"}, React.createElement("input", {"className": "form-control", "data-mask": "9999/99/99 99:99:99", "placeholder": $(e).attr("data-time")}))))));
+                    $("#template_modify_attachment_property").append(html);
+                });
+                $("#template_modify_attachment_property").children().addClass("modify_attachment_property");
+                var dialog = bootbox.dialog({
                     message: $("#template_modify_attachment_property").html(),
                     title: "修改附件属性",
                     className: "modal-darkorange",
@@ -286,17 +305,42 @@ var pages;
                             label: "确定",
                             className: "btn-blue",
                             callback: function () {
+                                var attachs = [];
+                                $(".modify_attachment_property").each(function (i, e) {
+                                    var attach = {
+                                        id: $(e).attr("data-id"),
+                                        display: $(e).find("input:eq(0)").val() ? $(e).find("input:eq(0)").val() : undefined,
+                                        uploadTime: $(e).find("input:eq(1)").val() && $(e).find("input:eq(1)").val().indexOf("__") < 0 ?
+                                            $(e).find("input:eq(1)").val() :
+                                            undefined
+                                    };
+                                    if (attach.display || attach.uploadTime) {
+                                        attachs.push(attach);
+                                    }
+                                });
+                                if (attachs.length > 0) {
+                                    collection.EntrustedCase.updateAttachement(attachs).done(function (r) {
+                                        if (r.code == 0) {
+                                            pages.Toast.success("附件修改成功");
+                                            _this.refresh();
+                                            dialog.modal("hide");
+                                        }
+                                        else {
+                                            pages.Toast.failed(r.msg);
+                                        }
+                                    }).fail(function (r) {
+                                        pages.Toast.failed("附件修改失败");
+                                    });
+                                }
+                                else {
+                                    pages.Toast.warning("请修改附件信息");
+                                }
+                                return false;
                             }
                         }
                     }
                 });
-            });
-            $("#bootbox-success").on('click', function () {
-                bootbox.dialog({
-                    message: $("#modal-success").html(),
-                    title: "Success",
-                    className: "",
-                });
+                $("#template_modify_attachment_property").children().removeClass("modify_attachment_property");
             });
             $(document).ready(function () {
                 bootbox.setDefaults('locale', 'zh_CN');
@@ -440,7 +484,7 @@ var pages;
                     if (!e) {
                         e = "";
                     }
-                    if (i <= 7) {
+                    if (i > 1 && i <= 9) {
                         _this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
                             '<i class="fa fa-square-o darkpink"></i><b>' + titles[i - 1] + '：</b>' + e +
                             '</div>');
@@ -499,7 +543,7 @@ var pages;
             this.find("#bootbox-record-work-timeline").show();
             $(this.ec.reports).each(function (i, report) {
                 var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": i % 2 == 0 ? "" : "timeline-inverted"}, React.createElement("div", {"className": "timeline-datetime"}, React.createElement("span", {"className": "timeline-time"}, " ", report.date.substring(11), " "), React.createElement("span", {"className": "timeline-date"}, report.date.substring(0, 10))), React.createElement("div", {"className": "timeline-badge"}, React.createElement("i", {"className": "fa fa-tag sky font-120"})), React.createElement("div", {"className": "timeline-panel bordered-top-3 bordered-azure", "id": "report" + report.id}, React.createElement("div", {"className": "timeline-header bordered-bottom bordered-blue"}, React.createElement("span", {"className": "timeline-title"}, " ", report.title, " ")), React.createElement("div", {"className": "timeline-body"}, React.createElement("p", null, report.content), _this.check(report.attachements) ? (React.createElement("p", null, React.createElement("b", null, "附件："))) : "", _this.check(report.attachements) ? report.attachements.map(function (atta) {
-                    return React.createElement("p", null, React.createElement("a", {"href": "#", "className": "danger", "id": "atta" + atta.id}, atta.display));
+                    return React.createElement("p", null, React.createElement("a", {"href": "#", "className": "danger attachement__", "value": atta.id, "data-time": atta.uploadTime}, atta.display));
                 }) : ""))));
                 _this.find("#bootbox-loans-consulting-timeline").parent().before(html);
             });
@@ -510,9 +554,9 @@ var pages;
             var pairs = Message.pairs(this.ec.messages);
             $(pairs).each(function (i, pair) {
                 var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": i % 2 == 0 ? "" : "timeline-inverted"}, React.createElement("div", {"className": "timeline-datetime"}, React.createElement("span", {"className": "timeline-time"}, " ", pair.ask.sendTime.substring(11), " "), React.createElement("span", {"className": "timeline-date"}, pair.ask.sendTime.substring(0, 10))), React.createElement("div", {"className": "timeline-badge"}, React.createElement("i", {"className": "fa fa-question darkorange font-120"})), React.createElement("div", {"className": "timeline-panel"}, React.createElement("div", {"className": "timeline-header bordered-bottom bordered-blue"}, React.createElement("span", {"className": "timeline-title darkorange"}, " ", pair.ask.title, " ")), React.createElement("div", {"className": "timeline-body"}, React.createElement("p", null, pair.ask.content), pair.answer ? (React.createElement("p", null, React.createElement("b", null, "答复："))) : (React.createElement("p", null, React.createElement("b", null, "未答复"))), pair.answer ? (React.createElement("p", null, pair.answer.content)) : "", pair.ask && _this.check(pair.ask.attachements) || (pair.answer && _this.check(pair.answer.attachements)) ? (React.createElement("p", null, React.createElement("b", null, "附件："))) : "", pair.ask && _this.check(pair.ask.attachements) ? pair.ask.attachements.map(function (atta) {
-                    return React.createElement("p", null, React.createElement("a", {"href": "#", "id": "atta" + atta.id}, atta.display));
+                    return React.createElement("p", null, React.createElement("a", {"href": "#", "className": "attachement__", "value": atta.id, "data-time": atta.uploadTime}, atta.display));
                 }) : "", pair.answer && _this.check(pair.answer.attachements) ? pair.answer.attachements.map(function (atta) {
-                    return React.createElement("p", null, React.createElement("a", {"href": "#", "id": "atta" + atta.id}, atta.display));
+                    return React.createElement("p", null, React.createElement("a", {"href": "#", "className": "attachement__", "value": atta.id, "data-time": atta.uploadTime}, atta.display));
                 }) : ""))));
                 _this.find("#bootbox-loans-consulting-timeline").parent().parent().append(html);
             });

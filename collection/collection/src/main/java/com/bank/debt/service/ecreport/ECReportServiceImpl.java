@@ -151,8 +151,6 @@ public class ECReportServiceImpl implements ECReportService {
 				ecre.setDate(Date.valueOf(ecr.getDate()));
 			}
 			
-			
-			
 			if (Checking.isExist(attachements)){
 				List<AttachementEntity> aes = ecre.getAttachements();
 				if (null == ecre){

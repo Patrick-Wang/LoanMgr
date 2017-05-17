@@ -56,6 +56,7 @@ public class HomeServlet {
 		UserEntity ue = accountService.getUser(userName);
 		List<String> addrs = accountService.getUIAuthAddress(userName);
 		mp.put("userName", userName);
+		mp.put("userId", ue.getId());
 		mp.put("roles", getRoles(ue.getRoles()));
 		mp.put("position", ue.getPosition());
 		mp.put("org", ue.getOrg().getName());

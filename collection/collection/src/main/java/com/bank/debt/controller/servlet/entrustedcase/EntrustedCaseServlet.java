@@ -12,6 +12,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -33,6 +34,7 @@ import com.bank.debt.protocol.tools.JsonUtil;
 import com.bank.debt.protocol.tools.JsonUtil.PropertyHandler;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
 import com.bank.debt.protocol.type.EntrustedCaseType;
+import com.bank.debt.service.attachement.AttachementService;
 import com.bank.debt.service.ecmanager.ECManagerService;
 import com.bank.debt.service.ecmanager.ECManagerServiceImpl;
 import com.bank.debt.service.ecreport.ECReportService;
@@ -55,6 +57,9 @@ public class EntrustedCaseServlet {
 
 	@Resource(name=EntrustedCaseServiceImpl.NAME)
 	EntrustedCaseService entrustedCaseService;
+	
+	@Autowired
+	AttachementService attaService;
 
 	@RequestMapping(value = "import.do")
 	public @ResponseBody byte[] add(
@@ -292,4 +297,16 @@ public class EntrustedCaseServlet {
 			throws IOException {
 			eCReportService.downloadAttachement(attachement, response);
 	}
+	
+	@RequestMapping(value = "attach/update.do")
+	public @ResponseBody byte[] updateAttach(HttpServletRequest request,
+			HttpServletResponse response, 
+			@RequestParam("attachs") String attachs,
+			@RequestParam(value = "new_name", required=false) String newName,
+			@RequestParam(value = "upload_time", required=false) String uploadTime) throws UnsupportedEncodingException, MappingFailedException {
+		List<Attachement> attas = JsonUtil.toObjects(JSONArray.fromObject(attachs), Attachement.class);
+		Result r = attaService.update(attas);
+		return r.toUtf8Json();
+	}
+	
 }

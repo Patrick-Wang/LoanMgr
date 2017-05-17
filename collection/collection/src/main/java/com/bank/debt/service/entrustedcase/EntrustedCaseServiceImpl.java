@@ -406,6 +406,8 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 			}).forceMap(eccle));
 			eccl.setOwner(ecme.getOwner().getUsername());
 			eccl.setAssignee(ecme.getAssignee() != null ? ecme.getAssignee().getUsername() : null);
+			eccl.setOwnerId(ecme.getOwner().getId());
+			eccl.setAssigneeId(ecme.getAssignee() != null ? ecme.getAssignee().getId() : null);
 			eccl.setReports(eCReportService.getECReports(ecme.getId()));
 			eccls.add(eccl);
 		}
@@ -440,6 +442,8 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 			}).forceMap(eccle));
 			eccl.setOwner(ecme.getOwner().getUsername());
 			eccl.setAssignee(ecme.getAssignee() != null ? ecme.getAssignee().getUsername() : null);
+			eccl.setOwnerId(ecme.getOwner().getId());
+			eccl.setAssigneeId(ecme.getAssignee() != null ? ecme.getAssignee().getId() : null);
 			eccl.setReports(eCReportService.getECReports(ecme.getId()));
 			eccls.add(eccl);
 		}
@@ -475,6 +479,8 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 			}).forceMap(eccle));
 			eccl.setOwner(ecme.getOwner().getUsername());
 			eccl.setAssignee(ecme.getAssignee() != null ? ecme.getAssignee().getUsername() : null);
+			eccl.setOwnerId(ecme.getOwner().getId());
+			eccl.setAssigneeId(ecme.getAssignee() != null ? ecme.getAssignee().getId() : null);
 			eccl.setReports(eCReportService.getECReports(ecme.getId()));
 			eccls.add(eccl);
 		}

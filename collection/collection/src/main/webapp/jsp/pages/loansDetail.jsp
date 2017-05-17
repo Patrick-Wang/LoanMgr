@@ -348,12 +348,13 @@
 					placeholder="186-8888-8888">
 			</div>
 			<div>
+	<a
+	href="javascript:void(0);"
+	class="btn btn-darkorange btn-circle btn-sm pull-right"><i
+	class="glyphicon glyphicon-phone-alt"></i></a>
 				<a href="javascript:void(0);"
 					class="btn btn-palegreen btn-circle btn-sm"><i
-					class="glyphicon glyphicon-earphone"></i></a> <a
-					href="javascript:void(0);"
-					class="btn btn-darkorange btn-circle btn-sm pull-right"><i
-					class="glyphicon glyphicon-phone-alt"></i></a>
+					class="glyphicon glyphicon-earphone"></i></a>
 			</div>
 		</div>
 	</div>
@@ -399,51 +400,52 @@
 
 <!--modify attachment property Modal Templates-->
 <div id="template_modify_attachment_property" style="display: none;">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="form-group">
-				<label class="col-sm-4 control-label no-padding-right">20170522_123433_外访表.doc</label>
-				<div class="col-sm-4">
-					<input class="form-control" placeholder="201705220_123433_外访表"
-						data-edit="false">
-				</div>
-				<div class="col-sm-4">
-					<input class="form-control" data-mask="9999/99/99 99:99:99"
-						placeholder="2017/05/22 12:34:33">
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="form-group">
-				<label class="col-sm-4 control-label no-padding-right">20170522_123433_外访表.doc</label>
-				<div class="col-sm-4">
-					<input class="form-control" placeholder="201705220_123433_外访表"
-						data-edit="false">
-				</div>
-				<div class="col-sm-4">
-					<input class="form-control" data-mask="9999/99/99 99:99:99"
-						placeholder="2017/05/22 12:34:33">
+
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">20170522_123433_外访表.doc</label>
+					<div class="col-sm-4">
+						<input class="form-control" placeholder="201705220_123433_外访表"
+							data-edit="false">
+					</div>
+					<div class="col-sm-4">
+						<input class="form-control" data-mask="9999/99/99 99:99:99"
+							placeholder="2017/05/22 12:34:33">
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-12">
-			<div class="form-group">
-				<label class="col-sm-4 control-label no-padding-right">20170522_123433_外访表.doc</label>
-				<div class="col-sm-4">
-					<input class="form-control" placeholder="201705220_123433_外访表"
-						data-edit="false">
-				</div>
-				<div class="col-sm-4">
-					<input class="form-control" data-mask="9999/99/99 99:99:99"
-						placeholder="2017/05/22 12:34:33">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">20170522_123433_外访表.doc</label>
+					<div class="col-sm-4">
+						<input class="form-control" placeholder="201705220_123433_外访表"
+							data-edit="false">
+					</div>
+					<div class="col-sm-4">
+						<input class="form-control" data-mask="9999/99/99 99:99:99"
+							placeholder="2017/05/22 12:34:33">
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<label class="col-sm-4 control-label no-padding-right">20170522_123433_外访表.doc</label>
+					<div class="col-sm-4">
+						<input class="form-control" placeholder="201705220_123433_外访表"
+							data-edit="false">
+					</div>
+					<div class="col-sm-4">
+						<input class="form-control" data-mask="9999/99/99 99:99:99"
+							placeholder="2017/05/22 12:34:33">
+					</div>
+				</div>
+			</div>
+		</div>
 </div>
 
 <div id="workrecord" style="display: none;">

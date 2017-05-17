@@ -24,13 +24,13 @@ module collection{
             });
         }
 
-        static createPhoneOutReport(entrustedCaseId:number, num:string, fileName:string):Promise<Result>{
+        static createPhoneOutReport(entrustedCaseId:number, title:string, content:string, fileName:string):Promise<Result>{
             let dt = new Date();
             let ecr : collection.protocol.EntrustedCaseReport = {
                 entrustedCaseId : entrustedCaseId,
                 date: dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDate(),
-                title:"呼出电话",
-                content:num,
+                title:title,
+                content:content,
                 attachements:[{
                     display:fileName
                 }]

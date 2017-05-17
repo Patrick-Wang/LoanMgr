@@ -19,6 +19,8 @@ import com.bank.debt.model.dao.attachement.AttachementDao;
 import com.bank.debt.model.dao.attachement.AttachementDaoImpl;
 import com.bank.debt.model.entity.AttachementEntity;
 import com.bank.debt.protocol.entity.Attachement;
+import com.bank.debt.protocol.entity.Result;
+import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.map.AttachMapping;
 import com.bank.debt.protocol.tools.map.Mapper;
 import com.bank.debt.service.service.ftp.FtpService;
@@ -130,5 +132,31 @@ public class AttachementServiceImpl implements AttachementService, Runnable {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	@Override
+	public Result update(List<Attachement> attas) {
+		
+		List<AttachementEntity> aes = new ArrayList<AttachementEntity>();
+		for (Attachement atta : attas){
+			AttachementEntity ae = attachementDao.getById(atta.getId());
+			if (null == ae){
+				Result r = ErrorCode.ATTACH_NOT_EXIST.clone();
+				r.setMsg(r.getMsg() + atta.getId());
+				return r;
+			}
+			
+			if (atta.getDisplay() != null){
+				ae.setDisplay(atta.getDisplay());
+			}
+			if (atta.getUploadTime() != null){
+				ae.setUploadTime(atta.getUploadTime());
+			}
+			
+			aes.add(ae);
+		}
+		
+		attachementDao.merge(aes);
+		return ErrorCode.OK;
 	}
 }

@@ -23,6 +23,11 @@ var collection;
         EntrustedCase.getAcceptSummary = function () {
             return collection.Net.postLocal(collection.Net.BASE_URL + "/entrusted_case/accept/summary.do");
         };
+        EntrustedCase.updateAttachement = function (attachs) {
+            return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/attach/update.do", {
+                attachs: JSON.stringify(attachs)
+            });
+        };
         return EntrustedCase;
     })();
     collection.EntrustedCase = EntrustedCase;

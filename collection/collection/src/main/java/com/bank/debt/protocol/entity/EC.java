@@ -13,7 +13,9 @@ import net.sf.json.JSONObject;
 public class EC  extends ProtocolEntityImpl {
 	Integer managerId;
 	String owner;
+	Integer ownerId;
 	String assignee;
+	Integer assigneeId;
 	List<EntrustedCaseReport> reports;
 	List<Message> messages;
 	List<Object> loan;
@@ -84,6 +86,22 @@ public class EC  extends ProtocolEntityImpl {
 
 	public void setAssignee(String assignee) {
 		this.assignee = assignee;
+	}
+
+	public Integer getOwnerId() {
+		return ownerId;
+	}
+
+	public void setOwnerId(Integer ownerId) {
+		this.ownerId = ownerId;
+	}
+
+	public Integer getAssigneeId() {
+		return assigneeId;
+	}
+
+	public void setAssigneeId(Integer assigneeId) {
+		this.assigneeId = assigneeId;
 	}
 
 	

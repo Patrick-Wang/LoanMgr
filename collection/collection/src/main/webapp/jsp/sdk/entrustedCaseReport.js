@@ -18,13 +18,13 @@ var collection;
                 report: JSON.stringify(ecr)
             });
         };
-        EntrustedCaseReport.createPhoneOutReport = function (entrustedCaseId, num, fileName) {
+        EntrustedCaseReport.createPhoneOutReport = function (entrustedCaseId, title, content, fileName) {
             var dt = new Date();
             var ecr = {
                 entrustedCaseId: entrustedCaseId,
                 date: dt.getFullYear() + "-" + dt.getMonth() + "-" + dt.getDate(),
-                title: "呼出电话",
-                content: num,
+                title: title,
+                content: content,
                 attachements: [{
                         display: fileName
                     }]
