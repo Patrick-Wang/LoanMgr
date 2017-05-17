@@ -28,9 +28,6 @@ var pages;
                         break;
                     case route.MSG.LOANMGR_GET_TYPE:
                         return _this.find(".dowebok input:checked").attr("myid");
-                    case route.MSG.EC_SELECT_REQUEST:
-                        _this.requestEvent = e;
-                        break;
                 }
             }));
             this.find(".dowebok input").click(function () {
@@ -47,26 +44,25 @@ var pages;
                         break;
                 }
             });
-            this.find(".buttons-preview:eq(1) a:eq(0)").click(function () {
-                var ids = [].concat(_this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
-                if (ids.length == 0) {
-                    pages.Toast.warning("请选择委案");
-                }
-                else {
-                    $(_this.ecs).each(function (i, e) {
-                        if (e.loan[0] == ids[0]) {
-                            route.router.from(pages.PageUtil.getPageId(_this.page)).to(_this.requestEvent.from).send(route.MSG.EC_SELECT_RESPONSE, e.managerId);
-                            _this.requestEvent = undefined;
-                            return false;
-                        }
-                    });
-                }
-                return false;
-            });
-            this.find(".buttons-preview:eq(1) a:eq(1)").click(function () {
-                route.router.from(pages.PageUtil.getPageId(_this.page)).to(_this.requestEvent.from).send(route.MSG.EC_SELECT_RESPONSE);
-                return false;
-            });
+            //this.find(".buttons-preview:eq(1) a:eq(0)").click(()=>{
+            //    let ids = [].concat(this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
+            //    if (ids.length == 0){
+            //        Toast.warning("请选择委案");
+            //    }else{
+            //        $(this.ecs).each((i, e)=>{
+            //            if (e.loan[0] == ids[0]){
+            //                route.router.from(PageUtil.getPageId(this.page)).to(this.requestEvent.from).send(route.MSG.EC_SELECT_RESPONSE, e.managerId);
+            //                this.requestEvent = undefined;
+            //                return false;
+            //            }
+            //        });
+            //    }
+            //    return false;
+            //});
+            //this.find(".buttons-preview:eq(1) a:eq(1)").click(()=>{
+            //    route.router.from(PageUtil.getPageId(this.page)).to(this.requestEvent.from).send(route.MSG.EC_SELECT_RESPONSE);
+            //    return false;
+            //});
         }
         LoansMgr.prototype.qOpt = function (id) {
             var optVal = this.find("#" + id).val();
@@ -104,14 +100,13 @@ var pages;
             });
         };
         LoansMgr.prototype.onShown = function () {
-            if (this.requestEvent) {
-                this.find(".buttons-preview").hide();
-                this.find(".buttons-preview:eq(1)").show();
-            }
-            else {
-                this.find(".buttons-preview").hide();
-                this.find(".buttons-preview:eq(0)").show();
-            }
+            //if (this.requestEvent){
+            //    this.find(".buttons-preview").hide();
+            //    this.find(".buttons-preview:eq(1)").show();
+            //}else{
+            //    this.find(".buttons-preview").hide();
+            //    this.find(".buttons-preview:eq(0)").show();
+            //}
             this.adjustWidth("lm-table", this.find("#lm-tableTable"));
         };
         LoansMgr.prototype.getEcByRid = function (rid) {
@@ -155,7 +150,7 @@ var pages;
                 shrinkToFit: false,
                 rowNum: 10,
                 autoScroll: true,
-                singleselect: true,
+                multiselect: true,
                 pager: '#lm-tablePager',
                 //onCellSelect:(rowid,iCol,cellcontent,e)=>{
                 //    if (iCol == 1){

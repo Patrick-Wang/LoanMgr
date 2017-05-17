@@ -550,12 +550,15 @@ module pages {
                 this.lastPage = sidebar.getLastPage()
             }
 
+
+
             this.find("#ld-timeline li:not(.timeline-node)").remove();
             this.find("#ld-common").empty();
             this.find("#ld-special").empty();
             this.find("#bootbox-record-work-timeline").hide();
             this.find("#bootbox-loans-consulting-timeline").hide();
             if (this.ec) {
+                this.find("#ld-eccode").text("委案编码：" +  this.ec.loan[2]);
                 this.refreshLoan();
                 if (this.check(this.ec.reports)){
                     this.refreshReport();

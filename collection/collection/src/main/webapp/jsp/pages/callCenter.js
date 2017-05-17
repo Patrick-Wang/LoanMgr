@@ -199,29 +199,51 @@ var pages;
                     return false;
                 }
             });
-            route.router.register(new route.Receiver(pages.PageUtil.getPageId(this.page), function (e) {
-                switch (e.id) {
-                    case route.MSG.EC_SELECT_RESPONSE:
-                        sidebar.enable();
-                        sidebar.switchPage(_this.page);
-                        if (e.data) {
-                            collection.EntrustedCaseReport.createPhoneInReport(e.data, record.phoneNum, record.recId)
-                                .done(function (ret) {
-                                if (ret.code == 0) {
-                                    record.ecId = e.data;
-                                    _this.updateCallInNoEC("cc-callInNoec");
-                                }
-                            });
-                        }
-                        break;
+            bootbox.prompt("请输入委案编码", function (result) {
+                if (result === null) {
                 }
-            }));
-            route.router
-                .from(pages.PageUtil.getPageId(this.page))
-                .to(pages.PageUtil.getPageId(pages.PageType.loansMgr))
-                .send(route.MSG.EC_SELECT_REQUEST);
-            sidebar.switchPage(pages.PageType.loansMgr);
-            sidebar.disable();
+                else {
+                    if (result) {
+                        collection.EntrustedCaseReport.createPhoneInReport(parseInt(result), record.phoneNum, record.recId)
+                            .done(function (ret) {
+                            if (ret.code == 0) {
+                                record.ecId = parseInt(result);
+                                _this.updateCallInNoEC("cc-callInNoec");
+                            }
+                            else {
+                                pages.Toast.failed(ret.msg);
+                            }
+                        });
+                    }
+                    else {
+                        pages.Toast.warning("请输入委案编码");
+                        return false;
+                    }
+                }
+            });
+            //route.router.register(new route.Receiver(PageUtil.getPageId(this.page), (e:route.Event)=> {
+            //    switch (e.id) {
+            //        case route.MSG.EC_SELECT_RESPONSE:
+            //            sidebar.enable();
+            //            sidebar.switchPage(this.page);
+            //            if (e.data){
+            //                collection.EntrustedCaseReport.createPhoneInReport(e.data, record.phoneNum, record.recId)
+            //                    .done((ret:collection.protocol.Result)=>{
+            //                        if (ret.code == 0){
+            //                            record.ecId = e.data;
+            //                            this.updateCallInNoEC("cc-callInNoec");
+            //                        }
+            //                    });
+            //            }
+            //            break;
+            //    }
+            //}));
+            //route.router
+            //    .from(PageUtil.getPageId(this.page))
+            //    .to(PageUtil.getPageId(PageType.loansMgr))
+            //    .send(route.MSG.EC_SELECT_REQUEST);
+            //sidebar.switchPage(PageType.loansMgr);
+            //sidebar.disable();
         };
         CallCenter.prototype.onclickECCode = function (recId) {
             var record;

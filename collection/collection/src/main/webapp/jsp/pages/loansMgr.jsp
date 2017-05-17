@@ -45,12 +45,12 @@
 						data-labelauty="信用卡"></li>
 				</ul>
 			</div>
-			<div class="col-xs-12 col-md-6">
-				<div class="buttons-preview" style="float:right;display:none">
-					<a href="javascript:void(0);" class="btn btn-blue">确定</a>
-					<a href="javascript:void(0);" class="btn btn-default">取消</a>
-				</div>
-			</div>
+			<%--<div class="col-xs-12 col-md-6">--%>
+				<%--<div class="buttons-preview" style="float:right;display:none">--%>
+					<%--<a href="javascript:void(0);" class="btn btn-blue">确定</a>--%>
+					<%--<a href="javascript:void(0);" class="btn btn-default">取消</a>--%>
+				<%--</div>--%>
+			<%--</div>--%>
 		</div>
 		<div class="row">
 			<div class="col-xs-2 col-md-2">

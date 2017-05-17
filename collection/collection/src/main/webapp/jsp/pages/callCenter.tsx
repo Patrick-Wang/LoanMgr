@@ -212,29 +212,54 @@ module pages{
                 }
             });
 
-            route.router.register(new route.Receiver(PageUtil.getPageId(this.page), (e:route.Event)=> {
-                switch (e.id) {
-                    case route.MSG.EC_SELECT_RESPONSE:
-                        sidebar.enable();
-                        sidebar.switchPage(this.page);
-                        if (e.data){
-                            collection.EntrustedCaseReport.createPhoneInReport(e.data, record.phoneNum, record.recId)
-                                .done((ret:collection.protocol.Result)=>{
-                                    if (ret.code == 0){
-                                        record.ecId = e.data;
-                                        this.updateCallInNoEC("cc-callInNoec");
-                                    }
-                                });
-                        }
-                        break;
+            bootbox.prompt("请输入委案编码",  (result) => {
+                if (result === null) {
+
+                } else {
+                    if (result){
+                    collection.EntrustedCaseReport.createPhoneInReport(parseInt(result), record.phoneNum, record.recId)
+                        .done((ret:collection.protocol.Result)=>{
+                            if (ret.code == 0){
+                                record.ecId = parseInt(result);
+                                this.updateCallInNoEC("cc-callInNoec");
+                            }else{
+                                Toast.failed(ret.msg);
+                            }
+                        });
+                    }else{
+                        Toast.warning("请输入委案编码");
+                        return false;
+                    }
                 }
-            }));
-            route.router
-                .from(PageUtil.getPageId(this.page))
-                .to(PageUtil.getPageId(PageType.loansMgr))
-                .send(route.MSG.EC_SELECT_REQUEST);
-            sidebar.switchPage(PageType.loansMgr);
-            sidebar.disable();
+            });
+
+
+
+
+
+            //route.router.register(new route.Receiver(PageUtil.getPageId(this.page), (e:route.Event)=> {
+            //    switch (e.id) {
+            //        case route.MSG.EC_SELECT_RESPONSE:
+            //            sidebar.enable();
+            //            sidebar.switchPage(this.page);
+            //            if (e.data){
+            //                collection.EntrustedCaseReport.createPhoneInReport(e.data, record.phoneNum, record.recId)
+            //                    .done((ret:collection.protocol.Result)=>{
+            //                        if (ret.code == 0){
+            //                            record.ecId = e.data;
+            //                            this.updateCallInNoEC("cc-callInNoec");
+            //                        }
+            //                    });
+            //            }
+            //            break;
+            //    }
+            //}));
+            //route.router
+            //    .from(PageUtil.getPageId(this.page))
+            //    .to(PageUtil.getPageId(PageType.loansMgr))
+            //    .send(route.MSG.EC_SELECT_REQUEST);
+            //sidebar.switchPage(PageType.loansMgr);
+            //sidebar.disable();
         }
 
         onclickECCode(recId:number){

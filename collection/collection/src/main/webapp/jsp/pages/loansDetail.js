@@ -508,6 +508,7 @@ var pages;
             this.find("#bootbox-record-work-timeline").hide();
             this.find("#bootbox-loans-consulting-timeline").hide();
             if (this.ec) {
+                this.find("#ld-eccode").text("委案编码：" + this.ec.loan[2]);
                 this.refreshLoan();
                 if (this.check(this.ec.reports)) {
                     this.refreshReport();

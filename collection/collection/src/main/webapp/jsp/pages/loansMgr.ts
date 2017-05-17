@@ -5,7 +5,7 @@ module pages{
         static ins = new LoansMgr(PageType.loansMgr);
         ecType:collection.protocol.EntrustedCaseType;
         ecs:collection.protocol.EC[];
-        requestEvent:route.Event;
+       // requestEvent:route.Event;
         tableAssist:JQTable.JQGridAssistant;
         private isAssigner:boolean = false;
         private isOwner:boolean = false;
@@ -25,9 +25,9 @@ module pages{
                         break;
                     case route.MSG.LOANMGR_GET_TYPE:
                         return this.find(".dowebok input:checked").attr("myid");
-                    case route.MSG.EC_SELECT_REQUEST:
-                        this.requestEvent = e;
-                        break;
+                    //case route.MSG.EC_SELECT_REQUEST:
+                    //    this.requestEvent = e;
+                    //    break;
                 }
             }));
 
@@ -46,27 +46,27 @@ module pages{
                 }
             });
 
-            this.find(".buttons-preview:eq(1) a:eq(0)").click(()=>{
-                let ids = [].concat(this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
-                if (ids.length == 0){
-                    Toast.warning("请选择委案");
-                }else{
-                    $(this.ecs).each((i, e)=>{
-                        if (e.loan[0] == ids[0]){
-                            route.router.from(PageUtil.getPageId(this.page)).to(this.requestEvent.from).send(route.MSG.EC_SELECT_RESPONSE, e.managerId);
-                            this.requestEvent = undefined;
-                            return false;
-                        }
-                    });
-                }
-                return false;
-            });
+            //this.find(".buttons-preview:eq(1) a:eq(0)").click(()=>{
+            //    let ids = [].concat(this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
+            //    if (ids.length == 0){
+            //        Toast.warning("请选择委案");
+            //    }else{
+            //        $(this.ecs).each((i, e)=>{
+            //            if (e.loan[0] == ids[0]){
+            //                route.router.from(PageUtil.getPageId(this.page)).to(this.requestEvent.from).send(route.MSG.EC_SELECT_RESPONSE, e.managerId);
+            //                this.requestEvent = undefined;
+            //                return false;
+            //            }
+            //        });
+            //    }
+            //    return false;
+            //});
 
 
-            this.find(".buttons-preview:eq(1) a:eq(1)").click(()=>{
-                route.router.from(PageUtil.getPageId(this.page)).to(this.requestEvent.from).send(route.MSG.EC_SELECT_RESPONSE);
-                return false;
-            });
+            //this.find(".buttons-preview:eq(1) a:eq(1)").click(()=>{
+            //    route.router.from(PageUtil.getPageId(this.page)).to(this.requestEvent.from).send(route.MSG.EC_SELECT_RESPONSE);
+            //    return false;
+            //});
         }
 
         private qOpt(id:string):string{
@@ -108,13 +108,13 @@ module pages{
         }
 
         protected onShown(){
-            if (this.requestEvent){
-                this.find(".buttons-preview").hide();
-                this.find(".buttons-preview:eq(1)").show();
-            }else{
-                this.find(".buttons-preview").hide();
-                this.find(".buttons-preview:eq(0)").show();
-            }
+            //if (this.requestEvent){
+            //    this.find(".buttons-preview").hide();
+            //    this.find(".buttons-preview:eq(1)").show();
+            //}else{
+            //    this.find(".buttons-preview").hide();
+            //    this.find(".buttons-preview:eq(0)").show();
+            //}
             this.adjustWidth("lm-table", this.find("#lm-tableTable"));
         }
 
@@ -163,7 +163,7 @@ module pages{
                     shrinkToFit: false,
                     rowNum: 10,
                     autoScroll: true,
-                    singleselect:true,
+                    multiselect:true,
                     pager: '#lm-tablePager',
                     //onCellSelect:(rowid,iCol,cellcontent,e)=>{
                     //    if (iCol == 1){

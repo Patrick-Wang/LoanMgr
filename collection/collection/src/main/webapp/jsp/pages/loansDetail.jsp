@@ -35,7 +35,7 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<div class="col-sm-4">
-					<h3 class="darkpink">委案编码：XD00001232 （工作中）</h3>
+					<h3 class="darkpink" id="ld-eccode">委案编码：</h3>
 				</div>
 				<div class="col-sm-8">
 					<div class="buttons-preview pull-right">
