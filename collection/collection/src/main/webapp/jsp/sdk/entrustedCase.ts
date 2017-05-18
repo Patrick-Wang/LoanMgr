@@ -8,6 +8,7 @@ module collection{
     import AcceptSummary = collection.protocol.AcceptSummary;
     import EC = collection.protocol.EC;
     import Attachement = collection.protocol.Attachement;
+    import ManagerSummary = collection.protocol.ManagerSummary;
 
     export class EntrustedCase{
         static search(type:number, qOpt:QueryOption):Promise<EC[]>{
@@ -26,6 +27,10 @@ module collection{
 
         static getAssignSummary():Promise<AssignSummary>{
             return Net.postLocal(Net.BASE_URL + "/entrusted_case/assign/summary.do");
+        }
+
+        static getManagerSummary():Promise<ManagerSummary>{
+            return Net.postLocal(Net.BASE_URL + "/entrusted_case/manager/summary.do");
         }
         static getAcceptSummary():Promise<AcceptSummary>{
             return Net.postLocal(Net.BASE_URL + "/entrusted_case/accept/summary.do");

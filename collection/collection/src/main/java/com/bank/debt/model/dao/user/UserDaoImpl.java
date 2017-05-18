@@ -61,4 +61,11 @@ public class UserDaoImpl extends AbstractReadWriteDaoImpl<UserEntity> implements
 		}
 		return r;
 	}
+
+	@Override
+	public Integer getCount() {
+		Query q = this.getEntityManager().createQuery("select count(*) from UserEntity");
+		List r = q.getResultList();
+		return ((Long) r.get(0)).intValue();
+	}
 }

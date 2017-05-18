@@ -96,11 +96,26 @@ public class Xlsx2JsonMapping implements Mapping<InputStream, JSONArray> {
 		for (int i = 1; i <= sheet.getLastRowNum(); ++i){
 			XSSFRow row = sheet.getRow(i);
 			JSONObject jrow = new JSONObject();
-			for (int j = 0; j < fields.size() && j < row.getLastCellNum(); ++j){
-				XSSFCell cell = row.getCell(j);
+			
+			XSSFCell cell = row.getCell(0);
+			if (cell == null || cell.getCellType() == XSSFCell.CELL_TYPE_BLANK){
+				break;
+			}
+			
+			int unInportColumnsCount = 0;
+			
+			for (int j = 0; j < fields.size() && (j - unInportColumnsCount) < row.getLastCellNum(); ++j){
+				
+				if (Xls2JsonMapping.unInportColumns.contains(fields.get(j).getName())){
+					++unInportColumnsCount;
+					continue;
+				}		
+				
+				cell = row.getCell(j - unInportColumnsCount);
 				if (null == cell){
 					continue;
 				}
+				
 				if (fields.get(j).getType().isAssignableFrom(String.class)){
 					jrow.put(fields.get(j).getName(), parseString(cell));
 				}else if (fields.get(j).getType().isAssignableFrom(Date.class)) {

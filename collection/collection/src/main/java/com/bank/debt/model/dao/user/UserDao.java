@@ -12,4 +12,6 @@ public interface UserDao extends AbstractReadWriteDao<UserEntity> {
 
 	List<UserEntity> getUserByIfs(List<String> ifList);
 
+	Integer getCount();
+
 }

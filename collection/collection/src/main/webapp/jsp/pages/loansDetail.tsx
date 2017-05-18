@@ -525,13 +525,12 @@ module pages {
 
         protected refreshLoan() {
             let titles = collection.protocol.getTitles(this.ecType);
-
             $(this.ec.loan).each((i, e)=> {
                 if (i > 0) {
                     if (!e) {
                         e = "";
                     }
-                    if (i > 1 && i <= 9) {
+                    if (i <= 8) {
                         this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
                             '<i class="fa fa-square-o darkpink"></i><b>' + titles[i - 1] + '：</b>' + e +
                             '</div>');
@@ -549,16 +548,13 @@ module pages {
             if (this.page != sidebar.getLastPage()) {
                 this.lastPage = sidebar.getLastPage()
             }
-
-
-
             this.find("#ld-timeline li:not(.timeline-node)").remove();
             this.find("#ld-common").empty();
             this.find("#ld-special").empty();
             this.find("#bootbox-record-work-timeline").hide();
             this.find("#bootbox-loans-consulting-timeline").hide();
             if (this.ec) {
-                this.find("#ld-eccode").text("委案编码：" +  this.ec.loan[2]);
+                this.find("#ld-eccode").text("委案编码：" +  this.ec.loan[1]);
                 this.refreshLoan();
                 if (this.check(this.ec.reports)){
                     this.refreshReport();

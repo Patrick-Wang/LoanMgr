@@ -484,7 +484,7 @@ var pages;
                     if (!e) {
                         e = "";
                     }
-                    if (i > 1 && i <= 9) {
+                    if (i <= 8) {
                         _this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
                             '<i class="fa fa-square-o darkpink"></i><b>' + titles[i - 1] + '：</b>' + e +
                             '</div>');
@@ -508,7 +508,7 @@ var pages;
             this.find("#bootbox-record-work-timeline").hide();
             this.find("#bootbox-loans-consulting-timeline").hide();
             if (this.ec) {
-                this.find("#ld-eccode").text("委案编码：" + this.ec.loan[2]);
+                this.find("#ld-eccode").text("委案编码：" + this.ec.loan[1]);
                 this.refreshLoan();
                 if (this.check(this.ec.reports)) {
                     this.refreshReport();

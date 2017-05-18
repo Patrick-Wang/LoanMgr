@@ -34,15 +34,16 @@ var pages;
                 var ecType = _this.find(".dowebok input:checked").attr("myid");
                 switch (parseInt(ecType)) {
                     case collection.protocol.EntrustedCaseType.carLoan:
-                        _this.find("#qCode").prev().text("卡号");
-                        break;
-                    case collection.protocol.EntrustedCaseType.creditCard:
-                        _this.find("#qCode").prev().text("客户号");
-                        break;
-                    case collection.protocol.EntrustedCaseType.creditLoan:
                         _this.find("#qCode").prev().text("车牌号");
                         break;
+                    case collection.protocol.EntrustedCaseType.creditCard:
+                        _this.find("#qCode").prev().text("卡号");
+                        break;
+                    case collection.protocol.EntrustedCaseType.creditLoan:
+                        _this.find("#qCode").prev().text("客户号");
+                        break;
                 }
+                _this.refresh();
             });
             //this.find(".buttons-preview:eq(1) a:eq(0)").click(()=>{
             //    let ids = [].concat(this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
@@ -82,15 +83,14 @@ var pages;
             return opt;
         };
         LoansMgr.prototype.onRefresh = function () {
+            //if (this.requestEvent){
+            //    this.find(".buttons-preview").hide();
+            //    this.find(".buttons-preview:eq(1)").show();
+            //}else{
+            //    this.find(".buttons-preview").hide();
+            //    this.find(".buttons-preview:eq(0)").show();
+            //}
             var _this = this;
-            if (this.requestEvent) {
-                this.find(".buttons-preview").hide();
-                this.find(".buttons-preview:eq(1)").show();
-            }
-            else {
-                this.find(".buttons-preview").hide();
-                this.find(".buttons-preview:eq(0)").show();
-            }
             var ecType = this.find(".dowebok input:checked").attr("myid");
             var opt = this.getQOpt();
             collection.EntrustedCase.search(ecType, opt).done(function (ecs) {
@@ -130,10 +130,10 @@ var pages;
             var loans = [];
             var isLinked = {};
             for (var i = 0; i < this.ecs.length; ++i) {
-                if (this.ecs[i].loan[2] != "" && this.ecs[i].loan[2] != null) {
+                if (this.ecs[i].loan[1]) {
                     if (this.isOwner && this.ecs[i].owner == context.userName ||
                         this.isAssigner && this.ecs[i].assignee == context.userName) {
-                        isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
+                        isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                     }
                 }
                 loans.push(this.ecs[i].loan);
@@ -150,7 +150,7 @@ var pages;
                 shrinkToFit: false,
                 rowNum: 10,
                 autoScroll: true,
-                multiselect: true,
+                multiselect: false,
                 pager: '#lm-tablePager',
                 //onCellSelect:(rowid,iCol,cellcontent,e)=>{
                 //    if (iCol == 1){
@@ -164,7 +164,7 @@ var pages;
                         var rids = $("#lm-tableTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                $("#lm-tableTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                                     "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
@@ -175,18 +175,18 @@ var pages;
                         var rids = $("#lm-tableTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                $("#lm-tableTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                                     "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
                     }, 0);
                 }
             }));
-            this.find("th input[role='checkbox']").hide();
+            //this.find("th input[role='checkbox']").hide();
             var rids = this.find("#lm-tableTable").getDataIDs();
             for (var i = 0; i < rids.length; ++i) {
                 if (undefined != isLinked[rids[i]]) {
-                    this.find("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                    this.find("#lm-tableTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                         "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                 }
             }

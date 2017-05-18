@@ -16,4 +16,8 @@ public interface ECCarLoanDao extends AbstractReadWriteDao<ECCarLoanEntity> {
 
 	int getCompleteForAssignee(UserEntity ue);
 
+	Double getLjje();
+
+	Double getYhje();
+
 }

@@ -37,7 +37,6 @@ drop table if exists  `entrusted_case_report`;
 create table `entrusted_case_report`(
 	`id` int NOT NULL AUTO_INCREMENT,
 	`creator` int NOT NULL,
-	`date`	date  NOT NULL,
 	`entrustedCaseManager` int not null,
 	`title`	text,
 	`content`	text,
@@ -225,7 +224,6 @@ create table `entrusted_case_car_loan`(
 drop table if exists  `entrusted_case_credit_loan`;
 create table `entrusted_case_credit_loan`(				
 	`id`	int NOT NULL AUTO_INCREMENT	,--	自增主键
-	`xh`	int,
 	`code` varchar(20),
 	`pch` varchar(20),
 	`wwrq`	date	,--	委外日期
@@ -309,7 +307,6 @@ create table `entrusted_case_credit_loan`(
 drop table if exists  `entrusted_case_credit_card`;
 create table `entrusted_case_credit_card`(				
 	`id`	int NOT NULL AUTO_INCREMENT	,--	自增主键
-	`cid`	int	,--	内部管理ID
 	`code` varchar(20),
 	`pch`	varchar(50)	,--	批次号
 	`wwrq`	date	,--	委外日期
@@ -319,7 +316,7 @@ create table `entrusted_case_credit_card`(
 	`yhje` double,
 	`syje` double,
 	`tarq` date,
-	`beiz`	text	,--	备注
+	`bz`	text	,--	备注
 	`gaxlh`	varchar(50)	,--	个案序列号
 	`xm`	varchar(50)	,--	姓名
 	`wtf`	varchar(50)	,--	委托方
@@ -378,7 +375,7 @@ create table `entrusted_case_credit_card`(
 	`sr`	date	,--	生日
 	`nl`	double	,--	年龄
 	`wczje`	double	,--	未出账金额
-	`bz`	varchar(50)	,--	币种
+	`biz`	varchar(50)	,--	币种
 	`ycsjl`	text	,--	原催收记录
 	`bj`	double	,--	本金
 	`zdhke`	double	,--	最低还款额

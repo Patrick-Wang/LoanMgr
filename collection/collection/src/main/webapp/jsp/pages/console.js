@@ -211,12 +211,12 @@ var pages;
             var loans = [];
             var isLinked = {};
             for (var i = 0; i < this.ecs.length; ++i) {
-                if (this.ecs[i].loan[2] != "" && this.ecs[i].loan[2] != null) {
+                if (this.ecs[i].loan[1]) {
                     if (this.isOwner && this.ecs[i].owner == context.userName) {
-                        isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
+                        isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                     }
                     else if (this.isAssigner && this.ecs[i].assignee == context.userName) {
-                        isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
+                        isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                     }
                 }
                 loans.push(this.ecs[i].loan);
@@ -245,7 +245,7 @@ var pages;
                         var rids = $("#tbAllTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                $("#tbAllTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                                     "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
@@ -256,7 +256,7 @@ var pages;
                         var rids = $("#tbAllTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                $("#tbAllTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                                     "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
@@ -266,7 +266,7 @@ var pages;
             var rids = $("#tbAllTable").getDataIDs();
             for (var i = 0; i < rids.length; ++i) {
                 if (undefined != isLinked[rids[i]]) {
-                    $("#tbAllTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                    $("#tbAllTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                         "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                 }
             }

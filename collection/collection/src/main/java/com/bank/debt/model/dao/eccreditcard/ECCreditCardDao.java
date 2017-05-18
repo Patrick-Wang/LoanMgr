@@ -16,4 +16,8 @@ public interface ECCreditCardDao extends AbstractReadWriteDao<ECCreditCardEntity
 
 	int getCompleteForAssignee(UserEntity ue);
 
+	Double getLjje();
+
+	Double getYhje();
+
 }

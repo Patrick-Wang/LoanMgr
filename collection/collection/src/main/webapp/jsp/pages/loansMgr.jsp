@@ -45,6 +45,7 @@
 						data-labelauty="信用卡"></li>
 				</ul>
 			</div>
+			<div class="col-xs-12 col-md-6" id="lm-export"></div>
 			<%--<div class="col-xs-12 col-md-6">--%>
 				<%--<div class="buttons-preview" style="float:right;display:none">--%>
 					<%--<a href="javascript:void(0);" class="btn btn-blue">确定</a>--%>
@@ -67,7 +68,7 @@
 			</div>
 			<div class="col-xs-2 col-md-2">
 				<div class="form-group">
-					<label class="control-label">卡号</label> <input id="qCode" type="text"
+					<label class="control-label">车牌号</label> <input id="qCode" type="text"
 						class="form-control">
 				</div>
 			</div>

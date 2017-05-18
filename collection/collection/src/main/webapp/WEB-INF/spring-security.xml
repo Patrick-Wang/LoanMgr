@@ -6,12 +6,11 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.1.xsd">
 
-	<http pattern="/webservice/*" security="none" />
-	<http pattern="/session/invalidSession.do*" security="none" />
-	<http pattern="/jsp/login.jsp" security="none" />
+	<http pattern="/webservice/**" security="none" />
+	<http pattern="/jsp/**" security="none" />
 	<http pattern="/phone/missed_call.do" security="none" />
 	<http pattern="/phone/upload.do" security="none" />
-
+	
 	<authentication-manager alias="authenticationManager">
 		<authentication-provider ref="authenticationProvider">
 		</authentication-provider>
@@ -42,11 +41,36 @@
 		</authentication-provider>
 	</authentication-manager> -->
 
+	<beans:bean id="sessionRegistry"  
+    class="org.springframework.security.core.session.SessionRegistryImpl" />  
+
+	<beans:bean id="sessionAuthenticationStrategy"  
+	    class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">  
+	    <beans:constructor-arg name="sessionRegistry"  
+	        ref="sessionRegistry" />  
+	    <beans:property name="maximumSessions" value="-1" />  
+	</beans:bean> 
+
+	<beans:bean id="concurrencyFilter"  
+	    class="org.springframework.security.web.session.ConcurrentSessionFilter">  
+	    <beans:constructor-arg name="sessionRegistry"  
+        ref="sessionRegistry" />  
+        <beans:constructor-arg name="expiredUrl"  
+        value="/session/invalidSession.do?redirect=/jsp/login.jsp" />  
+	</beans:bean>  
+
 	<http auto-config="true">
 		<access-denied-handler ref="accessDeniedHandler" />
-		<session-management
+		
+		<custom-filter position="CONCURRENT_SESSION_FILTER" ref="concurrencyFilter" />
+		
+		<session-management   
+        session-authentication-strategy-ref="sessionAuthenticationStrategy"   
+        invalid-session-url="/session/invalidSession.do?redirect=/jsp/login.jsp"/>  
+		
+		<!-- <session-management
 			invalid-session-url="/session/invalidSession.do?redirect=/jsp/login.jsp"></session-management>
-		<!--  <intercept-url pattern="/admin**" access="hasRole('ROLE_USER')" />  -->
+ -->		<!--  <intercept-url pattern="/admin**" access="hasRole('ROLE_USER')" />  -->
 		<!--	<intercept-url pattern="/app.jsp" access="hasRole('ROLE_SERVICE')"/> -->
 		<!-- <intercept-url pattern="/**" access="hasRole('ROLE_USER')"/> -->
 
@@ -58,6 +82,7 @@
 		<form-login login-page="/jsp/login.jsp"
 			authentication-failure-url="/jsp/loginError.jsp?" default-target-url="/home/index.do" />
 		<csrf disabled="true" />
+		<anonymous enabled="false"/>
 	</http>
 
 

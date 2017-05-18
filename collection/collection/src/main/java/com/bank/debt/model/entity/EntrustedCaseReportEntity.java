@@ -42,7 +42,6 @@ public class EntrustedCaseReportEntity extends AbstractReadWriteEntity implement
 
 
 	UserEntity creator;
-	Date date;
 	String title;
 	String content;
 	EntrustedCaseManagerEntity entrustedCaseManager;
@@ -60,13 +59,7 @@ public class EntrustedCaseReportEntity extends AbstractReadWriteEntity implement
 		this.creator = creator;
 	}
 	
-	
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
+
 	public String getTitle() {
 		return title;
 	}

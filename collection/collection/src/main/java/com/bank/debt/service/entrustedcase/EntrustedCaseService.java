@@ -8,6 +8,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import com.bank.debt.protocol.entity.AcceptSummary;
 import com.bank.debt.protocol.entity.AssignSummary;
 import com.bank.debt.protocol.entity.EC;
+import com.bank.debt.protocol.entity.ManagerSummary;
 import com.bank.debt.protocol.entity.QueryOption;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.tools.map.MappingFailedException;
@@ -47,6 +48,8 @@ public interface EntrustedCaseService {
 	void downloadAll(String usr, Integer batchNo, OutputStream outputStream) throws MappingFailedException, IOException;
 
 	List<Integer> getBatchs();
+
+	ManagerSummary getManagerSummary(String userName);
 
 
 }

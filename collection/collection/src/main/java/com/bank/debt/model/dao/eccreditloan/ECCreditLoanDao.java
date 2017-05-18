@@ -16,4 +16,8 @@ public interface ECCreditLoanDao extends AbstractReadWriteDao<ECCreditLoanEntity
 
 	int getCompleteForAssignee(UserEntity ue);
 
+	Double getLjje();
+
+	Double getYhje();
+
 }

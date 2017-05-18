@@ -139,19 +139,19 @@ var pages;
                 this.dropz.on("error", function (file, message, xhr) {
                     if (message == _this.dropz.options.dictMaxFilesExceeded) {
                         pages.Toast.failed(message);
-                        _this.dropz.removeFile(file);
                     }
                     else if (message == _this.dropz.options.dictInvalidFileType) {
                         pages.Toast.failed(message);
-                        _this.dropz.removeFile(file);
                     }
                     else {
                         pages.Toast.failed(file.name + " 导入失败");
                     }
                 });
                 this.dropz.on("complete", function (file) {
+                    _this.dropz.removeFile(file);
                     if (_this.dropz.getQueuedFiles().length == 0) {
                         _this.find(".btn-next").attr("disabled", false);
+                        _this.goStep1();
                     }
                     else {
                         _this.dropz.processQueue();

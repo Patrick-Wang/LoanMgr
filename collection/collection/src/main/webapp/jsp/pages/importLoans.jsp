@@ -81,8 +81,8 @@
 		</div>
 		<div class="actions actions-footer" id="il-WiredWizard-actions" style="display:none">
 			<div class="btn-group">
-			<button type="button" class="btn btn-default btn-sm btn-prev"> <i class="fa fa-angle-left"></i>Prev</button>
-			<button type="button" class="btn btn-default btn-sm btn-next" data-last="Import">Next<i class="fa fa-angle-right"></i></button>
+			<button type="button" class="btn btn-default btn-sm btn-prev"> <i class="fa fa-angle-left"></i>上一步</button>
+			<button type="button" class="btn btn-default btn-sm btn-next" data-last="导入">下一步<i class="fa fa-angle-right"></i></button>
 			</div>
 		</div>
 	</div>

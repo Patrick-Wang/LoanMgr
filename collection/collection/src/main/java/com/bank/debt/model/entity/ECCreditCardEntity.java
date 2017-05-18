@@ -29,7 +29,6 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	Integer	cid		;
 	String code;
 	String pch;
 	Date wwrq;
@@ -39,7 +38,7 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	Double yhje;
 	Double syje;
 	Date tarq;
-	String beiz;	
+	String bz;	
 	String	gaxlh		;
 	String	xm		;
 	String	wtf		;
@@ -98,7 +97,7 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	Date	sr		;
 	Double	nl		;
 	Double	wczje		;
-	String  bz;
+	String  biz;
 	String	ycsjl		;
 	Double	bj		;
 	Double	zdhke		;
@@ -210,12 +209,6 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	String	zdyxx		;
 	String	zxcj		;
 
-	public Integer getCid() {
-		return cid;
-	}
-	public void setCid(Integer cid) {
-		this.cid = cid;
-	}
 	public String getGaxlh() {
 		return gaxlh;
 	}
@@ -570,11 +563,11 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	public void setWczje(Double wczje) {
 		this.wczje = wczje;
 	}
-	public String getBz() {
-		return bz;
+	public String getBiz() {
+		return biz;
 	}
-	public void setBz(String bz) {
-		this.bz = bz;
+	public void setBiz(String biz) {
+		this.biz = biz;
 	}
 	public String getYcsjl() {
 		return ycsjl;
@@ -1279,11 +1272,11 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	public void setZxcj(String zxcj) {
 		this.zxcj = zxcj;
 	}
-	public String getBeiz() {
-		return beiz;
+	public String getBz() {
+		return bz;
 	}
-	public void setBeiz(String beiz) {
-		this.beiz = beiz;
+	public void setBz(String beiz) {
+		this.bz = bz;
 	}
 	public Date getTarq() {
 		return tarq;

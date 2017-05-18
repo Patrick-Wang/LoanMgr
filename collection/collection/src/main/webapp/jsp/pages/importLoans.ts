@@ -147,17 +147,20 @@ module pages{
                 this.dropz.on("error", (file, message, xhr)=>{
                     if (message == this.dropz.options.dictMaxFilesExceeded){
                         Toast.failed(message);
-                        this.dropz.removeFile(file);
+                        //this.dropz.removeFile(file);
                     }else if (message == this.dropz.options.dictInvalidFileType){
                         Toast.failed(message);
-                        this.dropz.removeFile(file);
+                        //this.dropz.removeFile(file);
                     }else{
                         Toast.failed(file.name + " 导入失败");
                     }
                 });
+
                 this.dropz.on("complete", (file)=>{
+                    this.dropz.removeFile(file);
                     if ( this.dropz.getQueuedFiles().length == 0){
                         this.find(".btn-next").attr("disabled", false);
+                        this.goStep1();
                     }else{
                         this.dropz.processQueue();
                     }

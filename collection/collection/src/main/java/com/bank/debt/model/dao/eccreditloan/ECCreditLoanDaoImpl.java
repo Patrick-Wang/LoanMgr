@@ -137,4 +137,20 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 		List ret = q.getResultList();
 		return ((Long)(ret.get(0))).intValue();
 	}
+
+	@Override
+	public Double getLjje() {
+		Query q = this.getEntityManager().createQuery("select sum(wwje) "
+				+ "from ECCreditLoanEntity");
+		List ret = q.getResultList();
+		return (Double) ret.get(0);
+	}
+	
+	@Override
+	public Double getYhje() {
+		Query q = this.getEntityManager().createQuery("select sum(yhje) "
+				+ "from ECCreditLoanEntity");
+		List ret = q.getResultList();
+		return (Double) ret.get(0);
+	}
 }

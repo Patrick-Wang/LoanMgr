@@ -26,6 +26,7 @@ import com.bank.debt.protocol.entity.AssignSummary;
 import com.bank.debt.protocol.entity.Attachement;
 import com.bank.debt.protocol.entity.EntrustedCaseManageInfo;
 import com.bank.debt.protocol.entity.EntrustedCaseReport;
+import com.bank.debt.protocol.entity.ManagerSummary;
 import com.bank.debt.protocol.entity.QueryOption;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
@@ -198,6 +199,16 @@ public class EntrustedCaseServlet {
 		return r.toUtf8Json();
 	}
 	
+	@RequestMapping(value = "manager/summary.do")
+	public @ResponseBody byte[] managerSummary(HttpServletRequest request,
+			HttpServletResponse response) throws UnsupportedEncodingException {
+		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
+			    .getAuthentication()
+			    .getPrincipal();
+		String userName = userDetails.getUsername();
+		ManagerSummary as = entrustedCaseService.getManagerSummary(userName);
+		return as.toUtf8Json();
+	}
 	
 	@RequestMapping(value = "assign/summary.do")
 	public @ResponseBody byte[] assignSummary(HttpServletRequest request,

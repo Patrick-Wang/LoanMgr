@@ -50,6 +50,7 @@ public class HomeServlet {
 	public ModelAndView getIndex(
 			HttpServletRequest request,
 			HttpServletResponse response){
+
 		Map<String, Object> mp = new HashMap<String, Object>();
 		
 		String userName = getUserName();

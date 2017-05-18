@@ -45,12 +45,14 @@ import com.bank.debt.protocol.entity.AssignSummary;
 import com.bank.debt.protocol.entity.EC;
 import com.bank.debt.protocol.entity.EntrustedCaseReport;
 import com.bank.debt.protocol.entity.IF;
+import com.bank.debt.protocol.entity.ManagerSummary;
 import com.bank.debt.protocol.entity.QueryOption;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.tools.BeanUtil;
 import com.bank.debt.protocol.tools.Checking;
 import com.bank.debt.protocol.tools.JsonUtil;
+import com.bank.debt.protocol.tools.MathUtil;
 import com.bank.debt.protocol.tools.PathUtil;
 import com.bank.debt.protocol.tools.map.EC2XlsMapping;
 import com.bank.debt.protocol.tools.map.Mapper;
@@ -582,6 +584,19 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	@Override
 	public List<Integer> getBatchs() {
 		return entrustedCaseManagerDao.getBatchNOs();
+	}
+
+	@Override
+	public ManagerSummary getManagerSummary(String userName) {
+		ManagerSummary ms = new ManagerSummary();
+		ms.setYgs(userDao.getCount());
+		ms.setLjje(MathUtil.sum(new Double[]{eCCreditLoanDao.getLjje(), 
+				eCCarLoanDao.getLjje(), 
+				eCCreditCardDao.getLjje()}));
+		ms.setYhje(MathUtil.sum(new Double[]{eCCreditLoanDao.getYhje(), 
+				eCCarLoanDao.getYhje(),
+				eCCreditCardDao.getYhje()}));
+		return ms;
 	}
 
 

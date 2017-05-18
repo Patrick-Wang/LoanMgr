@@ -11,9 +11,9 @@ module authority.ec.exporter{
             </form>
         );
 
-        pages.PageUtil.jqPage(pages.PageType.loansMgr).find(".buttons-preview:eq(0)").append(html);
-        pages.PageUtil.jqPage(pages.PageType.loansMgr).find(".buttons-preview:eq(0)").append(ReactDOMServer.renderToStaticMarkup(
-            <a id="lm-export-Btn" className="btn btn-default">导出</a>
+        pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(html);
+        pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(ReactDOMServer.renderToStaticMarkup(
+            <a id="lm-export-Btn" className="btn btn-default" style={{float:"right"}}>导出</a>
         ));
 
         let exporter = new Export();
@@ -29,8 +29,8 @@ module authority.ec.exporter{
         }
 
         private onClickExport():void {
-            let qOpt :QueryOption = route.router.to("loansMgr").send(route.MSG.LOANMGR_GET_QOPT);
-            let type :EntrustedCaseType = route.router.to("loansMgr").send(route.MSG.LOANMGR_GET_TYPE);
+            let qOpt :QueryOption = route.router.to(pages.PageUtil.getPageId(pages.PageType.loansMgr)).send(route.MSG.LOANMGR_GET_QOPT);
+            let type :EntrustedCaseType = route.router.to(pages.PageUtil.getPageId(pages.PageType.loansMgr)).send(route.MSG.LOANMGR_GET_TYPE);
             let action = collection.Net.BASE_URL + "/entrusted_case/download.do?type=" + type + "&query=" + JSON.stringify(qOpt);
             pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-exportForm").attr("action", action);
             pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-exportForm")[0].submit();

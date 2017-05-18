@@ -79,7 +79,7 @@ public class ECReportServiceImpl implements ECReportService {
 	
 	Mapping<EntrustedCaseReportEntity, EntrustedCaseReport> reportMapping = new Mapping<EntrustedCaseReportEntity, EntrustedCaseReport>(){
 
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss");
 		Mapper<AttachementEntity, Attachement> attachMapper = new Mapper<AttachementEntity, Attachement>(AttachMapping.ae2aMapping);
 		
 		@Override
@@ -88,7 +88,7 @@ public class ECReportServiceImpl implements ECReportService {
 			EntrustedCaseReport ecr = new EntrustedCaseReport();
 			ecr.setId(from.getId());
 			ecr.setContent(from.getContent());
-			ecr.setDate(formatter.format(from.getDate()));
+			ecr.setDate(formatter.format(from.getCreatedTime()));
 			ecr.setEntrustedCaseId(from.getEntrustedCaseManager().getId());
 			ecr.setAttachements(attachMapper.forceMap(from.getAttachements()));
 			ecr.setTitle(from.getTitle());
@@ -146,11 +146,7 @@ public class ECReportServiceImpl implements ECReportService {
 			if (ecr.getContent() != null){
 				ecre.setContent(ecr.getContent());
 			}
-			
-			if (ecr.getDate() != null){
-				ecre.setDate(Date.valueOf(ecr.getDate()));
-			}
-			
+						
 			if (Checking.isExist(attachements)){
 				List<AttachementEntity> aes = ecre.getAttachements();
 				if (null == ecre){
@@ -220,12 +216,6 @@ public class ECReportServiceImpl implements ECReportService {
 			ecre.setTitle(ecr.getTitle());
 			ecre.setModifier(usr);
 			ecre.setContent(ecr.getContent());
-			if (ecr.getDate() != null){
-				ecre.setDate(Date.valueOf(ecr.getDate()));
-			}else{
-				ecre.setDate(new Date(Calendar.getInstance().getTimeInMillis()));
-			}
-			
 
 			if (ecr.getPhoneRecId() != null) {
 				// 由 接电话 产生的 report
