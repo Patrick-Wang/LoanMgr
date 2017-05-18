@@ -174,6 +174,7 @@ module pages{
                 PageUtil.jqPage(this.page).css("display", "");
                 this.onShown();
             }
+            this.refresh();
         }
 
         hide():void {

@@ -160,7 +160,9 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	border-left-width:0px;
 	border-right-width:0px;
 }
-
+.ui-jqgrid .ui-pg-selbox{
+	padding:0;
+}
 
 
 .ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button

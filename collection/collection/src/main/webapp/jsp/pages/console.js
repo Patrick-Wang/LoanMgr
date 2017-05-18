@@ -113,6 +113,7 @@ var pages;
                 //  width:  $("#allLoans").width() - 30,
                 shrinkToFit: false,
                 rowNum: 10,
+                rowList: [10, 20, 50],
                 autoScroll: true,
                 pager: '#tbNotAssignedPager',
                 //onCellSelect:(rowid,iCol,cellcontent,e)=>{
@@ -180,6 +181,7 @@ var pages;
                 //  width:  $("#allLoans").width() - 30,
                 shrinkToFit: true,
                 rowNum: 10,
+                rowList: [10, 20, 50],
                 autoScroll: true,
                 pager: '#tbNotRepliedMsgPager'
             }));
@@ -233,6 +235,7 @@ var pages;
                 height: '100%',
                 shrinkToFit: false,
                 rowNum: 10,
+                rowList: [10, 20, 50],
                 autoScroll: true,
                 pager: '#tbAllPager',
                 //onCellSelect:(rowid,iCol,cellcontent,e)=>{
@@ -300,6 +303,7 @@ var pages;
                 //  width:  $("#allLoans").width() - 30,
                 shrinkToFit: true,
                 rowNum: 10,
+                rowList: [10, 20, 50],
                 autoScroll: true,
                 pager: '#tbWaitRepliedMsgPager'
             }));

@@ -162,6 +162,7 @@ var pages;
                 PageUtil.jqPage(this.page).css("display", "");
                 this.onShown();
             }
+            this.refresh();
         };
         PageImpl.prototype.hide = function () {
             if (this.isShown()) {
