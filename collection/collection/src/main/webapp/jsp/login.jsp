@@ -19,14 +19,13 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" href="${pageContext.request.contextPath}/jsp/assets/img/favicon.png" type="image/x-icon">
+ <!--Basic Scripts-->
+    <script src="${pageContext.request.contextPath}/jsp/assets/js/jquery.min.js"></script>
 
     <!--Basic Styles-->
     <link href="${pageContext.request.contextPath}/jsp/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/jsp/assets/css/font-awesome.min.css" rel="stylesheet" />
-
-    <!--Fonts-->
-    <link href="../fonts.googleapis.com/css@family=open+sans_3a300italic,400italic,600italic,700italic,400,600,700,300.css" rel="stylesheet" type="text/css">
 
     <!--Beyond styles-->
     <link id="beyond-link" href="${pageContext.request.contextPath}/jsp/assets/css/beyond.min.css" rel="stylesheet" />
@@ -98,9 +97,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
         </div>
     </div>
 
-    <!--Basic Scripts-->
-    <script src="${pageContext.request.contextPath}/jsp/assets/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/assets/js/bootstrap.min.js"></script>
+       <script src="${pageContext.request.contextPath}/jsp/assets/js/bootstrap.min.js"></script>
     <script src="${pageContext.request.contextPath}/jsp/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
 
     <!--Beyond Scripts-->
