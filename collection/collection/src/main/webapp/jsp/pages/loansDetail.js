@@ -285,6 +285,10 @@ var pages;
                 $("#template_modify_repayment").children().removeAttr("id");
             });
             $("#bootbox-modify-attachment-property").on('click', function () {
+                if ($(".attachement__").length > 0) {
+                    pages.Toast.warning("没有可以修改的附件");
+                    return;
+                }
                 $("#template_modify_attachment_property").empty();
                 $(".attachement__").each(function (i, e) {
                     var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", {"className": "row", "data-id": $(e).attr("value")}, React.createElement("div", {"className": "col-md-12"}, React.createElement("div", {"className": "form-group"}, React.createElement("label", {"className": "col-sm-4 control-label no-padding-right"}, $(e).text()), React.createElement("div", {"className": "col-sm-4"}, React.createElement("input", {"className": "form-control", "placeholder": $(e).text(), "data-edit": "false"})), React.createElement("div", {"className": "col-sm-4"}, React.createElement("input", {"className": "form-control", "data-mask": "9999/99/99 99:99:99", "placeholder": $(e).attr("data-time")}))))));

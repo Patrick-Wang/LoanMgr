@@ -229,27 +229,27 @@ var pages;
             var _this = this;
             var rids = this.find("#as-msgsTable").getDataIDs();
             for (var i = 0; i < rids.length; ++i) {
-                var msgPair = this.findMsgPair(rids[i]);
-                if (msgPair.answer != undefined) {
-                    continue;
-                }
+                //let msgPair:MsgPair = this.findMsgPair(rids[i]);
+                //if (msgPair.answer != undefined){
+                //    continue;
+                //}
                 for (var j = 0; j < data.length; ++j) {
                     if (data[j][0] == rids[i]) {
                         if (authority.ping("/ec/answer")) {
-                            var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", null, React.createElement("a", {"id": data[j][0], "className": "btn btn-default btn-xs purple"}, React.createElement("i", {"className": "fa fa-share"}), "回复"), React.createElement("a", {"id": data[j][0], "className": "btn btn-default btn-xs purple"}, React.createElement("i", {"className": "fa fa-share"}), "前往")));
+                            var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", {"id": ""}, React.createElement("a", {"value": data[j][0], "className": "btn btn-default btn-xs purple"}, React.createElement("i", {"className": "fa fa-share"}), "回复"), React.createElement("a", {"value": data[j][0], "className": "btn btn-default btn-xs purple"}, React.createElement("i", {"className": "fa fa-share"}), "前往")));
                             this.find("#as-msgsTable").setCell(rids[i], 6, html);
-                            this.find("#as-msgsTable #" + data[j][0] + " a:eq(0)").click(function () {
-                                _this.clickAnswer(data[j][0]);
+                            this.find("#as-msgsTable a[value=" + data[j][0] + "]:eq(0)").click(function (e) {
+                                _this.clickAnswer($(e.currentTarget).attr("value"));
                             });
-                            this.find("#as-msgsTable #" + data[j][0] + " a:eq(1)").click(function () {
-                                _this.clickGo(data[j][0]);
+                            this.find("#as-msgsTable a[value=" + data[j][0] + "]:eq(1)").click(function (e) {
+                                _this.clickGo($(e.currentTarget).attr("value"));
                             });
                         }
                         else {
                             var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", null, React.createElement("a", {"id": data[j][0], "className": "btn btn-default btn-xs purple"}, React.createElement("i", {"className": "fa fa-share"}), "前往")));
                             this.find("#as-msgsTable").setCell(rids[i], 6, html);
-                            this.find("#as-msgsTable #" + data[j][0] + " a").click(function () {
-                                _this.clickGo(data[j][0]);
+                            this.find("#as-msgsTable #" + data[j][0]).click(function (e) {
+                                _this.clickGo(e.currentTarget.id);
                             });
                         }
                         break;

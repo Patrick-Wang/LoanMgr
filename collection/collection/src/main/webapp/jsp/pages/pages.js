@@ -154,13 +154,13 @@ var pages;
             return PageUtil.jqPage(this.page).find(q);
         };
         PageImpl.prototype.show = function () {
+            this.refresh();
             if (!this.isShown()) {
                 //PageUtil.jqPage(this.page).append(this.html);
                 //init();
                 PageUtil.jqPage(this.page).css("display", "");
                 this.onShown();
             }
-            this.refresh();
         };
         PageImpl.prototype.hide = function () {
             if (this.isShown()) {

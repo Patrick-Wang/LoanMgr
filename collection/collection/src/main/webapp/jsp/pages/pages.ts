@@ -166,13 +166,13 @@ module pages{
         }
 
         show():void {
+            this.refresh();
             if (!this.isShown()) {
                 //PageUtil.jqPage(this.page).append(this.html);
                 //init();
                 PageUtil.jqPage(this.page).css("display", "");
                 this.onShown();
             }
-            this.refresh();
         }
 
         hide():void {

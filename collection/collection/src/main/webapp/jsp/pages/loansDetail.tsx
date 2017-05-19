@@ -306,6 +306,12 @@ module pages {
 
             $("#bootbox-modify-attachment-property").on('click', () => {
 
+
+                if ($(".attachement__").length > 0){
+                    Toast.warning("没有可以修改的附件");
+                    return;
+                }
+
                 $("#template_modify_attachment_property").empty();
 
 

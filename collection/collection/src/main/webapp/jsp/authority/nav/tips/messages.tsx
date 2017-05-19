@@ -131,11 +131,11 @@ module authority.nav.tips.messages{
             $(".navMsgTmp").remove();
             for (let i = 0; i < ums.length; ++i){
                 $("#msgCountDetail").after(this.buildMessageDetail(ums[i]));
-                let id = ums[i].msgId;
-                $(".navMsgTmp #" + ums[i].msgId).click(()=>{
-                    this.clickMessage(id);
-                });
             }
+
+            $(".navMsgTmp a").click((e)=>{
+                this.clickMessage(e.currentTarget.id);
+            });
         }
     }
 }

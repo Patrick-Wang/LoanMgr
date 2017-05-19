@@ -95,11 +95,10 @@ var authority;
                         $(".navMsgTmp").remove();
                         for (var i = 0; i < ums.length; ++i) {
                             $("#msgCountDetail").after(this.buildMessageDetail(ums[i]));
-                            var id = ums[i].msgId;
-                            $(".navMsgTmp #" + ums[i].msgId).click(function () {
-                                _this.clickMessage(id);
-                            });
                         }
+                        $(".navMsgTmp a").click(function (e) {
+                            _this.clickMessage(e.currentTarget.id);
+                        });
                     };
                     return MsgTip;
                 })();

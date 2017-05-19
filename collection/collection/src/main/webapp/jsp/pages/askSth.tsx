@@ -241,29 +241,29 @@ module pages {
             let rids = this.find("#as-msgsTable").getDataIDs();
             for (let i = 0; i < rids.length; ++i) {
 
-                let msgPair:MsgPair = this.findMsgPair(rids[i]);
-                if (msgPair.answer != undefined){
-                    continue;
-                }
+                //let msgPair:MsgPair = this.findMsgPair(rids[i]);
+                //if (msgPair.answer != undefined){
+                //    continue;
+                //}
 
                 for (var j = 0; j < data.length; ++j) {
                     if (data[j][0] == rids[i]) {
                         if (authority.ping("/ec/answer")) {
-                            let html = ReactDOMServer.renderToStaticMarkup(<div>
-                                    <a id={data[j][0]} className="btn btn-default btn-xs purple"><i
+                            let html = ReactDOMServer.renderToStaticMarkup(<div id="">
+                                    <a value={data[j][0]} className="btn btn-default btn-xs purple"><i
                                         className="fa fa-share"></i>回复
                                     </a>
-                                    <a id={data[j][0]} className="btn btn-default btn-xs purple"><i
+                                    <a value={data[j][0]} className="btn btn-default btn-xs purple"><i
                                         className="fa fa-share"></i>前往
                                     </a>
                                 </div>
                             );
                             this.find("#as-msgsTable").setCell(rids[i], 6, html);
-                            this.find("#as-msgsTable #" + data[j][0] + " a:eq(0)").click(()=> {
-                                this.clickAnswer(data[j][0]);
+                            this.find("#as-msgsTable a[value=" + data[j][0] + "]:eq(0)").click((e)=> {
+                                this.clickAnswer($(e.currentTarget).attr("value"));
                             });
-                            this.find("#as-msgsTable #" + data[j][0] + " a:eq(1)").click(()=> {
-                                this.clickGo(data[j][0]);
+                            this.find("#as-msgsTable a[value=" + data[j][0] + "]:eq(1)").click((e)=> {
+                                this.clickGo($(e.currentTarget).attr("value"));
                             });
                         } else {
                             let html = ReactDOMServer.renderToStaticMarkup(<div>
@@ -273,8 +273,8 @@ module pages {
                                 </div>
                             );
                             this.find("#as-msgsTable").setCell(rids[i], 6, html);
-                            this.find("#as-msgsTable #" + data[j][0] + " a").click(()=> {
-                                this.clickGo(data[j][0]);
+                            this.find("#as-msgsTable #" + data[j][0]).click((e)=> {
+                                this.clickGo(e.currentTarget.id);
                             });
                         }
 
