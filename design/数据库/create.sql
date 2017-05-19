@@ -594,7 +594,7 @@ insert into `authority` (intf, role) values
 ((select id from interface where address='/phone/upload.do'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
 
 /*data auth*/
-((select id from interface where address='/entrusted_case_manager/get/own'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
+((select id from interface where address='/entrusted_case_manager/get/own'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/entrusted_case_manager/get/all'), (select id from role where name='ROLE_ADMIN')),
 
 /*UI auth*/

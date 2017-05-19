@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" session="false"%>
 <style>
-#rearangeOfficePage #allLoans .widget {
+#rearangeOfficePage #ro-allLoans .widget {
 	margin-bottom: -30px;
 }
 </style>
@@ -138,11 +138,11 @@
 		<div class="actions actions-footer" id="ro-WiredWizard-actions">
 			<div class="btn-group">
 				<button type="button" class="btn btn-default btn-sm btn-prev">
-					<i class="fa fa-angle-left"></i>Prev
+					<i class="fa fa-angle-left"></i>上一步
 				</button>
 				<button type="button" class="btn btn-default btn-sm btn-next"
-					data-last="Finish">
-					Next<i class="fa fa-angle-right"></i>
+					data-last="完成">
+				下一步<i class="fa fa-angle-right"></i>
 				</button>
 			</div>
 		</div>

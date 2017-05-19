@@ -53,7 +53,7 @@ var pages;
                     break;
                 }
             }
-            $("#alwiredstep3 .alert").text("共计将如下 " + this.selectedEcs.length + " 条委案分配给 " + this.selectedUser.orgName + " 内勤人员 " + this.selectedUser.name + "。");
+            this.find("#ro-wiredstep3 .alert").text("共计将如下 " + this.selectedEcs.length + " 条委案分配给 " + this.selectedUser.orgName + " 内勤人员 " + this.selectedUser.name + "。");
             var tableAssist = pages.JQGridAssistantFactory.createTableAssist("ro-ensure", this.ecType);
             var loans = [];
             for (var i = 0; i < this.selectedEcs.length; ++i) {
@@ -74,9 +74,9 @@ var pages;
                 multiselect: false,
                 pager: '#ro-ensurePager'
             }));
-            if ($("#ro-ensure-outer").parent().width() != $("##ro-ensure-outer").width()) {
-                $("#ro-ensureTable").setGridWidth($("#ro-ensure-outer").parent().width());
-            }
+            //if ($("#ro-ensure-outer").parent().width() != $("#ro-ensure-outer" ).width()) {
+            //    $("#ro-ensureTable").setGridWidth($("#ro-ensure-outer").parent().width());
+            //}
         };
         RearangeOffice.prototype.goStep1 = function () {
             var step = this.find('#ro-WiredWizard').wizard('selectedItem').step;
