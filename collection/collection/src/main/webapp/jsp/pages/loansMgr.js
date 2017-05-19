@@ -30,6 +30,7 @@ var pages;
                         _this.isOwner = true;
                         break;
                     case route.MSG.CONSOLE_IS_MANAGER:
+                        _this.find(".dowebok:eq(1) input:eq(2)").prop("checked", true);
                         _this.isManager = true;
                     case route.MSG.LOANMGR_GET_QOPT:
                         return _this.getQOpt();

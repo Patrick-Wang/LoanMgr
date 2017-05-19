@@ -27,6 +27,7 @@ module pages{
                         this.isOwner = true;
                         break;
                     case route.MSG.CONSOLE_IS_MANAGER:
+                        this.find(".dowebok:eq(1) input:eq(2)").prop("checked", true);
                         this.isManager = true;
                     case route.MSG.LOANMGR_GET_QOPT:
                         return this.getQOpt();

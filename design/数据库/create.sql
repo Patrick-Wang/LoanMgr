@@ -240,7 +240,7 @@ create table `entrusted_case_credit_loan`(
 	`qyje`	double	,--	签约金额
 	`fkje`	double	,--	放款金额
 	`cplx`	varchar(50)	,--	产品类型
-	`fksj`	date	,--	放款时间
+	`fksj`	datetime	,--	放款时间
 	`tqjqje`	double	,--	提前结清金额
 	`zqs`	int	,--	总期数
 	`dqqs`	int	,--	当前期数

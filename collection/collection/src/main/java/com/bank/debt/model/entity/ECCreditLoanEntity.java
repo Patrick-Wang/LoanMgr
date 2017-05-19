@@ -1,16 +1,18 @@
 package com.bank.debt.model.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GenerationType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import com.speed.frame.model.entity.AbstractReadWriteEntity;
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.speed.frame.model.entity.AbstractReadWriteEntity;
 
 
 @Entity
@@ -45,7 +47,7 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	Double	qyje		;
 	Double	fkje		;
 	String	cplx		;
-	Date	fksj		;
+	Timestamp	fksj		;
 	Double	tqjqje		;
 	Integer	zqs		;
 	Integer	dqqs		;
@@ -158,10 +160,10 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	public void setCplx(String cplx) {
 		this.cplx = cplx;
 	}
-	public Date getFksj() {
+	public Timestamp getFksj() {
 		return fksj;
 	}
-	public void setFksj(Date fksj) {
+	public void setFksj(Timestamp fksj) {
 		this.fksj = fksj;
 	}
 	public Double getTqjqje() {
