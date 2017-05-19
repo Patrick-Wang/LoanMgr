@@ -144,7 +144,7 @@ create table `entrusted_case_car_loan`(
 	`pch` varchar(20),
 	`wwrq`	date	,--	委外日期
 	`wwzt`	varchar(54)	,--	委外状态
-	`wwjig` varchar(50)	,
+	`wwjg` varchar(50)	,
 	`wwje` double,
 	`yhje` double,
 	`syje` double,
@@ -214,7 +214,7 @@ create table `entrusted_case_car_loan`(
 	`khhztd`	text	,--	客户合作态度
 	`clzt`	text	,--	处理状态
 	`fkuirq`	date	,--	反馈日期
-	`wwjg`	text	,--	委外结果
+	`wwjieg`	text	,--	委外结果
 	`pcode`	varchar(73)	,--	PCODE
 	`ccode`	varchar(73)	,--	CCODE
 	PRIMARY KEY (`id`)
@@ -227,7 +227,7 @@ create table `entrusted_case_credit_loan`(
 	`pch` varchar(20),
 	`wwrq`	date	,--	委外日期
 	`wwzt`	varchar(54)	,--	委外状态
-	`wwjig` varchar(50)	,
+	`wwjg` varchar(50)	,
 	`wwje` double,
 	`yhje` double,
 	`syje` double,
@@ -309,7 +309,7 @@ create table `entrusted_case_credit_card`(
 	`pch`	varchar(50)	,--	批次号
 	`wwrq`	date	,--	委外日期
 	`wwzt`	varchar(54)	,--	委外状态
-	`wwjig` varchar(50)	,
+	`wwjg` varchar(50)	,
 	`wwje` double,
 	`yhje` double,
 	`syje` double,

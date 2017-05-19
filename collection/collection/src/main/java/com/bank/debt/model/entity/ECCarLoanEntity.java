@@ -33,7 +33,7 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	String pch;
 	Date wwrq;
 	String wwzt;
-	String wwjig;
+	String wwjg;
 	Double wwje;
 	Double yhje;
 	Double syje;
@@ -102,7 +102,7 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	String	khhztd	;
 	String	clzt	;
 	Date	fkuirq	;
-	String	wwjg	;
+	String	wwjieg	;
 	String	pcode	;
 	String	ccode	;
 	
@@ -508,11 +508,11 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	public void setFkuirq(Date fkuirq) {
 		this.fkuirq = fkuirq;
 	}
-	public String getWwjg() {
-		return wwjg;
+	public String getWwjieg() {
+		return wwjieg;
 	}
-	public void setWwjg(String wwjg) {
-		this.wwjg = wwjg;
+	public void setWwjieg(String wwjieg) {
+		this.wwjieg = wwjieg;
 	}
 	public String getPcode() {
 		return pcode;
@@ -545,11 +545,11 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	public void setPch(String pch) {
 		this.pch = pch;
 	}
-	public String getWwjig() {
-		return wwjig;
+	public String getWwjg() {
+		return wwjg;
 	}
-	public void setWwjig(String wwjig) {
-		this.wwjig = wwjig;
+	public void setWwjg(String wwjg) {
+		this.wwjg = wwjg;
 	}
 	public Double getWwje() {
 		return wwje;

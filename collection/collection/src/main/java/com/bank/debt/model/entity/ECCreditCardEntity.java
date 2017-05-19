@@ -33,7 +33,7 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	String pch;
 	Date wwrq;
 	String wwzt; //未分配、已分配、进行中、已结案
-	String wwjig;
+	String wwjg;
 	Double wwje;
 	Double yhje;
 	Double syje;
@@ -1002,9 +1002,9 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void update() {
 		this.code = String.format("00%08d", this.getId());
-		if (this.wwjig != null && this.wwrq != null){
+		if (this.wwjg != null && this.wwrq != null){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
-			this.pch = wwjig + sdf.format(this.wwrq);
+			this.pch = wwjg + sdf.format(this.wwrq);
 		}
 	}
 	public Date getWwrq() {
@@ -1019,11 +1019,11 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	public void setWwzt(String wwzt) {
 		this.wwzt = wwzt;
 	}
-	public String getWwjig() {
-		return wwjig;
+	public String getWwjg() {
+		return wwjg;
 	}
-	public void setWwjig(String wwjig) {
-		this.wwjig = wwjig;
+	public void setWwjg(String wwjig) {
+		this.wwjg = wwjig;
 	}
 	public Double getWwje() {
 		return wwje;
