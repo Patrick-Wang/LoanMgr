@@ -65,7 +65,7 @@ module pages{
 
         static stop(){
             let endTime = Date.now();
-            if (endTime - Loading.startTime < 1500){
+            if (endTime - Loading.startTime < 1200){
                 setTimeout(()=>{
                     $("#mloading").mLoading("hide");
                     $("#mloading").hide();

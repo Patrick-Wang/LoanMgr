@@ -51,7 +51,7 @@ var pages;
         };
         Loading.stop = function () {
             var endTime = Date.now();
-            if (endTime - Loading.startTime < 1500) {
+            if (endTime - Loading.startTime < 1200) {
                 setTimeout(function () {
                     $("#mloading").mLoading("hide");
                     $("#mloading").hide();

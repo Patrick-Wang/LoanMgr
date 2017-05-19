@@ -4,6 +4,9 @@
 #rearangeOfficePage #ro-allLoans .widget {
 	margin-bottom: -30px;
 }
+.pricing-container .dowebok li {
+	margin: 0;
+}
 </style>
 <div class="page-breadcrumbs">
 	<ul class="breadcrumb">
@@ -45,11 +48,7 @@
 					class="title">确认调整信息</span> <span class="chevron"></span></li>
 			</ul>
 		</div>
-		<style>
-.pricing-container .dowebok li {
-	margin: 0;
-}
-</style>
+
 		<div class="step-content" id="ro-WiredWizardsteps">
 			<div class="step-pane active" id="ro-wiredstep1">
 				<div class="row pricing-container">
@@ -142,7 +141,7 @@
 				</button>
 				<button type="button" class="btn btn-default btn-sm btn-next"
 					data-last="完成">
-				下一步<i class="fa fa-angle-right"></i>
+					下一步<i class="fa fa-angle-right"></i>
 				</button>
 			</div>
 		</div>

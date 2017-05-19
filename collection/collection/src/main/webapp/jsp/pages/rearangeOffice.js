@@ -36,6 +36,12 @@ var pages;
                     }
                 }
             });
+            this.find(".dowebok input").on("click", function () {
+                var type = _this.find(".dowebok input:checked").attr("myid");
+                if (type != _this.ecType) {
+                    _this.refresh();
+                }
+            });
             $('#ro-WiredWizard').on('changed', function (evt) {
                 if ($('#ro-WiredWizard').wizard('selectedItem').step == 3) {
                     _this.onStep3();

@@ -47,6 +47,14 @@ module pages{
                 }
             });
 
+            this.find(".dowebok input").on("click", ()=>{
+                let type = this.find(".dowebok input:checked").attr("myid");
+                if (type != this.ecType){
+                    this.refresh();
+                }
+            });
+
+
 
             $('#ro-WiredWizard').on('changed', (evt) => {
                 if ($('#ro-WiredWizard').wizard('selectedItem').step == 3){
