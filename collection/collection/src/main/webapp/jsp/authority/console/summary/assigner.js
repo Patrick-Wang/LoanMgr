@@ -53,7 +53,7 @@ var pages;
                 Message.getUnreadCount()
                     .done(function (count) {
                     $("#console-status>div:eq(2)>div").eq(0)
-                        .text(count).next().text("未回复委案咨询");
+                        .text(count).next().text("待回复咨询");
                 });
             };
             return Accepter;

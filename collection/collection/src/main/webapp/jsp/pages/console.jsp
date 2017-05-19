@@ -95,8 +95,6 @@
 										全部委案 </a></li>
 								<li class="tab-red"><a data-toggle="tab"
 									href="#notAssigned"> 未分配委案 </a></li>
-								<%--<li class="tab-yellow"><a data-toggle="tab"--%>
-									<%--href="#settings"> 设置 </a></li>--%>
 							</ul>
 							<div class="tab-content tabs-flat">
 								<div class="row">

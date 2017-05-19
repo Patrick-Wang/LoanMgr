@@ -78,6 +78,13 @@ module pages {
 
             let type = this.find(".dowebok input:checked").attr("myid");
             let opt:QueryOption = {};
+            if (authority.ping("/ec/answer")){
+                this.find(".nav-tabs a:eq(1)").text("未分配的委案");
+            }else{
+                this.find(".nav-tabs a:eq(1)").text("未结案的委案");
+            }
+
+
             EntrustedCase.search(type, opt).done((ecs:EC[])=> {
                 this.ecs = ecs;
                 this.ecType = type;
@@ -112,16 +119,29 @@ module pages {
             let tableAssist:JQTable.JQGridAssistant = pages.JQGridAssistantFactory.createTableAssist("tbNotAssigned", type);
             let loans = [];
             let isLinked:any = {};
-            for (let i = 0; i < this.ecs.length; ++i) {
-                if (undefined == this.ecs[i].assignee || "" == this.ecs[i].assignee) {
-                    if (this.ecs[i].loan[2] != "" && this.ecs[i].loan[2] != null){
-                        if (this.isManager || (this.isOwner && this.ecs[i].owner == context.userName)){
-                            isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
+            if (this.isOwner){
+                for (let i = 0; i < this.ecs.length; ++i) {
+                    if (!this.ecs[i].assignee) {
+                        if (this.ecs[i].loan[1]) {
+                            if (this.isManager || this.ecs[i].owner == context.userName) {
+                                isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
+                                loans.push(this.ecs[i].loan);
+                            }
                         }
                     }
-                    loans.push(this.ecs[i].loan);
+                }
+            }else{
+                let index = collection.protocol.getTitles(this.ecType).indexOf("委案状态");
+                for (let i = 0; i < this.ecs.length; ++i) {
+                    if (this.ecs[i].loan[1] && this.ecs[i].loan[1 + index] == "已分配") {
+                        if (this.isManager || this.ecs[i].assignee == context.userName) {
+                            isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
+                            loans.push(this.ecs[i].loan);
+                        }
+                    }
                 }
             }
+
 
             $("#tbNotAssignedTable").jqGrid(
                 tableAssist.decorate({
@@ -253,12 +273,13 @@ module pages {
                 if (this.ecs[i].loan[1]){
                     if (this.isManager){
                         isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
+                        loans.push(this.ecs[i].loan);
                     }else if (this.isOwner && this.ecs[i].owner == context.userName ||
                         this.isAssigner && this.ecs[i].assignee == context.userName){
                         isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
+                        loans.push(this.ecs[i].loan);
                     }
                 }
-                loans.push(this.ecs[i].loan);
             }
 
             $("#tbAllTable").jqGrid(
