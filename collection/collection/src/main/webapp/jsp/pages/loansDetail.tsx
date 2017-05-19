@@ -563,20 +563,18 @@ module pages {
                     if (this.check(msgs)){
                         this.ec.messages = msgs;
                         this.refreshMessage();
+                        route.router.broadcast(route.MSG.EC_DETAIL_REFRESH);
                     }
                 });
+                route.router.broadcast(route.MSG.EC_DETAIL_REFRESH);
             }
         }
 
         protected onRefresh():void {
-            if (!this.firstRefresh){
-                collection.EntrustedCase.search(this.ecType, {mgrId:this.ec.managerId}).done((ecs:collection.protocol.EC[])=>{
-                    this.ec = ecs[0];
-                    this.onShown();
-                });
-            }else{
-                this.firstRefresh = false;
-            }
+            collection.EntrustedCase.search(this.ecType, {mgrId:this.ec.managerId}).done((ecs:collection.protocol.EC[])=>{
+                this.ec = ecs[0];
+                this.onShown();
+            });
         }
 
         private check(obj):boolean{

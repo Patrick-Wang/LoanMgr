@@ -11,12 +11,10 @@ var pages;
         PageType[PageType["exportLoans"] = 6] = "exportLoans";
         PageType[PageType["callCenter"] = 7] = "callCenter";
         PageType[PageType["userMgr"] = 8] = "userMgr";
-        PageType[PageType["propertyMgr"] = 9] = "propertyMgr";
-        PageType[PageType["backup"] = 10] = "backup";
-        PageType[PageType["rearangeOffice"] = 11] = "rearangeOffice";
-        PageType[PageType["rearangeBussiness"] = 12] = "rearangeBussiness";
-        PageType[PageType["loansDetail"] = 13] = "loansDetail";
-        PageType[PageType["end"] = 14] = "end";
+        PageType[PageType["backup"] = 9] = "backup";
+        PageType[PageType["rearangeOffice"] = 10] = "rearangeOffice";
+        PageType[PageType["loansDetail"] = 11] = "loansDetail";
+        PageType[PageType["end"] = 12] = "end";
     })(pages.PageType || (pages.PageType = {}));
     var PageType = pages.PageType;
     var Toast = (function () {

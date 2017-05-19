@@ -88,6 +88,7 @@ public class MessageServiceImpl implements MessageService {
 		public Message onMap(MessageEntity from) throws MappingSkipException, MappingFailedException {
 			Message ms = new Message();
 			ms.setEcMgrId(from.getEntrustedCaseManager().getId());
+			ms.setEcType(from.getEntrustedCaseManager().getType());
 			ms.setEcCode(getECCode(from.getEntrustedCaseManager()));
 			ms.setFromId(from.getCome().getId());
 			ms.setFromName(from.getCome().getUsername());

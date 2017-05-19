@@ -2,6 +2,7 @@
 module authority.nav.tips.messages{
     import Receiver = route.Receiver;
     import PageType = pages.PageType;
+    import Message = collection.Message;
     let ADDR:string = "/nav/tips/messages";
     authority.register(ADDR, () => {
         let html = ReactDOMServer.renderToStaticMarkup(
@@ -40,7 +41,7 @@ module authority.nav.tips.messages{
     });
 
     export class MsgTip{
-
+        mecs : collection.protocol.Message[];
         constructor(){
             $("#queryAllMsgs").click(()=>{
                 this.onClickQueryAllMessage();
@@ -50,6 +51,7 @@ module authority.nav.tips.messages{
         updateTips(){
             collection.Message.getUnreadMessages()
                 .done((mecs : collection.protocol.Message[])=>{
+                   this.mecs = mecs;
                    this.onLoadMEC(mecs);
                 });
         }
@@ -76,11 +78,25 @@ module authority.nav.tips.messages{
         }
 
         onClickQueryAllMessage(){
-            sidebar.switchPage(PageType.askSth);
+            let msgIds = [];
+            $(this.mecs).each((i, e:collection.protocol.Message)=>{
+                msgIds.push(e.msgId);
+            });
+            if (msgIds.length > 0){
+                Message.setMessageRead(msgIds).done(()=>{
+                    sidebar.switchPage(PageType.askSth);
+                    this.updateTips();
+                })
+            }else{
+                sidebar.switchPage(PageType.askSth);
+            }
         }
 
         clickMessage(msgId:number){
-            sidebar.switchPage(PageType.askSth);
+            Message.setMessageRead([msgId]).done(()=>{
+                sidebar.switchPage(PageType.askSth);
+                this.updateTips();
+            })
         }
 
         buildMessageDetail(um):string {
@@ -116,7 +132,7 @@ module authority.nav.tips.messages{
             for (let i = 0; i < ums.length; ++i){
                 $("#msgCountDetail").after(this.buildMessageDetail(ums[i]));
                 let id = ums[i].msgId;
-                $("#" + ums[i].msgId).click(()=>{
+                $(".navMsgTmp #" + ums[i].msgId).click(()=>{
                     this.clickMessage(id);
                 });
             }

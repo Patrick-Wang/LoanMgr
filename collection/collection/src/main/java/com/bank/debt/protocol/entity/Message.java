@@ -21,6 +21,7 @@ public class Message  extends ProtocolEntityImpl{
 	String title;
 	String Content;
 	String sendTime;
+	Integer ecType;
 	Integer read;
 	List<Attachement> attachements;
 
@@ -183,5 +184,17 @@ public class Message  extends ProtocolEntityImpl{
 
 	public void setEcMgrId(Integer ecMgrId) {
 		this.ecMgrId = ecMgrId;
+	}
+
+
+
+	public Integer getEcType() {
+		return ecType;
+	}
+
+
+
+	public void setEcType(Integer ecType) {
+		this.ecType = ecType;
 	}
 }

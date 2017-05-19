@@ -517,21 +517,18 @@ var pages;
                     if (_this.check(msgs)) {
                         _this.ec.messages = msgs;
                         _this.refreshMessage();
+                        route.router.broadcast(route.MSG.EC_DETAIL_REFRESH);
                     }
                 });
+                route.router.broadcast(route.MSG.EC_DETAIL_REFRESH);
             }
         };
         LoansDetail.prototype.onRefresh = function () {
             var _this = this;
-            if (!this.firstRefresh) {
-                collection.EntrustedCase.search(this.ecType, { mgrId: this.ec.managerId }).done(function (ecs) {
-                    _this.ec = ecs[0];
-                    _this.onShown();
-                });
-            }
-            else {
-                this.firstRefresh = false;
-            }
+            collection.EntrustedCase.search(this.ecType, { mgrId: this.ec.managerId }).done(function (ecs) {
+                _this.ec = ecs[0];
+                _this.onShown();
+            });
         };
         LoansDetail.prototype.check = function (obj) {
             if (obj instanceof Array) {

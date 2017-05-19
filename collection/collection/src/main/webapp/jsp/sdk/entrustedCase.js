@@ -31,6 +31,12 @@ var collection;
                 attachs: JSON.stringify(attachs)
             });
         };
+        EntrustedCase.delete = function (type, ids) {
+            return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/delete.do", {
+                ids: JSON.stringify(ids),
+                type: type
+            });
+        };
         return EntrustedCase;
     })();
     collection.EntrustedCase = EntrustedCase;

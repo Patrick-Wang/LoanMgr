@@ -5,6 +5,7 @@ module pages {
     import Message = collection.Message;
     import MsgPair = collection.MsgPair;
     import Attachement = collection.protocol.Attachement;
+    import switchPage = sidebar.switchPage;
 
 
 
@@ -18,7 +19,7 @@ module pages {
             var parent = this.find("#" + pName);
             parent.empty();
             parent.append("<table id='" + pName + "Table'></table><div id='" + pName + "Pager'></div>");
-            let titles = ["委案编码", "责任内勤", "回复时间", "咨询标题", "咨询内容", "回复内容", "相关附件"];
+            let titles = ["委案编码", "责任内勤", "回复时间", "咨询标题", "咨询内容", "回复内容"];
             let nodes = [];
             for (let i = 0; i < titles.length; ++i) {
                 nodes.push(JQTable.Node.create({
@@ -112,12 +113,12 @@ module pages {
             row.push(msg.title);
             row.push(msg.content);
             row.push(reMsg != undefined ? reMsg.content : "--");
-            let atts = [];
-            $(msg.attachements).each((i, e:Attachement)=>{
-                atts.push(e.display);
-            });
-
-            row.push(atts);
+            //let atts = [];
+            //$(msg.attachements).each((i, e:Attachement)=>{
+            //    atts.push(e.display);
+            //});
+            //
+            //row.push(atts);
             row.push("");
             return row;
         }
@@ -222,7 +223,18 @@ module pages {
         }
 
         private clickGo(msgId:any) {
-            alert(msgId);
+            let msg:collection.protocol.Message = null;
+            $( this.msgs).each((i, e:collection.protocol.Message)=>{
+                if (e.msgId == msgId){
+                    msg = e;
+                    return false;
+                }
+            });
+            route.router.to(PageUtil.getPageId(PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
+                ec : {managerId:msg.ecMgrId},
+                ecType : msg.ecType
+            });
+            sidebar.switchPage(PageType.loansDetail);
         }
 
         private updateAnswerGo(data:string[][]) {
@@ -241,11 +253,17 @@ module pages {
                                     <a id={data[j][0]} className="btn btn-default btn-xs purple"><i
                                         className="fa fa-share"></i>回复
                                     </a>
+                                    <a id={data[j][0]} className="btn btn-default btn-xs purple"><i
+                                        className="fa fa-share"></i>前往
+                                    </a>
                                 </div>
                             );
-                            this.find("#as-msgsTable").setCell(rids[i], 7, html);
-                            this.find("#as-msgsTable #" + data[j][0] + " a").click(()=> {
+                            this.find("#as-msgsTable").setCell(rids[i], 6, html);
+                            this.find("#as-msgsTable #" + data[j][0] + " a:eq(0)").click(()=> {
                                 this.clickAnswer(data[j][0]);
+                            });
+                            this.find("#as-msgsTable #" + data[j][0] + " a:eq(1)").click(()=> {
+                                this.clickGo(data[j][0]);
                             });
                         } else {
                             let html = ReactDOMServer.renderToStaticMarkup(<div>
@@ -254,7 +272,7 @@ module pages {
                                     </a>
                                 </div>
                             );
-                            this.find("#as-msgsTable").setCell(rids[i], 7, html);
+                            this.find("#as-msgsTable").setCell(rids[i], 6, html);
                             this.find("#as-msgsTable #" + data[j][0] + " a").click(()=> {
                                 this.clickGo(data[j][0]);
                             });
@@ -266,36 +284,36 @@ module pages {
             }
         }
 
-        onclickAttachement(msgId:number, attach:string) {
-            for (let i = 0; i < this.msgs.length; ++i) {
-                if (msgId == this.msgs[i].msgId) {
-                    this.find("#as-downloadForm [name=entrusted_case]").val(this.msgs[i].ecMgrId);
-                    this.find("#as-downloadForm [name=from]").val(this.msgs[i].fromId);
-                    this.find("#as-downloadForm [name=to]").val(this.msgs[i].toId);
-                    this.find("#as-downloadForm [name=attachement]").val(attach);
-                    this.find("#as-downloadForm").submit();
-                    break;
-                }
-            }
-        }
+        //onclickAttachement(msgId:number, attach:string) {
+        //    for (let i = 0; i < this.msgs.length; ++i) {
+        //        if (msgId == this.msgs[i].msgId) {
+        //            this.find("#as-downloadForm [name=entrusted_case]").val(this.msgs[i].ecMgrId);
+        //            this.find("#as-downloadForm [name=from]").val(this.msgs[i].fromId);
+        //            this.find("#as-downloadForm [name=to]").val(this.msgs[i].toId);
+        //            this.find("#as-downloadForm [name=attachement]").val(attach);
+        //            this.find("#as-downloadForm").submit();
+        //            break;
+        //        }
+        //    }
+        //}
 
-        private updateAttachement(data:string[][]) {
-            let rids = this.find("#as-msgsTable").getDataIDs();
-            for (let i = 0; i < rids.length; ++i) {
-                for (let j = 0; j < data.length; ++j) {
-                    if (data[j][0] == rids[i]) {
-                        let html = "";
-                        for (let k = 0; k < data[j][7].length; ++k) {
-                            html += "<div style='color:blue;cursor:pointer' onclick='pages.AskSth.ins.onclickAttachement(" +
-                                data[j][0] + ",\"" +
-                                data[j][7][k] + "\")'>" + data[j][7][k] + "</div>"
-                        }
-                        this.find("#as-msgsTable").setCell(rids[i], 6, html);
-                        break;
-                    }
-                }
-            }
-        }
+        //private updateAttachement(data:string[][]) {
+        //    let rids = this.find("#as-msgsTable").getDataIDs();
+        //    for (let i = 0; i < rids.length; ++i) {
+        //        for (let j = 0; j < data.length; ++j) {
+        //            if (data[j][0] == rids[i]) {
+        //                let html = "";
+        //                for (let k = 0; k < data[j][7].length; ++k) {
+        //                    html += "<div style='color:blue;cursor:pointer' onclick='pages.AskSth.ins.onclickAttachement(" +
+        //                        data[j][0] + ",\"" +
+        //                        data[j][7][k] + "\")'>" + data[j][7][k] + "</div>"
+        //                }
+        //                this.find("#as-msgsTable").setCell(rids[i], 6, html);
+        //                break;
+        //            }
+        //        }
+        //    }
+        //}
 
         private updateTable(data:string[][]):void {
             let tableAssist:JQTable.JQGridAssistant = this.createTableAssist("as-msgs");
@@ -311,24 +329,25 @@ module pages {
                     height: '100%',
                     shrinkToFit: true,
                     rowNum: 10,
+                    rowList:[10,20,50],
                     autoScroll: true,
                     multiselect: false,
                     pager: '#as-msgsPager',
                     onSortCol: (index, iCol, sortorder)=> {
                         setTimeout(()=> {
-                            this.updateAttachement(data);
+                            //this.updateAttachement(data);
                             this.updateAnswerGo(data);
                         }, 0);
                     },
                     onPaging: (btn)=> {
                         setTimeout(()=> {
-                            this.updateAttachement(data);
+                            //this.updateAttachement(data);
                             this.updateAnswerGo(data);
                         }, 0);
                     }
                 }));
 
-            this.updateAttachement(data);
+            //this.updateAttachement(data);
             this.updateAnswerGo(data);
         }
 

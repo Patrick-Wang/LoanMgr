@@ -18,6 +18,7 @@ module collection{
             });
         }
 
+
         static getBatchNOs():Promise<number[]>{
             return Net.post(Net.BASE_URL + "/entrusted_case/manager/batch.do");
         }

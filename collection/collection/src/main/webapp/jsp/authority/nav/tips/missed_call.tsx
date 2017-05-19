@@ -3,6 +3,7 @@
 module authority.nav.tips.missedCall {
     import Receiver = route.Receiver;
     import PageType = pages.PageType;
+    import CallStatus = collection.protocol.CallStatus;
     let ADDR:string = "/nav/tips/missed_call";
     authority.register(ADDR, function () {
         let html = ReactDOMServer.renderToStaticMarkup(
@@ -13,7 +14,7 @@ module authority.nav.tips.missedCall {
                 </a>
                 <ul id="navCallDetail" className="pull-right dropdown-menu dropdown-arrow dropdown-notifications">
                     <li className="dropdown-footer ">
-                        <div id="navCallCenter" >
+                        <div id="navCallCenter">
                             前往呼叫中心
                         </div>
                     </li>
@@ -37,6 +38,7 @@ module authority.nav.tips.missedCall {
     });
 
     class MissedCall {
+        prs:collection.protocol.PhoneRecord[];
 
         constructor() {
             $("#navCallCenter").click(()=> {
@@ -47,18 +49,35 @@ module authority.nav.tips.missedCall {
 
         updateTips():void {
             collection.Phone.getRecords().done((prs:collection.protocol.PhoneRecord[])=> {
+                this.prs = prs;
                 this.onLoadCallInfos(prs);
             });
         }
 
         onClickCallCenter() {
-            sidebar.switchPage(PageType.callCenter);
+            let promises = [];
+            $(this.prs).each((i, e:collection.protocol.PhoneRecord)=> {
+                promises.push(collection.Phone.updateStatus(e.recId, CallStatus.missedSkip));
+            });
+            if (promises.length > 0) {
+                $.when.apply($, promises).done(()=> {
+                    //$.each(arguments, function (i, data) {
+                    //    console.log(data); //data is the value returned by each of the ajax requests
+                    //
+                    //    total += data[0]; //if the result of the ajax request is a int value then
+                    //});
+                    sidebar.switchPage(PageType.callCenter);
+                    this.updateTips();
+                });
+            } else {
+                sidebar.switchPage(PageType.callCenter);
+            }
         }
 
         buildCallCenter(detailli:any, pr:collection.protocol.PhoneRecord) {
             detailli.before(ReactDOMServer.renderToStaticMarkup(
                 <li className="navMissedTmp">
-                    <a href="#">
+                    <a href="#" id={pr.recId}>
                         <div className="clearfix">
                             <div className="notification-icon">
                                 <i className="fa fa-phone bg-themeprimary white"></i>
@@ -70,6 +89,10 @@ module authority.nav.tips.missedCall {
                         </div>
                     </a>
                 </li>));
+
+            $(".navMissedTmp #" + pr.recId).click(()=>{
+                this.onClickMissedCall(pr.recId);
+            })
         }
 
         onLoadCallInfos(prs:collection.protocol.PhoneRecord[]):void {
@@ -82,6 +105,13 @@ module authority.nav.tips.missedCall {
                 }
             }
             $("#navCallCount").text(5 - count);
+        }
+
+        private onClickMissedCall(recId:number):void {
+            collection.Phone.updateStatus(recId, CallStatus.missedSkip).done(()=>{
+                sidebar.switchPage(PageType.callCenter);
+                this.updateTips();
+            });
         }
     }
 

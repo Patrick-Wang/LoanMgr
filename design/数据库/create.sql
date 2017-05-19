@@ -148,7 +148,6 @@ create table `entrusted_case_car_loan`(
 	`wwje` double,
 	`yhje` double,
 	`syje` double,
-	`bz`	text	,--	备注
 	`xh`	int	,--	序号
 	`wwdqr`	date	,--	委外到期日
 	`jarq`	date	,--	结案日期
@@ -232,7 +231,6 @@ create table `entrusted_case_credit_loan`(
 	`wwje` double,
 	`yhje` double,
 	`syje` double,
-	`bz`	text	,--	备注
 	`khh`	varchar(50)	,--	客户号
 	`khxm`	varchar(50)	,--	客户姓名
 	`zhh`	varchar(50)	,--	账户号
@@ -316,7 +314,6 @@ create table `entrusted_case_credit_card`(
 	`yhje` double,
 	`syje` double,
 	`tarq` date,
-	`bz`	text	,--	备注
 	`gaxlh`	varchar(50)	,--	个案序列号
 	`xm`	varchar(50)	,--	姓名
 	`wtf`	varchar(50)	,--	委托方
@@ -618,7 +615,7 @@ insert into `authority` (intf, role) values
 ((select id from interface where address='/ec/assign'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/ec/backup'), (select id from role where name='ROLE_ADMIN')),
 ((select id from interface where address='/ec/export'), (select id from role where name='ROLE_INSIDE_STAFF')),
-((select id from interface where address='/ec/report'), (select id from role where name='ROLE_INSIDE_STAFF')),
+((select id from interface where address='/ec/report'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
 ((select id from interface where address='/user/manager'), (select id from role where name='ROLE_ADMIN')),
 ((select id from interface where address='/user/ec/assign'), (select id from role where name='ROLE_ADMIN')),
 ((select id from interface where address='/phone/call'), (select id from role where name='ROLE_OUTSIDE_STAFF'));

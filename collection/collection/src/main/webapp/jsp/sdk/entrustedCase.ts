@@ -41,5 +41,13 @@ module collection{
                 attachs: JSON.stringify(attachs)
             });
         }
+
+
+        static delete(type:number, ids:number[]):Promise<Result>{
+            return Net.post(Net.BASE_URL + "/entrusted_case/delete.do", {
+                ids: JSON.stringify(ids),
+                type:type
+            });
+        }
     }
 }

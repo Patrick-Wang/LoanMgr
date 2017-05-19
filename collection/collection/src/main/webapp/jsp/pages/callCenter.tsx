@@ -142,6 +142,7 @@ module pages{
                     height: '100%',
                     shrinkToFit: true,
                     rowNum: 10,
+                    rowList:[10,20,50],
                     autoScroll: true,
                     pager: '#' + tbName + 'Pager',
                     onSortCol:(index,iCol,sortorder)=>{
@@ -191,6 +192,7 @@ module pages{
                     height: '100%',
                     shrinkToFit: true,
                     rowNum: 10,
+                    rowList:[10,20,50],
                     autoScroll: true,
                     pager: '#' + tbName + 'Pager',
                     onSortCol:(index,iCol,sortorder)=>{
@@ -329,6 +331,7 @@ module pages{
                     height: '100%',
                     shrinkToFit: true,
                     rowNum: 10,
+                    rowList:[10,20,50],
                     autoScroll: true,
                     pager: '#' + tbName + 'Pager',
                     onSortCol:(index,iCol,sortorder)=>{
@@ -378,6 +381,7 @@ module pages{
                     height: '100%',
                     shrinkToFit: true,
                     rowNum: 10,
+                    rowList:[10,20,50],
                     autoScroll: true,
                     pager: '#' + tbName + 'Pager',
                     onCellSelect:(rowid,iCol,cellcontent,e)=>{

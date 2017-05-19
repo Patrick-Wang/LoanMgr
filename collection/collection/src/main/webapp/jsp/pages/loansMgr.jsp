@@ -35,8 +35,8 @@
 <div class="page-body">
 	<div class="tab-content tabs-flat">
 		<div class="row">
-			<div class="col-xs-12 col-md-6">
-				<ul class="dowebok">
+			<div class="col-xs-6 col-md-6">
+				<ul class="dowebok pull-left">
 					<li><input type="radio" checked="checked" name="lm-Radio"
 						myid="0" data-labelauty="车贷"></li>
 					<li><input type="radio" name="lm-Radio" myid="1"
@@ -44,8 +44,19 @@
 					<li><input type="radio" name="lm-Radio" myid="2"
 						data-labelauty="信用卡"></li>
 				</ul>
+				<ul class="dowebok pull-right" >
+				<li style="display:none"><input type="radio" checked="checked" name="lm-Radio2"
+				myid="0" data-labelauty="分配给我的"></li>
+				<li style="display:none"><input type="radio" name="lm-Radio2" myid="1"
+				data-labelauty="我分配的"></li>
+				<li style="display:none"><input type="radio" name="lm-Radio2" myid="2"
+				data-labelauty="全部"></li>
+				</ul>
 			</div>
-			<div class="col-xs-12 col-md-6" id="lm-export"></div>
+
+			<div class="col-xs-5 col-md-6" id="lm-export">
+
+			</div>
 			<%--<div class="col-xs-12 col-md-6">--%>
 				<%--<div class="buttons-preview" style="float:right;display:none">--%>
 					<%--<a href="javascript:void(0);" class="btn btn-blue">确定</a>--%>
@@ -81,8 +92,13 @@
 			</div>
 			<div class="col-xs-2 col-md-2">
 				<div class="form-group">
-					<label class="control-label">委外机构</label> <input id="qWwjg" type="text"
-						class="form-control">
+					<label class="control-label">委外机构</label>
+	<%----%>
+			<%--<input id="qWwjg" type="text"--%>
+						<%--class="form-control">--%>
+					<select id="qWwjg" style="width:100%;" class="form-control">
+						<option value="none" />
+					</select>
 				</div>
 			</div>
 			<div class="col-xs-2 col-md-2">

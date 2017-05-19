@@ -31,11 +31,14 @@ module route {
         static NAV_REFRESH:number = nextId();
         static CONSOLE_ASSIGNER_UNRESPMSGS:number = route.nextId();
         static CONSOLE_OWNER_UNREADMSGS:number = route.nextId();
+        static CONSOLE_IS_MANAGER:number = route.nextId();
         static LOANMGR_GET_QOPT:number = route.nextId();
         static LOANMGR_GET_TYPE:number = route.nextId();
+        static LOANMGR_GET_SELECTED:number = route.nextId();
         static EC_SELECT_REQUEST:number = route.nextId();
         static EC_SELECT_RESPONSE:number = route.nextId();
         static EC_DETAIL_ECINFO:number = route.nextId();
+        static EC_DETAIL_REFRESH:number = route.nextId();
     }
 
     export interface Endpoint {

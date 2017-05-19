@@ -36,7 +36,6 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	Double wwje;
 	Double yhje;
 	Double syje;
-	String bz;
 	String	khh		;
 	String	khxm		;
 	String	zhh		;
@@ -561,12 +560,6 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void setYhje(Double yhje) {
 		this.yhje = yhje;
-	}
-	public String getBz() {
-		return bz;
-	}
-	public void setBz(String bz) {
-		this.bz = bz;
 	}
 
 	public Double getSyje() {

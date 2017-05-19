@@ -71,6 +71,7 @@ var pages;
                 height: '100%',
                 shrinkToFit: false,
                 rowNum: 10,
+                rowList: [10, 20, 50],
                 autoScroll: true,
                 multiselect: false,
                 pager: '#al-ensurePager'
@@ -193,6 +194,7 @@ var pages;
                 height: '100%',
                 shrinkToFit: false,
                 rowNum: 10,
+                rowList: [10, 20, 50],
                 autoScroll: true,
                 multiselect: true,
                 onSelectAll: function (rowids, state) {

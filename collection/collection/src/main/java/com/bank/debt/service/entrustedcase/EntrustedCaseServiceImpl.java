@@ -146,6 +146,9 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					batchNo = eCBatchCreatorDao.createBatchNo(current);
 				}
 				for (ECCarLoanEntity entity : eccls){
+					if (null == entity.getWwzt()){
+						entity.setWwzt("未分配");
+					}
 					entity = eCCarLoanDao.merge(entity);
 					entity.update();
 					eCCarLoanDao.merge(entity);
@@ -200,6 +203,9 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					batchNo = eCBatchCreatorDao.createBatchNo(current);
 				}
 				for (ECCreditCardEntity entity : eccls){
+					if (null == entity.getWwzt()){
+						entity.setWwzt("未分配");
+					}
 					entity = eCCreditCardDao.merge(entity);
 					entity.update();
 					eCCreditCardDao.merge(entity);
@@ -253,6 +259,9 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					batchNo = eCBatchCreatorDao.createBatchNo(current);
 				}
 				for (ECCreditLoanEntity entity : eccls){
+					if (null == entity.getWwzt()){
+						entity.setWwzt("未分配");
+					}
 					entity = eCCreditLoanDao.merge(entity);
 					entity.update();
 					eCCreditLoanDao.merge(entity);
@@ -575,9 +584,10 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	public AcceptSummary getAcceptSummary(String userName) {
 		UserEntity ue = userDao.getUserByName(userName);
 		AcceptSummary as = new AcceptSummary();
-		as.setTotal(eCCreditLoanDao.getCompleteForAssignee(ue)
+		as.setComplete(eCCreditLoanDao.getCompleteForAssignee(ue)
 				+ eCCarLoanDao.getCompleteForAssignee(ue)
 				+ eCCreditCardDao.getCompleteForAssignee(ue));
+		as.setTotal(entrustedCaseManagerDao.getTotalForAssignee(ue));
 		return as;
 	}
 
@@ -597,6 +607,29 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 				eCCarLoanDao.getYhje(),
 				eCCreditCardDao.getYhje()}));
 		return ms;
+	}
+
+	@Override
+	public Result getDeleteECs(Integer type, List<Integer> mgrIds) {
+		for (int i = 0; i < mgrIds.size(); ++i){
+			EntrustedCaseManagerEntity ecme = this.entrustedCaseManagerDao.getByECId(type, mgrIds.get(i));
+			if (null != ecme){
+				entrustedCaseManagerDao.delete(ecme);
+			}
+			
+			switch(type){
+			case EntrustedCaseType.CAR_LOAN:
+				eCCarLoanDao.deleteById(mgrIds.get(i));
+				break;
+			case EntrustedCaseType.CREDIT_CARD:
+				eCCreditCardDao.deleteById(mgrIds.get(i));
+				break;
+			case EntrustedCaseType.CREDIT_LOAN:
+				eCCreditLoanDao.deleteById(mgrIds.get(i));
+				break;
+			}
+		}
+		return ErrorCode.OK;
 	}
 
 

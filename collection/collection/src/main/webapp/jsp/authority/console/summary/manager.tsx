@@ -16,6 +16,7 @@ module pages.console {
                     break;
             }
         }));
+        route.router.broadcast(route.MSG.CONSOLE_IS_MANAGER);
     });
 
     class Manager {

@@ -14,10 +14,8 @@ module pages{
         exportLoans,
         callCenter,
         userMgr,
-        propertyMgr,
         backup,
         rearangeOffice,
-        rearangeBussiness,
         loansDetail,
         end
     }

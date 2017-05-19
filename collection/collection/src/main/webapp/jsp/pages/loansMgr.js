@@ -14,24 +14,36 @@ var pages;
             _super.call(this, page);
             this.isAssigner = false;
             this.isOwner = false;
+            this.isManager = false;
+            this.wwjgs = [];
             this.find(".dowebok input").labelauty();
             route.router.register(new route.Receiver(pages.PageUtil.getPageId(this.page), function (e) {
                 switch (e.id) {
                     case route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS:
                         _this.isAssigner = true;
+                        _this.find(".dowebok:eq(1) input:eq(0)").prop("checked", true).parent().show();
+                        _this.find(".dowebok:eq(1) input:eq(2)").parent().show();
                         break;
                     case route.MSG.CONSOLE_OWNER_UNREADMSGS:
+                        _this.find(".dowebok:eq(1) input:eq(1)").prop("checked", true).parent().show();
+                        _this.find(".dowebok:eq(1) input:eq(2)").parent().show();
                         _this.isOwner = true;
                         break;
+                    case route.MSG.CONSOLE_IS_MANAGER:
+                        _this.isManager = true;
                     case route.MSG.LOANMGR_GET_QOPT:
                         return _this.getQOpt();
-                        break;
+                    case route.MSG.LOANMGR_GET_SELECTED:
+                        return {
+                            type: _this.ecType,
+                            ids: _this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow')
+                        };
                     case route.MSG.LOANMGR_GET_TYPE:
-                        return _this.find(".dowebok input:checked").attr("myid");
+                        return _this.find(".dowebok:eq(0) input:checked").attr("myid");
                 }
             }));
-            this.find(".dowebok input").click(function () {
-                var ecType = _this.find(".dowebok input:checked").attr("myid");
+            this.find(".dowebok:eq(0) input").click(function () {
+                var ecType = _this.find(".dowebok:eq(0) input:checked").attr("myid");
                 switch (parseInt(ecType)) {
                     case collection.protocol.EntrustedCaseType.carLoan:
                         _this.find("#qCode").prev().text("车牌号");
@@ -43,6 +55,10 @@ var pages;
                         _this.find("#qCode").prev().text("客户号");
                         break;
                 }
+                _this.refresh();
+            });
+            this.find(".dowebok:eq(1) input").click(function () {
+                var id = _this.find(".dowebok:eq(1) input:checked").attr("myid");
                 _this.refresh();
             });
             //this.find(".buttons-preview:eq(1) a:eq(0)").click(()=>{
@@ -91,11 +107,22 @@ var pages;
             //    this.find(".buttons-preview:eq(0)").show();
             //}
             var _this = this;
-            var ecType = this.find(".dowebok input:checked").attr("myid");
+            var ecType = this.find(".dowebok:eq(0) input:checked").attr("myid");
             var opt = this.getQOpt();
             collection.EntrustedCase.search(ecType, opt).done(function (ecs) {
                 _this.ecs = ecs;
                 _this.ecType = ecType;
+                var index = collection.protocol.getTitles(_this.ecType).indexOf("委外机构");
+                var wwjgChanged = false;
+                $(_this.ecs).each(function (i, e) {
+                    if (e.loan[index + 1] && _this.wwjgs.indexOf(e.loan[index + 1]) < 0) {
+                        _this.wwjgs.push(e.loan[index + 1]);
+                        wwjgChanged = true;
+                    }
+                });
+                if (wwjgChanged) {
+                    _this.updateWwjgs();
+                }
                 _this.refreshLoans(_this.ecType);
             });
         };
@@ -129,14 +156,28 @@ var pages;
             this.tableAssist = pages.JQGridAssistantFactory.createTableAssist("lm-table", type);
             var loans = [];
             var isLinked = {};
+            var id = this.find(".dowebok:eq(1) input:checked").attr("myid");
             for (var i = 0; i < this.ecs.length; ++i) {
                 if (this.ecs[i].loan[1]) {
-                    if (this.isOwner && this.ecs[i].owner == context.userName ||
+                    if (this.isManager ||
+                        this.isOwner && this.ecs[i].owner == context.userName ||
                         this.isAssigner && this.ecs[i].assignee == context.userName) {
                         isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                     }
                 }
-                loans.push(this.ecs[i].loan);
+                if (id == 0) {
+                    if (this.ecs[i].assignee == context.userName) {
+                        loans.push(this.ecs[i].loan);
+                    }
+                }
+                else if (id == 1) {
+                    if (this.ecs[i].owner == context.userName) {
+                        loans.push(this.ecs[i].loan);
+                    }
+                }
+                else {
+                    loans.push(this.ecs[i].loan);
+                }
             }
             this.find("#lm-tableTable").jqGrid(this.tableAssist.decorate({
                 data: this.tableAssist.getDataWithId(loans),
@@ -149,8 +190,9 @@ var pages;
                 height: '100%',
                 shrinkToFit: false,
                 rowNum: 10,
+                rowList: [10, 20, 50],
                 autoScroll: true,
-                multiselect: false,
+                multiselect: true,
                 pager: '#lm-tablePager',
                 //onCellSelect:(rowid,iCol,cellcontent,e)=>{
                 //    if (iCol == 1){
@@ -164,7 +206,7 @@ var pages;
                         var rids = $("#lm-tableTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#lm-tableTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
+                                $("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
                                     "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
@@ -175,7 +217,7 @@ var pages;
                         var rids = $("#lm-tableTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#lm-tableTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
+                                $("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
                                     "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
@@ -186,7 +228,7 @@ var pages;
             var rids = this.find("#lm-tableTable").getDataIDs();
             for (var i = 0; i < rids.length; ++i) {
                 if (undefined != isLinked[rids[i]]) {
-                    this.find("#lm-tableTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
+                    this.find("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
                         "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                 }
             }
@@ -196,6 +238,20 @@ var pages;
             if (this.find("#" + name).width() != this.find("#" + name).children().eq(0).width()) {
                 jqgrid.setGridWidth(this.find("#" + name).width());
             }
+        };
+        LoansMgr.prototype.updateWwjgs = function () {
+            var _this = this;
+            var val = this.find("#qWwjg").val();
+            this.find("#qWwjg").empty();
+            this.find("#qWwjg").append('<option value="none" />');
+            $(this.wwjgs).each(function (i, e) {
+                if (val == e) {
+                    _this.find("#qWwjg").append('<option value="' + e + '" selected="selected">' + e + '</option>');
+                }
+                else {
+                    _this.find("#qWwjg").append('<option value="' + e + '" >' + e + '</option>');
+                }
+            });
         };
         LoansMgr.ins = new LoansMgr(pages.PageType.loansMgr);
         return LoansMgr;

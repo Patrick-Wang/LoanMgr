@@ -52,4 +52,8 @@ public interface EntrustedCaseService {
 	ManagerSummary getManagerSummary(String userName);
 
 
+
+	Result getDeleteECs(Integer type, List<Integer> mgrIds);
+
+
 }

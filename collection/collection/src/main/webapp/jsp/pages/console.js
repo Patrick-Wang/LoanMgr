@@ -18,6 +18,7 @@ var pages;
             var _this = this;
             _super.call(this, page);
             this.isAssigner = false;
+            this.isManager = false;
             this.isOwner = false;
             //  $("#" + PageUtil.getPageId(this.page) + " .dowebok input[checked='checked']").prop("checked", true);
             this.find(".dowebok input").labelauty();
@@ -26,12 +27,17 @@ var pages;
                     _this.doTabRefresh();
                 }, 0);
             });
+            this.find(".dowebok input").click(function () {
+                if (_this.ecType != _this.find(".dowebok input:checked").attr("myid")) {
+                    _this.refresh();
+                }
+            });
             route.router.register(new AnonymousReceiver(function (e) {
                 switch (e.id) {
                     case route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS:
                         _this.unRespMsgs = e.data;
                         _this.isAssigner = true;
-                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").unbind("click");
+                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").off("click");
                         $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
                             setTimeout(function () {
                                 _this.doTabRefresh();
@@ -42,7 +48,17 @@ var pages;
                     case route.MSG.CONSOLE_OWNER_UNREADMSGS:
                         _this.unReadMsgs = e.data;
                         _this.isOwner = true;
-                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").unbind("click");
+                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").off("click");
+                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
+                            setTimeout(function () {
+                                _this.doTabRefresh();
+                            }, 0);
+                        });
+                        _this.doTabRefresh();
+                        break;
+                    case route.MSG.CONSOLE_IS_MANAGER:
+                        _this.isManager = true;
+                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").off("click");
                         $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
                             setTimeout(function () {
                                 _this.doTabRefresh();
@@ -89,7 +105,7 @@ var pages;
             for (var i = 0; i < this.ecs.length; ++i) {
                 if (undefined == this.ecs[i].assignee || "" == this.ecs[i].assignee) {
                     if (this.ecs[i].loan[2] != "" && this.ecs[i].loan[2] != null) {
-                        if (this.isOwner && this.ecs[i].owner == context.userName) {
+                        if (this.isManager || (this.isOwner && this.ecs[i].owner == context.userName)) {
                             isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
                         }
                     }
@@ -214,10 +230,11 @@ var pages;
             var isLinked = {};
             for (var i = 0; i < this.ecs.length; ++i) {
                 if (this.ecs[i].loan[1]) {
-                    if (this.isOwner && this.ecs[i].owner == context.userName) {
+                    if (this.isManager) {
                         isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                     }
-                    else if (this.isAssigner && this.ecs[i].assignee == context.userName) {
+                    else if (this.isOwner && this.ecs[i].owner == context.userName ||
+                        this.isAssigner && this.ecs[i].assignee == context.userName) {
                         isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                     }
                 }

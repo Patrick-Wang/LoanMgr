@@ -18,6 +18,7 @@ module pages {
         unReadMsgs:collection.protocol.Message[];
         unRespMsgs:collection.protocol.Message[];
         isAssigner:boolean = false;
+        isManager:boolean = false;
         isOwner:boolean = false;
         constructor(page:pages.PageType) {
             super(page);
@@ -28,12 +29,19 @@ module pages {
                     this.doTabRefresh();
                 }, 0);
             });
+
+            this.find(".dowebok input").click(()=>{
+                if (this.ecType != this.find(".dowebok input:checked").attr("myid")){
+                    this.refresh();
+                }
+            });
+
             route.router.register(new AnonymousReceiver((e:route.Event)=> {
                 switch (e.id) {
                     case route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS:
                         this.unRespMsgs = e.data;
                         this.isAssigner = true;
-                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").unbind("click");
+                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").off("click");
                         $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").click(()=> {
                             setTimeout(()=>{
                                 this.doTabRefresh();
@@ -44,7 +52,17 @@ module pages {
                     case route.MSG.CONSOLE_OWNER_UNREADMSGS:
                         this.unReadMsgs = e.data
                         this.isOwner = true;
-                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").unbind("click");
+                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").off("click");
+                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").click(()=> {
+                            setTimeout(()=>{
+                                this.doTabRefresh();
+                            }, 0);
+                        });
+                        this.doTabRefresh();
+                        break;
+                    case route.MSG.CONSOLE_IS_MANAGER:
+                        this.isManager = true;
+                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").off("click");
                         $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").click(()=> {
                             setTimeout(()=>{
                                 this.doTabRefresh();
@@ -97,7 +115,7 @@ module pages {
             for (let i = 0; i < this.ecs.length; ++i) {
                 if (undefined == this.ecs[i].assignee || "" == this.ecs[i].assignee) {
                     if (this.ecs[i].loan[2] != "" && this.ecs[i].loan[2] != null){
-                        if (this.isOwner && this.ecs[i].owner == context.userName){
+                        if (this.isManager || (this.isOwner && this.ecs[i].owner == context.userName)){
                             isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
                         }
                     }
@@ -233,9 +251,10 @@ module pages {
             let isLinked:any = {};
             for (let i = 0; i < this.ecs.length; ++i) {
                 if (this.ecs[i].loan[1]){
-                    if (this.isOwner && this.ecs[i].owner == context.userName){
+                    if (this.isManager){
                         isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
-                    } else if (this.isAssigner && this.ecs[i].assignee == context.userName){
+                    }else if (this.isOwner && this.ecs[i].owner == context.userName ||
+                        this.isAssigner && this.ecs[i].assignee == context.userName){
                         isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                     }
                 }

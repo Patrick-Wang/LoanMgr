@@ -344,24 +344,17 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 						<%@include file="pages/userMgr.jsp"%>
 					</div>
 				</c:if>
-				<div id="propertyMgrPage" style="display: none">
-					<%@include file="pages/propertyMgr.jsp"%>
-				</div>
+				
 				<div id="backupPage" style="display: none">
 					<%@include file="pages/backup.jsp"%>
 				</div>
 				<div id="rearangeOfficePage" style="display: none">
 					<%@include file="pages/rearangeOffice.jsp"%>
 				</div>
-				<div id="rearangeBussinessPage" style="display: none">
-					<%@include file="pages/rearangeBussiness.jsp"%>
-				</div>
 				<div id="askSthPage" style="display: none">
 					<%@include file="pages/askSth.jsp"%>
 				</div>
-<%-- 				<div id="reportTaskPage" style="display: none">
-					<%@include file="pages/reportTask.jsp"%>
-				</div> --%>
+
 			</div>
 			<!-- /Page Content -->
 		</div>
@@ -378,6 +371,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<%@include file="basicScript.jsp"%>
 
 	<script>
+	$(".fullscreen").remove();
 	InitiateSimpleDataTable.init();
 	InitiateEditableDataTable.init();
 	InitiateExpandableDataTable.init();

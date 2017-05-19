@@ -38,7 +38,6 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	Double yhje;
 	Double syje;
 	Date tarq;
-	String bz;	
 	String	gaxlh		;
 	String	xm		;
 	String	wtf		;
@@ -1271,12 +1270,6 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void setZxcj(String zxcj) {
 		this.zxcj = zxcj;
-	}
-	public String getBz() {
-		return bz;
-	}
-	public void setBz(String beiz) {
-		this.bz = bz;
 	}
 	public Date getTarq() {
 		return tarq;

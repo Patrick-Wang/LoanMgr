@@ -34,7 +34,7 @@ class JsonDateValueProcessor  implements JsonValueProcessor{
 	
 	 private Object process(Object value){  
 	        if(value instanceof Date){  
-	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
 	            return sdf.format(value);  
 	        } else if(value instanceof Timestamp){  
 	            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  

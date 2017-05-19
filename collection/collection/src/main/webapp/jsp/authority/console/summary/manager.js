@@ -14,6 +14,7 @@ var pages;
                         break;
                 }
             }));
+            route.router.broadcast(route.MSG.CONSOLE_IS_MANAGER);
         });
         var Manager = (function () {
             function Manager() {

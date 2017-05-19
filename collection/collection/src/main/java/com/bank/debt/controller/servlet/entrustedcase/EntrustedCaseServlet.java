@@ -210,6 +210,17 @@ public class EntrustedCaseServlet {
 		return as.toUtf8Json();
 	}
 	
+	@RequestMapping(value = "delete.do")
+	public @ResponseBody byte[] managerDelete(HttpServletRequest request,
+			HttpServletResponse response,
+			@RequestParam(value="type") Integer type,
+			@RequestParam(value="ids") String ids) throws UnsupportedEncodingException {
+		
+		List<Integer> mgrIds = JsonUtil.toObjects(JSONArray.fromObject(ids), Integer.class, null);
+		Result r = entrustedCaseService.getDeleteECs(type, mgrIds);
+		return r.toUtf8Json();
+	}
+	
 	@RequestMapping(value = "assign/summary.do")
 	public @ResponseBody byte[] assignSummary(HttpServletRequest request,
 			HttpServletResponse response) throws UnsupportedEncodingException {

@@ -71,4 +71,12 @@ public class EntrustedCaseManagerDaoImpl extends AbstractReadWriteDaoImpl<Entrus
 		return q.getResultList();
 	}
 
+	@Override
+	public Integer getTotalForAssignee(UserEntity ue) {
+		Query q = this.getEntityManager().createQuery("select count(*) from EntrustedCaseManagerEntity where assignee.id = :id");
+		q.setParameter("id", ue.getId());
+		List ret = q.getResultList();
+		return ((Long)(ret.get(0))).intValue();
+	}
+
 }
