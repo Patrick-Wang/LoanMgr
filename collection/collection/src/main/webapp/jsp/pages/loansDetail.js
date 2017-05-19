@@ -285,7 +285,7 @@ var pages;
                 $("#template_modify_repayment").children().removeAttr("id");
             });
             $("#bootbox-modify-attachment-property").on('click', function () {
-                if ($(".attachement__").length > 0) {
+                if ($(".attachement__").length == 0) {
                     pages.Toast.warning("没有可以修改的附件");
                     return;
                 }

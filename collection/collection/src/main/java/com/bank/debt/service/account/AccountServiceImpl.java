@@ -153,6 +153,7 @@ public class AccountServiceImpl implements AccountService {
 		ue.setPassword(usr.getPassword());
 		ue.setUsername(usr.getName());
 		ue.setPosition(usr.getPosition());
+		ue.setStatus(0);
 		ue.setOrg(org);
 		List<RoleEntity> roles = new ArrayList<RoleEntity>();
 		ue.setRoles(roles);
