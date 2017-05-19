@@ -195,7 +195,7 @@ module pages{
                 }
             }
 
-
+            let base = this.find("#lm-export-Btn").length > 0 ? 1 : 0;
 
             this.find("#lm-tableTable").jqGrid(
                 this.tableAssist.decorate({
@@ -211,7 +211,7 @@ module pages{
                     rowNum: 10,
                     rowList:[10,20,50],
                     autoScroll: true,
-                    multiselect:true,
+                    multiselect: base > 0,
                     pager: '#lm-tablePager',
                     //onCellSelect:(rowid,iCol,cellcontent,e)=>{
                     //    if (iCol == 1){
@@ -225,7 +225,7 @@ module pages{
                             let rids = $("#lm-tableTable").getDataIDs();
                             for (let i =0; i < rids.length; ++i){
                                 if (undefined != isLinked[rids[i]]) {
-                                    $("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                    $("#lm-tableTable").setCell(rids[i], base, "<div style='color:blue;cursor:pointer' " +
                                         "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                                 }
                             }
@@ -236,7 +236,7 @@ module pages{
                             let rids = $("#lm-tableTable").getDataIDs();
                             for (let i =0; i < rids.length; ++i){
                                 if (undefined != isLinked[rids[i]]) {
-                                    $("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                    $("#lm-tableTable").setCell(rids[i], base, "<div style='color:blue;cursor:pointer' " +
                                         "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                                 }
                             }
@@ -247,7 +247,7 @@ module pages{
             let rids = this.find("#lm-tableTable").getDataIDs();
             for (let i =0; i < rids.length; ++i){
                 if (undefined != isLinked[rids[i]]) {
-                    this.find("#lm-tableTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                    this.find("#lm-tableTable").setCell(rids[i], base, "<div style='color:blue;cursor:pointer' " +
                         "onclick='pages.LoansMgr.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                 }
             }
