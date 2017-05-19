@@ -548,9 +548,6 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	public String getWwjg() {
 		return wwjg;
 	}
-	public void setWwjig(String wwjg) {
-		this.wwjg = wwjg;
-	}
 	public Double getWwje() {
 		return wwje;
 	}
@@ -569,6 +566,9 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void setSyje(Double syje) {
 		this.syje = syje;
+	}
+	public void setWwjg(String wwjg) {
+		this.wwjg = wwjg;
 	}
 
 }
