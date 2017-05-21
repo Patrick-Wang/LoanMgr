@@ -146,7 +146,6 @@ module pages{
             //this.html = PageUtil.jqPage(this.page).html();
             //PageUtil.jqPage(this.page).empty();
             $("#" + PageUtil.getPageId(this.page) + " #refresh-toggler").click(()=> {
-                route.router.broadcast(route.MSG.PAGE_REFRESH, this.page);
                 this.refresh();
                 return false;
             });
@@ -154,6 +153,7 @@ module pages{
         }
 
         refresh():void{
+            route.router.broadcast(route.MSG.PAGE_REFRESH, this.page);
             this.onRefresh();
         }
 

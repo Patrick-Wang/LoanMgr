@@ -40,4 +40,11 @@ public class EntrustedCaseReportDaoImpl extends AbstractReadWriteDaoImpl<Entrust
 		q.setParameter("date", date);
 		return q.getResultList();
 	}
+
+	@Override
+	public void deleteByECM(int id) {
+		Query q = this.getEntityManager().createQuery("delete from EntrustedCaseReportEntity where entrustedCaseManager.id = :ecId");
+		q.setParameter("ecId", id);
+		q.executeUpdate();
+	}
 }

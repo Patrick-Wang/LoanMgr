@@ -60,10 +60,15 @@ module pages{
                 this.refresh();
             });
 
-            this.find(".dowebok:eq(1) input").click(()=>{
-                let id = this.find(".dowebok:eq(1) input:checked").attr("myid");
+            this.find("#lm-search-Btn").click(()=>{
                 this.refresh();
             });
+
+            this.find(".dowebok:eq(1) input").click(()=>{
+                this.refresh();
+            });
+
+
 
             //this.find(".buttons-preview:eq(1) a:eq(0)").click(()=>{
             //    let ids = [].concat(this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
@@ -210,7 +215,7 @@ module pages{
                     height: '100%',
                     shrinkToFit: false,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     multiselect: base > 0,
                     pager: '#lm-tablePager',

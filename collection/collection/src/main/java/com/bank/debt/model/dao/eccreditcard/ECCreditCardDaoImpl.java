@@ -119,7 +119,7 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 		Query q = this.getEntityManager().createQuery("select count(*) from "
 				+ "ECCreditCardEntity eccce, EntrustedCaseManagerEntity ecme "
 				+ "where eccce.id = ecme.entrustedCase and "
-				+ "wwzt='已结案' and "
+				+ "wwzt='已退案' and "
 				+ "ecme.owner.id = :uid");
 		q.setParameter("uid", ue.getId());
 		List ret = q.getResultList();
@@ -131,7 +131,7 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 		Query q = this.getEntityManager().createQuery("select count(*) from "
 				+ "ECCreditCardEntity eccce, EntrustedCaseManagerEntity ecme "
 				+ "where eccce.id = ecme.entrustedCase and "
-				+ "wwzt='已结案' and "
+				+ "wwzt='已退案' and "
 				+ "ecme.assignee.id = :uid");
 		q.setParameter("uid", ue.getId());
 		List ret = q.getResultList();

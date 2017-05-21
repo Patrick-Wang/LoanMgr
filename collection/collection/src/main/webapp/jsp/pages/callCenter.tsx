@@ -142,7 +142,7 @@ module pages{
                     height: '100%',
                     shrinkToFit: true,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     pager: '#' + tbName + 'Pager',
                     onSortCol:(index,iCol,sortorder)=>{
@@ -192,7 +192,7 @@ module pages{
                     height: '100%',
                     shrinkToFit: true,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     pager: '#' + tbName + 'Pager',
                     onSortCol:(index,iCol,sortorder)=>{
@@ -272,7 +272,12 @@ module pages{
                     return false;
                 }
             });
-            alert(recId);
+
+            route.router.to(PageUtil.getPageId(PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
+                ec : {managerId: record.ecId},
+                ecType:record.ecType
+            });
+            sidebar.switchPage(PageType.loansDetail);
         }
 
         onclickSkip(recId:number){
@@ -331,7 +336,7 @@ module pages{
                     height: '100%',
                     shrinkToFit: true,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     pager: '#' + tbName + 'Pager',
                     onSortCol:(index,iCol,sortorder)=>{
@@ -381,7 +386,7 @@ module pages{
                     height: '100%',
                     shrinkToFit: true,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     pager: '#' + tbName + 'Pager',
                     onCellSelect:(rowid,iCol,cellcontent,e)=>{

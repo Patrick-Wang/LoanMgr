@@ -138,13 +138,13 @@ var pages;
             //this.html = PageUtil.jqPage(this.page).html();
             //PageUtil.jqPage(this.page).empty();
             $("#" + PageUtil.getPageId(this.page) + " #refresh-toggler").click(function () {
-                route.router.broadcast(route.MSG.PAGE_REFRESH, _this.page);
                 _this.refresh();
                 return false;
             });
             route.router.broadcast(route.MSG.PAGE_REFRESH, this.page, route.DELAY_READY);
         }
         PageImpl.prototype.refresh = function () {
+            route.router.broadcast(route.MSG.PAGE_REFRESH, this.page);
             this.onRefresh();
         };
         PageImpl.prototype.pageName = function () {

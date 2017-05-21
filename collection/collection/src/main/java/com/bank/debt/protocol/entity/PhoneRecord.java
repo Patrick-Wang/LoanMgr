@@ -13,6 +13,10 @@ public class PhoneRecord  extends ProtocolEntityImpl{
 	String time;
 	Integer ecId;
 	String ecCode;
+	Integer ecType;
+	public Integer getEcType() {
+		return ecType;
+	}
 	public Integer getStatus() {
 		return status;
 	}
@@ -52,5 +56,8 @@ public class PhoneRecord  extends ProtocolEntityImpl{
 	}
 	public void setRecId(Integer recId) {
 		this.recId = recId;
+	}
+	public void setEcType(Integer ecType) {
+		this.ecType = ecType;
 	}
 }

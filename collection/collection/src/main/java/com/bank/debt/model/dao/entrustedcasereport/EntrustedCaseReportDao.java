@@ -13,4 +13,6 @@ public interface EntrustedCaseReportDao extends AbstractReadWriteDao<EntrustedCa
 
 	List<EntrustedCaseReportEntity> getByECId(Integer entrustedCase, Date date);
 
+	void deleteByECM(int id);
+
 }

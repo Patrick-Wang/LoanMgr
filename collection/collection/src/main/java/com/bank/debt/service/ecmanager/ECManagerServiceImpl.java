@@ -10,16 +10,26 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.bank.debt.model.dao.authority.AuthorityDao;
 import com.bank.debt.model.dao.authority.AuthorityDaoImpl;
+import com.bank.debt.model.dao.eccarloan.ECCarLoanDao;
+import com.bank.debt.model.dao.eccarloan.ECCarLoanDaoImpl;
+import com.bank.debt.model.dao.eccreditcard.ECCreditCardDao;
+import com.bank.debt.model.dao.eccreditcard.ECCreditCardDaoImpl;
+import com.bank.debt.model.dao.eccreditloan.ECCreditLoanDao;
+import com.bank.debt.model.dao.eccreditloan.ECCreditLoanDaoImpl;
 import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDao;
 import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDaoImpl;
 import com.bank.debt.model.dao.user.UserDao;
 import com.bank.debt.model.dao.user.UserDaoImpl;
+import com.bank.debt.model.entity.ECCarLoanEntity;
+import com.bank.debt.model.entity.ECCreditCardEntity;
+import com.bank.debt.model.entity.ECCreditLoanEntity;
 import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
 import com.bank.debt.model.entity.UserEntity;
 import com.bank.debt.protocol.entity.EntrustedCaseManageInfo;
 import com.bank.debt.protocol.entity.Result;
 import com.bank.debt.protocol.error.ErrorCode;
 import com.bank.debt.protocol.famous.AuthAddress;
+import com.bank.debt.protocol.type.EntrustedCaseType;
 
 @Service(ECManagerServiceImpl.NAME)
 @Transactional("transaction")
@@ -33,6 +43,16 @@ public class ECManagerServiceImpl implements ECManagerService {
 	@Resource(name=EntrustedCaseManagerDaoImpl.NAME)
 	EntrustedCaseManagerDao entrustedCaseManagerDao;
 
+
+	@Resource(name=ECCarLoanDaoImpl.NAME)
+	ECCarLoanDao eCCarLoanDao;
+
+	@Resource(name=ECCreditLoanDaoImpl.NAME)
+	ECCreditLoanDao eCCreditLoanDao;
+
+	@Resource(name=ECCreditCardDaoImpl.NAME)
+	ECCreditCardDao eCCreditCardDao;
+	
 	public final static String NAME = "ECManagerServiceImpl";
 
 	@Override
@@ -89,6 +109,29 @@ public class ECManagerServiceImpl implements ECManagerService {
 					UserEntity assignee = userDao.getById(ecmi.getAssigneeId());
 					if (null != assignee){
 						ecme.setAssignee(assignee);
+						switch(ecme.getType()){
+						case EntrustedCaseType.CAR_LOAN:
+							ECCarLoanEntity entity = eCCarLoanDao.getById(ecme.getEntrustedCase());
+							if (entity.getWwzt() == null || "未分配".equals(entity.getWwzt())){
+								entity.setWwzt("工作中");
+								eCCarLoanDao.merge(entity);
+							}
+							break;
+						case EntrustedCaseType.CREDIT_CARD:
+							ECCreditCardEntity entity2 = eCCreditCardDao.getById(ecme.getEntrustedCase());
+							if (entity2.getWwzt() == null ||  "未分配".equals(entity2.getWwzt())){
+								entity2.setWwzt("工作中");
+								eCCreditCardDao.merge(entity2);
+							}
+							break;
+						case EntrustedCaseType.CREDIT_LOAN:
+							ECCreditLoanEntity entity3 = eCCreditLoanDao.getById(ecme.getEntrustedCase());
+							if (entity3.getWwzt() == null ||  "未分配".equals(entity3.getWwzt())){
+								entity3.setWwzt("工作中");
+								eCCreditLoanDao.merge(entity3);
+							}
+							break;
+						}
 						changed = true;
 					}else{
 						r = ErrorCode.ECM_UPDATE_FAILED;

@@ -25,9 +25,6 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
     <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/jsp/assets/css/font-awesome.min.css" rel="stylesheet" />
 
-    <!--Fonts-->
-    <link href="../fonts.googleapis.com/css@family=open+sans_3a300italic,400italic,600italic,700italic,400,600,700,300.css" rel="stylesheet" type="text/css">
-
     <!--Beyond styles-->
     <link id="beyond-link" href="${pageContext.request.contextPath}/jsp/assets/css/beyond.min.css" rel="stylesheet" />
     <link href="${pageContext.request.contextPath}/jsp/assets/css/demo.min.css" rel="stylesheet" />

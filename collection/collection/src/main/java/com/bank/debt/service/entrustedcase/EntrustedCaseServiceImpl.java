@@ -31,6 +31,12 @@ import com.bank.debt.model.dao.eccreditloan.ECCreditLoanDao;
 import com.bank.debt.model.dao.eccreditloan.ECCreditLoanDaoImpl;
 import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDao;
 import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDaoImpl;
+import com.bank.debt.model.dao.entrustedcasereport.EntrustedCaseReportDao;
+import com.bank.debt.model.dao.entrustedcasereport.EntrustedCaseReportDaoImpl;
+import com.bank.debt.model.dao.message.MessageDao;
+import com.bank.debt.model.dao.message.MessageDaoImpl;
+import com.bank.debt.model.dao.phonerecord.PhoneRecordDao;
+import com.bank.debt.model.dao.phonerecord.PhoneRecordDaoImpl;
 import com.bank.debt.model.dao.user.UserDao;
 import com.bank.debt.model.dao.user.UserDaoImpl;
 import com.bank.debt.model.entity.AttachementEntity;
@@ -95,9 +101,14 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	@Autowired
 	ECReportService eCReportService;
 	
+	@Resource(name=EntrustedCaseReportDaoImpl.NAME)
+	EntrustedCaseReportDao entrustedCaseReportDao;
+	
 	@Autowired
 	AttachementService attachementService;
 	
+	@Resource(name=MessageDaoImpl.NAME)
+	MessageDao messageDao;
 	
 	Mapping<IntfEntity, IF> ifMapping = new Mapping<IntfEntity, IF>(){
 
@@ -611,24 +622,34 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 		return ms;
 	}
 
+	@Resource(name=PhoneRecordDaoImpl.NAME)
+	PhoneRecordDao phoneRecordDao;
+	
 	@Override
-	public Result getDeleteECs(Integer type, List<Integer> mgrIds) {
-		for (int i = 0; i < mgrIds.size(); ++i){
-			EntrustedCaseManagerEntity ecme = this.entrustedCaseManagerDao.getByECId(type, mgrIds.get(i));
-			if (null != ecme){
-				entrustedCaseManagerDao.delete(ecme);
-			}
-			
+	public Result deleteECs(Integer type, List<Integer> ecIds) {
+		for (int i = 0; i < ecIds.size(); ++i){
 			switch(type){
 			case EntrustedCaseType.CAR_LOAN:
-				eCCarLoanDao.deleteById(mgrIds.get(i));
+				eCCarLoanDao.deleteById(ecIds.get(i));
 				break;
 			case EntrustedCaseType.CREDIT_CARD:
-				eCCreditCardDao.deleteById(mgrIds.get(i));
+				eCCreditCardDao.deleteById(ecIds.get(i));
 				break;
 			case EntrustedCaseType.CREDIT_LOAN:
-				eCCreditLoanDao.deleteById(mgrIds.get(i));
+				eCCreditLoanDao.deleteById(ecIds.get(i));
 				break;
+			}
+			
+			
+			
+			EntrustedCaseManagerEntity ecme = this.entrustedCaseManagerDao.getByECId(type, ecIds.get(i));
+			if (null != ecme){
+				
+				
+				entrustedCaseReportDao.deleteByECM(ecme.getId());
+				messageDao.deleteByECM(ecme.getId());
+				phoneRecordDao.deleteByECM(ecme.getId());
+				entrustedCaseManagerDao.delete(ecme);
 			}
 		}
 		return ErrorCode.OK;

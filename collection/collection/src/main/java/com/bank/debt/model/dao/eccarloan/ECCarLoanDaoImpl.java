@@ -119,7 +119,7 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 		Query q = this.getEntityManager().createQuery("select count(*) "
 				+ "from ECCarLoanEntity eccle, EntrustedCaseManagerEntity ecme "
 				+ "where eccle.id = ecme.entrustedCase and "
-				+ "wwzt='已结案' and "
+				+ "wwzt='已退案' and "
 				+ "ecme.owner.id = :uid");
 		q.setParameter("uid", ue.getId());
 		List ret = q.getResultList();
@@ -131,7 +131,7 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 		Query q = this.getEntityManager().createQuery("select count(*) "
 				+ "from ECCarLoanEntity eccle, EntrustedCaseManagerEntity ecme "
 				+ "where eccle.id = ecme.entrustedCase and "
-				+ "wwzt='已结案' and "
+				+ "wwzt='已退案' and "
 				+ "ecme.assignee.id = :uid");
 		q.setParameter("uid", ue.getId());
 		List ret = q.getResultList();

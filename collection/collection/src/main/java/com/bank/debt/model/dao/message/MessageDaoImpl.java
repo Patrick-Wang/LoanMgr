@@ -41,6 +41,13 @@ public class MessageDaoImpl extends AbstractReadWriteDaoImpl<MessageEntity> impl
 	}
 
 	@Override
+	public void deleteByECM(int id) {
+		Query q = this.getEntityManager().createQuery("delete from MessageEntity where entrustedCaseManager.id = :ecId");
+		q.setParameter("ecId", id);
+		q.executeUpdate();
+	}
+	
+	@Override
 	public List<MessageEntity> getMsgWithUser(Integer entrustedCase, UserEntity user, Integer with) {
 		String sql = "from MessageEntity where (dest.id = :usr or come.id = :usr) ";
 		if (entrustedCase != null){

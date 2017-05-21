@@ -76,6 +76,7 @@ var pages;
                 height: '100%',
                 shrinkToFit: false,
                 rowNum: 10,
+                rowList: [10, 20, 50, 100],
                 autoScroll: true,
                 multiselect: false,
                 pager: '#ro-ensurePager'
@@ -197,6 +198,7 @@ var pages;
                 height: '100%',
                 shrinkToFit: false,
                 rowNum: 10,
+                rowList: [10, 20, 50, 100],
                 autoScroll: true,
                 multiselect: true,
                 onSelectAll: function (rowids, state) {

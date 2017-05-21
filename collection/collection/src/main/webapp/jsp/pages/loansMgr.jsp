@@ -55,7 +55,7 @@
 			</div>
 
 			<div class="col-xs-5 col-md-6" id="lm-export">
-
+				<a id="lm-search-Btn" class="btn btn-default pull-right" >查询</a>
 			</div>
 			<%--<div class="col-xs-12 col-md-6">--%>
 				<%--<div class="buttons-preview" style="float:right;display:none">--%>
@@ -107,8 +107,8 @@
 					<select id="qStatus" style="width:100%;" class="form-control">
 						<option value="none" />
 	                    <option value="未分配" >未分配</option>
-						<option value="已分配" >已分配</option>
-						<option value="已结束" >已结案</option>
+						<option value="工作中" >工作中</option>
+						<option value="已退案" >已退案</option>
 					</select>
 				</div>
 			</div>

@@ -26,8 +26,8 @@
 
 						<li><a class="login-area dropdown-toggle"
 							data-toggle="dropdown">
-								<div class="avatar" title="View your public profile">
-									<img
+								<div class="avatar">
+									<img class = "header-pic"
 										src="${pageContext.request.contextPath}/jsp/assets/img/avatars/adam-jansen.jpg">
 								</div>
 								<section>
@@ -42,9 +42,9 @@
 								<!--Avatar Area-->
 								<li>
 									<div class="avatar-area">
-										<img
+										<img 
 											src="${pageContext.request.contextPath}/jsp/assets/img/avatars/adam-jansen.jpg"
-											class="avatar"> <span class="caption">修改头像</span>
+											class="avatar header-pic"><!--  <span class="caption">修改头像</span> -->
 									</div>
 								</li>
 								<!--Theme Selector Area-->

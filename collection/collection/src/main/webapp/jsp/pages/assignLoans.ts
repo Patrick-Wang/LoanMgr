@@ -93,7 +93,7 @@ module pages {
                     height: '100%',
                     shrinkToFit: false,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     multiselect: false,
                     pager: '#al-ensurePager'
@@ -211,7 +211,9 @@ module pages {
             let tableAssist:JQTable.JQGridAssistant = pages.JQGridAssistantFactory.createTableAssist("tbAllLoans", this.ecType, ["内勤人员","业务员"]);
             let loans = [];
             for (let i = 0; i < this.ecs.length; ++i) {
-                loans.push([this.ecs[i].loan[0], this.ecs[i].owner, this.ecs[i].assignee].concat(this.ecs[i].loan.slice(1)));
+                if(!this.ecs[i].assignee){
+                    loans.push([this.ecs[i].loan[0], this.ecs[i].owner, this.ecs[i].assignee].concat(this.ecs[i].loan.slice(1)));
+                }
             }
 
             PageUtil.shuffle(loans);
@@ -228,7 +230,7 @@ module pages {
                     height: '100%',
                     shrinkToFit: false,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     multiselect: true,
                     onSelectAll: (rowids, state)=> {

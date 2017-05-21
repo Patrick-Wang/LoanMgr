@@ -36,39 +36,48 @@ module pages {
                 }
             });
 
+            let enableClick = false;
+
             route.router.register(new AnonymousReceiver((e:route.Event)=> {
                 switch (e.id) {
                     case route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS:
                         this.unRespMsgs = e.data;
                         this.isAssigner = true;
-                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").off("click");
-                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").click(()=> {
-                            setTimeout(()=>{
-                                this.doTabRefresh();
-                            }, 0);
-                        });
-                        this.doTabRefresh();
+                        if (!enableClick){
+                            enableClick = true;
+                            $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").click(()=> {
+                                setTimeout(()=>{
+                                    this.doTabRefresh();
+                                }, 0);
+                            });
+                            this.doTabRefresh();
+                        }
+
                         break;
                     case route.MSG.CONSOLE_OWNER_UNREADMSGS:
                         this.unReadMsgs = e.data
                         this.isOwner = true;
-                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").off("click");
-                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").click(()=> {
-                            setTimeout(()=>{
-                                this.doTabRefresh();
-                            }, 0);
-                        });
-                        this.doTabRefresh();
+                        if (!enableClick){
+                            enableClick = true;
+                            $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").click(()=> {
+                                setTimeout(()=>{
+                                    this.doTabRefresh();
+                                }, 0);
+                            });
+                            this.doTabRefresh();
+                        }
                         break;
                     case route.MSG.CONSOLE_IS_MANAGER:
                         this.isManager = true;
-                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").off("click");
-                        $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").click(()=> {
-                            setTimeout(()=>{
-                                this.doTabRefresh();
-                            }, 0);
-                        });
-                        this.doTabRefresh();
+                        if (!enableClick){
+                            enableClick = true;
+                            $("#" + PageUtil.getPageId(this.page) + " #myTab11 a").click(()=> {
+                                setTimeout(()=>{
+                                    this.doTabRefresh();
+                                }, 0);
+                            });
+                            this.doTabRefresh();
+                        }
                         break;
                 }
             }));
@@ -81,7 +90,7 @@ module pages {
             if (authority.ping("/ec/answer")){
                 this.find(".nav-tabs a:eq(1)").text("未分配的委案");
             }else{
-                this.find(".nav-tabs a:eq(1)").text("未结案的委案");
+                this.find(".nav-tabs a:eq(1)").text("未完成的委案");
             }
 
 
@@ -96,7 +105,7 @@ module pages {
 
         doTabRefresh() {
             if (this.ecs != undefined) {
-                if ($("#allLoans").hasClass("active")) {
+                if ($("#con-allLoans").hasClass("active")) {
                     this.refreshAllLoans(this.ecType);
                 }
                 if ($("#notAssigned").hasClass("active")) {
@@ -124,18 +133,18 @@ module pages {
                     if (!this.ecs[i].assignee) {
                         if (this.ecs[i].loan[1]) {
                             if (this.isManager || this.ecs[i].owner == context.userName) {
-                                isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
+                                isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                                 loans.push(this.ecs[i].loan);
                             }
                         }
                     }
                 }
             }else{
-                let index = collection.protocol.getTitles(this.ecType).indexOf("委案状态");
+                let index = collection.protocol.getTitles(this.ecType).indexOf("委外状态");
                 for (let i = 0; i < this.ecs.length; ++i) {
-                    if (this.ecs[i].loan[1] && this.ecs[i].loan[1 + index] == "已分配") {
+                    if (this.ecs[i].loan[1] && this.ecs[i].loan[1 + index] == "工作中") {
                         if (this.isManager || this.ecs[i].assignee == context.userName) {
-                            isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
+                            isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                             loans.push(this.ecs[i].loan);
                         }
                     }
@@ -161,7 +170,7 @@ module pages {
                     //  width:  $("#allLoans").width() - 30,
                     shrinkToFit: false,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     pager: '#tbNotAssignedPager',
                     //onCellSelect:(rowid,iCol,cellcontent,e)=>{
@@ -174,7 +183,7 @@ module pages {
                             let rids = $("#tbNotAssignedTable").getDataIDs();
                             for (let i =0; i < rids.length; ++i){
                                 if (undefined != isLinked[rids[i]]) {
-                                    $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                    $("#tbNotAssignedTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                                         "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                                 }
                             }
@@ -185,7 +194,7 @@ module pages {
                             let rids = $("#tbNotAssignedTable").getDataIDs();
                             for (let i =0; i < rids.length; ++i){
                                 if (undefined != isLinked[rids[i]]) {
-                                    $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                    $("#tbNotAssignedTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                                         "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                                 }
                             }
@@ -195,7 +204,7 @@ module pages {
             let rids = $("#tbNotAssignedTable").getDataIDs();
             for (let i =0; i < rids.length; ++i){
                 if (undefined != isLinked[rids[i]]) {
-                    $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                    $("#tbNotAssignedTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                         "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                 }
             }
@@ -233,7 +242,7 @@ module pages {
                     //  width:  $("#allLoans").width() - 30,
                     shrinkToFit: true,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     pager: '#tbNotRepliedMsgPager'
                 }));
@@ -295,7 +304,7 @@ module pages {
                     height: '100%',
                     shrinkToFit: false,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     pager: '#tbAllPager',
                     //onCellSelect:(rowid,iCol,cellcontent,e)=>{
@@ -367,7 +376,7 @@ module pages {
                     //  width:  $("#allLoans").width() - 30,
                     shrinkToFit: true,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     pager: '#tbWaitRepliedMsgPager'
                 }));

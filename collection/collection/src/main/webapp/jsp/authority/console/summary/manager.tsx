@@ -17,6 +17,7 @@ module pages.console {
             }
         }));
         route.router.broadcast(route.MSG.CONSOLE_IS_MANAGER);
+        $(".header-pic").attr("src", collection.Net.BASE_URL + "/jsp/assets/img/avatars/divyia.jpg");
     });
 
     class Manager {

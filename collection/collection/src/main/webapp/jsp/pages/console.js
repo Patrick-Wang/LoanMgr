@@ -32,39 +32,46 @@ var pages;
                     _this.refresh();
                 }
             });
+            var enableClick = false;
             route.router.register(new AnonymousReceiver(function (e) {
                 switch (e.id) {
                     case route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS:
                         _this.unRespMsgs = e.data;
                         _this.isAssigner = true;
-                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").off("click");
-                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
-                            setTimeout(function () {
-                                _this.doTabRefresh();
-                            }, 0);
-                        });
-                        _this.doTabRefresh();
+                        if (!enableClick) {
+                            enableClick = true;
+                            $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
+                                setTimeout(function () {
+                                    _this.doTabRefresh();
+                                }, 0);
+                            });
+                            _this.doTabRefresh();
+                        }
                         break;
                     case route.MSG.CONSOLE_OWNER_UNREADMSGS:
                         _this.unReadMsgs = e.data;
                         _this.isOwner = true;
-                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").off("click");
-                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
-                            setTimeout(function () {
-                                _this.doTabRefresh();
-                            }, 0);
-                        });
-                        _this.doTabRefresh();
+                        if (!enableClick) {
+                            enableClick = true;
+                            $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
+                                setTimeout(function () {
+                                    _this.doTabRefresh();
+                                }, 0);
+                            });
+                            _this.doTabRefresh();
+                        }
                         break;
                     case route.MSG.CONSOLE_IS_MANAGER:
                         _this.isManager = true;
-                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").off("click");
-                        $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
-                            setTimeout(function () {
-                                _this.doTabRefresh();
-                            }, 0);
-                        });
-                        _this.doTabRefresh();
+                        if (!enableClick) {
+                            enableClick = true;
+                            $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
+                                setTimeout(function () {
+                                    _this.doTabRefresh();
+                                }, 0);
+                            });
+                            _this.doTabRefresh();
+                        }
                         break;
                 }
             }));
@@ -77,7 +84,7 @@ var pages;
                 this.find(".nav-tabs a:eq(1)").text("未分配的委案");
             }
             else {
-                this.find(".nav-tabs a:eq(1)").text("未结案的委案");
+                this.find(".nav-tabs a:eq(1)").text("未完成的委案");
             }
             EntrustedCase.search(type, opt).done(function (ecs) {
                 _this.ecs = ecs;
@@ -87,7 +94,7 @@ var pages;
         };
         Console.prototype.doTabRefresh = function () {
             if (this.ecs != undefined) {
-                if ($("#allLoans").hasClass("active")) {
+                if ($("#con-allLoans").hasClass("active")) {
                     this.refreshAllLoans(this.ecType);
                 }
                 if ($("#notAssigned").hasClass("active")) {
@@ -113,7 +120,7 @@ var pages;
                     if (!this.ecs[i].assignee) {
                         if (this.ecs[i].loan[1]) {
                             if (this.isManager || this.ecs[i].owner == context.userName) {
-                                isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
+                                isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                                 loans.push(this.ecs[i].loan);
                             }
                         }
@@ -121,11 +128,11 @@ var pages;
                 }
             }
             else {
-                var index = collection.protocol.getTitles(this.ecType).indexOf("委案状态");
+                var index = collection.protocol.getTitles(this.ecType).indexOf("委外状态");
                 for (var i = 0; i < this.ecs.length; ++i) {
-                    if (this.ecs[i].loan[1] && this.ecs[i].loan[1 + index] == "已分配") {
+                    if (this.ecs[i].loan[1] && this.ecs[i].loan[1 + index] == "工作中") {
                         if (this.isManager || this.ecs[i].assignee == context.userName) {
-                            isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[2];
+                            isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                             loans.push(this.ecs[i].loan);
                         }
                     }
@@ -148,7 +155,7 @@ var pages;
                 //  width:  $("#allLoans").width() - 30,
                 shrinkToFit: false,
                 rowNum: 10,
-                rowList: [10, 20, 50],
+                rowList: [10, 20, 50, 100],
                 autoScroll: true,
                 pager: '#tbNotAssignedPager',
                 //onCellSelect:(rowid,iCol,cellcontent,e)=>{
@@ -161,7 +168,7 @@ var pages;
                         var rids = $("#tbNotAssignedTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                $("#tbNotAssignedTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                                     "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
@@ -172,7 +179,7 @@ var pages;
                         var rids = $("#tbNotAssignedTable").getDataIDs();
                         for (var i = 0; i < rids.length; ++i) {
                             if (undefined != isLinked[rids[i]]) {
-                                $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                                $("#tbNotAssignedTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                                     "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                             }
                         }
@@ -182,7 +189,7 @@ var pages;
             var rids = $("#tbNotAssignedTable").getDataIDs();
             for (var i = 0; i < rids.length; ++i) {
                 if (undefined != isLinked[rids[i]]) {
-                    $("#tbNotAssignedTable").setCell(rids[i], 1, "<div style='color:blue;cursor:pointer' " +
+                    $("#tbNotAssignedTable").setCell(rids[i], 0, "<div style='color:blue;cursor:pointer' " +
                         "onclick='pages.Console.ins.onClickLink(" + rids[i] + ")'>" + isLinked[rids[i]] + "</div>");
                 }
             }
@@ -216,7 +223,7 @@ var pages;
                 //  width:  $("#allLoans").width() - 30,
                 shrinkToFit: true,
                 rowNum: 10,
-                rowList: [10, 20, 50],
+                rowList: [10, 20, 50, 100],
                 autoScroll: true,
                 pager: '#tbNotRepliedMsgPager'
             }));
@@ -272,7 +279,7 @@ var pages;
                 height: '100%',
                 shrinkToFit: false,
                 rowNum: 10,
-                rowList: [10, 20, 50],
+                rowList: [10, 20, 50, 100],
                 autoScroll: true,
                 pager: '#tbAllPager',
                 //onCellSelect:(rowid,iCol,cellcontent,e)=>{
@@ -340,7 +347,7 @@ var pages;
                 //  width:  $("#allLoans").width() - 30,
                 shrinkToFit: true,
                 rowNum: 10,
-                rowList: [10, 20, 50],
+                rowList: [10, 20, 50, 100],
                 autoScroll: true,
                 pager: '#tbWaitRepliedMsgPager'
             }));

@@ -245,6 +245,7 @@ var pages;
             $("#bootbox-modify-repayment").on('click', function () {
                 $("#template_modify_repayment").children().attr("id", "modify_repayment");
                 $("#modify_repayment #exampleInputyhje").attr("value", _this.ec.loan[collection.protocol.getTitles(_this.ecType).indexOf("已还金额") + 1]);
+                $("#modify_repayment #exampleInputsyje").attr("value", _this.ec.loan[collection.protocol.getTitles(_this.ecType).indexOf("剩余金额") + 1]);
                 bootbox.dialog({
                     message: $("#template_modify_repayment").html(),
                     title: "修改委案回款额",
@@ -488,9 +489,20 @@ var pages;
                     if (!e) {
                         e = "";
                     }
-                    if (i <= 8) {
+                    if (i < 8) {
                         _this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
                             '<i class="fa fa-square-o darkpink"></i><b>' + titles[i - 1] + '：</b>' + e +
+                            '</div>');
+                    }
+                    else if (i == 8) {
+                        _this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
+                            '<i class="fa fa-square-o darkpink"></i><b>' + titles[i - 1] + '：</b>' + e +
+                            '</div>');
+                        _this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
+                            '<i class="fa fa-square-o darkpink"></i><b>分配内勤：</b>' + _this.ec.owner +
+                            '</div>');
+                        _this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
+                            '<i class="fa fa-square-o darkpink"></i><b>责任业务员：</b>' + _this.ec.assignee +
                             '</div>');
                     }
                     else {
@@ -509,8 +521,8 @@ var pages;
             this.find("#ld-timeline li:not(.timeline-node)").remove();
             this.find("#ld-common").empty();
             this.find("#ld-special").empty();
-            this.find("#bootbox-record-work-timeline").hide();
-            this.find("#bootbox-loans-consulting-timeline").hide();
+            //this.find("#bootbox-record-work-timeline").hide();
+            //this.find("#bootbox-loans-consulting-timeline").hide();
             if (this.ec) {
                 this.find("#ld-eccode").text("委案编码：" + this.ec.loan[1]);
                 this.refreshLoan();
@@ -542,7 +554,7 @@ var pages;
         };
         LoansDetail.prototype.refreshReport = function () {
             var _this = this;
-            this.find("#bootbox-record-work-timeline").show();
+            //this.find("#bootbox-record-work-timeline").show();
             $(this.ec.reports).each(function (i, report) {
                 var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": i % 2 == 0 ? "" : "timeline-inverted"}, React.createElement("div", {"className": "timeline-datetime"}, React.createElement("span", {"className": "timeline-time"}, " ", report.date.substring(11), " "), React.createElement("span", {"className": "timeline-date"}, report.date.substring(0, 10))), React.createElement("div", {"className": "timeline-badge"}, React.createElement("i", {"className": "fa fa-tag sky font-120"})), React.createElement("div", {"className": "timeline-panel bordered-top-3 bordered-azure", "id": "report" + report.id}, React.createElement("div", {"className": "timeline-header bordered-bottom bordered-blue"}, React.createElement("span", {"className": "timeline-title"}, " ", report.title, " ")), React.createElement("div", {"className": "timeline-body"}, React.createElement("p", null, report.content), _this.check(report.attachements) ? (React.createElement("p", null, React.createElement("b", null, "附件："))) : "", _this.check(report.attachements) ? report.attachements.map(function (atta) {
                     return React.createElement("p", null, React.createElement("a", {"href": "#", "className": "danger attachement__", "value": atta.id, "data-time": atta.uploadTime}, atta.display));
@@ -552,7 +564,7 @@ var pages;
         };
         LoansDetail.prototype.refreshMessage = function () {
             var _this = this;
-            this.find("#bootbox-loans-consulting-timeline").show();
+            //this.find("#bootbox-loans-consulting-timeline").show();
             var pairs = Message.pairs(this.ec.messages);
             $(pairs).each(function (i, pair) {
                 var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": i % 2 == 0 ? "" : "timeline-inverted"}, React.createElement("div", {"className": "timeline-datetime"}, React.createElement("span", {"className": "timeline-time"}, " ", pair.ask.sendTime.substring(11), " "), React.createElement("span", {"className": "timeline-date"}, pair.ask.sendTime.substring(0, 10))), React.createElement("div", {"className": "timeline-badge"}, React.createElement("i", {"className": "fa fa-question darkorange font-120"})), React.createElement("div", {"className": "timeline-panel"}, React.createElement("div", {"className": "timeline-header bordered-bottom bordered-blue"}, React.createElement("span", {"className": "timeline-title darkorange"}, " ", pair.ask.title, " ")), React.createElement("div", {"className": "timeline-body"}, React.createElement("p", null, pair.ask.content), pair.answer ? (React.createElement("p", null, React.createElement("b", null, "答复："))) : (React.createElement("p", null, React.createElement("b", null, "未答复"))), pair.answer ? (React.createElement("p", null, pair.answer.content)) : "", pair.ask && _this.check(pair.ask.attachements) || (pair.answer && _this.check(pair.answer.attachements)) ? (React.createElement("p", null, React.createElement("b", null, "附件："))) : "", pair.ask && _this.check(pair.ask.attachements) ? pair.ask.attachements.map(function (atta) {

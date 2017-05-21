@@ -1,8 +1,9 @@
+///<reference path="../../../pages/importLoans.ts"/>
+///<reference path="../../../pages/askSth.tsx"/>
 var pages;
 (function (pages) {
     var console;
     (function (console) {
-        var MessageStatus = collection.protocol.MessageStatus;
         var PageUtil = pages.PageUtil;
         var Message = collection.Message;
         var EntrustedCase = collection.EntrustedCase;
@@ -12,9 +13,9 @@ var pages;
             route.router.register(new Receiver("/console/summary", function (e) {
                 switch (e.id) {
                     case route.MSG.PAGE_REFRESH:
-                        if (e.data == pages.PageType.console) {
-                            Accepter.update();
-                        }
+                        //if (e.data == pages.PageType.console){
+                        //    Accepter.update();
+                        //}
                         break;
                 }
             }));
@@ -22,8 +23,16 @@ var pages;
                 switch (e.id) {
                     case route.MSG.PAGE_REFRESH:
                         if (e.data == pages.PageType.console) {
-                            Message.getSendMessages(MessageStatus.unread).done(function (msgs) {
-                                route.router.broadcast(route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS, msgs);
+                            Message.getMessages().done(function (msgs) {
+                                var pairs = Message.pairs(msgs);
+                                var unrespMsgs = [];
+                                $(pairs).each(function (i, e) {
+                                    if (!e.answer) {
+                                        unrespMsgs.push(e.ask);
+                                    }
+                                });
+                                route.router.broadcast(route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS, unrespMsgs);
+                                Accepter.update(unrespMsgs.length);
                             });
                         }
                         break;
@@ -34,11 +43,12 @@ var pages;
                 }
             }));
             route.router.to("/console/summary/assigner").send(MSG_REFRESH, null, route.DELAY_READY);
+            $(".header-pic").attr("src", collection.Net.BASE_URL + "/jsp/assets/img/avatars/adam-jansen.jpg");
         });
         var Accepter = (function () {
             function Accepter() {
             }
-            Accepter.update = function () {
+            Accepter.update = function (count) {
                 EntrustedCase.getAcceptSummary()
                     .done(function (as) {
                     $("#console-status>div:eq(0)>div").eq(0)
@@ -50,11 +60,8 @@ var pages;
                             .text(parseFloat("" + (as.complete / as.total * 100)).toFixed(1) + "%");
                     }
                 });
-                Message.getUnreadCount()
-                    .done(function (count) {
-                    $("#console-status>div:eq(2)>div").eq(0)
-                        .text(count).next().text("待回复咨询");
-                });
+                $("#console-status>div:eq(2)>div").eq(0)
+                    .text(count).next().text("待回复咨询");
             };
             return Accepter;
         })();

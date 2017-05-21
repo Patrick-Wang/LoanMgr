@@ -329,7 +329,7 @@ module pages {
                     height: '100%',
                     shrinkToFit: true,
                     rowNum: 10,
-                    rowList:[10,20,50],
+                    rowList:[10,20,50,100],
                     autoScroll: true,
                     multiselect: false,
                     pager: '#as-msgsPager',

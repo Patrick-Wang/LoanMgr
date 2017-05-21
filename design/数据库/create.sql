@@ -614,6 +614,7 @@ insert into `authority` (intf, role) values
 ((select id from interface where address='/ec/answer'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/ec/assign'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/ec/backup'), (select id from role where name='ROLE_ADMIN')),
+((select id from interface where address='/ec/export'), (select id from role where name='ROLE_ADMIN')),
 ((select id from interface where address='/ec/export'), (select id from role where name='ROLE_INSIDE_STAFF')),
 ((select id from interface where address='/ec/report'), (select id from role where name='ROLE_OUTSIDE_STAFF')),
 ((select id from interface where address='/user/manager'), (select id from role where name='ROLE_ADMIN')),

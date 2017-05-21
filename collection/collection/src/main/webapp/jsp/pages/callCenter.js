@@ -133,7 +133,7 @@ var pages;
                 height: '100%',
                 shrinkToFit: true,
                 rowNum: 10,
-                rowList: [10, 20, 50],
+                rowList: [10, 20, 50, 100],
                 autoScroll: true,
                 pager: '#' + tbName + 'Pager',
                 onSortCol: function (index, iCol, sortorder) {
@@ -180,7 +180,7 @@ var pages;
                 height: '100%',
                 shrinkToFit: true,
                 rowNum: 10,
-                rowList: [10, 20, 50],
+                rowList: [10, 20, 50, 100],
                 autoScroll: true,
                 pager: '#' + tbName + 'Pager',
                 onSortCol: function (index, iCol, sortorder) {
@@ -255,7 +255,11 @@ var pages;
                     return false;
                 }
             });
-            alert(recId);
+            route.router.to(pages.PageUtil.getPageId(pages.PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
+                ec: { managerId: record.ecId },
+                ecType: record.ecType
+            });
+            sidebar.switchPage(pages.PageType.loansDetail);
         };
         CallCenter.prototype.onclickSkip = function (recId) {
             var _this = this;
@@ -311,7 +315,7 @@ var pages;
                 height: '100%',
                 shrinkToFit: true,
                 rowNum: 10,
-                rowList: [10, 20, 50],
+                rowList: [10, 20, 50, 100],
                 autoScroll: true,
                 pager: '#' + tbName + 'Pager',
                 onSortCol: function (index, iCol, sortorder) {
@@ -358,7 +362,7 @@ var pages;
                 height: '100%',
                 shrinkToFit: true,
                 rowNum: 10,
-                rowList: [10, 20, 50],
+                rowList: [10, 20, 50, 100],
                 autoScroll: true,
                 pager: '#' + tbName + 'Pager',
                 onCellSelect: function (rowid, iCol, cellcontent, e) {

@@ -8,4 +8,6 @@ public interface PhoneRecordDao extends AbstractReadWriteDao<PhoneRecordEntity> 
 
 	PhoneRecordEntity getByAttachement(int id);
 
+	void deleteByECM(int id);
+
 }

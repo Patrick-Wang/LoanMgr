@@ -53,7 +53,7 @@ public interface EntrustedCaseService {
 
 
 
-	Result getDeleteECs(Integer type, List<Integer> mgrIds);
+	Result deleteECs(Integer type, List<Integer> mgrIds);
 
 
 }

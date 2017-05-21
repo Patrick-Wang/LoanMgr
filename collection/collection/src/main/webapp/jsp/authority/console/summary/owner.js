@@ -11,9 +11,9 @@ var pages;
             route.router.register(new Receiver("/console/summary", function (e) {
                 switch (e.id) {
                     case route.MSG.PAGE_REFRESH:
-                        if (e.data == pages.PageType.console) {
-                            Assigner.update();
-                        }
+                        //if (e.data == pages.PageType.console){
+                        //    Assigner.update();
+                        //}
                         break;
                 }
             }));
@@ -21,8 +21,16 @@ var pages;
                 switch (e.id) {
                     case route.MSG.PAGE_REFRESH:
                         if (e.data == pages.PageType.console) {
-                            Message.getUnreadMessages().done(function (umsgs) {
-                                route.router.broadcast(route.MSG.CONSOLE_OWNER_UNREADMSGS, umsgs);
+                            Message.getMessages().done(function (umsgs) {
+                                var pairs = Message.pairs(umsgs);
+                                var unrespMsgs = [];
+                                $(pairs).each(function (i, e) {
+                                    if (!e.answer) {
+                                        unrespMsgs.push(e.ask);
+                                    }
+                                });
+                                route.router.broadcast(route.MSG.CONSOLE_OWNER_UNREADMSGS, unrespMsgs);
+                                Assigner.update(unrespMsgs.length);
                             });
                         }
                         break;
@@ -33,11 +41,12 @@ var pages;
                 }
             }));
             route.router.to("/console/summary/owner").send(MSG_REFRESH, null, route.DELAY_READY);
+            $(".header-pic").attr("src", collection.Net.BASE_URL + "/jsp/assets/img/avatars/javi-jimenez.jpg");
         });
         var Assigner = (function () {
             function Assigner() {
             }
-            Assigner.update = function () {
+            Assigner.update = function (count) {
                 EntrustedCase.getAssignSummary()
                     .done(function (as) {
                     $("#console-status>div:eq(0)>div").eq(0)
@@ -49,11 +58,7 @@ var pages;
                             .text(parseFloat("" + (as.complete / as.total * 100)).toFixed(1) + "%");
                     }
                 });
-                Message.getUnreadCount()
-                    .done(function (count) {
-                    $("#console-status>div:eq(2)>div").eq(0)
-                        .text(count).next().text("未处理咨询");
-                });
+                $("#console-status>div:eq(2)>div").eq(0).text(count).next().text("未处理咨询");
             };
             return Assigner;
         })();

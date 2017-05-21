@@ -58,8 +58,10 @@ var pages;
                 }
                 _this.refresh();
             });
+            this.find("#lm-search-Btn").click(function () {
+                _this.refresh();
+            });
             this.find(".dowebok:eq(1) input").click(function () {
-                var id = _this.find(".dowebok:eq(1) input:checked").attr("myid");
                 _this.refresh();
             });
             //this.find(".buttons-preview:eq(1) a:eq(0)").click(()=>{
@@ -192,7 +194,7 @@ var pages;
                 height: '100%',
                 shrinkToFit: false,
                 rowNum: 10,
-                rowList: [10, 20, 50],
+                rowList: [10, 20, 50, 100],
                 autoScroll: true,
                 multiselect: base > 0,
                 pager: '#lm-tablePager',

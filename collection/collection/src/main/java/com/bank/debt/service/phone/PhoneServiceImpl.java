@@ -86,6 +86,7 @@ public class PhoneServiceImpl implements PhoneService {
 				pr.setPhoneNum(from.getNumber());
 				if (from.getEntrustedCaseManager() != null){
 					pr.setEcId(from.getEntrustedCaseManager().getId());
+					pr.setEcType(from.getEntrustedCaseManager().getType());
 					switch (from.getEntrustedCaseManager().getType()){
 					case EntrustedCaseType.CAR_LOAN:
 						pr.setEcCode(eCCarLoanDao.getById(from.getEntrustedCaseManager().getEntrustedCase()).getCode());

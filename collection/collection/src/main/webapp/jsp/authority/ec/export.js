@@ -11,7 +11,7 @@ var authority;
             authority.register(ADDR, function () {
                 var html = ReactDOMServer.renderToStaticMarkup(React.createElement("form", {"id": "lm-exportForm", "method": "post", "style": { display: "none" }}, React.createElement("input", {"id": "lm-export", "type": "submit", "value": "导出"})));
                 pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(html);
-                html = ReactDOMServer.renderToStaticMarkup(React.createElement("a", {"id": "lm-export-Btn", "className": "btn btn-default", "style": { float: "right" }}, "导出"));
+                html = ReactDOMServer.renderToStaticMarkup(React.createElement("a", {"id": "lm-export-Btn", "className": "btn btn-default", "style": { float: "right", marginRight: 5 }}, "导出"));
                 pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(html);
                 html = ReactDOMServer.renderToStaticMarkup(React.createElement("a", {"id": "lm-delete-Btn", "className": "btn btn-default", "style": { float: "right", marginRight: 5 }}, "删除"));
                 pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(html);
@@ -39,13 +39,17 @@ var authority;
                 Export.prototype.onClickDelete = function () {
                     var ec = route.router.to(pages.PageUtil.getPageId(pages.PageType.loansMgr)).send(route.MSG.LOANMGR_GET_SELECTED);
                     if (ec.ids.length > 0) {
-                        EntrustedCase.delete(ec.type, ec.ids).done(function (r) {
-                            if (r.code == 0) {
-                                Toast.success("委案删除成功");
-                                sidebar.switchPage(PageType.loansMgr);
-                            }
-                            else {
-                                Toast.failed("委案删除失败");
+                        bootbox.confirm("是否要删除委案?", function (result) {
+                            if (result) {
+                                EntrustedCase.delete(ec.type, ec.ids).done(function (r) {
+                                    if (r.code == 0) {
+                                        Toast.success("委案删除成功");
+                                        sidebar.switchPage(PageType.loansMgr);
+                                    }
+                                    else {
+                                        Toast.failed("委案删除失败");
+                                    }
+                                });
                             }
                         });
                     }

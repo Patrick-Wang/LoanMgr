@@ -17,7 +17,7 @@ module authority.ec.exporter{
 
         pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(html);
         html = ReactDOMServer.renderToStaticMarkup(
-            <a id="lm-export-Btn" className="btn btn-default" style={{float:"right"}}>导出</a>
+            <a id="lm-export-Btn" className="btn btn-default" style={{float:"right",marginRight:5}}>导出</a>
         );
         pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(html);
         html = ReactDOMServer.renderToStaticMarkup(
@@ -51,16 +51,27 @@ module authority.ec.exporter{
         }
 
         private onClickDelete():void {
+
+
+
+
+
             let ec = route.router.to(pages.PageUtil.getPageId(pages.PageType.loansMgr)).send(route.MSG.LOANMGR_GET_SELECTED);
             if (ec.ids.length > 0){
-                EntrustedCase.delete(ec.type, ec.ids).done((r)=>{
-                    if (r.code == 0){
-                        Toast.success("委案删除成功");
-                        sidebar.switchPage(PageType.loansMgr);
-                    }else{
-                        Toast.failed("委案删除失败");
+
+                bootbox.confirm("是否要删除委案?", (result) => {
+                    if (result) {
+                        EntrustedCase.delete(ec.type, ec.ids).done((r)=>{
+                            if (r.code == 0){
+                                Toast.success("委案删除成功");
+                                sidebar.switchPage(PageType.loansMgr);
+                            }else{
+                                Toast.failed("委案删除失败");
+                            }
+                        });
                     }
                 });
+
             }
             else{
                 Toast.warning("请选择要删除的委案");

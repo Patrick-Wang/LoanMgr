@@ -217,7 +217,7 @@ public class EntrustedCaseServlet {
 			@RequestParam(value="ids") String ids) throws UnsupportedEncodingException {
 		
 		List<Integer> mgrIds = JsonUtil.toObjects(JSONArray.fromObject(ids), Integer.class, null);
-		Result r = entrustedCaseService.getDeleteECs(type, mgrIds);
+		Result r = entrustedCaseService.deleteECs(type, mgrIds);
 		return r.toUtf8Json();
 	}
 	

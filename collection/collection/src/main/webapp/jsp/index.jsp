@@ -88,6 +88,15 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	src="${pageContext.request.contextPath}/jsp/assets/js/jquery.min.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/assets/js/skins.min.js"></script>
+	
+	<script>
+	if(!readCookie("current-skin")){
+		createCookie("current-skin", "${pageContext.request.contextPath}/jsp/assets/css/skins/black.min.css", 10);
+		window.location.reload();
+	}
+	</script>
+	
+	
 <script src="${pageContext.request.contextPath}/jsp/sdk/authority.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/pages/pages.js"></script>
 <script src="${pageContext.request.contextPath}/jsp/sdk/protocol.js"></script>

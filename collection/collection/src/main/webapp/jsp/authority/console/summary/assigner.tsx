@@ -1,3 +1,5 @@
+///<reference path="../../../pages/importLoans.ts"/>
+///<reference path="../../../pages/askSth.tsx"/>
 
 module pages.console {
 
@@ -12,9 +14,9 @@ module pages.console {
         route.router.register(new Receiver("/console/summary", (e:route.Event)=> {
             switch (e.id) {
                 case route.MSG.PAGE_REFRESH:
-                    if (e.data == pages.PageType.console){
-                        Accepter.update();
-                    }
+                    //if (e.data == pages.PageType.console){
+                    //    Accepter.update();
+                    //}
                     break;
             }
         }));
@@ -23,8 +25,18 @@ module pages.console {
             switch (e.id) {
                 case route.MSG.PAGE_REFRESH:
                     if (e.data == pages.PageType.console){
-                        Message.getSendMessages(MessageStatus.unread).done((msgs:Message[])=>{
-                            route.router.broadcast(route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS, msgs);
+                        Message.getMessages().done((msgs:collection.protocol.Message[])=>{
+                            let pairs : collection.MsgPair[] = Message.pairs(msgs);
+                            let unrespMsgs = [];
+                            $(pairs).each((i, e:collection.MsgPair)=>{
+                                if (!e.answer){
+                                    unrespMsgs.push(e.ask);
+                                }
+                            });
+
+
+                            route.router.broadcast(route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS, unrespMsgs);
+                            Accepter.update(unrespMsgs.length);
                         })
                     }
                     break;
@@ -41,11 +53,12 @@ module pages.console {
 
         route.router.to("/console/summary/assigner").send(MSG_REFRESH, null, route.DELAY_READY);
 
+        $(".header-pic").attr("src", collection.Net.BASE_URL + "/jsp/assets/img/avatars/adam-jansen.jpg");
 
     });
 
     class Accepter {
-        static update() {
+        static update(count) {
             EntrustedCase.getAcceptSummary()
                 .done((as:AcceptSummary)=>{
                     $("#console-status>div:eq(0)>div").eq(0)
@@ -57,11 +70,8 @@ module pages.console {
                             .text(parseFloat("" + (as.complete / as.total * 100)).toFixed(1) + "%");
                     }
                 });
-            Message.getUnreadCount()
-                .done((count:number)=> {
-                    $("#console-status>div:eq(2)>div").eq(0)
-                        .text(count).next().text("待回复咨询");
-                });
+            $("#console-status>div:eq(2)>div").eq(0)
+                .text(count).next().text("待回复咨询");
         }
     }
 }

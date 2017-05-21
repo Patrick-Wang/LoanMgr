@@ -264,7 +264,8 @@ module pages {
 
             $("#bootbox-modify-repayment").on('click', () => {
                 $("#template_modify_repayment").children().attr("id", "modify_repayment");
-                $("#modify_repayment #exampleInputyhje").attr("value", this.ec.loan[collection.protocol.getTitles(this.ecType).indexOf("已还金额") + 1])
+                $("#modify_repayment #exampleInputyhje").attr("value", this.ec.loan[collection.protocol.getTitles(this.ecType).indexOf("已还金额") + 1]);
+                $("#modify_repayment #exampleInputsyje").attr("value", this.ec.loan[collection.protocol.getTitles(this.ecType).indexOf("剩余金额") + 1]);
                 bootbox.dialog({
                     message: $("#template_modify_repayment").html(),
                     title: "修改委案回款额",
@@ -536,9 +537,19 @@ module pages {
                     if (!e) {
                         e = "";
                     }
-                    if (i <= 8) {
+                    if (i < 8) {
                         this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
                             '<i class="fa fa-square-o darkpink"></i><b>' + titles[i - 1] + '：</b>' + e +
+                            '</div>');
+                    }else if (i == 8){
+                        this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
+                            '<i class="fa fa-square-o darkpink"></i><b>' + titles[i - 1] + '：</b>' + e +
+                            '</div>');
+                        this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
+                            '<i class="fa fa-square-o darkpink"></i><b>分配内勤：</b>' + this.ec.owner +
+                            '</div>');
+                        this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
+                            '<i class="fa fa-square-o darkpink"></i><b>责任业务员：</b>' + this.ec.assignee +
                             '</div>');
                     } else {
                         this.find("#ld-special").append('<div class="fa-hover col-md-4 col-sm-6">' +
@@ -557,8 +568,8 @@ module pages {
             this.find("#ld-timeline li:not(.timeline-node)").remove();
             this.find("#ld-common").empty();
             this.find("#ld-special").empty();
-            this.find("#bootbox-record-work-timeline").hide();
-            this.find("#bootbox-loans-consulting-timeline").hide();
+            //this.find("#bootbox-record-work-timeline").hide();
+            //this.find("#bootbox-loans-consulting-timeline").hide();
             if (this.ec) {
                 this.find("#ld-eccode").text("委案编码：" +  this.ec.loan[1]);
                 this.refreshLoan();
@@ -591,7 +602,7 @@ module pages {
         }
 
         private refreshReport():void {
-            this.find("#bootbox-record-work-timeline").show();
+            //this.find("#bootbox-record-work-timeline").show();
             $(this.ec.reports).each((i, report : collection.protocol.EntrustedCaseReport)=>{
                 let html = ReactDOMServer.renderToStaticMarkup(
                     <li className={i % 2 == 0 ? "" : "timeline-inverted"}>
@@ -627,7 +638,7 @@ module pages {
         }
 
         private refreshMessage():void {
-            this.find("#bootbox-loans-consulting-timeline").show();
+            //this.find("#bootbox-loans-consulting-timeline").show();
             let pairs : collection.MsgPair[] = Message.pairs(this.ec.messages);
             $(pairs).each((i, pair:collection.MsgPair)=>{
                 let html = ReactDOMServer.renderToStaticMarkup(

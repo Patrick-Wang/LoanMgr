@@ -35,4 +35,11 @@ public class PhoneRecordDaoImpl extends AbstractReadWriteDaoImpl<PhoneRecordEnti
 		}
 		return (PhoneRecordEntity) ret.get(0);
 	}
+	
+	@Override
+	public void deleteByECM(int id) {
+		Query q = this.getEntityManager().createQuery("delete from PhoneRecordEntity where entrustedCaseManager.id = :ecId");
+		q.setParameter("ecId", id);
+		q.executeUpdate();
+	}
 }
