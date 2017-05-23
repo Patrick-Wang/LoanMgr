@@ -82,7 +82,16 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!--Head Ends-->
 <!--Body-->
 <body>
-	<div class="login-container animated fadeInDown">
+
+	
+	<table align="center" style="margin-top:70px;">
+	<tr>
+		<td>
+		<img src="${pageContext.request.contextPath}/jsp/assets/img/background.png"></img>
+		</td>
+		<td><div style="width:80px;"></div></td>
+		<td>
+			<div class="login-container animated fadeInDown pull-right">
 		<div class="loginbox bg-white">
 			<div class="loginbox-title">登录</div>
 
@@ -111,7 +120,11 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			<span class="darkgray">沈阳鑫久利商务代理服务有限公司</span>
 		</div>
 	</div>
-
+		
+		</td>
+	</tr>
+	</table>
+	
 	<script
 		src="${pageContext.request.contextPath}/jsp/assets/js/bootstrap.min.js"></script>
 	<script
