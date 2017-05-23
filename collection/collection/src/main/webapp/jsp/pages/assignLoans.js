@@ -36,6 +36,9 @@ var pages;
                     }
                 }
             });
+            this.find(".dowebok input").click(function () {
+                _this.refresh();
+            });
             $('#al-WiredWizard').on('changed', function (evt) {
                 if ($('#al-WiredWizard').wizard('selectedItem').step == 3) {
                     _this.onStep3();

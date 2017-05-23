@@ -43,6 +43,7 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	String	wtf		;
 	String	ajzt		;
 	String	zjh		;
+	String area;
 	String	zjlx		;
 	String	xb		;
 	String	cszt		;
@@ -1000,8 +1001,8 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public void update() {
-		this.code = String.format("00%08d", this.getId());
+	public void update(Integer ecmId) {
+		this.code = String.format("00%08d", ecmId);
 		if (this.wwjg != null && this.wwrq != null){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
 			this.pch = wwjg + sdf.format(this.wwrq);
@@ -1282,5 +1283,11 @@ public class ECCreditCardEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void setSyje(Double syje) {
 		this.syje = syje;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
 	}
 }

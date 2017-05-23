@@ -32,6 +32,7 @@ public class Xls2JsonMapping implements Mapping<InputStream, JSONArray> {
 		unInportColumns.add("pch");
 		unInportColumns.add("wwzt");
 		unInportColumns.add("bz");
+		unInportColumns.add("area");
 	}
 	
 	public Xls2JsonMapping(Class<?> beanClass) {

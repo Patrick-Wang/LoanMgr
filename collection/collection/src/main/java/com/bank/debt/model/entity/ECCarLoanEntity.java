@@ -46,6 +46,7 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	String	khxb	;
 	Date	khcsrq	;
 	String	khsfzh	;
+	String area;
 	Integer	wfqs	;
 	Double	wfje	;
 	Double	yqts	;
@@ -532,8 +533,8 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public void update() {
-		this.code = String.format("00%08d", this.getId());
+	public void update(Integer ecmId) {
+		this.code = String.format("00%08d", ecmId);
 		if (this.wwjg != null && this.wwrq != null){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
 			this.pch = wwjg + sdf.format(this.wwrq);
@@ -568,5 +569,11 @@ public class ECCarLoanEntity extends AbstractReadWriteEntity implements Serializ
 	}
 	public void setSyje(Double syje) {
 		this.syje = syje;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
 	}
 }

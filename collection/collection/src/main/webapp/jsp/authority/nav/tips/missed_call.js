@@ -46,7 +46,9 @@ var authority;
                         var _this = this;
                         var promises = [];
                         $(this.prs).each(function (i, e) {
-                            promises.push(collection.Phone.updateStatus(e.recId, CallStatus.missedSkip));
+                            if (e.status == CallStatus.missed) {
+                                promises.push(collection.Phone.updateStatus(e.recId, CallStatus.missedNotifySkip));
+                            }
                         });
                         if (promises.length > 0) {
                             $.when.apply($, promises).done(function () {
@@ -83,7 +85,7 @@ var authority;
                     };
                     MissedCall.prototype.onClickMissedCall = function (recId) {
                         var _this = this;
-                        collection.Phone.updateStatus(recId, CallStatus.missedSkip).done(function () {
+                        collection.Phone.updateStatus(recId, CallStatus.missedNotifySkip).done(function () {
                             sidebar.switchPage(PageType.callCenter);
                             _this.updateTips();
                         });

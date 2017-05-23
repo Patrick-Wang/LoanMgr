@@ -82,7 +82,7 @@ module pages{
                 this.find("#cc-callInNoec").parent().removeClass("active");
 
                 active.addClass("active");
-            })
+            });
         }
 
         createTableAssist(pName:string, titles:string[]):JQTable.JQGridAssistant {
@@ -160,7 +160,7 @@ module pages{
             let data = [];
             $(this.records).each((i, e:collection.protocol.PhoneRecord)=>{
                 let row = [];
-                if (e.status == CallStatus.missed){
+                if (e.status == CallStatus.missed || e.status == CallStatus.missedNotifySkip){
                     row.push(e.recId);
                     row.push(e.phoneNum);
                     row.push(e.time);
@@ -223,6 +223,7 @@ module pages{
                         .done((ret:collection.protocol.Result)=>{
                             if (ret.code == 0){
                                 record.ecId = parseInt(result);
+                                Toast.success("关联成功");
                                 this.updateCallInNoEC("cc-callInNoec");
                             }else{
                                 Toast.failed(ret.msg);

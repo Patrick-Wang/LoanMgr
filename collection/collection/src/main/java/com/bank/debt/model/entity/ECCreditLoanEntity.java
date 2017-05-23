@@ -43,6 +43,7 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	String	zhh		;
 	String	xb		;
 	String	sfzh		;
+	String area;
 	String	fkjg		;
 	Double	qyje		;
 	Double	fkje		;
@@ -520,8 +521,8 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	public void setCode(String code) {
 		this.code = code;
 	}
-	public void update() {
-		this.code = String.format("00%08d", this.getId());
+	public void update(Integer ecmId) {
+		this.code = String.format("00%08d", ecmId);
 		if (this.wwjg != null && this.wwrq != null){
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
 			this.pch = wwjg + sdf.format(this.wwrq);
@@ -569,6 +570,12 @@ public class ECCreditLoanEntity extends AbstractReadWriteEntity implements Seria
 	}
 	public void setWwjg(String wwjg) {
 		this.wwjg = wwjg;
+	}
+	public String getArea() {
+		return area;
+	}
+	public void setArea(String area) {
+		this.area = area;
 	}
 
 }

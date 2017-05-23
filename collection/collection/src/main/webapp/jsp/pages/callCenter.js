@@ -151,7 +151,7 @@ var pages;
             var data = [];
             $(this.records).each(function (i, e) {
                 var row = [];
-                if (e.status == CallStatus.missed) {
+                if (e.status == CallStatus.missed || e.status == CallStatus.missedNotifySkip) {
                     row.push(e.recId);
                     row.push(e.phoneNum);
                     row.push(e.time);
@@ -210,6 +210,7 @@ var pages;
                             .done(function (ret) {
                             if (ret.code == 0) {
                                 record.ecId = parseInt(result);
+                                pages.Toast.success("关联成功");
                                 _this.updateCallInNoEC("cc-callInNoec");
                             }
                             else {

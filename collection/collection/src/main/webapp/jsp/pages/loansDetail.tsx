@@ -10,6 +10,7 @@ module pages {
         ec:collection.protocol.EC;
         ecType:collection.protocol.EntrustedCaseType;
         firstRefresh:boolean = true;
+
         constructor(page:pages.PageType) {
             super(page);
 
@@ -23,7 +24,7 @@ module pages {
             }));
 
             $("#bootbox-click-to-working").on('click', () => {
-                bootbox.confirm("是否将委案状态修改为工作中？",  (result) =>{
+                bootbox.confirm("是否将委案状态修改为工作中？", (result) => {
                     if (result) {
                         collection.EntrustedCase.update(this.ecType, [{id: this.ec.loan[0], wwzt: "工作中"}])
                             .done((ret:collection.protocol.Result)=> {
@@ -39,7 +40,7 @@ module pages {
             });
 
             $("#bootbox-click-to-done").on('click', () => {
-                bootbox.confirm("是否将委案状态修改为已退案？",  (result) => {
+                bootbox.confirm("是否将委案状态修改为已退案？", (result) => {
                     if (result) {
                         collection.EntrustedCase.update(this.ecType, [{id: this.ec.loan[0], wwzt: "已退案"}])
                             .done((ret:collection.protocol.Result)=> {
@@ -76,13 +77,15 @@ module pages {
                             label: "上传记录",
                             className: "btn-blue",
                             callback: () => {
-                                if ($("#record-work input:eq(0)").val() && $("#record-work textarea:eq(0)").val()){
+                                if ($("#record-work input:eq(0)").val() && $("#record-work textarea:eq(0)").val()) {
 
                                     if (dropzs[0].getQueuedFiles().length > 0) {
-                                        dropzs[0].options.params = {report : EntrustedCaseReport.reportParams(
-                                            this.ec.managerId,
-                                            $("#record-work input:eq(0)").val(),
-                                            $("#record-work textarea:eq(0)").val())};
+                                        dropzs[0].options.params = {
+                                            report: EntrustedCaseReport.reportParams(
+                                                this.ec.managerId,
+                                                $("#record-work input:eq(0)").val(),
+                                                $("#record-work textarea:eq(0)").val())
+                                        };
 
                                         dropzs[0].processQueue();
                                     } else {
@@ -90,16 +93,16 @@ module pages {
                                             this.ec.managerId,
                                             $("#record-work input:eq(0)").val(),
                                             $("#record-work textarea:eq(0)").val())
-                                            .done((r)=>{
-                                               if (r.code == 0){
-                                                   Toast.success("报告上传成功");
-                                                   this.refresh();
-                                               } else{
-                                                   Toast.failed(r.msg);
-                                               }
+                                            .done((r)=> {
+                                                if (r.code == 0) {
+                                                    Toast.success("报告上传成功");
+                                                    this.refresh();
+                                                } else {
+                                                    Toast.failed(r.msg);
+                                                }
                                             });
                                     }
-                                }else{
+                                } else {
                                     Toast.warning("信息不完整");
                                     return false;
                                 }
@@ -154,7 +157,7 @@ module pages {
                     message: $("#template_report_work_by_phone").html(),
                     title: "电话催收记录录入",
                     className: "modal-blue",
-                    closeButton:false,
+                    closeButton: false,
                     buttons: {
                         "取消": {
                             className: "btn-default mycancel",
@@ -165,7 +168,7 @@ module pages {
                             label: "上传记录",
                             className: "btn-blue myupload",
                             callback: () => {
-                                if ( $("#report_work_by_phone_ input:eq(0)").val() && $("#report_work_by_phone_ textarea").val()){
+                                if ($("#report_work_by_phone_ input:eq(0)").val() && $("#report_work_by_phone_ textarea").val()) {
                                     collection.EntrustedCaseReport.createPhoneOutReport(this.ec.managerId,
                                         $("#report_work_by_phone_ input:eq(0)").val(),
                                         $("#report_work_by_phone_ textarea").val(),
@@ -178,7 +181,7 @@ module pages {
                                                 Toast.success("上传报告成功");
                                             }
                                         });
-                                }else{
+                                } else {
                                     Toast.warning("请填写记录信息");
                                 }
                             }
@@ -189,13 +192,28 @@ module pages {
                 $("#template_report_work_by_phone").children().removeAttr("id");
                 $(".myupload").prop("disabled", true);
                 $("#report_work_by_phone_ a:eq(0)").hide();
-                $("#report_work_by_phone_ a:eq(0)").click(()=>{
-                   collection.phone.hangUp();
+                $("#report_work_by_phone_ a:eq(0)").click(()=> {
+                    collection.phone.hangUp();
                 });
 
-                $("#report_work_by_phone_ a:eq(1)").click(()=>{
+
+                if (this.ecType == collection.protocol.EntrustedCaseType.carLoan) {
+                    let i = collection.protocol.getTitles(this.ecType).indexOf("客户手机");
+                    $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
+                }
+                else if (this.ecType == collection.protocol.EntrustedCaseType.creditLoan) {
+                    let i = collection.protocol.getTitles(this.ecType).indexOf("手机");
+                    $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
+                }
+                else if (collection.protocol.EntrustedCaseType.creditCard) {
+                    let i = collection.protocol.getTitles(this.ecType).indexOf("手机号码");
+                    $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
+                }
+                $("#report_work_by_phone_ input:eq(1)").click();
+
+                $("#report_work_by_phone_ a:eq(1)").click(()=> {
                     let num = $("#report_work_by_phone_ input:eq(1)").val();
-                    if (num){
+                    if (num) {
 
                         $(".mycancel, .myupload").prop("disabled", true);
                         $("#report_work_by_phone_ a:eq(1)").hide();
@@ -205,13 +223,13 @@ module pages {
                             if (fName) {
                                 $("#report_work_by_phone_ a").hide();
                                 $(".mycancel, .myupload").prop("disabled", false);
-                            }else{
+                            } else {
                                 $("#report_work_by_phone_ a:eq(0)").hide();
                                 $("#report_work_by_phone_ a:eq(1)").show();
                                 $(".mycancel, .myupload").prop("disabled", true);
                             }
                         });
-                    }else{
+                    } else {
                         Toast.warning("请填写电话号码");
                     }
                 });
@@ -233,20 +251,20 @@ module pages {
                             label: "咨询",
                             className: "btn-blue",
                             callback: () => {
-                                if ($("#template_consulting_sub input:eq(0)").val() || $("#template_consulting_sub textarea:eq(0)").val()){
+                                if ($("#template_consulting_sub input:eq(0)").val() || $("#template_consulting_sub textarea:eq(0)").val()) {
                                     Message.sendMessage(this.ec.managerId,
                                         this.ec.ownerId,
                                         $("#template_consulting_sub input:eq(0)").val(),
                                         $("#template_consulting_sub textarea:eq(0)").val())
-                                        .done((r:collection.protocol.Result)=>{
-                                            if (r.code == 0){
+                                        .done((r:collection.protocol.Result)=> {
+                                            if (r.code == 0) {
                                                 Toast.success("咨询提交成功");
                                                 this.refresh();
-                                            }else{
+                                            } else {
                                                 Toast.failed(r.msg);
                                             }
                                         });
-                                }else{
+                                } else {
                                     Toast.warning("请填完整写信息");
                                     return false;
                                 }
@@ -280,20 +298,21 @@ module pages {
                             label: "确定",
                             className: "btn-blue",
                             callback: () => {
-                                if ($("#modify_repayment #exampleInputyhje").val() || $("#modify_repayment #exampleInputsyje").val()){
+                                if ($("#modify_repayment #exampleInputyhje").val() || $("#modify_repayment #exampleInputsyje").val()) {
                                     collection.EntrustedCase.update(this.ecType, [{
-                                        id: this.ec.loan[0],
-                                        yhje: $("#modify_repayment #exampleInputyhje").val(),
-                                        syje: $("#modify_repayment #exampleInputsyje").val()}])
-                                        .done((r:collection.protocol.Result)=>{
-                                            if (r.code == 0){
+                                            id: this.ec.loan[0],
+                                            yhje: $("#modify_repayment #exampleInputyhje").val(),
+                                            syje: $("#modify_repayment #exampleInputsyje").val()
+                                        }])
+                                        .done((r:collection.protocol.Result)=> {
+                                            if (r.code == 0) {
                                                 this.refresh();
                                                 Toast.success("修改成功");
-                                            }else{
+                                            } else {
                                                 Toast.failed(r.msg);
                                             }
                                         });
-                                }else{
+                                } else {
                                     Toast.warning("请填写金额");
                                     return false;
                                 }
@@ -308,7 +327,7 @@ module pages {
             $("#bootbox-modify-attachment-property").on('click', () => {
 
 
-                if ($(".attachement__").length == 0){
+                if ($(".attachement__").length == 0) {
                     Toast.warning("没有可以修改的附件");
                     return;
                 }
@@ -316,19 +335,19 @@ module pages {
                 $("#template_modify_attachment_property").empty();
 
 
-                $(".attachement__").each((i, e)=>{
+                $(".attachement__").each((i, e)=> {
                     let html = ReactDOMServer.renderToStaticMarkup(
                         <div className="row" data-id={$(e).attr("value")}>
                             <div className="col-md-12">
                                 <div className="form-group">
                                     <label className="col-sm-4 control-label no-padding-right">{$(e).text()}</label>
                                     <div className="col-sm-4">
-                                        <input className="form-control" placeholder={$(e).text()}
+                                        <input className="form-control" value={$(e).text()}
                                                data-edit="false"></input>
                                     </div>
                                     <div className="col-sm-4">
                                         <input className="form-control" data-mask="9999/99/99 99:99:99"
-                                               placeholder={$(e).attr("data-time")}></input>
+                                               value={$(e).attr("data-time")}></input>
                                     </div>
                                 </div>
                             </div>
@@ -353,32 +372,32 @@ module pages {
                             label: "确定",
                             className: "btn-blue",
                             callback: () => {
-                                let attachs : collection.protocol.Attachement[] = [];
-                                $(".modify_attachment_property").each((i, e)=>{
-                                    let attach : collection.protocol.Attachement  = {
-                                        id : $(e).attr("data-id"),
-                                        display : $(e).find("input:eq(0)").val()?$(e).find("input:eq(0)").val():undefined,
-                                        uploadTime : $(e).find("input:eq(1)").val() && $(e).find("input:eq(1)").val().indexOf("__") < 0 ?
+                                let attachs:collection.protocol.Attachement[] = [];
+                                $(".modify_attachment_property").each((i, e)=> {
+                                    let attach:collection.protocol.Attachement = {
+                                        id: $(e).attr("data-id"),
+                                        display: $(e).find("input:eq(0)").val() ? $(e).find("input:eq(0)").val() : undefined,
+                                        uploadTime: $(e).find("input:eq(1)").val() && $(e).find("input:eq(1)").val().indexOf("__") < 0 ?
                                             $(e).find("input:eq(1)").val() :
                                             undefined
                                     };
-                                    if (attach.display || attach.uploadTime){
+                                    if (attach.display || attach.uploadTime) {
                                         attachs.push(attach);
                                     }
                                 });
-                                if (attachs.length > 0){
-                                    collection.EntrustedCase.updateAttachement(attachs).done((r:collection.protocol.Result)=>{
-                                        if (r.code == 0){
+                                if (attachs.length > 0) {
+                                    collection.EntrustedCase.updateAttachement(attachs).done((r:collection.protocol.Result)=> {
+                                        if (r.code == 0) {
                                             Toast.success("附件修改成功");
                                             this.refresh();
                                             dialog.modal("hide");
-                                        }else{
+                                        } else {
                                             Toast.failed(r.msg);
                                         }
-                                    }).fail((r:any)=>{
+                                    }).fail((r:any)=> {
                                         Toast.failed("附件修改失败");
                                     });
-                                }else{
+                                } else {
                                     Toast.warning("请修改附件信息");
                                 }
                                 return false;
@@ -402,7 +421,7 @@ module pages {
                             invalid: 'glyphicon glyphicon-remove',
                             validating: 'glyphicon glyphicon-refresh'
                         },
-                        submitHandler:  (validator, form, submitButton) => {
+                        submitHandler: (validator, form, submitButton) => {
                             // Do nothing
                         },
                         fields: {
@@ -541,7 +560,7 @@ module pages {
                         this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
                             '<i class="fa fa-square-o darkpink"></i><b>' + titles[i - 1] + '：</b>' + e +
                             '</div>');
-                    }else if (i == 8){
+                    } else if (i == 8) {
                         this.find("#ld-common").append('<div class="fa-hover col-md-4 col-sm-6">' +
                             '<i class="fa fa-square-o darkpink"></i><b>' + titles[i - 1] + '：</b>' + e +
                             '</div>');
@@ -571,13 +590,13 @@ module pages {
             //this.find("#bootbox-record-work-timeline").hide();
             //this.find("#bootbox-loans-consulting-timeline").hide();
             if (this.ec) {
-                this.find("#ld-eccode").text("委案编码：" +  this.ec.loan[1]);
+                this.find("#ld-eccode").text("委案编码：" + this.ec.loan[1]);
                 this.refreshLoan();
-                if (this.check(this.ec.reports)){
+                if (this.check(this.ec.reports)) {
                     this.refreshReport();
                 }
-                Message.getMessages(this.ec.managerId).done((msgs:collection.protocol.Message[])=>{
-                    if (this.check(msgs)){
+                Message.getMessages(this.ec.managerId).done((msgs:collection.protocol.Message[])=> {
+                    if (this.check(msgs)) {
                         this.ec.messages = msgs;
                         this.refreshMessage();
                         route.router.broadcast(route.MSG.EC_DETAIL_REFRESH);
@@ -588,14 +607,14 @@ module pages {
         }
 
         protected onRefresh():void {
-            collection.EntrustedCase.search(this.ecType, {mgrId:this.ec.managerId}).done((ecs:collection.protocol.EC[])=>{
+            collection.EntrustedCase.search(this.ecType, {mgrId: this.ec.managerId}).done((ecs:collection.protocol.EC[])=> {
                 this.ec = ecs[0];
                 this.onShown();
             });
         }
 
-        private check(obj):boolean{
-            if (obj instanceof Array){
+        private check(obj):boolean {
+            if (obj instanceof Array) {
                 return obj && obj.length > 0
             }
             return !!obj;
@@ -603,7 +622,7 @@ module pages {
 
         private refreshReport():void {
             //this.find("#bootbox-record-work-timeline").show();
-            $(this.ec.reports).each((i, report : collection.protocol.EntrustedCaseReport)=>{
+            $(this.ec.reports).each((i, report:collection.protocol.EntrustedCaseReport)=> {
                 let html = ReactDOMServer.renderToStaticMarkup(
                     <li className={i % 2 == 0 ? "" : "timeline-inverted"}>
                         <div className="timeline-datetime">
@@ -620,15 +639,18 @@ module pages {
                             <div className="timeline-body">
                                 <p>{report.content}</p>
                                 {this.check(report.attachements) ? (
-                                    <p>
-                                        <b>附件：</b>
-                                    </p> ):""
-                                }
+                                <p>
+                                    <b>附件：</b>
+                                </p> ):""
+                                    }
                                 {
                                     this.check(report.attachements) ? report.attachements.map((atta:collection.protocol.Attachement)=>{
-                                        return <p><a  href="#" className="danger attachement__" value={atta.id} data-time={atta.uploadTime}>{atta.display}</a></p>;
-                                    }) : ""
-                                }
+                                        return <p>
+                                            <a href="#" className="danger attachement__" value={atta.id}
+                                               data-time={atta.uploadTime}>{atta.display}</a>
+                                        </p>;
+                                        }) : ""
+                                    }
                             </div>
                         </div>
                     </li>
@@ -639,8 +661,8 @@ module pages {
 
         private refreshMessage():void {
             //this.find("#bootbox-loans-consulting-timeline").show();
-            let pairs : collection.MsgPair[] = Message.pairs(this.ec.messages);
-            $(pairs).each((i, pair:collection.MsgPair)=>{
+            let pairs:collection.MsgPair[] = Message.pairs(this.ec.messages);
+            $(pairs).each((i, pair:collection.MsgPair)=> {
                 let html = ReactDOMServer.renderToStaticMarkup(
                     <li className={i % 2 == 0 ? "" : "timeline-inverted"}>
                         <div className="timeline-datetime">
@@ -656,13 +678,26 @@ module pages {
                             </div>
                             <div className="timeline-body">
                                 <p>{pair.ask.content}</p>
-                                {pair.answer ? (<p><b>答复：</b></p>):(<p><b>未答复</b></p>)}
+                                {pair.answer ? (<p>
+                                    <b>答复：</b>
+                                </p>):(<p>
+                                    <b>未答复</b>
+                                </p>)}
                                 {pair.answer ? (<p>{pair.answer.content}</p>):""}
-                                {pair.ask && this.check(pair.ask.attachements) || (pair.answer && this.check(pair.answer.attachements)) ? (<p><b>附件：</b></p> ):""}
+                                {pair.ask && this.check(pair.ask.attachements) || (pair.answer && this.check(pair.answer.attachements)) ? (
+                                <p>
+                                    <b>附件：</b>
+                                </p> ):""}
                                 {pair.ask && this.check(pair.ask.attachements) ? pair.ask.attachements.map((atta:collection.protocol.Attachement)=>{
-                                    return <p><a href="#" className="attachement__" value={atta.id} data-time={atta.uploadTime}>{atta.display}</a></p>;}) : ""}
+                                    return <p>
+                                        <a href="#" className="attachement__" value={atta.id}
+                                           data-time={atta.uploadTime}>{atta.display}</a>
+                                    </p>;}) : ""}
                                 {pair.answer && this.check(pair.answer.attachements) ? pair.answer.attachements.map((atta:collection.protocol.Attachement)=>{
-                                        return <p><a href="#" className="attachement__" value={atta.id} data-time={atta.uploadTime}>{atta.display}</a></p>;}) : ""}
+                                    return <p>
+                                        <a href="#" className="attachement__" value={atta.id}
+                                           data-time={atta.uploadTime}>{atta.display}</a>
+                                    </p>;}) : ""}
                             </div>
                         </div>
                     </li>

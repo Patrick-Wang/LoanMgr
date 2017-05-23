@@ -75,7 +75,9 @@ var pages;
                             callback: function () {
                                 if ($("#record-work input:eq(0)").val() && $("#record-work textarea:eq(0)").val()) {
                                     if (dropzs[0].getQueuedFiles().length > 0) {
-                                        dropzs[0].options.params = { report: EntrustedCaseReport.reportParams(_this.ec.managerId, $("#record-work input:eq(0)").val(), $("#record-work textarea:eq(0)").val()) };
+                                        dropzs[0].options.params = {
+                                            report: EntrustedCaseReport.reportParams(_this.ec.managerId, $("#record-work input:eq(0)").val(), $("#record-work textarea:eq(0)").val())
+                                        };
                                         dropzs[0].processQueue();
                                     }
                                     else {
@@ -177,6 +179,19 @@ var pages;
                 $("#report_work_by_phone_ a:eq(0)").click(function () {
                     collection.phone.hangUp();
                 });
+                if (_this.ecType == collection.protocol.EntrustedCaseType.carLoan) {
+                    var i = collection.protocol.getTitles(_this.ecType).indexOf("客户手机");
+                    $("#report_work_by_phone_ input:eq(1)").val(_this.ec.loan[i + 1]);
+                }
+                else if (_this.ecType == collection.protocol.EntrustedCaseType.creditLoan) {
+                    var i = collection.protocol.getTitles(_this.ecType).indexOf("手机");
+                    $("#report_work_by_phone_ input:eq(1)").val(_this.ec.loan[i + 1]);
+                }
+                else if (collection.protocol.EntrustedCaseType.creditCard) {
+                    var i = collection.protocol.getTitles(_this.ecType).indexOf("手机号码");
+                    $("#report_work_by_phone_ input:eq(1)").val(_this.ec.loan[i + 1]);
+                }
+                $("#report_work_by_phone_ input:eq(1)").click();
                 $("#report_work_by_phone_ a:eq(1)").click(function () {
                     var num = $("#report_work_by_phone_ input:eq(1)").val();
                     if (num) {
@@ -264,7 +279,8 @@ var pages;
                                     collection.EntrustedCase.update(_this.ecType, [{
                                             id: _this.ec.loan[0],
                                             yhje: $("#modify_repayment #exampleInputyhje").val(),
-                                            syje: $("#modify_repayment #exampleInputsyje").val() }])
+                                            syje: $("#modify_repayment #exampleInputsyje").val()
+                                        }])
                                         .done(function (r) {
                                         if (r.code == 0) {
                                             _this.refresh();
@@ -292,7 +308,7 @@ var pages;
                 }
                 $("#template_modify_attachment_property").empty();
                 $(".attachement__").each(function (i, e) {
-                    var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", {"className": "row", "data-id": $(e).attr("value")}, React.createElement("div", {"className": "col-md-12"}, React.createElement("div", {"className": "form-group"}, React.createElement("label", {"className": "col-sm-4 control-label no-padding-right"}, $(e).text()), React.createElement("div", {"className": "col-sm-4"}, React.createElement("input", {"className": "form-control", "placeholder": $(e).text(), "data-edit": "false"})), React.createElement("div", {"className": "col-sm-4"}, React.createElement("input", {"className": "form-control", "data-mask": "9999/99/99 99:99:99", "placeholder": $(e).attr("data-time")}))))));
+                    var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", {"className": "row", "data-id": $(e).attr("value")}, React.createElement("div", {"className": "col-md-12"}, React.createElement("div", {"className": "form-group"}, React.createElement("label", {"className": "col-sm-4 control-label no-padding-right"}, $(e).text()), React.createElement("div", {"className": "col-sm-4"}, React.createElement("input", {"className": "form-control", "value": $(e).text(), "data-edit": "false"})), React.createElement("div", {"className": "col-sm-4"}, React.createElement("input", {"className": "form-control", "data-mask": "9999/99/99 99:99:99", "value": $(e).attr("data-time")}))))));
                     $("#template_modify_attachment_property").append(html);
                 });
                 $("#template_modify_attachment_property").children().addClass("modify_attachment_property");

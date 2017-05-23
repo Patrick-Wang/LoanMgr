@@ -57,7 +57,9 @@ module authority.nav.tips.missedCall {
         onClickCallCenter() {
             let promises = [];
             $(this.prs).each((i, e:collection.protocol.PhoneRecord)=> {
-                promises.push(collection.Phone.updateStatus(e.recId, CallStatus.missedSkip));
+                if (e.status == CallStatus.missed){
+                    promises.push(collection.Phone.updateStatus(e.recId, CallStatus.missedNotifySkip));
+                }
             });
             if (promises.length > 0) {
                 $.when.apply($, promises).done(()=> {
@@ -108,7 +110,7 @@ module authority.nav.tips.missedCall {
         }
 
         private onClickMissedCall(recId:number):void {
-            collection.Phone.updateStatus(recId, CallStatus.missedSkip).done(()=>{
+            collection.Phone.updateStatus(recId, CallStatus.missedNotifySkip).done(()=>{
                 sidebar.switchPage(PageType.callCenter);
                 this.updateTips();
             });

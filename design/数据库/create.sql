@@ -135,6 +135,13 @@ create table `entrusted_case_batch_creator`(
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
+drop table if exists  `areas`;
+create table `areas`(
+	`id` int NOT NULL AUTO_INCREMENT,
+	`PID` varchar(20) NOT NULL,
+	`area` varchar(100) NOT NULL,
+	PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 
 
 drop table if exists  `entrusted_case_car_loan`;
@@ -158,6 +165,7 @@ create table `entrusted_case_car_loan`(
 	`khxb`	varchar(54)	,--	客户性别
 	`khcsrq`	date	,--	客户出生日期
 	`khsfzh`	varchar(54)	,--	客户身份证号
+	`area`	varchar(100)	, -- 身份证区域
 	`wfqs`	int	,--	外访期数
 	`wfje`	double	,--	外访金额
 	`yqts`	double	,--	逾期天数
@@ -236,6 +244,7 @@ create table `entrusted_case_credit_loan`(
 	`zhh`	varchar(50)	,--	账户号
 	`xb`	varchar(50)	,--	性别
 	`sfzh`	varchar(50)	,--	身份证号
+	`area`	varchar(100)	, -- 身份证区域
 	`fkjg`	varchar(50)	,--	放款机构
 	`qyje`	double	,--	签约金额
 	`fkje`	double	,--	放款金额
@@ -319,6 +328,7 @@ create table `entrusted_case_credit_card`(
 	`wtf`	varchar(50)	,--	委托方
 	`ajzt`	varchar(50)	,--	案件状态
 	`zjh`	varchar(50)	,--	证件号
+	`area`	varchar(100)	, -- 身份证区域
 	`zjlx`	varchar(50)	,--	证件类型
 	`xb`	varchar(50)	,--	性别
 	`cszt`	varchar(50)	,--	催收状态
@@ -718,7 +728,7 @@ values
 
 insert into `entrusted_case_car_loan` (code, khxm)
 values
-('01225412', 'test');
+('00000001', 'test');
 
 insert into `phone_records` (`number`, `status`, `entrustedCase`, `startTime`, attachement)
 values
@@ -736,6 +746,7 @@ insert into `attachements` (`fileAddress`, `display`, `uploadTime`)
 values
 ('PHONES/faet', "asdfasdfasdf.mp3", current_time());
 
+insert into areas (PID, area) values ('2101', '朝阳');
 
 insert into user_role (user, role) values
 (1, 1),

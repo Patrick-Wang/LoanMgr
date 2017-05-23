@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.bank.debt.model.dao.area.AreaDao;
 import com.bank.debt.model.dao.authority.AuthorityDao;
 import com.bank.debt.model.dao.authority.AuthorityDaoImpl;
 import com.bank.debt.model.dao.ecbatchcreator.ECBatchCreatorDao;
@@ -107,6 +108,9 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	@Autowired
 	AttachementService attachementService;
 	
+	@Autowired
+	AreaDao areaDao;
+	
 	@Resource(name=MessageDaoImpl.NAME)
 	MessageDao messageDao;
 	
@@ -160,9 +164,11 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					if (null == entity.getWwzt()){
 						entity.setWwzt("未分配");
 					}
+					if (null != entity.getKhsfzh() && entity.getKhsfzh().length() > 4){
+						entity.setArea(areaDao.getArea(entity.getKhsfzh().substring(0, 4)));
+					}
+					
 					entity = eCCarLoanDao.merge(entity);
-					entity.update();
-					eCCarLoanDao.merge(entity);
 
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
@@ -172,7 +178,10 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					ecm.setLastModifiedTime(current);
 					ecm.setEntrustedCase(entity.getId());
 					ecm.setType(type);
-					entrustedCaseManagerDao.merge(ecm);
+					ecm = entrustedCaseManagerDao.merge(ecm);
+					
+					entity.update(ecm.getId());
+					eCCarLoanDao.merge(entity);
 				}
 				r = ErrorCode.OK.clone();
 				r.setMsg(data.size() + "");
@@ -217,9 +226,10 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					if (null == entity.getWwzt()){
 						entity.setWwzt("未分配");
 					}
+					if (null != entity.getZjh() && entity.getZjh().length() > 4){
+						entity.setArea(areaDao.getArea(entity.getZjh().substring(0, 4)));
+					}
 					entity = eCCreditCardDao.merge(entity);
-					entity.update();
-					eCCreditCardDao.merge(entity);
 					
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
@@ -229,7 +239,11 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					ecm.setLastModifiedTime(current);
 					ecm.setEntrustedCase(entity.getId());
 					ecm.setType(type);
-					entrustedCaseManagerDao.merge(ecm);
+					ecm = entrustedCaseManagerDao.merge(ecm);
+					
+					entity.update(ecm.getId());
+					eCCreditCardDao.merge(entity);
+					
 				}
 				r = ErrorCode.OK.clone();
 				r.setMsg(data.size() + "");
@@ -274,9 +288,10 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					if (null == entity.getWwzt()){
 						entity.setWwzt("未分配");
 					}
+					if (null != entity.getSfzh() && entity.getSfzh().length() > 4){
+						entity.setArea(areaDao.getArea(entity.getSfzh().substring(0, 4)));
+					}
 					entity = eCCreditLoanDao.merge(entity);
-					entity.update();
-					eCCreditLoanDao.merge(entity);
 					
 					EntrustedCaseManagerEntity ecm = new EntrustedCaseManagerEntity();
 					ecm.setOwner(usr);
@@ -286,7 +301,10 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					ecm.setLastModifiedTime(current);
 					ecm.setEntrustedCase(entity.getId());
 					ecm.setType(type);
-					entrustedCaseManagerDao.merge(ecm);
+					ecm = entrustedCaseManagerDao.merge(ecm);
+					
+					entity.update(ecm.getId());
+					eCCreditLoanDao.merge(entity);
 				}
 				r = ErrorCode.OK.clone();
 				r.setMsg(data.size() + "");
@@ -423,7 +441,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					for (Field fd : fds){
 						if (!fd.getName().equals("entityVersion")){
 							rets.add(BeanUtil.doGet(from, fd.getName()));
-						};
+						}						
 					}
 					return rets;
 				}
@@ -459,7 +477,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					for (Field fd : fds){
 						if (!fd.getName().equals("entityVersion")){
 							rets.add(BeanUtil.doGet(from, fd.getName()));
-						};
+						}
 					}
 					return rets;
 				}
@@ -496,7 +514,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					for (Field fd : fds){
 						if (!fd.getName().equals("entityVersion")){
 							rets.add(BeanUtil.doGet(from, fd.getName()));
-						};
+						}
 					}
 					return rets;
 				}
@@ -644,8 +662,6 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 			
 			EntrustedCaseManagerEntity ecme = this.entrustedCaseManagerDao.getByECId(type, ecIds.get(i));
 			if (null != ecme){
-				
-				
 				entrustedCaseReportDao.deleteByECM(ecme.getId());
 				messageDao.deleteByECM(ecme.getId());
 				phoneRecordDao.deleteByECM(ecme.getId());

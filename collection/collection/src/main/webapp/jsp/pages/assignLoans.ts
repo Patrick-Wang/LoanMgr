@@ -47,6 +47,9 @@ module pages {
                 }
             });
 
+            this.find(".dowebok input").click(()=>{
+               this.refresh();
+            });
 
             $('#al-WiredWizard').on('changed', (evt) => {
                 if ($('#al-WiredWizard').wizard('selectedItem').step == 3){
