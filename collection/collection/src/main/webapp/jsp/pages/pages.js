@@ -141,6 +141,10 @@ var pages;
                 _this.refresh();
                 return false;
             });
+            $("#" + PageUtil.getPageId(this.page) + " .sidebar-toggler").click(function () {
+                _this.refresh();
+                return false;
+            });
             route.router.broadcast(route.MSG.PAGE_REFRESH, this.page, route.DELAY_READY);
         }
         PageImpl.prototype.refresh = function () {

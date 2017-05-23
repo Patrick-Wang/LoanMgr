@@ -17,6 +17,12 @@ module navbar{
                 setInterval(()=>{
                     route.router.broadcast(route.MSG.NAV_REFRESH);
                 }, 30000)
+
+                $("#sidebar-collapse").on('click', ()=>{
+                    setTimeout(()=>{
+                        sidebar.refreshPage();
+                    }, 0);
+                });
             })
 
         }

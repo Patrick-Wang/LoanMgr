@@ -15,6 +15,15 @@ var sidebar;
         return SiderBar.ins.lastPage;
     }
     sidebar.getLastPage = getLastPage;
+    function refreshPage() {
+        $(SiderBar.ins.pages).each(function (i, e) {
+            if (e && e.isShown()) {
+                e.refresh();
+                return false;
+            }
+        });
+    }
+    sidebar.refreshPage = refreshPage;
     function disable() {
         $(SiderBar.ins.items).each(function (i, e) {
             e && e.disable();

@@ -83,48 +83,49 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <!--Body-->
 <body>
 
-	
-	<table align="center" style="margin-top:70px;">
-	<tr>
-		<td>
-		<img src="${pageContext.request.contextPath}/jsp/assets/img/background.png"></img>
-		</td>
-		<td><div style="width:80px;"></div></td>
-		<td>
-			<div class="login-container animated fadeInDown pull-right">
-		<div class="loginbox bg-white">
-			<div class="loginbox-title">登录</div>
 
-			<div class="loginbox-or">
-				<div class="or-line"></div>
-				<div class="or"></div>
-			</div>
+	<table align="center" style="margin-top: 70px;">
+		<tr>
+			<td><img
+				src="${pageContext.request.contextPath}/jsp/assets/img/background.png"></img>
+			</td>
+			<td><div style="width: 80px;"></div></td>
+			<td>
+				<div class="login-container animated fadeInDown pull-right">
+					<div class="loginbox bg-white">
+						<div class="loginbox-title">登录</div>
 
-			<br />
-			<form:form action="${pageContext.request.contextPath}/login"
-				method="post">
-				<div class="loginbox-textbox">
-					<input type="text" class="form-control" name="username"
-						placeholder="用户名" />
+						<div class="loginbox-or">
+							<div class="or-line"></div>
+							<div class="or"></div>
+						</div>
+
+						<br />
+						<form:form action="${pageContext.request.contextPath}/login"
+							method="post">
+							<div class="loginbox-textbox">
+								<input type="text" class="form-control" name="username"
+									placeholder="用户名" />
+							</div>
+							<div class="loginbox-textbox">
+								<input type="password" class="form-control" name="password"
+									placeholder="密码" />
+							</div>
+							<div class="loginbox-submit">
+								<input type="submit" class="btn btn-primary btn-block"
+									value="登录" />
+							</div>
+						</form:form>
+					</div>
+					<div class="logobox text-align-center">
+						<span class="darkgray">沈阳鑫久利商务代理服务有限公司</span>
+					</div>
 				</div>
-				<div class="loginbox-textbox">
-					<input type="password" class="form-control" name="password"
-						placeholder="密码" />
-				</div>
-				<div class="loginbox-submit">
-					<input type="submit" class="btn btn-primary btn-block" value="登录" />
-				</div>
-			</form:form>
-		</div>
-		<div class="logobox text-align-center">
-			<span class="darkgray">沈阳鑫久利商务代理服务有限公司</span>
-		</div>
-	</div>
-		
-		</td>
-	</tr>
+
+			</td>
+		</tr>
 	</table>
-	
+
 	<script
 		src="${pageContext.request.contextPath}/jsp/assets/js/bootstrap.min.js"></script>
 	<script

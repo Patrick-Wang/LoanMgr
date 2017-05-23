@@ -55,6 +55,12 @@ module pages.console {
 
         $(".header-pic").attr("src", collection.Net.BASE_URL + "/jsp/assets/img/avatars/adam-jansen.jpg");
 
+        $("#console-status>div:eq(0)>div").eq(0)
+            .text("--").next().text("已接受委案");
+        $("#console-status>div:eq(1)>div").eq(0)
+            .text("--").next().text("未完成委案");
+        $("#console-status>div:eq(2)>div").eq(0)
+            .text("--").next().text("待回复咨询");
     });
 
     class Accepter {

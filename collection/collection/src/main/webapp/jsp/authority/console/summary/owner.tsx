@@ -47,6 +47,12 @@ module pages.console {
         route.router.to("/console/summary/owner").send(MSG_REFRESH, null, route.DELAY_READY);
 
         $(".header-pic").attr("src", collection.Net.BASE_URL + "/jsp/assets/img/avatars/javi-jimenez.jpg");
+        $("#console-status>div:eq(0)>div").eq(0)
+            .text("--").next().text("已导入委案");
+        $("#console-status>div:eq(1)>div").eq(0)
+            .text("--").next().text("已分配委案");
+        $("#console-status>div:eq(2)>div").eq(0)
+            .text("--").next().text("未处理咨询");
     });
 
     class Assigner {
@@ -54,15 +60,15 @@ module pages.console {
             EntrustedCase.getAssignSummary()
                 .done((as:AssignSummary)=> {
                     $("#console-status>div:eq(0)>div").eq(0)
-                        .text(as.total).next().text("已导入委案");
+                        .text(as.total);
                     $("#console-status>div:eq(1)>div").eq(0)
-                        .text(as.assign).next().text("已分配委案");
+                        .text(as.assign);
                     if (as.total != 0){
                         $("#completeRate")
                             .text(parseFloat("" + (as.complete / as.total * 100)).toFixed(1) + "%");
                     }
                 });
-            $("#console-status>div:eq(2)>div").eq(0).text(count).next().text("未处理咨询");
+            $("#console-status>div:eq(2)>div").eq(0).text(count);
 
 
         }

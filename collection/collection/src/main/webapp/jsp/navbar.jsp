@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" session="false"%>
 <!-- Navbar -->
+	<style>
+	.page-header.page-header-fixed+.page-body {
+	margin-top: 125px;
+	}
+	</style>
 <div class="navbar">
 	<div class="navbar-inner">
 		<div class="navbar-container">

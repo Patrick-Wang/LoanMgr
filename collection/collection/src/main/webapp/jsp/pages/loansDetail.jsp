@@ -186,8 +186,8 @@
 							data-edit="false">
 					</div>
 					<div class="col-sm-4">
-						<input class="form-control" data-mask="9999/99/99 99:99:99"
-							placeholder="2017/05/22 12:34:33">
+						<input class="form-control" data-mask="9999-99-99 99:99:99"
+							placeholder="2017-05-22 12:34:33">
 					</div>
 				</div>
 			</div>

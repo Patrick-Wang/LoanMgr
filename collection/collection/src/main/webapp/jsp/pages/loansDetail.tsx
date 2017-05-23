@@ -346,7 +346,7 @@ module pages {
                                                data-edit="false"></input>
                                     </div>
                                     <div className="col-sm-4">
-                                        <input className="form-control" data-mask="9999/99/99 99:99:99"
+                                        <input className="form-control" data-mask="9999-99-99 99:99:99"
                                                value={$(e).attr("data-time")}></input>
                                     </div>
                                 </div>

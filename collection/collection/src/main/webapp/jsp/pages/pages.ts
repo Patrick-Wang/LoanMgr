@@ -149,6 +149,12 @@ module pages{
                 this.refresh();
                 return false;
             });
+
+            $("#" + PageUtil.getPageId(this.page) + " .sidebar-toggler").click(()=> {
+                this.refresh();
+                return false;
+            });
+
             route.router.broadcast(route.MSG.PAGE_REFRESH, this.page, route.DELAY_READY);
         }
 

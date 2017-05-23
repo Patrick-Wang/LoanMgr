@@ -15,6 +15,14 @@ module sidebar {
         return SiderBar.ins.lastPage;
     }
 
+    export function refreshPage():void{
+        $(SiderBar.ins.pages).each((i,e)=>{
+           if (e && e.isShown()){
+               e.refresh();
+               return false;
+           }
+        });
+    }
 
     export function disable(){
         $(SiderBar.ins.items).each((i,e)=>{
