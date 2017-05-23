@@ -209,12 +209,10 @@ module pages {
                     let i = collection.protocol.getTitles(this.ecType).indexOf("手机号码");
                     $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
                 }
-                $("#report_work_by_phone_ input:eq(1)").click();
 
                 $("#report_work_by_phone_ a:eq(1)").click(()=> {
                     let num = $("#report_work_by_phone_ input:eq(1)").val();
                     if (num) {
-
                         $(".mycancel, .myupload").prop("disabled", true);
                         $("#report_work_by_phone_ a:eq(1)").hide();
                         $("#report_work_by_phone_ a:eq(0)").show();

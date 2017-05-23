@@ -25,6 +25,7 @@ module pages{
             }
         }
 
+
         onCallIn(num:string){
             let html =  ReactDOMServer.renderToStaticMarkup(
                     <div className="row">
@@ -34,6 +35,8 @@ module pages{
                             </div>
                         </div>
                     </div>);
+            let timer = new Timer();
+
             let dialog = bootbox.dialog({
                 message: html,
                 title: "来电话了",
@@ -44,7 +47,10 @@ module pages{
                         label: "接听",
                         className: "btn-blue",
                         callback: ()=>{
-                            $("#cc-callInNum").text("正在通话 : " + num);
+                            $("#cc-callInNum").text("正在通话 : " + num + "  \r\n00:00:00");
+                            timer.start(1000, ()=>{
+                                $("#cc-callInNum").text("正在通话 : " + num + "  \r\n" + timer.secFmt());
+                            });
                             return false;
                         }
                     },
@@ -56,11 +62,15 @@ module pages{
                     }
                 }
             });
+
             return (fileName:string) =>{
                 dialog.modal("hide");
+                timer.kill();
                 this.onHangUp(fileName);
             };
         }
+
+
 
         protected onRefresh():void {
             collection.Phone.getRecords(false).done((records:collection.protocol.PhoneRecord[])=>{

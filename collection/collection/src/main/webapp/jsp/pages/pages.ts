@@ -4,6 +4,43 @@
 declare let Notify:(message:string, position:string, timeout:string, theme:string, icon:string, closable:boolean)=>void;
 declare let bootbox:any;
 module pages{
+
+    export class Timer{
+        tid:any;
+        startTime:number;
+        start(interval:number, onTimer : ()=>void){
+            this.kill();
+            this.startTime = Date.now();
+            this.tid = setInterval(onTimer, interval);
+        }
+        kill(){
+            if (this.tid){
+                clearInterval(this.tid);
+                this.tid = undefined
+            }
+        }
+
+        private format(second:number):string{
+            let h:any = second / 3600;
+            let m:any = ((second %3600) /  60);
+            let s:any = second %60;
+            if (h < 10){
+                h = "0" + h;
+            }
+            if (m < 10){
+                m = "0" + m;
+            }
+            if (s < 10){
+                s = "0" + s;
+            }
+            return ("" + h).substring(0, 2) + ":" + ("" + m).substring(0, 2) + ":" + ("" + s).substring(0, 2);
+        }
+
+        secFmt():string{
+            return this.format((Date.now() - this.startTime) / 1000);
+        }
+    }
+
     export enum PageType{
         reportTask,
         askSth,

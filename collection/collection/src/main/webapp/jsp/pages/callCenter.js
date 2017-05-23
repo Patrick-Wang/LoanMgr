@@ -31,6 +31,7 @@ var pages;
         CallCenter.prototype.onCallIn = function (num) {
             var _this = this;
             var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", {"className": "row"}, React.createElement("div", {"className": "col-md-4"}, React.createElement("div", {"className": "form-group", "id": "cc-callInNum"}, "来电话了 : ", num))));
+            var timer = new pages.Timer();
             var dialog = bootbox.dialog({
                 message: html,
                 title: "来电话了",
@@ -41,7 +42,10 @@ var pages;
                         label: "接听",
                         className: "btn-blue",
                         callback: function () {
-                            $("#cc-callInNum").text("正在通话 : " + num);
+                            $("#cc-callInNum").text("正在通话 : " + num + "  \r\n00:00:00");
+                            timer.start(1000, function () {
+                                $("#cc-callInNum").text("正在通话 : " + num + "  \r\n" + timer.secFmt());
+                            });
                             return false;
                         }
                     },
@@ -55,6 +59,7 @@ var pages;
             });
             return function (fileName) {
                 dialog.modal("hide");
+                timer.kill();
                 _this.onHangUp(fileName);
             };
         };

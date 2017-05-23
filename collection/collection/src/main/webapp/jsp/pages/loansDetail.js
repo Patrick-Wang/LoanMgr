@@ -191,7 +191,6 @@ var pages;
                     var i = collection.protocol.getTitles(_this.ecType).indexOf("手机号码");
                     $("#report_work_by_phone_ input:eq(1)").val(_this.ec.loan[i + 1]);
                 }
-                $("#report_work_by_phone_ input:eq(1)").click();
                 $("#report_work_by_phone_ a:eq(1)").click(function () {
                     var num = $("#report_work_by_phone_ input:eq(1)").val();
                     if (num) {

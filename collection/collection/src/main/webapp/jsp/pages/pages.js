@@ -1,6 +1,41 @@
 ///<reference path="../pageSidebar.ts"/>
 var pages;
 (function (pages) {
+    var Timer = (function () {
+        function Timer() {
+        }
+        Timer.prototype.start = function (interval, onTimer) {
+            this.kill();
+            this.startTime = Date.now();
+            this.tid = setInterval(onTimer, interval);
+        };
+        Timer.prototype.kill = function () {
+            if (this.tid) {
+                clearInterval(this.tid);
+                this.tid = undefined;
+            }
+        };
+        Timer.prototype.format = function (second) {
+            var h = second / 3600;
+            var m = ((second % 3600) / 60);
+            var s = second % 60;
+            if (h < 10) {
+                h = "0" + h;
+            }
+            if (m < 10) {
+                m = "0" + m;
+            }
+            if (s < 10) {
+                s = "0" + s;
+            }
+            return ("" + h).substring(0, 2) + ":" + ("" + m).substring(0, 2) + ":" + ("" + s).substring(0, 2);
+        };
+        Timer.prototype.secFmt = function () {
+            return this.format((Date.now() - this.startTime) / 1000);
+        };
+        return Timer;
+    })();
+    pages.Timer = Timer;
     (function (PageType) {
         PageType[PageType["reportTask"] = 0] = "reportTask";
         PageType[PageType["askSth"] = 1] = "askSth";
