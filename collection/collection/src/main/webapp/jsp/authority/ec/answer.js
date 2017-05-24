@@ -19,12 +19,12 @@ var pages;
                     "#bootbox-click-to-done, " +
                     "#bootbox-modify-repayment, " +
                     "#bootbox-modify-attachment-property").show();
-                pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-loans-consulting-timeline, " +
-                    "#bootbox-record-work-timeline").off("click").parent().show();
-                var txt = pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-loans-consulting-timeline").text();
-                pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-loans-consulting-timeline").text(txt.replace("+", ""));
-                txt = pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-record-work-timeline").text();
-                pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-record-work-timeline").text(txt.replace("+", ""));
+                //PageUtil.jqPage(PageType.loansDetail).find("#bootbox-loans-consulting-timeline, " +
+                //    "#bootbox-record-work-timeline").off("click").parent().show();
+                //let txt = PageUtil.jqPage(PageType.loansDetail).find("#bootbox-loans-consulting-timeline").text();
+                //PageUtil.jqPage(PageType.loansDetail).find("#bootbox-loans-consulting-timeline").text(txt.replace("+", ""));
+                //txt = PageUtil.jqPage(PageType.loansDetail).find("#bootbox-record-work-timeline").text();
+                //PageUtil.jqPage(PageType.loansDetail).find("#bootbox-record-work-timeline").text(txt.replace("+", ""));
             };
             return Answer;
         })();

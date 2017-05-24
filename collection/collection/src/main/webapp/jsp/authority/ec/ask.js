@@ -10,6 +10,14 @@ var pages;
                         break;
                 }
             }));
+            var txt = pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-loans-consulting-timeline").text();
+            pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-loans-consulting-timeline").text(txt.replace("+", "") + " +");
+            txt = pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-record-work-timeline").text();
+            pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-record-work-timeline").text(txt.replace("+", "") + " +");
+            var handler = $._data(pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-loans-consulting")[0], "events").click[0];
+            pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-loans-consulting-timeline").click(handler);
+            handler = $._data(pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-record-work")[0], "events").click[0];
+            pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-record-work-timeline").click(handler);
         });
         var Ask = (function () {
             function Ask() {
@@ -18,8 +26,8 @@ var pages;
                 pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-record-work," +
                     "#bootbox-record-work-by-phone, " +
                     "#bootbox-loans-consulting").show();
-                pages.PageUtil.jqPage(pages.PageType.loansDetail).find("#bootbox-loans-consulting-timeline, " +
-                    "#bootbox-record-work-timeline").parent().show();
+                //PageUtil.jqPage(PageType.loansDetail).find("#bootbox-loans-consulting-timeline, " +
+                //    "#bootbox-record-work-timeline").parent().show();
             };
             return Ask;
         })();

@@ -3,7 +3,7 @@
 	version="2.3">
 	<display-name>collection</display-name>
 	<welcome-file-list>
-		<welcome-file>/jsp/index.jsp</welcome-file>
+		<welcome-file>/home/index.do</welcome-file>
 	</welcome-file-list>
 
 	<listener>

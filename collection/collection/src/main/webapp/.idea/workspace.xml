@@ -24,7 +24,7 @@
       <file leaf-file-name="callCenter.tsx" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/pages/callCenter.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.633333">
+            <state vertical-scroll-proportion="0.0">
               <caret line="51" column="49" selection-start-line="51" selection-start-column="49" selection-end-line="51" selection-end-column="49" />
               <folding>
                 <marker date="1495545823350" expanded="true" signature="5248:5273" placeholder="..." />
@@ -39,18 +39,18 @@
       <file leaf-file-name="phone.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/sdk/phone.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+            <state vertical-scroll-proportion="-8.233334">
+              <caret line="50" column="18" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loansMgr.ts" pinned="false" current-in-tab="true">
+      <file leaf-file-name="loansMgr.ts" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/pages/loansMgr.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.5981308">
-              <caret line="116" column="13" selection-start-line="116" selection-start-column="13" selection-end-line="116" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="103" column="26" selection-start-line="103" selection-start-column="26" selection-end-line="103" selection-end-column="26" />
               <folding>
                 <marker date="1495550863140" expanded="true" signature="564:3067" placeholder="{...}" />
                 <marker date="1495550863140" expanded="true" signature="10057:10082" placeholder="..." />
@@ -61,33 +61,61 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="loansMgr.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/pages/loansMgr.jsp">
+      <file leaf-file-name="loansDetail.tsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/pages/loansDetail.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.178572">
-              <caret line="50" column="36" selection-start-line="50" selection-start-column="32" selection-end-line="50" selection-end-column="36" />
+            <state vertical-scroll-proportion="-6.366667">
+              <caret line="702" column="61" selection-start-line="702" selection-start-column="27" selection-end-line="702" selection-end-column="61" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="export.tsx" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/authority/ec/export.tsx">
+      <file leaf-file-name="assigner.tsx" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/authority/console/summary/assigner.tsx">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.166667">
-              <caret line="52" column="94" selection-start-line="52" selection-start-column="94" selection-end-line="52" selection-end-column="94" />
-              <folding>
-                <marker date="1495550177483" expanded="true" signature="3368:3382" placeholder="{...}" />
-              </folding>
+            <state vertical-scroll-proportion="0.0">
+              <caret line="61" column="48" selection-start-line="61" selection-start-column="48" selection-end-line="61" selection-end-column="48" />
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="backup.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/pages/backup.ts">
+      <file leaf-file-name="loansDetail.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/pages/loansDetail.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-2.0517242">
+              <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="85" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ask.ts" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/authority/ec/ask.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.0">
+              <caret line="28" column="92" selection-start-line="28" selection-start-column="59" selection-end-line="28" selection-end-column="92" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="answer.ts" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/jsp/authority/ec/answer.ts">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.4255814">
+              <caret line="20" column="80" selection-start-line="20" selection-start-column="80" selection-end-line="20" selection-end-column="80" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="loansMgr.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/jsp/pages/loansMgr.jsp">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="35" column="66" selection-start-line="35" selection-start-column="66" selection-end-line="35" selection-end-column="66" />
+              <caret line="50" column="36" selection-start-line="50" selection-start-column="32" selection-end-line="50" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -96,18 +124,8 @@
       <file leaf-file-name="backup.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/jsp/pages/backup.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.214286">
-              <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="57" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="protocol.ts" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/jsp/sdk/protocol.ts">
-          <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="193" column="13" selection-start-line="193" selection-start-column="8" selection-end-line="193" selection-end-column="13" />
+              <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="57" />
               <folding />
             </state>
           </provider>
@@ -147,8 +165,6 @@
         <option value="$PROJECT_DIR$/jsp/authority/ec/assign.ts" />
         <option value="$PROJECT_DIR$/jsp/authority/nav/tips/messages.tsx" />
         <option value="$PROJECT_DIR$/jsp/pages/assignLoans.jsp" />
-        <option value="$PROJECT_DIR$/jsp/authority/ec/answer.ts" />
-        <option value="$PROJECT_DIR$/jsp/authority/ec/ask.ts" />
         <option value="$PROJECT_DIR$/jsp/index.jsp" />
         <option value="$PROJECT_DIR$/jsp/sdk/route/route.ts" />
         <option value="$PROJECT_DIR$/jsp/sdk/entrustedCaseManager.ts" />
@@ -165,7 +181,6 @@
         <option value="$PROJECT_DIR$/jsp/sdk/protocol.ts" />
         <option value="$PROJECT_DIR$/jsp/authority/nav/tips/missed_call.tsx" />
         <option value="$PROJECT_DIR$/jsp/login.jsp" />
-        <option value="$PROJECT_DIR$/jsp/pages/loansDetail.jsp" />
         <option value="$PROJECT_DIR$/jsp/authority/console/summary/assigner.tsx" />
         <option value="$PROJECT_DIR$/jsp/authority/console/summary/manager.tsx" />
         <option value="$PROJECT_DIR$/jsp/authority/console/summary/owner.tsx" />
@@ -174,9 +189,12 @@
         <option value="$PROJECT_DIR$/jsp/navbar.jsp" />
         <option value="$PROJECT_DIR$/jsp/pages/callCenter.tsx" />
         <option value="$PROJECT_DIR$/jsp/pages/pages.ts" />
-        <option value="$PROJECT_DIR$/jsp/pages/loansDetail.tsx" />
         <option value="$PROJECT_DIR$/jsp/authority/ec/export.tsx" />
         <option value="$PROJECT_DIR$/jsp/pages/loansMgr.ts" />
+        <option value="$PROJECT_DIR$/jsp/pages/loansDetail.tsx" />
+        <option value="$PROJECT_DIR$/jsp/pages/loansDetail.jsp" />
+        <option value="$PROJECT_DIR$/jsp/authority/ec/answer.ts" />
+        <option value="$PROJECT_DIR$/jsp/authority/ec/ask.ts" />
       </list>
     </option>
   </component>
@@ -220,6 +238,9 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches">
+        <subPane />
+      </pane>
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -306,6 +327,58 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="phone" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="call.ts" />
+              <option name="myItemType" value="com.intellij.lang.typescript.compiler.ui.projectView.TypeScriptNestingTreeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="authority" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="nav" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="tips" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="authority" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="ec" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -341,9 +414,6 @@
           </PATH>
         </subPane>
         <subPane subId="Tests" />
-      </pane>
-      <pane id="Scratches">
-        <subPane />
       </pane>
     </panes>
   </component>
@@ -445,17 +515,17 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20758928" sideWeight="0.6447639" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21875" sideWeight="0.63398695" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32802126" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.215781" sideWeight="0.21205357" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26086956" sideWeight="0.21205357" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.34138486" sideWeight="0.7879464" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32850242" sideWeight="0.4940476" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32766616" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20758928" sideWeight="0.35523614" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21875" sideWeight="0.36601308" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -589,7 +659,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="181" column="43" selection-start-line="181" selection-start-column="43" selection-end-line="181" selection-end-column="43" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -606,13 +675,6 @@
         <state vertical-scroll-proportion="0.14345992">
           <caret line="5" column="15" selection-start-line="5" selection-start-column="15" selection-end-line="5" selection-end-column="15" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/authority/ec/answer.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="20" column="78" selection-start-line="20" selection-start-column="78" selection-end-line="20" selection-end-column="78" />
         </state>
       </provider>
     </entry>
@@ -643,13 +705,6 @@
         <state vertical-scroll-proportion="0.28691983">
           <caret line="9" column="21" selection-start-line="9" selection-start-column="21" selection-end-line="9" selection-end-column="21" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/authority/ec/ask.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
         </state>
       </provider>
     </entry>
@@ -739,7 +794,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="61" column="17" selection-start-line="61" selection-start-column="17" selection-end-line="61" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -747,14 +801,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="13" column="28" selection-start-line="13" selection-start-column="28" selection-end-line="13" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/pages/loansDetail.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="11.535714">
-          <caret line="180" column="12" selection-start-line="180" selection-start-column="12" selection-end-line="180" selection-end-column="12" />
           <folding />
         </state>
       </provider>
@@ -775,19 +821,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/authority/console/summary/assigner.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="61" column="48" selection-start-line="61" selection-start-column="48" selection-end-line="61" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/navbar.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="25" column="14" selection-start-line="25" selection-start-column="14" selection-end-line="25" selection-end-column="14" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -815,14 +852,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/sdk/phone.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="84" column="0" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/pages/backup.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -833,7 +862,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/authority/ec/export.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.166667">
+        <state vertical-scroll-proportion="0.0">
           <caret line="52" column="94" selection-start-line="52" selection-start-column="94" selection-end-line="52" selection-end-column="94" />
           <folding>
             <marker date="1495550177483" expanded="true" signature="3368:3382" placeholder="{...}" />
@@ -859,17 +888,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/jsp/pages/loansDetail.tsx">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.50934577">
-          <caret line="218" column="44" selection-start-line="218" selection-start-column="44" selection-end-line="218" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/jsp/pages/callCenter.tsx">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.633333">
+        <state vertical-scroll-proportion="0.0">
           <caret line="51" column="49" selection-start-line="51" selection-start-column="49" selection-end-line="51" selection-end-column="49" />
           <folding>
             <marker date="1495545823350" expanded="true" signature="5248:5273" placeholder="..." />
@@ -882,7 +903,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/pages/backup.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.214286">
+        <state vertical-scroll-proportion="0.0">
           <caret line="33" column="4" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="57" />
           <folding />
         </state>
@@ -890,22 +911,70 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/pages/loansMgr.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.178572">
+        <state vertical-scroll-proportion="0.0">
           <caret line="50" column="36" selection-start-line="50" selection-start-column="32" selection-end-line="50" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/sdk/phone.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.233334">
+          <caret line="50" column="18" selection-start-line="50" selection-start-column="18" selection-end-line="50" selection-end-column="18" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/jsp/pages/loansMgr.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5981308">
-          <caret line="116" column="13" selection-start-line="116" selection-start-column="13" selection-end-line="116" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="103" column="26" selection-start-line="103" selection-start-column="26" selection-end-line="103" selection-end-column="26" />
           <folding>
             <marker date="1495550863140" expanded="true" signature="564:3067" placeholder="{...}" />
             <marker date="1495550863140" expanded="true" signature="10057:10082" placeholder="..." />
             <marker date="1495550863140" expanded="true" signature="10720:10745" placeholder="..." />
             <marker date="1495550863140" expanded="true" signature="11336:11361" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/authority/console/summary/assigner.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="61" column="48" selection-start-line="61" selection-start-column="48" selection-end-line="61" selection-end-column="48" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/pages/loansDetail.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-2.0517242">
+          <caret line="79" column="0" selection-start-line="79" selection-start-column="0" selection-end-line="85" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/pages/loansDetail.tsx">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.366667">
+          <caret line="702" column="61" selection-start-line="702" selection-start-column="27" selection-end-line="702" selection-end-column="61" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/authority/ec/ask.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.0">
+          <caret line="28" column="92" selection-start-line="28" selection-start-column="59" selection-end-line="28" selection-end-column="92" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/jsp/authority/ec/answer.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4255814">
+          <caret line="20" column="80" selection-start-line="20" selection-start-column="80" selection-end-line="20" selection-end-column="80" />
+          <folding />
         </state>
       </provider>
     </entry>

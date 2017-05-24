@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" session="false"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <!--
 BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
@@ -111,6 +112,9 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 								<input type="password" class="form-control" name="password"
 									placeholder="密码" />
 							</div>
+							<c:if test="${param.error}">
+								<div style="margin-left:160px;color:red;font-size:6px;">用户名或密码错误</div>
+							</c:if>
 							<div class="loginbox-submit">
 								<input type="submit" class="btn btn-primary btn-block"
 									value="登录" />

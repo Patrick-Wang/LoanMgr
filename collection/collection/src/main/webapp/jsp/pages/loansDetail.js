@@ -56,7 +56,7 @@ var pages;
                     }
                 });
             });
-            $("#bootbox-record-work, #bootbox-record-work-timeline").on('click', function () {
+            $("#bootbox-record-work").on('click', function () {
                 $("#template_report_work").children().attr("id", "record-work");
                 var dropzs = [];
                 var dialog = bootbox.dialog({
@@ -215,7 +215,7 @@ var pages;
                     }
                 });
             });
-            $("#bootbox-loans-consulting-timeline, #bootbox-loans-consulting").on('click', function () {
+            $("#bootbox-loans-consulting").on('click', function () {
                 $("#template_consulting").children().attr("id", "template_consulting_sub");
                 bootbox.dialog({
                     message: $("#template_consulting").html(),

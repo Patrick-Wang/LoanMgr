@@ -56,7 +56,7 @@ module pages {
             });
 
 
-            $("#bootbox-record-work, #bootbox-record-work-timeline").on('click', () => {
+            $("#bootbox-record-work").on('click', () => {
 
                 $("#template_report_work").children().attr("id", "record-work");
 
@@ -233,7 +233,7 @@ module pages {
                 });
             });
 
-            $("#bootbox-loans-consulting-timeline, #bootbox-loans-consulting").on('click', () => {
+            $("#bootbox-loans-consulting").on('click', () => {
                 $("#template_consulting").children().attr("id", "template_consulting_sub");
                 bootbox.dialog({
                     message: $("#template_consulting").html(),

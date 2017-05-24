@@ -79,10 +79,10 @@
 		<div class="row">
 			<div class="col-sm-12">
 				<ul class="timeline" id="ld-timeline">
-					<li class="timeline-node" style="display:none"><a class="btn btn-lg btn-blue"
-						id="bootbox-record-work-timeline">工作记录 +</a></li>
-					<li class="timeline-node" style="display:none"><a class="btn btn-lg btn-darkorange"
-						id="bootbox-loans-consulting-timeline">咨询记录 +</a></li>
+					<li class="timeline-node"><a class="btn btn-lg btn-blue"
+						id="bootbox-record-work-timeline">工作记录</a></li>
+					<li class="timeline-node"><a class="btn btn-lg btn-darkorange"
+						id="bootbox-loans-consulting-timeline">咨询记录</a></li>
 				</ul>
 			</div>
 		</div>

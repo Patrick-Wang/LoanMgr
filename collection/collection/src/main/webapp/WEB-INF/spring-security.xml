@@ -80,7 +80,7 @@
 			logout-url="/logout.do" logout-success-url="/jsp/login.jsp" />
 
 		<form-login login-page="/jsp/login.jsp"
-			authentication-failure-url="/jsp/loginError.jsp?" default-target-url="/home/index.do" />
+			authentication-failure-url="/jsp/login.jsp?error=true" default-target-url="/home/index.do" />
 		<csrf disabled="true" />
 		<anonymous enabled="false"/>
 	</http>
