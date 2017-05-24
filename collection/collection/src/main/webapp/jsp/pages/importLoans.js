@@ -52,6 +52,9 @@ var pages;
                 }
                 else {
                     _this.find(".btn-next").attr("disabled", true);
+                    _this.dropz.options.params = {
+                        batchTime: _this.batchTime
+                    };
                     _this.dropz.processQueue();
                 }
                 evt.preventDefault();
@@ -91,6 +94,10 @@ var pages;
             this.ecType = EntrustedCaseType.creditCard;
             this.find("#il-wiredstep2 .header").text("选择信用卡文件或拖拽信用卡文件到此处");
             this.onclickSelect();
+        };
+        ImportLoans.prototype.onShown = function () {
+            this.batchTime = Date.now() + "";
+            _super.prototype.onShown.call(this);
         };
         ImportLoans.prototype.onclickSelectLoan = function () {
             if (this.ecType != EntrustedCaseType.creditLoan) {

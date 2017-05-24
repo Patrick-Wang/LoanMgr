@@ -90,5 +90,13 @@ public class MessageDaoImpl extends AbstractReadWriteDaoImpl<MessageEntity> impl
 			return q.getResultList();
 		}
 	}
+	
+	@Override
+	public List<MessageEntity> getECMsgs(Integer entrustedCase) {
+		Query q = this.getEntityManager().createQuery("from MessageEntity where entrustedCaseManager.id = :entrustedCase ");
+		q.setParameter("entrustedCase", entrustedCase);
+		return q.getResultList();
+		
+	}
 
 }

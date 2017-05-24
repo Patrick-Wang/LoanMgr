@@ -183,7 +183,7 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 	@Override
 	public Integer count(UserEntity ue, QueryOption qOpt) {
 		Query q = makeQuery(
-				"select count(*) "
+				"select count(*) from "
 				+ "ECCreditLoanEntity eccle, EntrustedCaseManagerEntity ecme",
 				ue, qOpt);
 		List ret = q.getResultList();

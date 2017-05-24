@@ -66,8 +66,9 @@ public class EntrustedCaseServlet {
 	public @ResponseBody byte[] add(
 			HttpServletRequest request,
 			HttpServletResponse response, 
-			@RequestParam(value="type", required=false) Integer type,
-			@RequestParam(value="file", required=false) CommonsMultipartFile file) throws UnsupportedEncodingException {
+			@RequestParam(value="batchTime") String batchTimeMillSeconds,
+			@RequestParam(value="type") Integer type,
+			@RequestParam(value="file") CommonsMultipartFile file) throws UnsupportedEncodingException {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext()
 			    .getAuthentication()
 			    .getPrincipal();
@@ -76,13 +77,13 @@ public class EntrustedCaseServlet {
 		if (Checking.isExist(type) && file != null){
 			switch(type){
 			case EntrustedCaseType.CAR_LOAN:
-				r = entrustedCaseService.importCarLoan(owner, type, file);
+				r = entrustedCaseService.importCarLoan(owner, type, file, batchTimeMillSeconds);
 				break;
 			case EntrustedCaseType.CREDIT_CARD:
-				r = entrustedCaseService.importCreditCard(owner, type, file);
+				r = entrustedCaseService.importCreditCard(owner, type, file, batchTimeMillSeconds);
 				break;
 			case EntrustedCaseType.CREDIT_LOAN:
-				r = entrustedCaseService.importCreditLoan(owner, type, file);
+				r = entrustedCaseService.importCreditLoan(owner, type, file, batchTimeMillSeconds);
 				break;
 			}
 		}

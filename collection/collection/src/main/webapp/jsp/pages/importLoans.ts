@@ -4,11 +4,13 @@ module pages{
 
     import EntrustedCaseType = collection.protocol.EntrustedCaseType;
     import Net = collection.Net;
+    import UUID = route.UUID;
     declare let Dropzone:any;
     class ImportLoans extends PageImpl{
         static ins = new ImportLoans(PageType.importLoans);
         ecType:collection.protocol.EntrustedCaseType;
         dropz;any;
+        batchTime:string;
         constructor(page:pages.PageType) {
             super(page);
             this.find(".plan").hover(
@@ -52,6 +54,9 @@ module pages{
                     Toast.warning('请添加要导入的委案');
                 }else{
                     this.find(".btn-next").attr("disabled", true);
+                    this.dropz.options.params = {
+                        batchTime : this.batchTime
+                    }
                     this.dropz.processQueue();
                 }
                 evt.preventDefault();
@@ -97,6 +102,11 @@ module pages{
             this.ecType = EntrustedCaseType.creditCard;
             this.find("#il-wiredstep2 .header").text("选择信用卡文件或拖拽信用卡文件到此处");
             this.onclickSelect();
+        }
+
+        protected onShown(){
+            this.batchTime = Date.now() + "";
+            super.onShown();
         }
 
         private onclickSelectLoan():void {

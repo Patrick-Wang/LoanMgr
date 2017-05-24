@@ -131,7 +131,7 @@ create table `phone_records`(
 drop table if exists  `entrusted_case_batch_creator`;
 create table `entrusted_case_batch_creator`(
 	`id` int NOT NULL AUTO_INCREMENT,
-	`createdTime` datetime,
+	`createdTime` datetime(3),
 	PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 

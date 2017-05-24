@@ -46,6 +46,7 @@ import com.bank.debt.model.entity.ECCreditCardEntity;
 import com.bank.debt.model.entity.ECCreditLoanEntity;
 import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
 import com.bank.debt.model.entity.IntfEntity;
+import com.bank.debt.model.entity.MessageEntity;
 import com.bank.debt.model.entity.UserEntity;
 import com.bank.debt.protocol.entity.AcceptSummary;
 import com.bank.debt.protocol.entity.AssignSummary;
@@ -128,7 +129,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	public final static String NAME = "EntrustedCaseServiceImpl";
 
 	@Override
-	public Result importCarLoan(String owner, Integer type, CommonsMultipartFile file) {
+	public Result importCarLoan(String owner, Integer type, CommonsMultipartFile file, String batchTimeMillSeconds) {
 		Result r = ErrorCode.ACCOUNT_UPDATE_FALIED.clone();
 		UserEntity usr = userDao.getUserByName(owner);
 		if (null != usr){
@@ -158,7 +159,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 				List<ECCarLoanEntity> eccls = JsonUtil.toObjects(data, ECCarLoanEntity.class, null);
 				Integer batchNo = null;
 				if (!eccls.isEmpty()){
-					batchNo = eCBatchCreatorDao.createBatchNo(current);
+					batchNo = eCBatchCreatorDao.createBatchNo(new Timestamp(Long.valueOf(batchTimeMillSeconds)));
 				}
 				for (ECCarLoanEntity entity : eccls){
 					if (null == entity.getWwzt()){
@@ -191,7 +192,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	}
 
 	@Override
-	public Result importCreditCard(String owner, Integer type, CommonsMultipartFile file) {
+	public Result importCreditCard(String owner, Integer type, CommonsMultipartFile file, String batchTimeMillSeconds) {
 		Result r = ErrorCode.ACCOUNT_UPDATE_FALIED.clone();
 		UserEntity usr = userDao.getUserByName(owner);
 		if (null != usr){
@@ -220,7 +221,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 				List<ECCreditCardEntity> eccls = JsonUtil.toObjects(data, ECCreditCardEntity.class, null);
 				Integer batchNo = null;
 				if (!eccls.isEmpty()){
-					batchNo = eCBatchCreatorDao.createBatchNo(current);
+					batchNo = eCBatchCreatorDao.createBatchNo(new Timestamp(Long.valueOf(batchTimeMillSeconds)));
 				}
 				for (ECCreditCardEntity entity : eccls){
 					if (null == entity.getWwzt()){
@@ -253,7 +254,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	}
 
 	@Override
-	public Result importCreditLoan(String owner, Integer type, CommonsMultipartFile file) {
+	public Result importCreditLoan(String owner, Integer type, CommonsMultipartFile file, String batchTimeMillSeconds) {
 		Result r = ErrorCode.ACCOUNT_UPDATE_FALIED.clone();
 		UserEntity usr = userDao.getUserByName(owner);
 		if (null != usr){
@@ -282,7 +283,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 				List<ECCreditLoanEntity> eccls = JsonUtil.toObjects(data, ECCreditLoanEntity.class, null);
 				Integer batchNo = null;
 				if (!eccls.isEmpty()){
-					batchNo = eCBatchCreatorDao.createBatchNo(current);
+					batchNo = eCBatchCreatorDao.createBatchNo(new Timestamp(Long.valueOf(batchTimeMillSeconds)));
 				}
 				for (ECCreditLoanEntity entity : eccls){
 					if (null == entity.getWwzt()){
@@ -323,16 +324,30 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 		return null;
 	}
 
-	private void zipAttachement(ZipOutputStream zipOut, List<EntrustedCaseReport> reports) throws IOException{
-		for (EntrustedCaseReport ecr : reports){
+	private void zipAttachement(ZipOutputStream zipOut, EC ec) throws IOException{
+		for (EntrustedCaseReport ecr : ec.getReports()){
 			if (Checking.isExist(ecr.getAttachements())){
 				for (AttachementEntity attach : ecr.getAttachements()){
 					ByteArrayOutputStream baos = new ByteArrayOutputStream();
 					eCReportService.downloadAttachement(attach.getId(), baos);
-					zipOut.putNextEntry(new ZipEntry(PathUtil.zipReportAttachementPath(
-							ecr.getDate(), ecr.getId(), ecr.getTitle(), attach.getDisplay())));
+					zipOut.putNextEntry(new ZipEntry(PathUtil.zipAttachementPath(attach.getId() + "_" + attach.getDisplay())));
 					zipOut.write(baos.toByteArray());
 					zipOut.closeEntry();
+				}
+			}
+		}
+		
+		List<MessageEntity> msgs = messageDao.getECMsgs(ec.getManagerId());
+		for(MessageEntity msg : msgs){
+			if (msg.getTitle() != null && msg.getTitle().startsWith("RE:")){
+				if (Checking.isExist(msg.getAttachements())){
+					for (AttachementEntity attach : msg.getAttachements()){
+						ByteArrayOutputStream baos = new ByteArrayOutputStream();
+						eCReportService.downloadAttachement(attach.getId(), baos);
+						zipOut.putNextEntry(new ZipEntry(PathUtil.zipAttachementPath(attach.getId() + "_" + attach.getDisplay())));
+						zipOut.write(baos.toByteArray());
+						zipOut.closeEntry();
+					}
 				}
 			}
 		}
@@ -342,7 +357,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	public void getDownloadCarLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
 		List<EC> ecs = (List)searchCarLoan(userName, qOpt);
-		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.carLoanTitle));
+		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.carLoanTitle, messageDao));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper2.map(ecs);
 		outputStream.write(os.toByteArray());
 //		zipOut.putNextEntry(new ZipEntry("委案信息.xls"));
@@ -359,7 +374,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	public void getDownloadCreditCard(String userName, QueryOption qOpt, OutputStream outputStream) throws IOException, MappingFailedException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
 		List<EC> ecs = (List)searchCreditCard(userName, qOpt);
-		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditCardTitle));
+		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditCardTitle, messageDao));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper2.map(ecs);
 		outputStream.write(os.toByteArray());
 //		zipOut.putNextEntry(new ZipEntry("委案信息.xls"));
@@ -373,7 +388,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	public void getDownloadCreditLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
 		List<EC> ecs = (List)searchCreditLoan(userName, qOpt);
-		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditLoanTitle));
+		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditLoanTitle, messageDao));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper2.map((List<EC>)ecs);
 		outputStream.write(os.toByteArray());
 //		zipOut.putNextEntry(new ZipEntry("委案信息.xls"));
@@ -387,35 +402,36 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	public void downloadAll(String usr, Integer batchNo, OutputStream outputStream) throws MappingFailedException, IOException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
 		List<EC> ecs = (List)searchCreditLoan(null, new QueryOption(batchNo));
-		Mapper<List<EC>, OutputStream> mapper = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditLoanTitle));
+		Mapper<List<EC>, OutputStream> mapper = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditLoanTitle, messageDao));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper.map((List<EC>)ecs);
 		zipOut.putNextEntry(new ZipEntry("信贷.xls"));
 		zipOut.write(os.toByteArray());
 		zipOut.closeEntry();
 		for (int i = 0; i < ecs.size(); ++i){
-			zipAttachement(zipOut, ecs.get(i).getReports());				
+			zipAttachement(zipOut, ecs.get(i));				
 		}
 		
 		ecs = (List)searchCreditCard(null, new QueryOption(batchNo));
-		mapper.setMapping(new EC2XlsMapping(EC2XlsMapping.creditCardTitle));
+		mapper.setMapping(new EC2XlsMapping(EC2XlsMapping.creditCardTitle, messageDao));
 		os = (ByteArrayOutputStream) mapper.map(ecs);
 		zipOut.putNextEntry(new ZipEntry("信用卡.xls"));
 		zipOut.write(os.toByteArray());
 		zipOut.closeEntry();
 		for (int i = 0; i < ecs.size(); ++i){
-			zipAttachement(zipOut, ecs.get(i).getReports());				
+			zipAttachement(zipOut, ecs.get(i));				
 		}
 
-		
+			
 		ecs = (List)searchCarLoan(null, new QueryOption(batchNo));
-		mapper.setMapping(new EC2XlsMapping(EC2XlsMapping.carLoanTitle));
+		mapper.setMapping(new EC2XlsMapping(EC2XlsMapping.carLoanTitle, messageDao));
 		os = (ByteArrayOutputStream) mapper.map(ecs);
 		zipOut.putNextEntry(new ZipEntry("车贷.xls"));
 		zipOut.write(os.toByteArray());
 		zipOut.closeEntry();
 		for (int i = 0; i < ecs.size(); ++i){
-			zipAttachement(zipOut, ecs.get(i).getReports());				
+			zipAttachement(zipOut, ecs.get(i));				
 		}
+		
 		zipOut.close();		
 	}
 	

@@ -17,11 +17,11 @@ import net.sf.json.JSONArray;
 
 public interface EntrustedCaseService {
 
-	Result importCarLoan(String owner, Integer type, CommonsMultipartFile file);
+	Result importCarLoan(String owner, Integer type, CommonsMultipartFile file, String batchTimeMillSeconds);
 
-	Result importCreditCard(String owner, Integer type, CommonsMultipartFile file);
+	Result importCreditCard(String owner, Integer type, CommonsMultipartFile file, String batchTimeMillSeconds);
 
-	Result importCreditLoan(String owner, Integer type, CommonsMultipartFile file);
+	Result importCreditLoan(String owner, Integer type, CommonsMultipartFile file, String batchTimeMillSeconds);
 
 	void getDownloadCarLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException;
 

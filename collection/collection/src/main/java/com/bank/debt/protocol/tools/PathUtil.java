@@ -14,10 +14,8 @@ public class PathUtil {
 		return "/REPORT/" + entrustedCase + "/" + creator + "/" + report + "/";
 	}
 	
-	public static String zipReportAttachementPath(String date, Integer reportId, String title, String attchName){
-		return "Attachement/" + 
-				date + "/" + 
-				reportId + (title == null ? "" : "_" + title) + "/" + attchName;
+	public static String zipAttachementPath(String attchName){
+		return "附件/" + attchName;
 	}
 		
 	public static String phoneRecordPath(String number){

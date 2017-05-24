@@ -21,4 +21,6 @@ public interface MessageDao extends AbstractReadWriteDao<MessageEntity> {
 
 	void deleteByECM(int id);
 
+	List<MessageEntity> getECMsgs(Integer entrustedCase);
+
 }
