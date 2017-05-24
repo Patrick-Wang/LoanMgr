@@ -341,7 +341,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	@Override
 	public void getDownloadCarLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
-		List<EC> ecs = (List)searchCarLoan(null, qOpt);
+		List<EC> ecs = (List)searchCarLoan(userName, qOpt);
 		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.carLoanTitle));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper2.map(ecs);
 		outputStream.write(os.toByteArray());
@@ -358,7 +358,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	@Override
 	public void getDownloadCreditCard(String userName, QueryOption qOpt, OutputStream outputStream) throws IOException, MappingFailedException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
-		List<EC> ecs = (List)searchCreditCard(null, qOpt);
+		List<EC> ecs = (List)searchCreditCard(userName, qOpt);
 		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditCardTitle));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper2.map(ecs);
 		outputStream.write(os.toByteArray());
@@ -372,7 +372,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	@Override
 	public void getDownloadCreditLoan(String userName, QueryOption qOpt, OutputStream outputStream) throws MappingFailedException, IOException {
 		ZipOutputStream zipOut = new ZipOutputStream(outputStream);
-		List<EC> ecs = (List)searchCreditLoan(null, qOpt);
+		List<EC> ecs = (List)searchCreditLoan(userName, qOpt);
 		Mapper<List<EC>, OutputStream> mapper2 = new Mapper<List<EC>, OutputStream>(new EC2XlsMapping(EC2XlsMapping.creditLoanTitle));
 		ByteArrayOutputStream os = (ByteArrayOutputStream) mapper2.map((List<EC>)ecs);
 		outputStream.write(os.toByteArray());

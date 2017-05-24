@@ -9,7 +9,7 @@ var authority;
             var EntrustedCase = collection.EntrustedCase;
             var ADDR = "/ec/export";
             authority.register(ADDR, function () {
-                var html = ReactDOMServer.renderToStaticMarkup(React.createElement("form", {"id": "lm-exportForm", "method": "post", "style": { display: "none" }}, React.createElement("input", {"id": "lm-export", "type": "submit", "value": "导出"})));
+                var html = ReactDOMServer.renderToStaticMarkup(React.createElement("form", {"id": "lm-exportForm", "method": "post", "style": { display: "none" }}, React.createElement("input", {"id": "lm-type", "name": "type", "type": "text"}), React.createElement("input", {"id": "lm-query", "name": "query", "type": "text"})));
                 pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(html);
                 html = ReactDOMServer.renderToStaticMarkup(React.createElement("a", {"id": "lm-export-Btn", "className": "btn btn-default", "style": { float: "right", marginRight: 5 }}, "导出"));
                 pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(html);
@@ -32,7 +32,9 @@ var authority;
                 Export.prototype.onClickExport = function () {
                     var qOpt = route.router.to(pages.PageUtil.getPageId(pages.PageType.loansMgr)).send(route.MSG.LOANMGR_GET_QOPT);
                     var type = route.router.to(pages.PageUtil.getPageId(pages.PageType.loansMgr)).send(route.MSG.LOANMGR_GET_TYPE);
-                    var action = collection.Net.BASE_URL + "/entrusted_case/download.do?type=" + type + "&query=" + JSON.stringify(qOpt);
+                    var action = collection.Net.BASE_URL + "/entrusted_case/download.do";
+                    pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-type").val(type);
+                    pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-query").val(JSON.stringify(qOpt));
                     pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-exportForm").attr("action", action);
                     pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-exportForm")[0].submit();
                 };

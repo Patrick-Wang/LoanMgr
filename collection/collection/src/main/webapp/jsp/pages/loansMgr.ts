@@ -109,6 +109,12 @@ module pages{
             opt.wwjg = this.qOpt("qWwjg");
             opt.wwrq = this.qOpt("qDate");
             opt.wwzt = this.qOpt("qStatus");
+            let id = this.find(".dowebok:eq(1) input:checked").attr("myid");
+            if (id == 0 ){
+                opt.assignToMe = true;
+            }else if (id == 1){
+                opt.myOwn = true;
+            }
             return opt;
         }
 

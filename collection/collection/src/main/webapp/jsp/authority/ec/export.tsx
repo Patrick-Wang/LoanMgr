@@ -11,7 +11,8 @@ module authority.ec.exporter{
     authority.register(ADDR, () => {
         let html = ReactDOMServer.renderToStaticMarkup(
             <form id="lm-exportForm" method="post" style={{display: "none"}}>
-                <input id = "lm-export" type="submit" value="导出"/>
+                <input id = "lm-type" name="type" type="text" />
+                <input id = "lm-query" name="query" type="text" />
             </form>
         );
 
@@ -45,7 +46,9 @@ module authority.ec.exporter{
         private onClickExport():void {
             let qOpt :QueryOption = route.router.to(pages.PageUtil.getPageId(pages.PageType.loansMgr)).send(route.MSG.LOANMGR_GET_QOPT);
             let type :EntrustedCaseType = route.router.to(pages.PageUtil.getPageId(pages.PageType.loansMgr)).send(route.MSG.LOANMGR_GET_TYPE);
-            let action = collection.Net.BASE_URL + "/entrusted_case/download.do?type=" + type + "&query=" + JSON.stringify(qOpt);
+            let action = collection.Net.BASE_URL + "/entrusted_case/download.do";
+            pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-type").val(type);
+            pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-query").val(JSON.stringify(qOpt));
             pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-exportForm").attr("action", action);
             pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-exportForm")[0].submit();
         }
