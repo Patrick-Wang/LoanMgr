@@ -450,13 +450,30 @@ var JQTable;
                 this.group();
             }
         }
+        JQGridAssistant.prototype.grid = function () {
+            return $("#" + this.mGridName);
+        };
         JQGridAssistant.prototype.getCheckedRowIds = function () {
-            var ids = $("#" + this.mGridName + "").jqGrid('getGridParam', 'selarrrow');
+            var ids = this.grid().jqGrid('getGridParam', 'selarrrow');
             return ids;
         };
+        JQGridAssistant.prototype.isSelected = function (rowId) {
+            var rows = this.getCheckedRowIds();
+            for (var i = 0; i < rows.length; ++i) {
+                if (rows[i] == rowId) {
+                    return true;
+                }
+            }
+            return false;
+        };
+        JQGridAssistant.prototype.addTableData = function (tableData) {
+            if (tableData) {
+                this.grid()[0].addJSONData(tableData);
+            }
+        };
         JQGridAssistant.prototype.getAllData = function () {
-            var grid = $("#" + this.mGridName + "");
-            grid[0].p.data;
+            var grid = this.grid();
+            //grid[0].p.data
             var ids = grid.jqGrid('getDataIDs');
             var data = [];
             for (var i in grid[0].p.data) {
@@ -471,11 +488,11 @@ var JQTable;
             return data;
         };
         JQGridAssistant.prototype.getDataCount = function () {
-            var grid = $("#" + this.mGridName + "");
+            var grid = this.grid();
             return grid[0].p.data.length;
         };
         JQGridAssistant.prototype.getCurrentPageNumber = function () {
-            var grid = $("#" + this.mGridName + "");
+            var grid = this.grid();
             var curPg = $(grid[0].p.pager + "_center input").val();
             return parseInt(curPg);
         };
@@ -1117,6 +1134,14 @@ var JQTable;
             }
             return opt;
         };
+        JQGridAssistant.prototype.cleanSelRow = function () {
+            var rowIds = [].concat(this.getSelRows());
+            if (null != rowIds) {
+                for (var id in rowIds) {
+                    this.grid().jqGrid('setSelection', rowIds[id], false);
+                }
+            }
+        };
         JQGridAssistant.prototype.decorate = function (option) {
             var _this = this;
             if (option.gridComplete != undefined) {
@@ -1181,6 +1206,23 @@ var JQTable;
             }
             if (option.colNames == undefined) {
                 option.colNames = this.getColNames();
+            }
+            if (typeof option.datatype == 'function') {
+                var stub = option.datatype;
+                var init = true;
+                option.datatype = function (postdata) {
+                    try {
+                        if (!init) {
+                            _this.cleanSelRow();
+                            return stub(postdata);
+                        }
+                        else {
+                            init = false;
+                        }
+                    }
+                    catch (e) {
+                    }
+                };
             }
             if (option.colModel == undefined) {
                 option.colModel = this.getColModel();

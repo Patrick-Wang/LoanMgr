@@ -17,6 +17,11 @@ var collection;
                 data: JSON.stringify(data)
             });
         };
+        EntrustedCase.getWwjgs = function (type) {
+            return collection.Net.post(collection.Net.BASE_URL + "/entrusted_case/wwjgs.do", {
+                type: type
+            });
+        };
         EntrustedCase.getAssignSummary = function () {
             return collection.Net.postLocal(collection.Net.BASE_URL + "/entrusted_case/assign/summary.do");
         };

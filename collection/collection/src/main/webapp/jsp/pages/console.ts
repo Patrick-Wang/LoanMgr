@@ -86,7 +86,7 @@ module pages {
         protected onRefresh():void {
 
             let type = this.find(".dowebok input:checked").attr("myid");
-            let opt:QueryOption = {};
+            let opt:QueryOption = {limit:200};
             if (authority.ping("/ec/answer")){
                 this.find(".nav-tabs a:eq(1)").text("未分配的委案");
             }else{

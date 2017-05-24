@@ -117,6 +117,24 @@ public class EntrustedCaseServlet {
 		return JsonUtil.toUtf8Json(ecqi);
 	}
 	
+	@RequestMapping(value = "wwjgs.do")
+	public @ResponseBody byte[] getWwjgs(HttpServletRequest request,
+			HttpServletResponse response, 
+			@RequestParam("type") Integer type) throws IOException {
+		List<String> wwjgs = null;
+		switch(type){
+		case EntrustedCaseType.CAR_LOAN:
+			wwjgs = entrustedCaseService.getCarLoanWwjgs();
+			break;
+		case EntrustedCaseType.CREDIT_CARD:
+			wwjgs = entrustedCaseService.getCreditCardWwjgs();
+			break;
+		case EntrustedCaseType.CREDIT_LOAN:
+			wwjgs = entrustedCaseService.getCreditLoanWwjgs();
+			break;
+		}		
+		return JsonUtil.toUtf8Json(wwjgs);
+	}
 	
 	@RequestMapping(value = "manager/backup.do")
 	public void backup(HttpServletRequest request,

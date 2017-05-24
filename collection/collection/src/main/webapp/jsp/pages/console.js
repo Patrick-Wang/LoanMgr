@@ -79,7 +79,7 @@ var pages;
         Console.prototype.onRefresh = function () {
             var _this = this;
             var type = this.find(".dowebok input:checked").attr("myid");
-            var opt = {};
+            var opt = { limit: 200 };
             if (authority.ping("/ec/answer")) {
                 this.find(".nav-tabs a:eq(1)").text("未分配的委案");
             }

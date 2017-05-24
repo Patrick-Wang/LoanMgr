@@ -60,15 +60,15 @@ module pages.console {
             EntrustedCase.getAssignSummary()
                 .done((as:AssignSummary)=> {
                     $("#console-status>div:eq(0)>div").eq(0)
-                        .text(as.total);
+                        .text(as.total).next().text("已导入委案");
                     $("#console-status>div:eq(1)>div").eq(0)
-                        .text(as.assign);
+                        .text(as.assign).next().text("已分配委案");
                     if (as.total != 0){
                         $("#completeRate")
                             .text(parseFloat("" + (as.complete / as.total * 100)).toFixed(1) + "%");
                     }
                 });
-            $("#console-status>div:eq(2)>div").eq(0).text(count);
+            $("#console-status>div:eq(2)>div").eq(0).text(count).next().text("未处理咨询");
 
 
         }

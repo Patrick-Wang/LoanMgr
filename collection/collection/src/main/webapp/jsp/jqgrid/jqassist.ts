@@ -185,6 +185,17 @@ declare var $:any;
 
 module JQTable {
 
+    export interface TableRow {
+        id : string;
+        cell : string[];
+    }
+
+    export interface TableData {
+        total : number;//总页数
+        page : number;//当前页
+        records : number;//记录数
+        rows : TableRow[];
+    }
 
     export enum TextAlign {
         Left,
@@ -192,8 +203,8 @@ module JQTable {
         Center
     }
 
-    export let NodeId : ()=>string= (function(idBase:number){
-        return function(){
+    export let NodeId:()=>string = (function (idBase:number) {
+        return function () {
             return "jq_" + (++idBase) + "_node";
         };
     })(2000);
@@ -251,9 +262,9 @@ module JQTable {
                 isNumber: true,
                 align: TextAlign.Right,
                 width: 0,
-                isSortable : false
+                isSortable: false
             }, opts);
-            if (node.mOpts.id == undefined){
+            if (node.mOpts.id == undefined) {
                 node.mOpts.id = NodeId();
             }
             return node;
@@ -451,22 +462,29 @@ module JQTable {
             }
         }
 
-        public update(): boolean {
-            let newVal : any = this.mFormula(this.mDestCell, this.mSrcCellarray);
+        public update():boolean {
+            let newVal:any = this.mFormula(this.mDestCell, this.mSrcCellarray);
             let oldVal = this.mDestCell.getVal();
-            if (oldVal == "" && (newVal == undefined || newVal == null || newVal == "")){
+            if (oldVal == "" && (newVal == undefined || newVal == null || newVal == "")) {
                 return false;
-            } else if (oldVal == newVal){
+            } else if (oldVal == newVal) {
                 return false;
-            } else{
+            } else {
                 if (newVal != null && newVal != undefined) {
                     this.mDestCell.setVal(newVal);
-                }else{
+                } else {
                     this.mDestCell.setVal("");
                 }
                 return true;
             }
         }
+    }
+
+    export interface SortData{
+        page: number;
+        rows: number;
+        sidx: string;//"sale_col_2"
+        sord: string;//"asc"
     }
 
     export class JQGridAssistant {
@@ -503,7 +521,7 @@ module JQTable {
                         edittype: nodes[j].editType(),
                         editoptions: nodes[j].editOptions(),
                         editrules: !nodes[j].isReadOnly() ? {number: nodes[j].isNumber()} : undefined,
-                        hidden:nodes[j].hidden(),
+                        hidden: nodes[j].hidden(),
                         //editrules:undefined,
                         cellattr: function (rowId, tv, rawObject, cm, rdata) {
                             return 'id=\'' + cm.name + rowId + "\'";
@@ -534,14 +552,34 @@ module JQTable {
             }
         }
 
+        private grid():any{
+            return $("#" + this.mGridName);
+        }
+
         public getCheckedRowIds():string[] {
-            var ids = $("#" + this.mGridName + "").jqGrid('getGridParam', 'selarrrow');
+            var ids = this.grid().jqGrid('getGridParam', 'selarrrow');
             return ids;
         }
 
+        private isSelected(rowId: number): boolean {
+            var rows: any = this.getCheckedRowIds();
+            for (var i = 0; i < rows.length; ++i) {
+                if (rows[i] == rowId) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public addTableData(tableData:TableData):void{
+            if (tableData){
+                this.grid()[0].addJSONData(tableData);
+            }
+        }
+
         public getAllData():Array<string[]> {
-            var grid = $("#" + this.mGridName + "");
-            grid[0].p.data
+            var grid = this.grid();
+            //grid[0].p.data
             var ids = grid.jqGrid('getDataIDs');
             var data:Array<string[]> = [];
             for (var i in grid[0].p.data) {
@@ -557,12 +595,12 @@ module JQTable {
         }
 
         public getDataCount():number {
-            var grid = $("#" + this.mGridName + "");
+            var grid = this.grid();
             return grid[0].p.data.length;
         }
 
         public getCurrentPageNumber():number {
-            var grid = $("#" + this.mGridName + "")
+            var grid = this.grid();
             let curPg = $(grid[0].p.pager + "_center input").val();
             return parseInt(curPg);
         }
@@ -741,6 +779,7 @@ module JQTable {
         isMSIE() {
             return navigator.appName == "Microsoft Internet Explorer";
         }
+
         public mergeRow(iCol:number, iRowStart?:number, ilen?:number) {
             if (iRowStart != undefined) {
                 this.completeList.push(() => {
@@ -754,7 +793,7 @@ module JQTable {
                         });
                     }
                     $("#" + this.mGridName + " #" + col + "" + mya[iRowStart] + "").attr("rowspan", ilen);
-                    if (this.isMSIE()){
+                    if (this.isMSIE()) {
                         //IE下overflow-y 无法正常工作
                         $("#" + this.mGridName).parent().css("overflow-y", "hidden");
                     }
@@ -789,20 +828,21 @@ module JQTable {
                 });
             }
         }
-        indexOf(arr, val) {
-        for (var i = 0; i < arr.length; i++) {
-            if (arr[i] == val) {
-                return i;
-            }
-        }
-        return -1;
-    }
 
-        public getChangedData(){
+        indexOf(arr, val) {
+            for (var i = 0; i < arr.length; i++) {
+                if (arr[i] == val) {
+                    return i;
+                }
+            }
+            return -1;
+        }
+
+        public getChangedData() {
             var grid = $("#" + this.mGridName + "");
             var data:Array<string[]> = [];
             for (var i in grid[0].p.data) {
-                if (this.indexOf(this.mEditedRows, grid[0].p.data[i].id) >= 0){
+                if (this.indexOf(this.mEditedRows, grid[0].p.data[i].id) >= 0) {
                     var row = [];
                     row.push(grid[0].p.data[i].id);
                     for (var j in this.mColModel) {
@@ -895,14 +935,14 @@ module JQTable {
             }
         }
 
-        private invokeFormula(depth:number = 0){
-            let changed : boolean  = false;
+        private invokeFormula(depth:number = 0) {
+            let changed:boolean = false;
             for (var i = 0; i < this.mFormula.length; i++) {
-                if (this.mFormula[i].update()){
+                if (this.mFormula[i].update()) {
                     changed = true;
                 }
             }
-            if (changed && depth < 10){
+            if (changed && depth < 10) {
                 this.invokeFormula(++depth);
             }
         }
@@ -911,7 +951,7 @@ module JQTable {
             formula.setGrid($("#" + this.mGridName));
             if (this.mFormula.length == 0) {
                 this.completeList.push(() => {
-                   this.invokeFormula();
+                    this.invokeFormula();
                 });
             }
             this.mFormula.push(formula);
@@ -1056,10 +1096,10 @@ module JQTable {
             }
         }
 
-        public disableCellEdit(cells:Cell[]){
+        public disableCellEdit(cells:Cell[]) {
             this.mDisabledEditCells = cells;
-            this.completeList.push(()=>{
-                for (let i = 0; i < cells.length; ++i){
+            this.completeList.push(()=> {
+                for (let i = 0; i < cells.length; ++i) {
                     let id = $("#" + this.mGridName + "")[0].p.data[cells[i].row()].id;
                     $("#" + this.mGridName + " #" + id + " td:eq(" + cells[i].col() + ")").css("background", "RGB(183, 222, 232)");
                 }
@@ -1068,8 +1108,8 @@ module JQTable {
 
         private enablePageEdit(rowNum:number, pagername:string):any {
             var grid = $("#" + this.mGridName + "");
-            let lastsel : any = "";
-            let lastcell : any = "";
+            let lastsel:any = "";
+            let lastcell:any = "";
             let opt = {
                 beforeEditCell: (rowid, cellname, v, iRow, iCol) => {
                     lastsel = iRow;
@@ -1077,12 +1117,11 @@ module JQTable {
                     $("input").attr("disabled", true);
 
 
-
-                    if (undefined != this.mDisabledEditCells){
+                    if (undefined != this.mDisabledEditCells) {
                         let oldFun = $.jgrid.createEl;
-                        for (let i = 0; i < this.mDisabledEditCells.length; ++i){
-                            if (this.mDisabledEditCells[i].row() == (iRow - 1) && this.mDisabledEditCells[i].col() == iCol){
-                                $.jgrid.createEl = ()=>{
+                        for (let i = 0; i < this.mDisabledEditCells.length; ++i) {
+                            if (this.mDisabledEditCells[i].row() == (iRow - 1) && this.mDisabledEditCells[i].col() == iCol) {
+                                $.jgrid.createEl = ()=> {
                                     $.jgrid.createEl = oldFun;
                                 }
                                 break;
@@ -1094,7 +1133,7 @@ module JQTable {
                 afterSaveCell: () => {
                     $("input").attr("disabled", false);
                     let ids:string[] = grid.jqGrid('getDataIDs');
-                    if (this.indexOf(this.mEditedRows, ids[lastsel - 1]) < 0){
+                    if (this.indexOf(this.mEditedRows, ids[lastsel - 1]) < 0) {
                         this.mEditedRows.push(ids[lastsel - 1]);
                     }
                     lastsel = "";
@@ -1108,21 +1147,21 @@ module JQTable {
 
                 afterEditCell: (rowid, cellname, v, iRow, iCol) => {
                     let isDisabled:boolean = false;
-                    if (undefined != this.mDisabledEditCells){
-                        for (let i = 0; i < this.mDisabledEditCells.length; ++i){
-                            if (this.mDisabledEditCells[i].row() == (iRow - 1) && this.mDisabledEditCells[i].col() == iCol){
+                    if (undefined != this.mDisabledEditCells) {
+                        for (let i = 0; i < this.mDisabledEditCells.length; ++i) {
+                            if (this.mDisabledEditCells[i].row() == (iRow - 1) && this.mDisabledEditCells[i].col() == iCol) {
                                 isDisabled = true;
                                 break;
                             }
                         }
                     }
-                    if (isDisabled){
+                    if (isDisabled) {
                         $("#" + this.mGridName).restoreCell(iRow, iCol);
                     }
                     $("#" + this.mGridName + " input[type=text]").bind("keydown", function (e) {
                         if (e.keyCode === 13) {
                             let ids:string[] = grid.jqGrid('getDataIDs');
-                            if (ids.length > iRow){
+                            if (ids.length > iRow) {
                                 setTimeout(function () {
                                     grid.jqGrid("editCell", iRow + 1, iCol, true);
                                 }, 10);
@@ -1133,10 +1172,10 @@ module JQTable {
 
                 beforeSaveCell: (rowid, cellname, v, iRow, iCol) => {
                     if (this.mColModel[iCol].edittype != "select" &&
-                        this.mColModel[iCol].edittype != "text"){
+                        this.mColModel[iCol].edittype != "text") {
                         var ret = parseFloat(v.replace(new RegExp(',', 'g'), ''));
                         if (isNaN(ret)) {
-                           this.centerModal();
+                            this.centerModal();
                             return v;
                         } else {
                             return ret;
@@ -1151,7 +1190,7 @@ module JQTable {
                         //and the click is outside of the grid //save the row being edited and unselect the row
                         //  $("#" + name).jqGrid('saveRow', lastsel);
 
-                        if ($('input[type=search]').length != 0){
+                        if ($('input[type=search]').length != 0) {
                             return;
                         }
                         grid.jqGrid("saveCell", lastsel, lastcell);
@@ -1161,8 +1200,8 @@ module JQTable {
                 }
             });
 
-            if (rowNum != undefined && pagername != undefined){
-                setTimeout( () => {
+            if (rowNum != undefined && pagername != undefined) {
+                setTimeout(() => {
                     let addId = 1;
                     grid.jqGrid('navGrid', pagername, {
                         del: true, add: true, edit: false, refresh: false, search: false,
@@ -1200,7 +1239,7 @@ module JQTable {
                                 return;
                             }
                             let ind = this.indexOf(this.mEditedRows, rowid);
-                            if (ind >= 0){
+                            if (ind >= 0) {
                                 this.mEditedRows.splice(ind, 1);
                             }
 
@@ -1209,7 +1248,7 @@ module JQTable {
                             grid.trigger("reloadGrid");
 
                             let dataCount = this.getDataCount();
-                            if (dataCount == 0){
+                            if (dataCount == 0) {
                                 return;
                             }
 
@@ -1242,6 +1281,15 @@ module JQTable {
                 }, 0);
             }
             return opt;
+        }
+
+        public cleanSelRow(): void {
+            var rowIds : Array<string> = [].concat(this.getSelRows());
+            if (null != rowIds) {
+                for (var id in rowIds) {
+                    this.grid().jqGrid('setSelection', rowIds[id], false);
+                }
+            }
         }
 
         public decorate(option:any):any {
@@ -1316,6 +1364,25 @@ module JQTable {
                 option.colNames = this.getColNames();
             }
 
+            if (typeof option.datatype == 'function') {
+                let stub = option.datatype;
+                let init = true;
+                option.datatype = (postdata:SortData) => {
+                    try {
+                        if (!init){
+                            this.cleanSelRow();
+                            return stub(postdata);
+                        }else{
+                            init = false;
+                        }
+                    }
+                    catch (e) {
+                    }
+
+                }
+            }
+
+
             if (option.colModel == undefined) {
                 option.colModel = this.getColModel();
             }
@@ -1331,7 +1398,7 @@ module JQTable {
                 $.extend(option, this.enablePageEdit(option.rowNum, option.pager));
             }
 
-            if (option.singleselect){
+            if (option.singleselect) {
                 option.multiselect = true;
                 $.extend(option, this.enableSingleSelect(option));
             }
@@ -1344,38 +1411,38 @@ module JQTable {
             return option;
         }
 
-        getSelRows():any[]{
-            let grid : any = $("#" + this.mGridName + "");
+        getSelRows():any[] {
+            let grid:any = $("#" + this.mGridName + "");
             return [].concat(grid.jqGrid('getGridParam', 'selarrrow'));
         }
 
-        private enableSingleSelect(option:any): any{
-            let grid : any = $("#" + this.mGridName + "");
-            let lastSel : any = "";
+        private enableSingleSelect(option:any):any {
+            let grid:any = $("#" + this.mGridName + "");
+            let lastSel:any = "";
             let onSelectRow = option.onSelectRow;
             let onSortCol = option.onSortCol;
             let onPaging = option.onPaging;
             let opt = {
-                onSelectRow: (id)=>{
-                    if(id && id!==lastSel){
+                onSelectRow: (id)=> {
+                    if (id && id !== lastSel) {
                         let ids = [].concat(grid.jqGrid('getGridParam', 'selarrrow'));
-                        if (ids.indexOf(lastSel) >= 0){
+                        if (ids.indexOf(lastSel) >= 0) {
                             grid.setSelection(lastSel);
                         }
-                        lastSel=id;
+                        lastSel = id;
                     }
-                    if (onSelectRow){
+                    if (onSelectRow) {
                         onSelectRow(id);
                     }
                 },
-                onSortCol:(index,iCol,sortorder)=>{
-                    if (onSortCol){
-                        onSortCol(index,iCol,sortorder);
+                onSortCol: (index, iCol, sortorder)=> {
+                    if (onSortCol) {
+                        onSortCol(index, iCol, sortorder);
                     }
                 },
-                onPaging:(btn)=>{
+                onPaging: (btn)=> {
                     lastSel = undefined;
-                    if (onPaging){
+                    if (onPaging) {
                         onPaging(btn);
                     }
                 }

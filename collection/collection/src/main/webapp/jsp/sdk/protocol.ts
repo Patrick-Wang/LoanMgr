@@ -179,6 +179,9 @@ module collection.protocol {
         ownerId?:number;
         assignee?:string;
         assigneeId?:number;
+        pageCount?:number;
+        pageNum?:number;
+        records?:number;
         loan:any[];
     }
 
@@ -192,6 +195,9 @@ module collection.protocol {
         mgrId?:number;
         assignToMe?:boolean;
         myOwn?:boolean;
+        limit?:number;
+        pageNum?:number;
+        pageSize?:number;
     }
 
     export interface Promise<S> {

@@ -20,4 +20,8 @@ public interface ECCreditCardDao extends AbstractReadWriteDao<ECCreditCardEntity
 
 	Double getYhje();
 
+	List<String> getWwjgs();
+
+	Integer count(UserEntity ue, QueryOption qOpt);
+
 }

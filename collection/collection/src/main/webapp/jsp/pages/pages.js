@@ -137,7 +137,7 @@ var pages;
                 nodes.push(JQTable.Node.create({
                     name: titles[i],
                     width: width,
-                    isSortable: true,
+                    isSortable: false,
                     align: align,
                 }));
             }

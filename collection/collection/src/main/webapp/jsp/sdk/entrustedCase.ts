@@ -25,6 +25,12 @@ module collection{
             });
         }
 
+        static getWwjgs(type:number):Promise<string[]>{
+            return Net.post(Net.BASE_URL + "/entrusted_case/wwjgs.do", {
+                type: type
+            });
+        }
+
         static getAssignSummary():Promise<AssignSummary>{
             return Net.postLocal(Net.BASE_URL + "/entrusted_case/assign/summary.do");
         }

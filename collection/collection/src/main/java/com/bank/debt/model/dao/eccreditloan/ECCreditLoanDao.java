@@ -20,4 +20,8 @@ public interface ECCreditLoanDao extends AbstractReadWriteDao<ECCreditLoanEntity
 
 	Double getYhje();
 
+	List<String> getWwjgs();
+
+	Integer count(UserEntity ue, QueryOption qOpt);
+
 }

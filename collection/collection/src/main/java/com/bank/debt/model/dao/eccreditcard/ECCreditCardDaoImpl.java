@@ -28,9 +28,8 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 		super.setEntityManager(entityManager);
 	}
 
-	@Override
-	public List<Object[]> search(UserEntity ue, QueryOption qOpt) {
-		String sql = "select ecme, eccle from ECCreditCardEntity eccle, EntrustedCaseManagerEntity ecme";
+	Query makeQuery(String sel, UserEntity ue, QueryOption qOpt){
+		String sql = sel;//"select ecme, eccle from ECCreditCardEntity eccle, EntrustedCaseManagerEntity ecme";
 		String where = " where ecme.entrustedCase = eccle.id and type=2";
 		
 		if (qOpt.getAssignToMe()){
@@ -42,11 +41,11 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 		}
 		
 		if (qOpt.getName() != null){
-			where += " and khxm like :name ";
+			where += " and xm like :name ";
 		}
 		
 		if (qOpt.getPIN() != null){
-			where += " and  khsfzh like :pin ";
+			where += " and  zjh like :pin ";
 		}
 		
 		if (qOpt.getCode() != null){
@@ -70,9 +69,10 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 		}
 
 		if (qOpt.getMgrId() != null){
-			where += " and  mgrId = :mgrId ";
+			where += " and  ecme.id = :mgrId ";
 		}
 
+		
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
 		if (qOpt.getName() != null){
@@ -111,6 +111,24 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 			q.setParameter("me", ue.getId());
 		}
 		
+		return q;
+	}
+	
+	@Override
+	public List<Object[]> search(UserEntity ue, QueryOption qOpt) {
+		Query q = makeQuery(
+				"select ecme, eccle "
+				+ "from ECCreditCardEntity eccle, "
+				+ "EntrustedCaseManagerEntity ecme",
+				ue, qOpt);
+		if (qOpt.getLimit() != null){
+			q.setMaxResults(qOpt.getLimit());
+		}
+		
+		if (qOpt.getPageNum() != null && qOpt.getPageSize() != null){
+			q.setFirstResult(qOpt.getPageNum() * qOpt.getPageSize());
+			q.setMaxResults(qOpt.getPageSize());
+		}
 		return q.getResultList();
 	}
 
@@ -154,4 +172,22 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 		return (Double) ret.get(0);
 	}
 	
+	@Override
+	public List<String> getWwjgs() {
+		Query q = this.getEntityManager().createQuery("select distinct wwjg "
+				+ "from ECCreditCardEntity where wwjg is not null");
+		List ret = q.getResultList();
+		return ret;
+	}
+
+	@Override
+	public Integer count(UserEntity ue, QueryOption qOpt) {
+		Query q = makeQuery(
+				"select count(*) "
+				+ "from ECCreditCardEntity eccle, "
+				+ "EntrustedCaseManagerEntity ecme",
+				ue, qOpt);
+		List ret = q.getResultList();
+		return ((Long)(ret.get(0))).intValue();
+	}
 }

@@ -16,6 +16,9 @@ public class EC  extends ProtocolEntityImpl {
 	Integer ownerId;
 	String assignee;
 	Integer assigneeId;
+	Integer pageCount;
+	Integer pageNum;
+	Integer records;
 	List<EntrustedCaseReport> reports;
 	List<Message> messages;
 	List<Object> loan;
@@ -104,6 +107,34 @@ public class EC  extends ProtocolEntityImpl {
 		this.assigneeId = assigneeId;
 	}
 
+	
+	
+
+	public Integer getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(Integer pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	public Integer getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(Integer pageNum) {
+		this.pageNum = pageNum;
+	}
+
+	public Integer getRecords() {
+		return records;
+	}
+
+	public void setRecords(Integer records) {
+		this.records = records;
+	}
+
+	
 	
 	
 }

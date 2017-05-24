@@ -55,5 +55,11 @@ public interface EntrustedCaseService {
 
 	Result deleteECs(Integer type, List<Integer> mgrIds);
 
+	List<String> getCarLoanWwjgs();
+
+	List<String> getCreditCardWwjgs();
+
+	List<String> getCreditLoanWwjgs();
+
 
 }

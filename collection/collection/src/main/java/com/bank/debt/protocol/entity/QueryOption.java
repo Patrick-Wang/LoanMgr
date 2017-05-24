@@ -27,7 +27,10 @@ public class QueryOption extends ProtocolEntityImpl {
 	Integer mgrId;
 	Boolean assignToMe = false;
 	Boolean myOwn = false;
-
+	Integer limit;
+	Integer pageNum;
+	Integer pageSize;
+	
 	public String getName() {
 		return name;
 	}
@@ -111,5 +114,29 @@ public class QueryOption extends ProtocolEntityImpl {
 
 	public void setMgrId(Integer mgrId) {
 		this.mgrId = mgrId;
+	}
+
+	public Integer getLimit() {
+		return limit;
+	}
+
+	public void setLimit(Integer limit) {
+		this.limit = limit;
+	}
+
+	public Integer getPageNum() {
+		return pageNum;
+	}
+
+	public void setPageNum(Integer pageNum) {
+		this.pageNum = pageNum;
+	}
+
+	public Integer getPageSize() {
+		return pageSize;
+	}
+
+	public void setPageSize(Integer pageSize) {
+		this.pageSize = pageSize;
 	}
 }

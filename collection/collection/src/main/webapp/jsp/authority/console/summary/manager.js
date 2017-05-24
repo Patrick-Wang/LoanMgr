@@ -28,10 +28,10 @@ var pages;
                     .done(function (ms) {
                     if (ms.ljje) {
                         $("#console-status>div:eq(0)>div").eq(0)
-                            .text(ms.ljje).next();
+                            .text(ms.ljje).next().text("累计委案金额");
                         if (ms.yhje) {
                             $("#console-status>div:eq(1)>div").eq(0)
-                                .text(ms.ljje - ms.yhje).next();
+                                .text(ms.ljje - ms.yhje).next().text("未完成委案金额");
                         }
                         if (ms.ljje != 0) {
                             $("#completeRate")
@@ -39,7 +39,7 @@ var pages;
                         }
                     }
                     $("#console-status>div:eq(2)>div").eq(0)
-                        .text(ms.ygs).next();
+                        .text(ms.ygs).next().next().text("员工数");
                 });
             };
             return Manager;

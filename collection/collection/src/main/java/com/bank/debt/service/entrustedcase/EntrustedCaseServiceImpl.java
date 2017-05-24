@@ -428,6 +428,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 	
 		List<Object[]> objs = eCCarLoanDao.search(ue, qOpt);
 		List<EC> eccls = new ArrayList<EC>();
+		boolean checkPageInfo = true;
 		for (Object[] row : objs){
 			EC eccl = new EC();
 			EntrustedCaseManagerEntity ecme = (EntrustedCaseManagerEntity) row[0];
@@ -446,6 +447,12 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					return rets;
 				}
 			}).forceMap(eccle));
+			if (checkPageInfo && qOpt.getPageNum() != null && qOpt.getPageSize() != null){
+				checkPageInfo = false;
+				eccl.setRecords(eCCarLoanDao.count(ue, qOpt));
+				eccl.setPageCount(eccl.getRecords() / qOpt.getPageSize() + (eccl.getRecords() % qOpt.getPageSize() > 0 ? 1 : 0));
+				eccl.setPageNum(qOpt.getPageNum());
+			}
 			eccl.setOwner(ecme.getOwner().getUsername());
 			eccl.setAssignee(ecme.getAssignee() != null ? ecme.getAssignee().getUsername() : null);
 			eccl.setOwnerId(ecme.getOwner().getId());
@@ -464,6 +471,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 		}
 		List<Object[]> objs = eCCreditCardDao.search(ue, qOpt);			
 		List<EC> eccls = new ArrayList<EC>();
+		boolean checkPageInfo = true;
 		for (Object[] row : objs){
 			EC eccl = new EC();
 			EntrustedCaseManagerEntity ecme = (EntrustedCaseManagerEntity) row[0];
@@ -482,6 +490,12 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					return rets;
 				}
 			}).forceMap(eccle));
+			if (checkPageInfo && qOpt.getPageNum() != null && qOpt.getPageSize() != null){
+				checkPageInfo = false;
+				eccl.setRecords(eCCreditCardDao.count(ue, qOpt));
+				eccl.setPageCount(eccl.getRecords() / qOpt.getPageSize() + (eccl.getRecords() % qOpt.getPageSize() > 0 ? 1 : 0));
+				eccl.setPageNum(qOpt.getPageNum());
+			}
 			eccl.setOwner(ecme.getOwner().getUsername());
 			eccl.setAssignee(ecme.getAssignee() != null ? ecme.getAssignee().getUsername() : null);
 			eccl.setOwnerId(ecme.getOwner().getId());
@@ -501,6 +515,7 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 		}
 		List<Object[]> objs = eCCreditLoanDao.search(ue, qOpt);		
 		List<EC> eccls = new ArrayList<EC>();
+		boolean checkPageInfo = true;
 		for (Object[] row : objs){
 			EC eccl = new EC();
 			EntrustedCaseManagerEntity ecme = (EntrustedCaseManagerEntity) row[0];
@@ -519,6 +534,12 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					return rets;
 				}
 			}).forceMap(eccle));
+			if (checkPageInfo && qOpt.getPageNum() != null && qOpt.getPageSize() != null){
+				checkPageInfo = false;
+				eccl.setRecords(eCCreditLoanDao.count(ue, qOpt));
+				eccl.setPageCount(eccl.getRecords() / qOpt.getPageSize() + (eccl.getRecords() % qOpt.getPageSize() > 0 ? 1 : 0));
+				eccl.setPageNum(qOpt.getPageNum());
+			}
 			eccl.setOwner(ecme.getOwner().getUsername());
 			eccl.setAssignee(ecme.getAssignee() != null ? ecme.getAssignee().getUsername() : null);
 			eccl.setOwnerId(ecme.getOwner().getId());
@@ -669,6 +690,21 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 			}
 		}
 		return ErrorCode.OK;
+	}
+
+	@Override
+	public List<String> getCarLoanWwjgs() {
+		return eCCarLoanDao.getWwjgs();
+	}
+
+	@Override
+	public List<String> getCreditCardWwjgs() {
+		return eCCreditCardDao.getWwjgs();
+	}
+
+	@Override
+	public List<String> getCreditLoanWwjgs() {
+		return eCCreditLoanDao.getWwjgs();
 	}
 
 

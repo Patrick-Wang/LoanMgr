@@ -28,9 +28,8 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 		super.setEntityManager(entityManager);
 	}
 
-	@Override
-	public List<Object[]> search(UserEntity ue, QueryOption qOpt) {
-		String sql = "select ecme, eccle from ECCarLoanEntity eccle, EntrustedCaseManagerEntity ecme";
+	Query makeQuery(String sel, UserEntity ue, QueryOption qOpt){
+		String sql = sel;//"select ecme, eccle from ECCarLoanEntity eccle, EntrustedCaseManagerEntity ecme";
 		String where = " where entrustedCase = eccle.id and type = 0";
 		
 		if (qOpt.getAssignToMe()){
@@ -58,7 +57,7 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 		}
 		
 		if (qOpt.getWwjg() != null){
-			where += " and  wwjig like :wwjg ";
+			where += " and  wwjg like :wwjg ";
 		}
 		
 		if (qOpt.getWwzt() != null){
@@ -72,6 +71,8 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 		if (qOpt.getMgrId() != null){
 			where += " and ecme.id = :mgrId ";
 		}
+		
+		
 		
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
@@ -111,6 +112,24 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 			q.setParameter("me", ue.getId());
 		}
 		
+		return q;
+	}
+	
+	@Override
+	public List<Object[]> search(UserEntity ue, QueryOption qOpt) {
+		Query q = makeQuery(
+				"select ecme, eccle "
+				+ "from ECCarLoanEntity eccle, "
+				+ "EntrustedCaseManagerEntity ecme",
+				ue, qOpt);
+		if (qOpt.getLimit() != null){
+			q.setMaxResults(qOpt.getLimit());
+		}
+		
+		if (qOpt.getPageNum() != null && qOpt.getPageSize() != null){
+			q.setFirstResult(qOpt.getPageNum() * qOpt.getPageSize());
+			q.setMaxResults(qOpt.getPageSize());
+		}
 		return q.getResultList();
 	}
 
@@ -152,5 +171,24 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 				+ "from ECCarLoanEntity");
 		List ret = q.getResultList();
 		return (Double) ret.get(0);
+	}
+	
+	@Override
+	public List<String> getWwjgs() {
+		Query q = this.getEntityManager().createQuery("select distinct wwjg "
+				+ "from ECCarLoanEntity where wwjg is not null");
+		List ret = q.getResultList();
+		return ret;
+	}
+
+	@Override
+	public Integer count(UserEntity ue, QueryOption qOpt) {
+		Query q = makeQuery(
+				"select count(*) "
+				+ "from ECCarLoanEntity eccle, "
+				+ "EntrustedCaseManagerEntity ecme",
+				ue, qOpt);
+		List ret = q.getResultList();
+		return ((Long)(ret.get(0))).intValue();
 	}
 }
