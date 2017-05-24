@@ -3,6 +3,8 @@ package com.bank.debt.protocol.tools.map;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -10,13 +12,64 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+import com.bank.debt.model.dao.message.MessageDao;
+import com.bank.debt.model.entity.AttachementEntity;
+import com.bank.debt.model.entity.MessageEntity;
+import com.bank.debt.protocol.entity.Attachement;
 import com.bank.debt.protocol.entity.EC;
+import com.bank.debt.protocol.entity.EntrustedCaseReport;
+import com.bank.debt.protocol.entity.Message;
+import com.bank.debt.protocol.tools.PathUtil;
 import com.bank.debt.protocol.tools.ValidationException;
 
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+class MsgPair {
+	public Integer ecMgrId;
+	public MessageEntity ask;
+	public MessageEntity answer;
+}
+
 
 public class EC2XlsMapping implements Mapping<List<EC>, OutputStream> {
 
+
+	static List<MsgPair> pairs(List<MessageEntity> msgs){
+        List<MsgPair> pairs = new ArrayList<MsgPair>();
+        for (int i = 0; msgs != null && i < msgs.size(); ++i) {
+        	MsgPair pair = new MsgPair();
+        	if (msgs.get(i).getTitle().indexOf("RE:") < 0){
+        		pair.ask = msgs.get(i);
+        		pairs.add(pair);
+        		for (int j = i + 1; j < msgs.size(); ++j){
+        			if (msgs.get(j).getTitle().indexOf("RE:") == 0){
+        				 Integer msgId = Integer.valueOf(msgs.get(j).getTitle().substring(3));
+        				 if (msgId.equals(msgs.get(i).getId())){
+        					 pair.answer = msgs.get(j);
+        					 msgs.remove(j);
+        					 break;
+        				 }
+        			}
+        		}
+        	}else{
+        		pair.answer = msgs.get(i);
+        		Integer msgId = Integer.valueOf(msgs.get(i).getTitle().substring(3));
+        		for (int j = i + 1; j < msgs.size(); ++j){
+        			if (msgs.get(j).getTitle().indexOf("RE:") < 0){
+        				 if (msgId.equals(msgs.get(j).getId())){
+        					 pair.ask = msgs.get(j);
+        					 msgs.remove(j);
+        					 break;
+        				 }
+        			}
+        		}
+        	}
+        }
+   
+        return pairs;
+    }
+	
 	public static String[] carLoanTitle = new String[] {"委案编号", "批次号", "委外日期", "委外状态", "委外机构", "委外金额", "已还金额","剩余金额",
 			"委外到期日", "结案日期", "客户姓名", "合同编号", "外包商编号", "委外类型", "客户性别", "客户出生日期", "客户身份证号", "", "外访期数", "外访金额", "逾期天数",
 			"逾期金额", "月供车款金额", "贷款期限", "逾期期数", "曾经逾期次数", "还款期数", "城市", "经销商", "客户手机", "客户宅电", "客户公司", "客户公司电话", "分区",
@@ -59,10 +112,70 @@ public class EC2XlsMapping implements Mapping<List<EC>, OutputStream> {
 //		return -1;
 //	}
 	
+	MessageDao messageDao;
+	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	JSONArray transMsgs(List<MessageEntity> list){
+		List<MsgPair> pairs = pairs(list);
+		JSONArray zxxx = new JSONArray();
+		
+		for (MsgPair pair : pairs){
+			JSONObject zx = new JSONObject();
+			if (pair.ask != null){
+				zx.put("业务员", pair.ask.getCome().getUsername());
+				zx.put("责任内勤", pair.ask.getDest().getUsername());
+				zx.put("咨询标题", pair.ask.getTitle());
+				zx.put("咨询内容", pair.ask.getContent());
+				zx.put("咨询时间", formatter.format(pair.ask.getSendTime()));
+			}
+			
+			if (pair.answer != null){
+				zx.put("回复内容", pair.answer.getContent());
+				zx.put("回复时间", formatter.format(pair.answer.getSendTime()));
+				if (null != pair.answer.getAttachements()){
+					JSONArray at = new JSONArray();
+					for(AttachementEntity atta : pair.answer.getAttachements()){
+						at.add(atta.getId() + "_" + atta.getDisplay());
+					}
+					zx.put("附件", at);
+				}
+			}
+			zxxx.add(zx);
+		}
+		return zxxx;
+	}
+	
+	JSONArray transReports(List<EntrustedCaseReport> reports){
+		JSONArray gzjls = new JSONArray();
+		if (reports != null){
+			for (EntrustedCaseReport report : reports){
+				JSONObject gzjl = new JSONObject();
+				if (report.getTitle() != null){
+					gzjl.put("标题", report.getTitle());
+				}
+				if (report.getContent() != null){
+					gzjl.put("内容", report.getContent());
+				}
+				if (report.getDate() != null){
+					gzjl.put("时间", report.getDate());
+				}
+				if (report.getAttachements() != null){
+					JSONArray at = new JSONArray();
+					for (Attachement atta : report.getAttachements()){
+						at.add(atta.getId() + "_" + atta.getDisplay());
+					}
+					gzjl.put("附件", at);
+				}
+				gzjls.add(gzjl);
+			}
+		}
+		return gzjls;
+	}
+	
 	String[] titles = null;
 
-	public EC2XlsMapping(String[] titles) {
+	public EC2XlsMapping(String[] titles, MessageDao messageDao) {
 		this.titles = titles;
+		this.messageDao = messageDao;
 	}
 
 	@SuppressWarnings("unused")
@@ -90,7 +203,10 @@ public class EC2XlsMapping implements Mapping<List<EC>, OutputStream> {
 				cell.setCellValue(null != ecqi.get(j).getLoan().get(i + 1) ? ecqi.get(j).getLoan().get(i + 1) + "" : "");
 			}
 			HSSFCell cell = row.createCell(titles.length);
-			cell.setCellValue(JSONArray.fromObject(ecqi.get(j).getReports()).toString());
+			JSONObject bz = new JSONObject();
+			bz.put("工作记录", transReports(ecqi.get(j).getReports()));
+			bz.put("咨询记录", transMsgs(messageDao.getECMsgs(ecqi.get(j).getManagerId())));
+			cell.setCellValue(bz.toString());
 		}
 
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
