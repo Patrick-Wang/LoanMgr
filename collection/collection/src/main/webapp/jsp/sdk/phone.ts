@@ -32,7 +32,7 @@ module collection {
 
     export class ActiveXPhone {
         activeX:ActiveX;
-        disConnected:(fileName:string)=>void;
+        disConnected:(fileName?:string)=>void;
         onCall:(num:string)=>((fileName:string)=>void);
         fileName:string;
 
@@ -43,9 +43,14 @@ module collection {
                     this.fileName = fileName;
                     this.disConnected = this.onCall(num);
                 };
-                window["__onHangUp"] = ()=> {
+                window["__onHangUp"] = (code:number)=> {
                     if (this.disConnected) {
-                        this.disConnected(this.fileName);
+                        if (code == 0){
+                            this.disConnected(this.fileName);
+                        }else{
+                            this.disConnected();
+                        }
+
                         this.disConnected = undefined;
                     }
                 };
@@ -60,7 +65,7 @@ module collection {
         }
 
         isAvailable():boolean {
-            return true;//this.activeX != undefined;
+            return this.activeX != undefined;
         }
 
         start(onCall:(num:string)=>((fileName:string)=>void)):boolean {

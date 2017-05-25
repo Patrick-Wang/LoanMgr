@@ -12,22 +12,24 @@ var authority;
                 var PageType = pages.PageType;
                 var CallStatus = collection.protocol.CallStatus;
                 var ADDR = "/nav/tips/missed_call";
-                authority.register(ADDR, function () {
-                    var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", null, React.createElement("a", {"className": " dropdown-toggle", "data-toggle": "dropdown", "title": "Notifications", "href": "#"}, React.createElement("i", {"className": "icon fa fa-warning red"}), React.createElement("span", {"id": "navCallCount", "className": "badge"}, "0")), React.createElement("ul", {"id": "navCallDetail", "className": "pull-right dropdown-menu dropdown-arrow dropdown-notifications"}, React.createElement("li", {"className": "dropdown-footer "}, React.createElement("div", {"id": "navCallCenter"}, "前往呼叫中心")))));
-                    var missedCall;
-                    route.router.register(new Receiver(ADDR, function (e) {
-                        switch (e.id) {
-                            case route.MSG.NAV_REFRESH:
-                                if (html != null) {
-                                    $("#accountarea").children(":first").before(html);
-                                    missedCall = new MissedCall();
-                                    html = null;
-                                }
-                                missedCall.updateTips();
-                                break;
-                        }
-                    }));
-                });
+                if (collection.phone.isAvailable()) {
+                    authority.register(ADDR, function () {
+                        var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", null, React.createElement("a", {"className": " dropdown-toggle", "data-toggle": "dropdown", "title": "Notifications", "href": "#"}, React.createElement("i", {"className": "icon fa fa-warning red"}), React.createElement("span", {"id": "navCallCount", "className": "badge"}, "0")), React.createElement("ul", {"id": "navCallDetail", "className": "pull-right dropdown-menu dropdown-arrow dropdown-notifications"}, React.createElement("li", {"className": "dropdown-footer "}, React.createElement("div", {"id": "navCallCenter"}, "前往呼叫中心")))));
+                        var missedCall;
+                        route.router.register(new Receiver(ADDR, function (e) {
+                            switch (e.id) {
+                                case route.MSG.NAV_REFRESH:
+                                    if (html != null) {
+                                        $("#accountarea").children(":first").before(html);
+                                        missedCall = new MissedCall();
+                                        html = null;
+                                    }
+                                    missedCall.updateTips();
+                                    break;
+                            }
+                        }));
+                    });
+                }
                 var MissedCall = (function () {
                     function MissedCall() {
                         var _this = this;

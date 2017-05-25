@@ -30,9 +30,14 @@ var collection;
                     _this.fileName = fileName;
                     _this.disConnected = _this.onCall(num);
                 };
-                window["__onHangUp"] = function () {
+                window["__onHangUp"] = function (code) {
                     if (_this.disConnected) {
-                        _this.disConnected(_this.fileName);
+                        if (code == 0) {
+                            _this.disConnected(_this.fileName);
+                        }
+                        else {
+                            _this.disConnected();
+                        }
                         _this.disConnected = undefined;
                     }
                 };
@@ -47,7 +52,7 @@ var collection;
             });
         }
         ActiveXPhone.prototype.isAvailable = function () {
-            return true; //this.activeX != undefined;
+            return this.activeX != undefined;
         };
         ActiveXPhone.prototype.start = function (onCall) {
             this.onCall = onCall;
