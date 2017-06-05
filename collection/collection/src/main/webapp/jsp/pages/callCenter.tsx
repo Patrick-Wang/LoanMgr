@@ -51,6 +51,10 @@ module pages{
                             timer.start(1000, ()=>{
                                 $("#cc-callInNum").text("正在通话 : " + num + "  \r\n" + timer.secFmt());
                             });
+
+                            collection.phone.pickUp((fName)=>{
+                                dialog.modal('hide');
+                            });
                             return false;
                         }
                     },

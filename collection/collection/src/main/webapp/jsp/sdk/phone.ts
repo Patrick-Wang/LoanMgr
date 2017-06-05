@@ -32,43 +32,52 @@ module collection {
 
     export class ActiveXPhone {
         activeX:ActiveX;
+        inited:boolean = false;
         disConnected:(fileName?:string)=>void;
         onCall:(num:string)=>((fileName:string)=>void);
         fileName:string;
 
         constructor() {
-            $(document).ready(()=> {
-                let obj:any = document.getElementById("softPhone");
-                window["__onHaveCall"] = (num:string, fileName:string)=> {
-                    this.fileName = fileName;
-                    this.disConnected = this.onCall(num);
-                };
-                window["__onHangUp"] = (code:number)=> {
-                    if (this.disConnected) {
-                        if (code == 0){
-                            this.disConnected(this.fileName);
-                        }else{
-                            this.disConnected();
-                        }
 
-                        this.disConnected = undefined;
+        }
+
+        private init():void{
+            if (this.inited){
+                return;
+            }
+            this.inited = true;
+            let obj:any = document.getElementById("softPhone");
+            window["__onHaveCall"] = (num:string, fileName:string)=> {
+                this.fileName = fileName;
+                this.disConnected = this.onCall(num);
+            };
+            window["__onHangUp"] = (code:number)=> {
+                if (this.disConnected) {
+                    if (code == 0){
+                        this.disConnected(this.fileName);
+                    }else{
+                        this.disConnected();
                     }
-                };
-                try{
-                    obj.RegIncomingCallJs(window, "__onHaveCall");
-                    obj.RegHangupJs(window, "__onHangUp");
-                    this.activeX = obj;
-                }catch(e){
-                    console.log(e);
+
+                    this.disConnected = undefined;
                 }
-            });
+            };
+            try{
+                obj.RegIncomingCallJs(window, "__onHaveCall");
+                obj.RegHangupJs(window, "__onHangUp");
+                this.activeX = obj;
+            }catch(e){
+                console.log(e);
+            }
         }
 
         isAvailable():boolean {
+            this.init();
             return this.activeX != undefined;
         }
 
         start(onCall:(num:string)=>((fileName:string)=>void)):boolean {
+            this.init();
             this.onCall = onCall;
             if (this.activeX && this.activeX.Init(context.sipServerIP)) {
                 this.onCall = onCall;
@@ -78,17 +87,20 @@ module collection {
         }
 
         pickUp(onDisconnected:(fileName:string)=>void):boolean {
+            this.init();
             this.disConnected = onDisconnected;
             return this.activeX && this.activeX.PickUp();
         }
 
         ringUp(num:string, fileName:string, onDisconnected:(fileName:string)=>void):boolean {
+            this.init();
             this.disConnected = onDisconnected;
             this.fileName = fileName;
             return this.activeX && this.activeX.CallOut(num, fileName);
         }
 
         hangUp():boolean {
+            this.init();
             return this.activeX && this.activeX.HangUp();
         }
     }

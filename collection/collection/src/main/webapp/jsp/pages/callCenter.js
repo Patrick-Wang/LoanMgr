@@ -46,6 +46,9 @@ var pages;
                             timer.start(1000, function () {
                                 $("#cc-callInNum").text("正在通话 : " + num + "  \r\n" + timer.secFmt());
                             });
+                            collection.phone.pickUp(function (fName) {
+                                dialog.modal('hide');
+                            });
                             return false;
                         }
                     },
