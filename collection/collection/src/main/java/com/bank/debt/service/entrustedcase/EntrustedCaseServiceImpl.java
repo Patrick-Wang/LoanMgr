@@ -165,8 +165,8 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					if (null == entity.getWwzt()){
 						entity.setWwzt("未分配");
 					}
-					if (null != entity.getKhsfzh() && entity.getKhsfzh().length() > 4){
-						entity.setArea(areaDao.getArea(entity.getKhsfzh().substring(0, 4)));
+					if (null != entity.getKhsfzh() && entity.getKhsfzh().length() >= 6){
+						entity.setArea(areaDao.getArea(entity.getKhsfzh().substring(0, 6)));
 					}
 					
 					entity = eCCarLoanDao.merge(entity);
@@ -227,8 +227,8 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					if (null == entity.getWwzt()){
 						entity.setWwzt("未分配");
 					}
-					if (null != entity.getZjh() && entity.getZjh().length() > 4){
-						entity.setArea(areaDao.getArea(entity.getZjh().substring(0, 4)));
+					if (null != entity.getZjh() && entity.getZjh().length() >= 6){
+						entity.setArea(areaDao.getArea(entity.getZjh().substring(0, 6)));
 					}
 					entity = eCCreditCardDao.merge(entity);
 					
@@ -289,8 +289,8 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 					if (null == entity.getWwzt()){
 						entity.setWwzt("未分配");
 					}
-					if (null != entity.getSfzh() && entity.getSfzh().length() > 4){
-						entity.setArea(areaDao.getArea(entity.getSfzh().substring(0, 4)));
+					if (null != entity.getSfzh() && entity.getSfzh().length() >= 6){
+						entity.setArea(areaDao.getArea(entity.getSfzh().substring(0, 6)));
 					}
 					entity = eCCreditLoanDao.merge(entity);
 					

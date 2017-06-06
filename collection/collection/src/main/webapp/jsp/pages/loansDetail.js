@@ -184,11 +184,11 @@ var pages;
                     $("#report_work_by_phone_ input:eq(1)").val(_this.ec.loan[i + 1]);
                 }
                 else if (_this.ecType == collection.protocol.EntrustedCaseType.creditLoan) {
-                    var i = collection.protocol.getTitles(_this.ecType).indexOf("手机");
+                    var i = collection.protocol.getTitles(_this.ecType).indexOf("手机号码");
                     $("#report_work_by_phone_ input:eq(1)").val(_this.ec.loan[i + 1]);
                 }
                 else if (collection.protocol.EntrustedCaseType.creditCard) {
-                    var i = collection.protocol.getTitles(_this.ecType).indexOf("手机号码");
+                    var i = collection.protocol.getTitles(_this.ecType).indexOf("手机");
                     $("#report_work_by_phone_ input:eq(1)").val(_this.ec.loan[i + 1]);
                 }
                 $("#report_work_by_phone_ a:eq(1)").click(function () {

@@ -202,11 +202,11 @@ module pages {
                     $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
                 }
                 else if (this.ecType == collection.protocol.EntrustedCaseType.creditLoan) {
-                    let i = collection.protocol.getTitles(this.ecType).indexOf("手机");
+                    let i = collection.protocol.getTitles(this.ecType).indexOf("手机号码");
                     $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
                 }
                 else if (collection.protocol.EntrustedCaseType.creditCard) {
-                    let i = collection.protocol.getTitles(this.ecType).indexOf("手机号码");
+                    let i = collection.protocol.getTitles(this.ecType).indexOf("手机");
                     $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
                 }
 
