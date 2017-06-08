@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -80,7 +81,7 @@ public class Xlsx2JsonMapping implements Mapping<InputStream, JSONArray> {
 		case XSSFCell.CELL_TYPE_BLANK:
 			return null;
 		case XSSFCell.CELL_TYPE_NUMERIC:
-			return cell.getNumericCellValue() + "";
+			return BigDecimal.valueOf(cell.getNumericCellValue()).stripTrailingZeros().toPlainString();
 		case XSSFCell.CELL_TYPE_STRING:
 			return cell.getStringCellValue();
 		}

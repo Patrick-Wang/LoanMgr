@@ -18,8 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.bank.debt.model.entity.RoleEntity;
 import com.bank.debt.model.entity.UserEntity;
+import com.bank.debt.protocol.tools.map.EC2XlsMapping;
 import com.bank.debt.service.account.AccountService;
 import com.bank.debt.service.account.AccountServiceImpl;
+
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping(value = "home")
@@ -62,6 +65,10 @@ public class HomeServlet {
 		mp.put("position", ue.getPosition());
 		mp.put("org", ue.getOrg().getName());
 		mp.put("sipServerIP", sipServerIp);
+		mp.put("carLoanTitle", JSONArray.fromObject(EC2XlsMapping.carLoanTitle).toString());
+		mp.put("creditCardTitle", JSONArray.fromObject(EC2XlsMapping.creditCardTitle).toString());
+		mp.put("creditLoanTitle", JSONArray.fromObject(EC2XlsMapping.creditLoanTitle).toString());
+		
 		if (null != ue.getOrg().getParent()){
 			mp.put("pOrg", ue.getOrg().getParent().getName());
 		}else{

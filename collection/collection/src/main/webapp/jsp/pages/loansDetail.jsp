@@ -120,8 +120,10 @@
 				<textarea class="form-control" placeholder="内容" rows="8" required=""></textarea>
 			</div>
 			<div class="form-group">
-				<input type="text" data-mask="999-9999-9999" class="form-control"
-					placeholder="186-8888-8888">
+				<%--<input type="text" data-mask="999-9999-9999" class="form-control"--%>
+					<%--placeholder="186-8888-8888">--%>
+				<select placeholder="186-8888-8888" class="form-control" data-mask="999-9999-9999">
+				</select>
 			</div>
 			<div>
 	<a

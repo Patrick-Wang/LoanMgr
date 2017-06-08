@@ -66,6 +66,9 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <link
 	href="${pageContext.request.contextPath}/jsp/assets/css/animate.min.css"
 	rel="stylesheet" />
+<link
+	href="${pageContext.request.contextPath}/jsp/assets/combobox/css/combo.select.css"
+	rel="stylesheet" />
 <link id="skin-link" href="" rel="stylesheet" type="text/css" />
 
 <!--Page Related styles-->
@@ -73,7 +76,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 <%--href="${pageContext.request.contextPath}/jsp/assets/css/datatables.bootstrap.css"--%>
 <%--rel="stylesheet" />--%>
 
-<script>
+	<script>
 		var context  = {
 			position : '${position}',
 			userName : '${userName}',
@@ -156,10 +159,18 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 	<script src="${pageContext.request.contextPath}/jsp/assets/js/bootbox/bootbox.js"></script>
 	<script src="${pageContext.request.contextPath}/jsp/assets/js/inputmask/jasny-bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/jsp/sdk/route/route.js"></script>
+	<script src="${pageContext.request.contextPath}/jsp/assets/combobox/js/jquery.combo.select.js"></script>
 <script
 	src="${pageContext.request.contextPath}/jsp/assets/js/bootbox/bootbox.js"></script>
-
+	<script>
+		collection.protocol.carLoanTitle = JSON.parse('${carLoanTitle}');
+		collection.protocol.creditLoanTitle = JSON.parse('${creditLoanTitle}');
+		collection.protocol.creditCardTitle = JSON.parse('${creditCardTitle}');
+	</script>
 <style>
+
+
+
 .ui-widget {
 	font-family: Microsoft YaHei UI;
 	font-size: 1.1em;
@@ -304,8 +315,8 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 </style>
 </head>
 <body>
-<div style="display:none">
-	<object id="softPhone" classid="clsid:D62393A3-B447-4603-B56D-521CE6DDDABE"></object>
+<div style="width:0px;height:0px">
+	<object id="softPhone" classid="clsid:D62393A3-B447-4603-B56D-521CE6DDDABE" style="width:0px;height:0px"></object>
 </div>
 	<!-- Loading Container -->
 	<div class="loading-container">

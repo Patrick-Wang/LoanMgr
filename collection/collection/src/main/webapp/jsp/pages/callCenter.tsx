@@ -8,15 +8,16 @@ module pages{
         static ins = new CallCenter(PageType.callCenter);
         records:collection.protocol.PhoneRecord[];
         constructor(page:pages.PageType) {
-            if (collection.phone.isAvailable()){
-                super(page);
-
-                collection.phone.start((num:string)=>{
-                    return this.onCallIn(num);
-                });
-            }else{
-                $("#callCenter").hide();
-            }
+            super(page);
+            $(document).ready(()=>{
+                if (collection.phone.isAvailable()){
+                    collection.phone.start((num:string)=>{
+                        return this.onCallIn(num);
+                    });
+                }else{
+                    $("#callCenter").hide();
+                }
+            });
         }
 
         private onHangUp(fileName:String):void {

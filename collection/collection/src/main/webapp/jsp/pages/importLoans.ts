@@ -141,7 +141,7 @@ module pages{
                     maxFiles: 5,
                     parallelUploads:1,
                     maxFilesize: 1024*10,
-                    acceptedFiles: ".xls, xlsx",
+                    acceptedFiles: ".xlsx,.xls",
                     paramName:"file",
                     autoProcessQueue:false
                 });

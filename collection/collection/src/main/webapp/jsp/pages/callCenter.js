@@ -13,15 +13,17 @@ var pages;
         __extends(CallCenter, _super);
         function CallCenter(page) {
             var _this = this;
-            if (collection.phone.isAvailable()) {
-                _super.call(this, page);
-                collection.phone.start(function (num) {
-                    return _this.onCallIn(num);
-                });
-            }
-            else {
-                $("#callCenter").hide();
-            }
+            _super.call(this, page);
+            $(document).ready(function () {
+                if (collection.phone.isAvailable()) {
+                    collection.phone.start(function (num) {
+                        return _this.onCallIn(num);
+                    });
+                }
+                else {
+                    $("#callCenter").hide();
+                }
+            });
         }
         CallCenter.prototype.onHangUp = function (fileName) {
             if (fileName) {

@@ -3,6 +3,7 @@ package com.bank.debt.protocol.tools.map;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -91,7 +92,7 @@ public class Xls2JsonMapping implements Mapping<InputStream, JSONArray> {
 		case HSSFCell.CELL_TYPE_BLANK:
 			return null;
 		case HSSFCell.CELL_TYPE_NUMERIC:
-			return cell.getNumericCellValue() + "";
+			return BigDecimal.valueOf(cell.getNumericCellValue()).stripTrailingZeros().toPlainString();
 		case HSSFCell.CELL_TYPE_STRING:
 			return cell.getStringCellValue();
 		}

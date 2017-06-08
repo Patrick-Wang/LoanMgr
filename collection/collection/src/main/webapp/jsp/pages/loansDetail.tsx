@@ -197,18 +197,30 @@ module pages {
                 });
 
 
-                if (this.ecType == collection.protocol.EntrustedCaseType.carLoan) {
-                    let i = collection.protocol.getTitles(this.ecType).indexOf("客户手机");
-                    $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
-                }
-                else if (this.ecType == collection.protocol.EntrustedCaseType.creditLoan) {
-                    let i = collection.protocol.getTitles(this.ecType).indexOf("手机号码");
-                    $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
-                }
-                else if (collection.protocol.EntrustedCaseType.creditCard) {
-                    let i = collection.protocol.getTitles(this.ecType).indexOf("手机");
-                    $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
-                }
+                let nums = collection.protocol.getPhoneNums(this.ecType, this.ec.loan);
+                $("#report_work_by_phone_ select").empty()
+                $(nums).each((i, e)=>{
+                    $("#report_work_by_phone_ select").append(
+                        "<option value='" + e +  "'>" + e + "</option>"
+                    );
+                });
+                $("#report_work_by_phone_ select").comboSelect();
+                $("#report_work_by_phone_ select").parent().find("input")
+                    .addClass("form-control")
+                    .attr("data-mask", "999-9999-9999");
+
+                //if (this.ecType == collection.protocol.EntrustedCaseType.carLoan) {
+                //    let i = collection.protocol.getTitles(this.ecType).indexOf("客户手机");
+                //    $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
+                //}
+                //else if (this.ecType == collection.protocol.EntrustedCaseType.creditLoan) {
+                //    let i = collection.protocol.getTitles(this.ecType).indexOf("手机号码");
+                //    $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
+                //}
+                //else if (collection.protocol.EntrustedCaseType.creditCard) {
+                //    let i = collection.protocol.getTitles(this.ecType).indexOf("手机");
+                //    $("#report_work_by_phone_ input:eq(1)").val(this.ec.loan[i + 1]);
+                //}
 
                 $("#report_work_by_phone_ a:eq(1)").click(()=> {
                     let num = $("#report_work_by_phone_ input:eq(1)").val();
