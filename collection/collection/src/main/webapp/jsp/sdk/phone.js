@@ -63,7 +63,7 @@ var collection;
         ActiveXPhone.prototype.start = function (onCall) {
             this.init();
             this.onCall = onCall;
-            if (this.activeX && this.activeX.Init(context.sipServerIP)) {
+            if (this.activeX && this.activeX.Init(context.sipServerIP, context.userName)) {
                 this.onCall = onCall;
                 return true;
             }

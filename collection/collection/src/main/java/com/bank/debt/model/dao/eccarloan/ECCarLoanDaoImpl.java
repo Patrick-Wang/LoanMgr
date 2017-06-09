@@ -72,7 +72,17 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 			where += " and ecme.id = :mgrId ";
 		}
 		
+		if (qOpt.getYqtsStartOpen() != null){
+			where += " and yqts > :yqtsStart ";
+		}
 		
+		if (qOpt.getYqtsEndClose() != null){
+			where += " and yqts <= :yqtsEnd ";
+		}
+		
+		if (qOpt.getAssignee() != null){
+			where += " and ecme.assignee.id=:assignee ";
+		}
 		
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
@@ -112,6 +122,16 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 			q.setParameter("me", ue.getId());
 		}
 		
+		if (qOpt.getYqtsStartOpen() != null){
+			q.setParameter("yqtsStart", qOpt.getYqtsStartOpen());
+		}
+		
+		if (qOpt.getYqtsEndClose() != null){
+			q.setParameter("yqtsEnd", qOpt.getYqtsEndClose());
+		}
+		if (qOpt.getAssignee() != null){
+			q.setParameter("assignee", qOpt.getAssignee());
+		}
 		return q;
 	}
 	

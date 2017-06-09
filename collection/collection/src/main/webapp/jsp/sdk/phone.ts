@@ -22,7 +22,7 @@ module collection {
 
 
     interface ActiveX {
-        Init(ip:string):boolean;
+        Init(ip:string, usrName:string):boolean;
         CallOut(num:string, fileName:string):boolean;
         PickUp():boolean;
         HangUp():boolean;
@@ -79,7 +79,7 @@ module collection {
         start(onCall:(num:string)=>((fileName:string)=>void)):boolean {
             this.init();
             this.onCall = onCall;
-            if (this.activeX && this.activeX.Init(context.sipServerIP)) {
+            if (this.activeX && this.activeX.Init(context.sipServerIP, context.userName)) {
                 this.onCall = onCall;
                 return true;
             }

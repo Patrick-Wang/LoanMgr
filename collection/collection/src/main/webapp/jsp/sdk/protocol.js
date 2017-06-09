@@ -69,6 +69,15 @@ var collection;
         })(protocol.UseStatus || (protocol.UseStatus = {}));
         var UseStatus = protocol.UseStatus;
         protocol.ROLE = ["none", "管理员", "内勤管理员", "业务管理员", "内勤", "业务员"];
+        (function (RoleEN) {
+            RoleEN[RoleEN["NONE"] = 0] = "NONE";
+            RoleEN[RoleEN["ADMIN"] = 1] = "ADMIN";
+            RoleEN[RoleEN["INSIDE_MGR"] = 2] = "INSIDE_MGR";
+            RoleEN[RoleEN["OUTSIDE_MGR"] = 3] = "OUTSIDE_MGR";
+            RoleEN[RoleEN["INSIDE"] = 4] = "INSIDE";
+            RoleEN[RoleEN["OUTSIDE"] = 5] = "OUTSIDE";
+        })(protocol.RoleEN || (protocol.RoleEN = {}));
+        var RoleEN = protocol.RoleEN;
         (function (EntrustedCaseType) {
             EntrustedCaseType[EntrustedCaseType["carLoan"] = 0] = "carLoan";
             EntrustedCaseType[EntrustedCaseType["creditLoan"] = 1] = "creditLoan";

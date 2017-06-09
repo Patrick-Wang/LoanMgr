@@ -136,6 +136,18 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 			where += " and  ecme.id = :mgrId ";
 		}
 		
+		if (qOpt.getYqtsStartOpen() != null){
+			where += " and yqts > :yqtsStart ";
+		}
+		
+		if (qOpt.getYqtsEndClose() != null){
+			where += " and yqts <= :yqtsEnd ";
+		}
+
+		if (qOpt.getAssignee() != null){
+			where += " and ecme.assignee.id=:assignee ";
+		}
+		
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
 		if (qOpt.getName() != null){
@@ -175,7 +187,18 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 			q.setParameter("mgrId", qOpt.getMgrId());
 		}
 		
+		if (qOpt.getYqtsStartOpen() != null){
+			q.setParameter("yqtsStart", qOpt.getYqtsStartOpen());
+		}
 		
+		if (qOpt.getYqtsEndClose() != null){
+			q.setParameter("yqtsEnd", qOpt.getYqtsEndClose());
+		}
+		
+		if (qOpt.getAssignee() != null){
+			q.setParameter("assignee", qOpt.getAssignee());
+		}
+				
 		return q;
 	}
 	

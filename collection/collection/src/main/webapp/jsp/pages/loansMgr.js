@@ -16,6 +16,7 @@ var pages;
             this.isOwner = false;
             this.isManager = false;
             this.wwjgs = [];
+            this.usrs = [];
             this.pageSize = 10;
             this.pageNum = 0;
             this.find(".dowebok input").labelauty();
@@ -101,6 +102,8 @@ var pages;
             opt.wwjg = this.qOpt("qWwjg");
             opt.wwrq = this.qOpt("qDate");
             opt.wwzt = this.qOpt("qStatus");
+            var assid = this.qOpt("qYwy");
+            opt.assignee = assid ? parseInt(assid) : undefined;
             var id = this.find(".dowebok:eq(1) input:checked").attr("myid");
             if (id == 0) {
                 opt.assignToMe = true;
@@ -127,6 +130,15 @@ var pages;
                 _this.wwjgs = wwjgs;
                 _this.updateWwjgs();
             });
+            if (authority.ping("/ec/answer") || authority.ping("/user/manager")) {
+                collection.Account.getUsers().done(function (usrs) {
+                    _this.usrs = usrs;
+                    _this.updateUsrs();
+                });
+            }
+            else {
+                this.find("#qYwy").parent().parent().remove();
+            }
             collection.EntrustedCase.search(ecType, opt).done(function (ecs) {
                 _this.ecs = ecs;
                 _this.ecType = ecType;
@@ -232,6 +244,22 @@ var pages;
                 }
                 else {
                     _this.find("#qWwjg").append('<option value="' + e + '" >' + e + '</option>');
+                }
+            });
+        };
+        LoansMgr.prototype.updateUsrs = function () {
+            var _this = this;
+            var val = this.find("#qYwy").val();
+            this.find("#qYwy").empty();
+            this.find("#qYwy").append('<option value="none" />');
+            $(this.usrs).each(function (i, e) {
+                if (e.roles.indexOf(collection.protocol.RoleEN.OUTSIDE) >= 0) {
+                    if (val == e.id) {
+                        _this.find("#qYwy").append('<option value="' + e.id + '" selected="selected">' + e.name + '</option>');
+                    }
+                    else {
+                        _this.find("#qYwy").append('<option value="' + e.id + '" >' + e.name + '</option>');
+                    }
                 }
             });
         };

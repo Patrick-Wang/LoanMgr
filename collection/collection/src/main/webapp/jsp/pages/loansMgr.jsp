@@ -102,13 +102,21 @@
 				</div>
 			</div>
 			<div class="col-xs-2 col-md-2">
-			<div class="form-group">
-				<label class="control-label">委外状态</label>
+				<div class="form-group">
+					<label class="control-label">委外状态</label>
 					<select id="qStatus" style="width:100%;" class="form-control">
 						<option value="none" />
 	                    <option value="未分配" >未分配</option>
 						<option value="工作中" >工作中</option>
 						<option value="已退案" >已退案</option>
+					</select>
+				</div>
+			</div>
+			<div class="col-xs-2 col-md-2">
+				<div class="form-group">
+					<label class="control-label">业务员</label>
+					<select id="qYwy" style="width:100%;" class="form-control">
+						<option value="none" />
 					</select>
 				</div>
 			</div>

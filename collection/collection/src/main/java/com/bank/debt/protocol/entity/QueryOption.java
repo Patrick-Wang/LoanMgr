@@ -30,6 +30,9 @@ public class QueryOption extends ProtocolEntityImpl {
 	Integer limit;
 	Integer pageNum;
 	Integer pageSize;
+	Double yqtsStartOpen;
+	Double yqtsEndClose;
+	Integer assignee;
 	
 	public String getName() {
 		return name;
@@ -138,5 +141,29 @@ public class QueryOption extends ProtocolEntityImpl {
 
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public Double getYqtsStartOpen() {
+		return yqtsStartOpen;
+	}
+
+	public void setYqtsStartOpen(Double yqtsStartOpen) {
+		this.yqtsStartOpen = yqtsStartOpen;
+	}
+
+	public Double getYqtsEndClose() {
+		return yqtsEndClose;
+	}
+
+	public void setYqtsEndClose(Double yqtsEndClose) {
+		this.yqtsEndClose = yqtsEndClose;
+	}
+
+	public Integer getAssignee() {
+		return assignee;
+	}
+
+	public void setAssignee(Integer assignee) {
+		this.assignee = assignee;
 	}
 }

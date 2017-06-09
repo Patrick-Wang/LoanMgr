@@ -82,7 +82,7 @@ Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB0
 			userName : '${userName}',
 			org : '${org}',
 			pOrg : '${pOrg}',
-			sipServerIP: '192.168.1.100',
+			sipServerIP: '192.168.1.100:5066',
 		}
 	</script>
 

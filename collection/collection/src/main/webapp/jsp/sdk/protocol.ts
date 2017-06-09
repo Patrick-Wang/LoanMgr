@@ -73,6 +73,9 @@ module collection.protocol {
 
     export let ROLE = ["none", "管理员","内勤管理员","业务管理员","内勤","业务员"];
 
+    export enum RoleEN{
+       NONE, ADMIN, INSIDE_MGR, OUTSIDE_MGR, INSIDE, OUTSIDE
+    }
 
     export interface User {
         id:number;
@@ -201,6 +204,9 @@ module collection.protocol {
         limit?:number;
         pageNum?:number;
         pageSize?:number;
+        yqtsStartOpen?:number;
+        yqtsEndClose?:number;
+        assignee?:number;
     }
 
     export interface Promise<S> {

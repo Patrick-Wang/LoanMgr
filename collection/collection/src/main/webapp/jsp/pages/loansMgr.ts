@@ -12,6 +12,7 @@ module pages{
         private isOwner:boolean = false;
         private isManager:boolean = false;
         private wwjgs:string[] = [];
+        private usrs:collection.protocol.User[] = [];
         private pageSize:number = 10;
         private pageNum:number = 0;
         constructor(page:pages.PageType) {
@@ -112,6 +113,8 @@ module pages{
             opt.wwjg = this.qOpt("qWwjg");
             opt.wwrq = this.qOpt("qDate");
             opt.wwzt = this.qOpt("qStatus");
+            let assid : any = this.qOpt("qYwy");
+            opt.assignee = assid ? parseInt(assid) : undefined ;
             let id = this.find(".dowebok:eq(1) input:checked").attr("myid");
             if (id == 0 ){
                 opt.assignToMe = true;
@@ -139,6 +142,15 @@ module pages{
                 this.wwjgs = wwjgs;
                 this.updateWwjgs();
             });
+
+            if (authority.ping("/ec/answer") || authority.ping("/user/manager")){
+                collection.Account.getUsers().done((usrs:collection.protocol.User[])=>{
+                    this.usrs = usrs;
+                    this.updateUsrs();
+                });
+            }else{
+                this.find("#qYwy").parent().parent().remove();
+            }
 
             collection.EntrustedCase.search(ecType, opt).done((ecs:collection.protocol.EC[])=> {
                 this.ecs = ecs;
@@ -258,6 +270,21 @@ module pages{
                     this.find("#qWwjg").append('<option value="' + e + '" selected="selected">' + e + '</option>');
                 }else{
                     this.find("#qWwjg").append('<option value="' + e + '" >' + e + '</option>');
+                }
+            });
+        }
+
+        private updateUsrs():void {
+            let val = this.find("#qYwy").val();
+            this.find("#qYwy").empty();
+            this.find("#qYwy").append('<option value="none" />');
+            $(this.usrs).each((i, e:collection.protocol.User)=>{
+                if (e.roles.indexOf(collection.protocol.RoleEN.OUTSIDE) >= 0){
+                    if (val == e.id){
+                        this.find("#qYwy").append('<option value="' + e.id + '" selected="selected">' + e.name + '</option>');
+                    }else{
+                        this.find("#qYwy").append('<option value="' + e.id + '" >' + e.name + '</option>');
+                    }
                 }
             });
         }
