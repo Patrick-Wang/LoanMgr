@@ -57,6 +57,10 @@ module pages {
                 }
             });
 
+            this.find("#qYqts").on("change", ()=>{
+               this.refresh();
+            });
+
             $('#al-WiredWizard').on('finished.fu.wizard', (evt, data) => {
                 this.updateAssignee();
             });
@@ -140,10 +144,34 @@ module pages {
             return tree;
         }
 
+        parseYqts(opt:QueryOption){
+            let val = this.find("#qYqts").val();
+            if ("none" == val){
+                return;
+            }else if ("1" == val){
+                opt.yqtsEndClose = 90;
+            }else if ("2" == val){
+                opt.yqtsStartOpen = 90;
+                opt.yqtsEndClose = 120;
+            }else if ("3" == val){
+                opt.yqtsStartOpen = 120;
+                opt.yqtsEndClose = 180;
+            }else if ("4" == val){
+                opt.yqtsStartOpen = 180;
+                opt.yqtsEndClose = 240;
+            }else if ("5" == val){
+                opt.yqtsStartOpen = 240;
+                opt.yqtsEndClose = 360;
+            }else if ("6" == val){
+                opt.yqtsStartOpen = 360;
+            }
+        }
+
         protected onRefresh():void {
             this.goStep1();
             let type = PageUtil.jqPage(this.page).find(".dowebok input:checked").attr("myid");
             let opt:QueryOption = {myOwn:true};
+            this.parseYqts(opt);
             EntrustedCase.search(type, opt)
                 .done((ecs:EC[])=> {
                     this.ecs = ecs;

@@ -58,7 +58,7 @@
 			<div class="step-pane active" id="alwiredstep1">
 				<div class="row pricing-container">
 					<div class="row">
-						<div class="col-xs-12 col-md-12">
+						<div class="col-xs-3 col-md-3">
 							<ul class="dowebok" style="float: left">
 								<li><input type="radio" name="radio" myid="0"
 									data-labelauty="车贷" checked="checked"></li>
@@ -67,10 +67,19 @@
 								<li><input type="radio" name="radio" myid="2"
 									data-labelauty="信用卡"></li>
 							</ul>
-							<!-- 							<div class="buttons-preview" style="float:right">
-								<a href="javascript:void(0);" class="btn btn-info">查询</a>
-							</div> -->
 						</div>
+						<div class="col-xs-2 col-md-2">
+							<select id="qYqts" style="float:left" class="form-control">
+									<option value="none" selected="selected">----逾期天数----</option>
+				                    <option value="1" >90天以内</option>
+									<option value="2" >90天到120天</option>
+									<option value="3" >120天到180天</option>
+									<option value="4" >180天到240天</option>
+									<option value="5" >240天到360天</option>
+									<option value="6" >360天以上</option>
+							</select>
+						</div>
+								
 					</div>
 					<div class="row">
 						<div class="col-xs-12 col-md-12">

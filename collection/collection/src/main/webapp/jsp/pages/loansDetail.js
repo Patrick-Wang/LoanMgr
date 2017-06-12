@@ -138,7 +138,7 @@ var pages;
             });
             $("#bootbox-record-work-by-phone").on('click', function () {
                 $("#template_report_work_by_phone").children().attr("id", "report_work_by_phone_");
-                var fNewName = route.UUID() + ".MP3";
+                var fNewName = route.UUID() + ".wav";
                 var dialog = bootbox.dialog({
                     message: $("#template_report_work_by_phone").html(),
                     title: "电话催收记录录入",

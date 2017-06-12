@@ -152,7 +152,7 @@ module pages {
             $("#bootbox-record-work-by-phone").on('click', () => {
 
                 $("#template_report_work_by_phone").children().attr("id", "report_work_by_phone_");
-                let fNewName = route.UUID() + ".MP3";
+                let fNewName = route.UUID() + ".wav";
                 let dialog = bootbox.dialog({
                     message: $("#template_report_work_by_phone").html(),
                     title: "电话催收记录录入",
