@@ -1,9 +1,12 @@
 ///<reference path="pages.ts"/>
 ///<reference path="../pageSidebar.ts"/>
 ///<reference path="askSth.tsx"/>
+///<reference path="importLoans.ts"/>
 module pages {
     import Message = collection.Message;
     import EntrustedCaseReport = collection.EntrustedCaseReport;
+
+
     class LoansDetail extends PageImpl {
         static ins = new LoansDetail(PageType.loansDetail);
         lastPage;
@@ -183,6 +186,7 @@ module pages {
                                         });
                                 } else {
                                     Toast.warning("请填写记录信息");
+                                    return false;
                                 }
                             }
                         }
@@ -206,8 +210,7 @@ module pages {
                 });
                 $("#report_work_by_phone_ select").comboSelect();
                 $("#report_work_by_phone_ select").parent().find("input")
-                    .addClass("form-control")
-                    .attr("data-mask", "999-9999-9999");
+                    .addClass("form-control");
 
                 //if (this.ecType == collection.protocol.EntrustedCaseType.carLoan) {
                 //    let i = collection.protocol.getTitles(this.ecType).indexOf("客户手机");
@@ -230,13 +233,10 @@ module pages {
                         $("#report_work_by_phone_ a:eq(0)").show();
                         collection.phone.ringUp(num.replace(/-/g, ""), fNewName, (fName:string)=> {
                             $(".mycancel, .myupload").prop("disabled", false);
-                            if (fName) {
-                                $("#report_work_by_phone_ a").hide();
-                                $(".mycancel, .myupload").prop("disabled", false);
-                            } else {
-                                $("#report_work_by_phone_ a:eq(0)").hide();
-                                $("#report_work_by_phone_ a:eq(1)").show();
-                                $(".mycancel, .myupload").prop("disabled", true);
+                            $("#report_work_by_phone_ a:eq(0)").hide();
+                            $("#report_work_by_phone_ a:eq(1)").show();
+                            if (!fName) {
+                                $(".myupload").prop("disabled", true);
                             }
                         });
                     } else {
@@ -630,6 +630,9 @@ module pages {
             return !!obj;
         }
 
+
+
+
         private refreshReport():void {
             //this.find("#bootbox-record-work-timeline").show();
             $(this.ec.reports).each((i, report:collection.protocol.EntrustedCaseReport)=> {
@@ -656,7 +659,8 @@ module pages {
                                 {
                                     this.check(report.attachements) ? report.attachements.map((atta:collection.protocol.Attachement)=>{
                                         return <p>
-                                            <a href="#" className="danger attachement__" value={atta.id}
+                                            <a href="#" className="danger attachement__"
+                                               value={atta.id}
                                                data-time={atta.uploadTime}>{atta.display}</a>
                                         </p>;
                                         }) : ""
@@ -667,6 +671,11 @@ module pages {
                 );
                 this.find("#bootbox-loans-consulting-timeline").parent().before(html);
             });
+            $(".attachement__").on("click", (e, v1, v2, v3)=>{
+                let form = $("#downloadForm")[0];
+                form.action = collection.Net.BASE_URL + "/entrusted_case/report/download.do?attachement=" + e.target.getAttribute("value");
+                form.submit();
+            })
         }
 
         private refreshMessage():void {

@@ -3,6 +3,7 @@ package com.bank.debt.service.phone;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.ServletInputStream;
@@ -17,7 +18,7 @@ public interface PhoneService {
 
 	Result uploadRecord(String number, Integer status, String name, InputStream inputStream) throws IOException;
 
-	Result recordMissedCall(String number, String time);
+	Result recordMissedCall(String number, String time) throws ParseException;
 
 	Result donwloandRecord(Integer attachId, OutputStream os) throws IOException;
 

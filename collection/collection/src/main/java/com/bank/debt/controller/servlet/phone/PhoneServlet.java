@@ -2,6 +2,7 @@ package com.bank.debt.controller.servlet.phone;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -49,7 +50,7 @@ public class PhoneServlet {
 	public @ResponseBody byte[] getMissedCall(HttpServletRequest request,
 			HttpServletResponse response,
 			@RequestParam("number") String number,
-			@RequestParam("time") String time) throws UnsupportedEncodingException {
+			@RequestParam("time") String time) throws UnsupportedEncodingException, ParseException {
 		return phoneService.recordMissedCall(number, time).toUtf8Json();
 	}
 	

@@ -43,6 +43,10 @@ public class FtpServiceImplTest {
 
 	@Test
 	public final void testUpdoadFile() throws IOException {
+		//发送 POST 请求
+//        String sr=HttpRequest.sendPost("http://localhost:8080/collection/phone/upload.do", "number=123&status=1&name=fjkjsdf");
+//        System.out.println(sr);
+		
 		File f = new File("d:/test.zip");
 		FileInputStream fr = new FileInputStream(f);
 		ftpService.updoadFile("/ffew/abc/few", "test.zip", fr);
@@ -51,11 +55,11 @@ public class FtpServiceImplTest {
 
 	@Test
 	public final void testDownloadFile() throws IOException {
-		File f = new File("d:/test.zip");
-		FileOutputStream fr = new FileOutputStream(f);
-		ftpService.downloadFile("/192.168.7.22", "operating_management201612172138log.zip", fr);
-		fr.flush();
-		fr.close();
+//		File f = new File("d:/test.zip");
+//		FileOutputStream fr = new FileOutputStream(f);
+//		ftpService.downloadFile("/192.168.7.22", "operating_management201612172138log.zip", fr);
+//		fr.flush();
+//		fr.close();
 	}
 
 }

@@ -3,6 +3,9 @@ package com.bank.debt.protocol.tools;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.junit.Test;
 
@@ -23,7 +26,11 @@ public class JsonUtilTest {
 	}
 
 	@Test
-	public void testToUtf8Json() {
+	public void testToUtf8Json() throws ParseException {
+		
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date d = sdf.parse("2017-5-6 15:32:15");
+		
 		fail("Not yet implemented");
 	}
 

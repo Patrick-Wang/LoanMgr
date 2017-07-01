@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.UUID;
@@ -132,11 +133,14 @@ public class PhoneServiceImpl implements PhoneService {
 	}
 
 	@Override
-	public Result recordMissedCall(String number, String time) {
+	public Result recordMissedCall(String number, String time) throws ParseException {
 		PhoneRecordEntity pre = new PhoneRecordEntity();
 		pre.setNumber(number);
 		pre.setStatus(PhoneRecordStatus.missed);
-		pre.setStartTime(new Timestamp(Date.valueOf(time).getTime()));
+		
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		
+		pre.setStartTime(new Timestamp(sdf.parse(time).getTime()));
 		phoneRecordDao.merge(pre);
 		return ErrorCode.OK;
 	}

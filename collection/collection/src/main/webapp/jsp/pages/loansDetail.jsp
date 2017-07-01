@@ -122,7 +122,7 @@
 			<div class="form-group">
 				<%--<input type="text" data-mask="999-9999-9999" class="form-control"--%>
 					<%--placeholder="186-8888-8888">--%>
-				<select placeholder="186-8888-8888" class="form-control" data-mask="999-9999-9999">
+				<select placeholder="186-8888-8888" class="form-control">
 				</select>
 			</div>
 			<div>
@@ -255,7 +255,7 @@
 		</div>
 	</div>
 </div>
-
+<form style="display:none" method="post" id="downloadForm"></form>
 <script
 	src="${pageContext.request.contextPath}/jsp/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
 

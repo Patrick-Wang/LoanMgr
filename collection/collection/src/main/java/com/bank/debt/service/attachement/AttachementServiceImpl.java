@@ -68,7 +68,9 @@ public class AttachementServiceImpl implements AttachementService, Runnable {
 	}
 	
 	BlockingQueue<AttachQueryTask> attachQueryQueue = new LinkedBlockingQueue<AttachQueryTask>();
-
+	
+	@Autowired
+	AttachementGetListenerTrigger listenerTrigger;
 	public final static String NAME = "AttachementServiceImpl";
 
 	@Autowired
@@ -106,7 +108,15 @@ public class AttachementServiceImpl implements AttachementService, Runnable {
 
 	@Override
 	public void getAttachementAsync(String fileName, OnGetAttachement callback) {
-		attachQueryQueue.add(new AttachQueryTask(fileName, callback));
+		this.listenerTrigger.addListener(fileName, callback);
+		attachQueryQueue.add(new AttachQueryTask(fileName, new OnGetAttachement(){
+
+			@Override
+			public void onGetAttachement(AttachementEntity attach) {
+				listenerTrigger.triggerOnGet(attach.getDisplay(), attach);
+			}
+			
+		}));
 	}
 
 	@Override
@@ -122,10 +132,12 @@ public class AttachementServiceImpl implements AttachementService, Runnable {
 					tmpTasks.add(task);
 					if (this.attachQueryQueue.isEmpty()){
 						for (AttachQueryTask tsk : tmpTasks){
-							if (System.currentTimeMillis() - tsk.getStartTime() <= maxQueryTime)
-							this.attachQueryQueue.put(tsk);
+							if ((System.currentTimeMillis() - tsk.getStartTime()) <= maxQueryTime){
+								this.attachQueryQueue.put(tsk);
+							}
 						}
-						Thread.sleep(50000);
+						tmpTasks.clear();
+						Thread.sleep(5000);
 					}
 				}
 			} catch (InterruptedException e) {
