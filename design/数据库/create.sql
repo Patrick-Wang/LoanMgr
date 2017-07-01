@@ -233,7 +233,7 @@ create table `entrusted_case_car_loan`(
 	`lxr1dwdh`	varchar(100)	,--	联系人1单位电话
 	`lxr1sj`	varchar(100)	,--	联系人1手机
 	`lxr1dz`	varchar(100)	,--	联系人1地址
-	`bz1`	varchar(100)	,--	备注1
+	`bz1`	varchar(1000)	,--	备注1
 	`lxr2xm`	varchar(100)	,--	联系人2姓名
 	`lxr2zjh`	varchar(100)	,--	联系人2证件号
 	`lxr2gx`	varchar(100)	,--	联系人2关系
@@ -376,7 +376,7 @@ create table `entrusted_case_credit_loan`(
 	`lxr1dwdh`	varchar(100)	,--	联系人1单位电话
 	`lxr1sj`	varchar(100)	,--	联系人1手机
 	`lxr1dz`	varchar(100)	,--	联系人1地址
-	`bz1`	varchar(100)	,--	备注1
+	`bz1`	varchar(1000)	,--	备注1
 	`lxr2xm`	varchar(100)	,--	联系人2姓名
 	`lxr2zjh`	varchar(100)	,--	联系人2证件号
 	`lxr2gx`	varchar(100)	,--	联系人2关系
@@ -597,7 +597,7 @@ create table `entrusted_case_credit_card`(
 	`lxr1dwdh`	varchar(100)	,--	联系人1单位电话
 	`lxr1sj`	varchar(100)	,--	联系人1手机
 	`lxr1dz`	varchar(100)	,--	联系人1地址
-	`bz1`	varchar(100)	,--	备注1
+	`bz1`	varchar(1000)	,--	备注1
 	`lxr2xm`	varchar(100)	,--	联系人2姓名
 	`lxr2zjh`	varchar(100)	,--	联系人2证件号
 	`lxr2gx`	varchar(100)	,--	联系人2关系

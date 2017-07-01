@@ -22,7 +22,7 @@ module collection {
 
 
     interface ActiveX {
-        Init(ip:string, usrName:string):boolean;
+        Init(ip:string, usrName:string, tag:string):boolean;
         CallOut(num:string, fileName:string):boolean;
         PickUp():boolean;
         HangUp():boolean;
@@ -36,9 +36,9 @@ module collection {
         disConnected:(fileName?:string)=>void;
         onCall:(num:string)=>((fileName:string)=>void);
         fileName:string;
-
+        activeXCode: string;
         constructor() {
-
+            this.activeXCode = new Date().getTime() + "";
         }
 
         private init():void{
@@ -47,19 +47,23 @@ module collection {
             }
             this.inited = true;
             let obj:any = document.getElementById("softPhone");
-            window["__onHaveCall"] = (num:string, fileName:string)=> {
-                this.fileName = fileName;
-                this.disConnected = this.onCall(num);
+            window["__onHaveCall"] = (num:string, fileName:string, tag:string)=> {
+                if(this.activeXCode == tag){
+                    this.fileName = fileName;
+                    this.disConnected = this.onCall(num);
+                }
             };
-            window["__onHangUp"] = (code:number)=> {
-                if (this.disConnected) {
-                    if (code == 0){
-                        this.disConnected(this.fileName);
-                    }else{
-                        this.disConnected();
-                    }
+            window["__onHangUp"] = (code:number, tag:string)=> {
+                if(this.activeXCode == tag) {
+                    if (this.disConnected) {
+                        if (code == 0) {
+                            this.disConnected(this.fileName);
+                        } else {
+                            this.disConnected();
+                        }
 
-                    this.disConnected = undefined;
+                        this.disConnected = undefined;
+                    }
                 }
             };
             try{
@@ -79,7 +83,7 @@ module collection {
         start(onCall:(num:string)=>((fileName:string)=>void)):boolean {
             this.init();
             this.onCall = onCall;
-            if (this.activeX && this.activeX.Init(context.sipServerIP, context.userName)) {
+            if (this.activeX && this.activeX.Init(context.sipServerIP, context.userName, this.activeXCode)) {
                 this.onCall = onCall;
                 return true;
             }

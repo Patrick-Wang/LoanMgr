@@ -582,7 +582,7 @@ var pages;
                 }) : ""))));
                 _this.find("#bootbox-loans-consulting-timeline").parent().before(html);
             });
-            $(".attachement__").on("click", function (e) {
+            $(".attachement__").on("click", function (e, v1, v2, v3) {
                 var form = $("#downloadForm")[0];
                 form.action = collection.Net.BASE_URL + "/entrusted_case/report/download.do?attachement=" + e.target.getAttribute("value");
                 form.submit();

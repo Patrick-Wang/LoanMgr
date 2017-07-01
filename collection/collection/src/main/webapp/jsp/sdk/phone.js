@@ -24,6 +24,7 @@ var collection;
     var ActiveXPhone = (function () {
         function ActiveXPhone() {
             this.inited = false;
+            this.activeXCode = new Date().getTime() + "";
         }
         ActiveXPhone.prototype.init = function () {
             var _this = this;
@@ -32,19 +33,23 @@ var collection;
             }
             this.inited = true;
             var obj = document.getElementById("softPhone");
-            window["__onHaveCall"] = function (num, fileName) {
-                _this.fileName = fileName;
-                _this.disConnected = _this.onCall(num);
+            window["__onHaveCall"] = function (num, fileName, tag) {
+                if (_this.activeXCode == tag) {
+                    _this.fileName = fileName;
+                    _this.disConnected = _this.onCall(num);
+                }
             };
-            window["__onHangUp"] = function (code) {
-                if (_this.disConnected) {
-                    if (code == 0) {
-                        _this.disConnected(_this.fileName);
+            window["__onHangUp"] = function (code, tag) {
+                if (_this.activeXCode == tag) {
+                    if (_this.disConnected) {
+                        if (code == 0) {
+                            _this.disConnected(_this.fileName);
+                        }
+                        else {
+                            _this.disConnected();
+                        }
+                        _this.disConnected = undefined;
                     }
-                    else {
-                        _this.disConnected();
-                    }
-                    _this.disConnected = undefined;
                 }
             };
             try {
@@ -63,7 +68,7 @@ var collection;
         ActiveXPhone.prototype.start = function (onCall) {
             this.init();
             this.onCall = onCall;
-            if (this.activeX && this.activeX.Init(context.sipServerIP, context.userName)) {
+            if (this.activeX && this.activeX.Init(context.sipServerIP, context.userName, this.activeXCode)) {
                 this.onCall = onCall;
                 return true;
             }
