@@ -25,6 +25,11 @@ var pages;
                         break;
                 }
             }));
+            $("#return-back").on("click", function () {
+                if (_this.lastPage) {
+                    sidebar.switchPage(_this.lastPage);
+                }
+            });
             $("#bootbox-click-to-working").on('click', function () {
                 bootbox.confirm("是否将委案状态修改为工作中？", function (result) {
                     if (result) {

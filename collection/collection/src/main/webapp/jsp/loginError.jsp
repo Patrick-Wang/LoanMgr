@@ -1,78 +1,52 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8" session="false"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+	pageEncoding="utf-8" session="false"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
-<!--
-BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.3.6
-Version: 1.6.0
-Purchase: https://wrapbootstrap.com/theme/beyondadmin-adminapp-angularjs-mvc-WB06R48S4
--->
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-<!--Head-->
+<html lang="zh">
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon"
+	href="${pageContext.request.contextPath}/jsp/assets/img/favicon.png"
+	type="image/x-icon">
     <title>贷款委案管理平台</title>
+    <link rel="stylesheet" type="text/css" href="build/css/login_styles.css">
+    <style>
 
-    <meta name="description" content="login page" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="shortcut icon" href="${pageContext.request.contextPath}/jsp/assets/img/favicon.png" type="image/x-icon">
+        input:-webkit-autofill {
+            -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+            -webkit-text-fill-color: #009688;
+        }
 
-    <!--Basic Styles-->
-    <link href="${pageContext.request.contextPath}/jsp/assets/css/bootstrap.min.css" rel="stylesheet" />
-    <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/assets/css/font-awesome.min.css" rel="stylesheet" />
-
-    <!--Beyond styles-->
-    <link id="beyond-link" href="${pageContext.request.contextPath}/jsp/assets/css/beyond.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/assets/css/demo.min.css" rel="stylesheet" />
-    <link href="${pageContext.request.contextPath}/jsp/assets/css/animate.min.css" rel="stylesheet" />
-    <link id="skin-link" href="" rel="stylesheet" type="text/css" />
-
-    <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="${pageContext.request.contextPath}/jsp/assets/js/skins.min.js"></script>
+    </style>
 </head>
-<!--Head Ends-->
-<!--Body-->
 <body>
-    <div class="login-container animated fadeInDown">
-        <div class="loginbox bg-white">
-            <div class="loginbox-title">登录</div>
 
-            <div class="loginbox-or">
-                <div class="or-line"></div>
-                <div class="or"></div>
-            </div>
-
-            <br/>
-			<form:form action="${pageContext.request.contextPath}/login" method="post">
-				<div class="loginbox-textbox">
-                	<input type="text" class="form-control" name="username" placeholder="用户名" />
-            	</div>
-				<div class="loginbox-textbox">
-                	<input type="password" class="form-control"  name="password" placeholder="密码" />
-            	</div>
-            	 <div style="margin-left:160px;color:red;font-size:6px;">用户名或密码错误</div>
-            	<div class="loginbox-submit">
-					<input type="submit" class="btn btn-primary btn-block" value="登录"/>
-				</div>
-			</form:form>
-        </div>
-        <div class="logobox">
-        </div>
+<div class="panel-lite">
+    <div class="thumbur">
+        <div class="icon-lock"></div>
     </div>
-
-    <!--Basic Scripts-->
-    <script src="${pageContext.request.contextPath}/jsp/assets/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/assets/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath}/jsp/assets/js/slimscroll/jquery.slimscroll.min.js"></script>
-
-    <!--Beyond Scripts-->
-    <script src="${pageContext.request.contextPath}/jsp/assets/js/beyond.js"></script>
-
-    
+    <h4>贷款委案管理平台</h4>
+    <form action="${pageContext.request.contextPath}/login"
+							method="post">
+	    <div class="form-group">
+	        <input required="required" class="form-control" style="z-index: 0"/>
+	        <label class="form-label">用户名 </label>
+	    </div>
+	    <div class="form-group">
+	        <input type="password" required="required" class="form-control" style="z-index: 0"/>
+	        <label class="form-label">密　码</label>
+	    </div>
+	    <a href="#" style="color:red">用户名或密码错误 </a>
+	    <button class="floating-btn" onclick="login"><i class="icon-arrow"></i></button>
+	</form>
+</div>
+<script type="text/javascript">
+	function login(){
+		document.getElementsByTagName("form")[0].submit();
+	}
+</script>
 </body>
-<!--Body Ends-->
 </html>

@@ -26,6 +26,12 @@ module pages {
                 }
             }));
 
+            $("#return-back").on("click", ()=>{
+                if (this.lastPage) {
+                    sidebar.switchPage(this.lastPage);
+                }
+            });
+
             $("#bootbox-click-to-working").on('click', () => {
                 bootbox.confirm("是否将委案状态修改为工作中？", (result) => {
                     if (result) {

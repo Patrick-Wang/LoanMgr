@@ -26,14 +26,22 @@
 	<div class="header-title">
 		<h1>委案信息查询和管理</h1>
 	</div>
+	<style>
+	.page-header .header-buttons a.return:before {
+	background-color: #fb6e52;
+	}
+	.page-header .header-buttons a.return:hover,
+	.page-header .header-buttons a.return.active {
+	color: #fb6e52;
+	}
+	</style>
+
 	<!--Header Buttons-->
 	<div class="header-buttons">
-		<a class="sidebar-toggler" href="#"> <i class="fa fa-arrows-h"></i>
-		</a> <a class="refresh" id="refresh-toggler" href="indexOffice.htm"> <i
-			class="glyphicon glyphicon-refresh"></i>
-		</a> <a class="fullscreen" id="fullscreen-toggler" href="#"> <i
-			class="glyphicon glyphicon-fullscreen"></i>
-		</a>
+		<a class="sidebar-toggler" href="#"> <i class="fa fa-arrows-h"></i></a>
+		<a class="refresh" id="refresh-toggler" href="#"> <i class="glyphicon glyphicon-refresh"></i></a>
+		<a class="return" id="return-back" href="#"> <i class="glyphicon glyphicon-arrow-left"></i></a>
+		<a class="fullscreen" id="fullscreen-toggler" href="#"> <i	class="glyphicon glyphicon-fullscreen"></i></a>
 	</div>
 	<!--Header Buttons End-->
 </div>
