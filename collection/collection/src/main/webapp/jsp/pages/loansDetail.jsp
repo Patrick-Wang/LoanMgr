@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8" session="false"%>
+<style>
+	.phone-call{
+		margin: 55px 0px 0px 10px;
+		width: 210px;
+	}
 
+	.phone-call-mash{
+		opacity: 0.35 !important;
+	}
+
+	</style>
 
 <!-- Page Breadcrumb -->
 <div class="page-breadcrumbs">

@@ -149,6 +149,8 @@ var pages;
                         "取消": {
                             className: "btn-default mycancel",
                             callback: function () {
+                                $(".modal-dialog").removeClass("phone-call");
+                                $(".modal-backdrop").removeClass("phone-call-mash");
                             }
                         },
                         success: {
@@ -166,6 +168,8 @@ var pages;
                                             pages.Toast.success("上传报告成功");
                                         }
                                     });
+                                    $(".modal-dialog").removeClass("phone-call");
+                                    $(".modal-backdrop").removeClass("phone-call-mash");
                                 }
                                 else {
                                     pages.Toast.warning("请填写记录信息");
@@ -175,6 +179,8 @@ var pages;
                         }
                     }
                 });
+                $(".modal-dialog").addClass("phone-call");
+                $(".modal-backdrop").addClass("phone-call-mash");
                 $("#template_report_work_by_phone").children().removeAttr("id");
                 $(".myupload").prop("disabled", true);
                 $("#report_work_by_phone_ a:eq(0)").hide();
