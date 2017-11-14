@@ -165,8 +165,10 @@ module pages {
                         "取消": {
                             className: "btn-default mycancel",
                             callback: () => {
-                                $(".modal-dialog").removeClass("phone-call");
-                                $(".modal-backdrop").removeClass("phone-call-mash");
+                                setTimeout(()=>{
+                                    $(".modal-dialog").removeClass("phone-call");
+                                    $(".modal-backdrop").removeClass("phone-call-mash");
+                                }, 1000);
                             }
                         },
                         success: {
@@ -186,8 +188,10 @@ module pages {
                                                 Toast.success("上传报告成功");
                                             }
                                         });
-                                    $(".modal-dialog").removeClass("phone-call");
-                                    $(".modal-backdrop").removeClass("phone-call-mash");
+                                    setTimeout(()=>{
+                                        $(".modal-dialog").removeClass("phone-call");
+                                        $(".modal-backdrop").removeClass("phone-call-mash");
+                                    }, 1000);
                                 } else {
                                     Toast.warning("请填写记录信息");
                                     return false;
