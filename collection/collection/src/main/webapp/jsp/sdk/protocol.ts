@@ -19,35 +19,127 @@ module collection.protocol {
         return titles;
     }
 
+    function getPhone(ec, index){
+        if (index >= 0){
+            return ec[1 + index];
+        }
+    }
+
+    function getCommonPhone(lxr :string, titles:string[], clientName:string, ec:string[], nums :string[]){
+        let  name = getPhone(ec, titles.indexOf(lxr + '姓名'));
+        let num = getPhone(ec, titles.indexOf(lxr + '家庭电话'));
+        if (num && name){
+            nums.push(lxr + " " + name + " 家庭电话:" + num);
+        }
+        num = getPhone(ec, titles.indexOf(lxr + '单位电话'));
+        if (num && name){
+            nums.push(lxr + " " + name + " 单位电话:" + num);
+        }
+        num = getPhone(ec, titles.indexOf(lxr + '手机'));
+        if (num && name){
+            nums.push(lxr + " " + name + " 手机:" + num);
+        }
+    }
+
+    function getCommonNums(titles:string[], clientName:string, ec:string[], nums :string[]){
+        getCommonPhone("联系人1", titles, clientName, ec, nums);
+        getCommonPhone("联系人2", titles, clientName, ec, nums);
+        getCommonPhone("联系人3", titles, clientName, ec, nums);
+        getCommonPhone("联系人4", titles, clientName, ec, nums);
+        getCommonPhone("联系人5", titles, clientName, ec, nums);
+        getCommonPhone("联系人6", titles, clientName, ec, nums);
+        getCommonPhone("联系人7", titles, clientName, ec, nums);
+        getCommonPhone("联系人8", titles, clientName, ec, nums);
+        getCommonPhone("联系人9", titles, clientName, ec, nums);
+        getCommonPhone("联系人10", titles, clientName, ec, nums);
+    }
+
+    function getCarloanPhone(ec:string[]): string[]{
+        let clientName =getPhone(ec, collection.protocol.carLoanTitle.indexOf('客户姓名'));
+        let nums = [];
+        let num = getPhone(ec, collection.protocol.carLoanTitle.indexOf('客户手机'));
+        if (num){
+            nums.push(clientName + " 手机:" + num);
+        }
+        num = getPhone(ec, collection.protocol.carLoanTitle.indexOf('客户宅电'));
+        if (num){
+            nums.push(clientName + " 宅电:" + num);
+        }
+        num = getPhone(ec, collection.protocol.carLoanTitle.indexOf('客户公司电话'));
+        if (num){
+            nums.push(clientName + " 公司电话:" + num);
+        }
+        num = getPhone(ec, collection.protocol.carLoanTitle.indexOf('配偶手机'));
+        if (num){
+            nums.push(clientName + " 配偶手机:" + num);
+        }
+        num = getPhone(ec, collection.protocol.carLoanTitle.indexOf('配偶公司电话'));
+        if (num){
+            nums.push(clientName + " 配偶公司电话:" + num);
+        }
+        num = getPhone(ec, collection.protocol.carLoanTitle.indexOf('担保人手机'));
+        if (num){
+            nums.push(clientName + " 担保人手机:" + num);
+        }
+        num = getPhone(ec, collection.protocol.carLoanTitle.indexOf('担保人公司电话'));
+        if (num){
+            nums.push(clientName + " 担保人公司电话:" + num);
+        }
+        getCommonNums(collection.protocol.carLoanTitle, clientName, ec, nums);
+        return nums;
+    }
+
+    function getCreditLoanPhone(ec:string[]): string[]{
+        let clientName =getPhone(ec, collection.protocol.creditLoanTitle.indexOf('客户姓名'));
+        let nums = [];
+        let num = getPhone(ec, collection.protocol.creditLoanTitle.indexOf('户籍电话'));
+        if (num){
+            nums.push(clientName + " 户籍电话:" + num);
+        }
+        num = getPhone(ec, collection.protocol.creditLoanTitle.indexOf('手机号码'));
+        if (num){
+            nums.push(clientName + " 手机:" + num);
+        }
+        num = getPhone(ec, collection.protocol.creditLoanTitle.indexOf('住宅电话'));
+        if (num){
+            nums.push(clientName + " 住宅电话:" + num);
+        }
+        num = getPhone(ec, collection.protocol.creditLoanTitle.indexOf('公司电话'));
+        if (num){
+            nums.push(clientName + " 公司电话:" + num);
+        }
+        getCommonNums(collection.protocol.creditLoanTitle, clientName, ec, nums);
+        return nums;
+    }
+
+    function getCreditCardPhone(ec:string[]): string[]{
+        let clientName =getPhone(ec, collection.protocol.creditCardTitle.indexOf('姓名'));
+        let nums = [];
+        let num = getPhone(ec, collection.protocol.creditCardTitle.indexOf('手机'));
+        if (num){
+            nums.push(clientName + " 手机:" + num);
+        }
+        num = getPhone(ec, collection.protocol.creditCardTitle.indexOf('家庭号码'));
+        if (num){
+            nums.push(clientName + " 家庭号码:" + num);
+        }
+        num = getPhone(ec, collection.protocol.creditCardTitle.indexOf('单位号码'));
+        if (num){
+            nums.push(clientName + " 单位号码:" + num);
+        }
+        getCommonNums(collection.protocol.creditCardTitle, clientName, ec, nums);
+        return nums;
+    }
+
+
     export function getPhoneNums(type, ec:string[]):string[]{
         let nums = [];
         if (type == collection.protocol.EntrustedCaseType.carLoan){
-            $(collection.protocol.carLoanTitle).each((i, e:string)=>{
-                if (e == "客户手机" ||(
-                    e.indexOf("联系人") >= 0 && (e.indexOf("手机") > 0 || e.indexOf("电话") > 0))){
-                    if (ec[parseInt(i) + 1]){
-                        nums.push(ec[parseInt(i) + 1]);
-                    }
-                }
-            });
+            nums = getCarloanPhone(ec);
         }else if(type == collection.protocol.EntrustedCaseType.creditCard){
-            $(collection.protocol.creditCardTitle).each((i, e:string)=>{
-                if (e == "手机" ||(
-                    e.indexOf("联系人") >= 0 && (e.indexOf("手机") > 0 || e.indexOf("电话") > 0))){
-                    if (ec[parseInt(i) + 1]){
-                        nums.push(ec[parseInt(i) + 1]);
-                    }
-                }
-            });
+            nums = getCreditCardPhone(ec);
         }else if(type == collection.protocol.EntrustedCaseType.creditLoan){
-            $(collection.protocol.creditLoanTitle).each((i, e:string)=>{
-                if (e == "手机号码" ||(
-                    e.indexOf("联系人") >= 0 && (e.indexOf("手机") > 0 || e.indexOf("电话") > 0))){
-                    if (ec[parseInt(i) + 1]){
-                        nums.push(ec[parseInt(i) + 1]);
-                    }
-                }
-            });
+            nums = getCreditLoanPhone(ec);
         }
         return nums;
     }

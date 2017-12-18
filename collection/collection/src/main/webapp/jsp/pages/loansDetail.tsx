@@ -7,13 +7,21 @@ module pages {
     import EntrustedCaseReport = collection.EntrustedCaseReport;
 
 
+    interface ECInfo{
+        ecs:collection.protocol.EC[];
+        ec:collection.protocol.EC;
+        ecType:collection.protocol.EntrustedCaseType;
+        searchOpt: collection.protocol.QueryOption;
+        index : number;
+    }
+
     class LoansDetail extends PageImpl {
         static ins = new LoansDetail(PageType.loansDetail);
         lastPage;
         ec:collection.protocol.EC;
         ecType:collection.protocol.EntrustedCaseType;
         firstRefresh:boolean = true;
-
+        ecInfo:ECInfo;
         constructor(page:pages.PageType) {
             super(page);
 
@@ -22,9 +30,19 @@ module pages {
                     case route.MSG.EC_DETAIL_ECINFO:
                         this.ec = e.data.ec;
                         this.ecType = e.data.ecType;
+                        this.ecInfo = e.data;
                         break;
                 }
             }));
+
+            $("#bootbox-click-to-ppg").on("click", ()=>{
+                --this.ecInfo.index;
+                this.refresh();
+            });
+            $("#bootbox-click-to-npg").on("click", ()=>{
+                ++this.ecInfo.index;
+                this.refresh();
+            });
 
             $("#return-back").on("click", ()=>{
                 if (this.lastPage) {
@@ -220,7 +238,7 @@ module pages {
 
 
                 let nums = collection.protocol.getPhoneNums(this.ecType, this.ec.loan);
-                $("#report_work_by_phone_ select").empty()
+                $("#report_work_by_phone_ select").empty();
                 $(nums).each((i, e)=>{
                     $("#report_work_by_phone_ select").append(
                         "<option value='" + e +  "'>" + e + "</option>"
@@ -245,7 +263,12 @@ module pages {
 
                 $("#report_work_by_phone_ a:eq(1)").click(()=> {
                     let num = $("#report_work_by_phone_ input:eq(1)").val();
+                    let index = num.indexOf(":");
+                    if (index >= 0){
+                        num = num.substring(index + 1);
+                    }
                     if (num) {
+
                         $(".mycancel, .myupload").prop("disabled", true);
                         $("#report_work_by_phone_ a:eq(1)").hide();
                         $("#report_work_by_phone_ a:eq(0)").show();
@@ -618,7 +641,7 @@ module pages {
             //this.find("#bootbox-record-work-timeline").hide();
             //this.find("#bootbox-loans-consulting-timeline").hide();
             if (this.ec) {
-                this.find("#ld-eccode").text("委案编码：" + this.ec.loan[1]);
+                this.find("#ld-eccode").text("委案：" + this.ec.loan[1]);
                 this.refreshLoan();
                 if (this.check(this.ec.reports)) {
                     this.refreshReport();
@@ -634,11 +657,58 @@ module pages {
             }
         }
 
+        private globalIndex():number{
+            let base = (this.ecInfo.ecs[0].pageNum) * this.ecInfo.searchOpt.pageSize;
+            return base + this.ecInfo.index;
+        }
+
         protected onRefresh():void {
-            collection.EntrustedCase.search(this.ecType, {mgrId: this.ec.managerId}).done((ecs:collection.protocol.EC[])=> {
-                this.ec = ecs[0];
-                this.onShown();
-            });
+            if (this.ecInfo.searchOpt){
+                this.ec = this.ecInfo.ec;
+
+                $("#bootbox-click-to-ppg").parent().show();
+                if (this.globalIndex() <= 0){
+                    $("#bootbox-click-to-ppg").prop("disabled", true);
+                }else{
+                    $("#bootbox-click-to-ppg").prop("disabled", false);
+                }
+
+                if (this.globalIndex() + 1 >= this.ecInfo.ecs[0].records){
+                    $("#bootbox-click-to-npg").prop("disabled", true);
+                }else{
+                    $("#bootbox-click-to-npg").prop("disabled", false);
+                }
+
+                $("#bootbox-click-to-pgnum").text((this.globalIndex() + 1) + "/" + this.ecInfo.ecs[0].records);
+
+                if (this.ecInfo.index >= this.ecInfo.searchOpt.pageSize){
+                    this.ecInfo.index = 0;
+                    ++this.ecInfo.searchOpt.pageNum;
+                    collection.EntrustedCase.search(this.ecType, this.ecInfo.searchOpt).done((ecs:collection.protocol.EC[])=> {
+                        this.ecInfo.ecs = ecs;
+                        this.ecInfo.ec = ecs[0];
+                        this.refresh();
+                    });
+                }else if (this.ecInfo.index < 0){
+                    this.ecInfo.index = this.ecInfo.searchOpt.pageSize - 1;
+                    --this.ecInfo.searchOpt.pageNum;
+                    collection.EntrustedCase.search(this.ecType, this.ecInfo.searchOpt).done((ecs:collection.protocol.EC[])=> {
+                        this.ecInfo.ecs = ecs;
+                        this.ecInfo.ec = ecs[0];
+                        this.refresh();
+                    });
+                }else{
+                    this.ec = this.ecInfo.ecs[this.ecInfo.index];
+                    this.onShown();
+                }
+            }else{
+                collection.EntrustedCase.search(this.ecType, {mgrId: this.ec.managerId}).done((ecs:collection.protocol.EC[])=> {
+                    this.ec = ecs[0];
+                    this.onShown();
+                });
+                $("#bootbox-click-to-ppg").parent().hide();
+            }
+
         }
 
         private check(obj):boolean {

@@ -14,12 +14,18 @@ module pages {
     export class Console extends PageImpl {
         private static ins = new Console(PageType.console);
         ecs:EC[];
+        unassignedEcs:EC[];
         ecType:EntrustedCaseType;
+        searchOpt:QueryOption = {
+            pageNum:0,
+            pageSize:200
+        };
         unReadMsgs:collection.protocol.Message[];
         unRespMsgs:collection.protocol.Message[];
         isAssigner:boolean = false;
         isManager:boolean = false;
         isOwner:boolean = false;
+
         constructor(page:pages.PageType) {
             super(page);
           //  $("#" + PageUtil.getPageId(this.page) + " .dowebok input[checked='checked']").prop("checked", true);
@@ -86,7 +92,6 @@ module pages {
         protected onRefresh():void {
 
             let type = this.find(".dowebok input:checked").attr("myid");
-            let opt:QueryOption = {limit:200};
             if (authority.ping("/ec/answer")){
                 this.find(".nav-tabs a:eq(1)").text("未分配的委案");
             }else{
@@ -94,7 +99,7 @@ module pages {
             }
 
 
-            EntrustedCase.search(type, opt).done((ecs:EC[])=> {
+            EntrustedCase.search(type, this.searchOpt).done((ecs:EC[])=> {
                 this.ecs = ecs;
                 this.ecType = type;
                 this.doTabRefresh();
@@ -128,6 +133,7 @@ module pages {
             let tableAssist:JQTable.JQGridAssistant = pages.JQGridAssistantFactory.createTableAssist("tbNotAssigned", type);
             let loans = [];
             let isLinked:any = {};
+            this.unassignedEcs = [];
             if (this.isOwner){
                 for (let i = 0; i < this.ecs.length; ++i) {
                     if (!this.ecs[i].assignee) {
@@ -135,6 +141,7 @@ module pages {
                             if (this.isManager || this.ecs[i].owner == context.userName) {
                                 isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                                 loans.push(this.ecs[i].loan);
+                                this.unassignedEcs.push(this.ecs[i]);
                             }
                         }
                     }
@@ -146,9 +153,17 @@ module pages {
                         if (this.isManager || this.ecs[i].assignee == context.userName) {
                             isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                             loans.push(this.ecs[i].loan);
+                            this.unassignedEcs.push(this.ecs[i]);
                         }
                     }
                 }
+            }
+
+            if(this.unassignedEcs.length > 0){
+                this.unassignedEcs[0] = $.extend({}, this.unassignedEcs[0]);
+                this.unassignedEcs[0].pageNum = 0;
+                this.unassignedEcs[0].pageCount = 1;
+                this.unassignedEcs[0].records = this.unassignedEcs.length;
             }
 
 
@@ -256,21 +271,46 @@ module pages {
         }
 
 
-        getEcByRid(rid:string):collection.protocol.EC{
+        getEcByRid(rid:string):number{
             for (let i = 0; i < this.ecs.length; ++i){
                 if (this.ecs[i].loan[0] == rid){
-                    return this.ecs[i];
+                    return i;
+                }
+            }
+            return undefined;
+        }
+
+        getUnassignedEcByRid(rid:string):number{
+            for (let i = 0; i < this.unassignedEcs.length; ++i){
+                if (this.unassignedEcs[i].loan[0] == rid){
+                    return i;
                 }
             }
             return undefined;
         }
 
         onClickLink(rid:string){
-            let ec = this.getEcByRid(rid);
-            route.router.to(PageUtil.getPageId(PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
-                ec : ec,
-                ecType : this.ecType
-            });
+
+            if ($("#notAssigned").hasClass("active")){
+                let index = this.getUnassignedEcByRid(rid);
+                route.router.to(PageUtil.getPageId(PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
+                    ecs : this.unassignedEcs,
+                    index : index,
+                    ec : this.unassignedEcs[index],
+                    ecType : this.ecType,
+                    searchOpt : this.searchOpt,
+                });
+            }else{
+                let index = this.getEcByRid(rid);
+                route.router.to(PageUtil.getPageId(PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
+                    ecs : this.ecs,
+                    index : index,
+                    ec : this.ecs[index],
+                    ecType : this.ecType,
+                    searchOpt : this.searchOpt,
+                });
+            }
+
             sidebar.switchPage(PageType.loansDetail);
         }
 

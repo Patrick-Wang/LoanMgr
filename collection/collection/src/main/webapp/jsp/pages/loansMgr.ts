@@ -15,6 +15,7 @@ module pages{
         private usrs:collection.protocol.User[] = [];
         private pageSize:number = 10;
         private pageNum:number = 0;
+        private searchOpt:collection.protocol.QueryOption;
         constructor(page:pages.PageType) {
             super(page);
             this.find(".dowebok input").labelauty();
@@ -136,7 +137,7 @@ module pages{
             //}
 
             let ecType = this.find(".dowebok:eq(0) input:checked").attr("myid");
-            let opt:collection.protocol.QueryOption = this.getQOpt();
+            this.searchOpt = this.getQOpt();
 
             collection.EntrustedCase.getWwjgs(ecType).done((wwjgs:string[])=>{
                 this.wwjgs = wwjgs;
@@ -152,7 +153,7 @@ module pages{
                 this.find("#qYwy").parent().parent().remove();
             }
 
-            collection.EntrustedCase.search(ecType, opt).done((ecs:collection.protocol.EC[])=> {
+            collection.EntrustedCase.search(ecType, this.searchOpt).done((ecs:collection.protocol.EC[])=> {
                 this.ecs = ecs;
                 this.ecType = ecType;
                 this.refreshLoans(this.ecType);
@@ -170,20 +171,23 @@ module pages{
             this.adjustWidth("lm-table", this.find("#lm-tableTable"));
         }
 
-        getEcByRid(rid:string):collection.protocol.EC{
+        getEcByRid(rid:string):number{
             for (let i = 0; i < this.ecs.length; ++i){
                if (this.ecs[i].loan[0] == rid){
-                   return this.ecs[i];
+                   return i;
                }
             }
             return undefined;
         }
 
         onClickLink(rid:string){
-            let ec = this.getEcByRid(rid);
+            let index = this.getEcByRid(rid);
             route.router.to(PageUtil.getPageId(PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
-                ec : ec,
-                ecType : this.ecType
+                ecs : this.ecs,
+                index : index,
+                ec : this.ecs[index],
+                ecType : this.ecType,
+                searchOpt : this.searchOpt
             });
             sidebar.switchPage(PageType.loansDetail);
         }

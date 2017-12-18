@@ -51,40 +51,50 @@
 	<div class="row"></div>
 	<div class="well">
 		<div class="row">
-			<div class="col-sm-12">
-				<div class="col-sm-4">
-					<h3 class="darkpink" id="ld-eccode">委案编码：</h3>
+				<div class="col-sm-9">
+	<div class="buttons-preview pull-left">
+	<div class="btn-group">
+	<button type="button" class="btn btn-default"  style="display:none"
+	id="bootbox-click-to-working">设为工作中</button>
+	<button type="button" class="btn btn-default"  style="display:none"
+	id="bootbox-click-to-done">设为已退案</button>
+	</div>
+	<div class="btn-group">
+	<button type="button" class="btn btn-default"  style="display:none"
+	id="bootbox-modify-repayment">修改回款额</button>
+	</div>
+	<div class="btn-group">
+	<button type="button" class="btn btn-default"  style="display:none"
+	id="bootbox-record-work">工作记录</button>
+	<button type="button" class="btn btn-default"  style="display:none"
+	id="bootbox-record-work-by-phone">电话访谈</button>
+	</div>
+	<div class="btn-group">
+	<button type="button" class="btn btn-default"  style="display:none"
+	id="bootbox-loans-consulting">委案咨询</button>
+	</div>
+	<div class="btn-group">
+	<button type="button" class="btn btn-default"  style="display:none"
+	id="bootbox-modify-attachment-property">修改附件属性</button>
+	</div>
+	</div>
 				</div>
-				<div class="col-sm-8">
-					<div class="buttons-preview pull-right">
-						<div class="btn-group">
-							<button type="button" class="btn btn-default"  style="display:none"
-								id="bootbox-click-to-working">设为工作中</button>
-							<button type="button" class="btn btn-default"  style="display:none"
-								id="bootbox-click-to-done">设为已退案</button>
-						</div>
-						<div class="btn-group">
-							<button type="button" class="btn btn-default"  style="display:none"
-								id="bootbox-modify-repayment">修改回款额</button>
-						</div>
-						<div class="btn-group">
-							<button type="button" class="btn btn-default"  style="display:none"
-								id="bootbox-record-work">工作记录</button>
-							<button type="button" class="btn btn-default"  style="display:none"
-								id="bootbox-record-work-by-phone">电话访谈</button>
-						</div>
-						<div class="btn-group">
-							<button type="button" class="btn btn-default"  style="display:none"
-								id="bootbox-loans-consulting">委案咨询</button>
-						</div>
-						<div class="btn-group">
-							<button type="button" class="btn btn-default"  style="display:none"
-								id="bootbox-modify-attachment-property">修改附件属性</button>
-						</div>
-					</div>
-				</div>
+				<div class="col-sm-3">
+
+
+	<div class="buttons-preview pull-right">
+	<div class="btn-group">
+	<button type="button" class="btn btn-default"
+	id="bootbox-click-to-ppg">&lt;&lt;上一条</button>
+	<div type="button" class="btn btn-default"
+	id="bootbox-click-to-pgnum"></div>
+	<button type="button" class="btn btn-default"
+	id="bootbox-click-to-npg">下一条&gt;&gt;</button>
+	</div>
+	</div>
 			</div>
 		</div>
+
 		<hr class="wide" />
 		<div class="row fontawesome-icon-list" id="ld-common">
 

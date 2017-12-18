@@ -125,7 +125,7 @@ var pages;
             //}
             var _this = this;
             var ecType = this.find(".dowebok:eq(0) input:checked").attr("myid");
-            var opt = this.getQOpt();
+            this.searchOpt = this.getQOpt();
             collection.EntrustedCase.getWwjgs(ecType).done(function (wwjgs) {
                 _this.wwjgs = wwjgs;
                 _this.updateWwjgs();
@@ -139,7 +139,7 @@ var pages;
             else {
                 this.find("#qYwy").parent().parent().remove();
             }
-            collection.EntrustedCase.search(ecType, opt).done(function (ecs) {
+            collection.EntrustedCase.search(ecType, this.searchOpt).done(function (ecs) {
                 _this.ecs = ecs;
                 _this.ecType = ecType;
                 _this.refreshLoans(_this.ecType);
@@ -158,16 +158,19 @@ var pages;
         LoansMgr.prototype.getEcByRid = function (rid) {
             for (var i = 0; i < this.ecs.length; ++i) {
                 if (this.ecs[i].loan[0] == rid) {
-                    return this.ecs[i];
+                    return i;
                 }
             }
             return undefined;
         };
         LoansMgr.prototype.onClickLink = function (rid) {
-            var ec = this.getEcByRid(rid);
+            var index = this.getEcByRid(rid);
             route.router.to(pages.PageUtil.getPageId(pages.PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
-                ec: ec,
-                ecType: this.ecType
+                ecs: this.ecs,
+                index: index,
+                ec: this.ecs[index],
+                ecType: this.ecType,
+                searchOpt: this.searchOpt
             });
             sidebar.switchPage(pages.PageType.loansDetail);
         };

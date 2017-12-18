@@ -17,6 +17,10 @@ var pages;
         function Console(page) {
             var _this = this;
             _super.call(this, page);
+            this.searchOpt = {
+                pageNum: 0,
+                pageSize: 200
+            };
             this.isAssigner = false;
             this.isManager = false;
             this.isOwner = false;
@@ -79,14 +83,13 @@ var pages;
         Console.prototype.onRefresh = function () {
             var _this = this;
             var type = this.find(".dowebok input:checked").attr("myid");
-            var opt = { limit: 200 };
             if (authority.ping("/ec/answer")) {
                 this.find(".nav-tabs a:eq(1)").text("未分配的委案");
             }
             else {
                 this.find(".nav-tabs a:eq(1)").text("未完成的委案");
             }
-            EntrustedCase.search(type, opt).done(function (ecs) {
+            EntrustedCase.search(type, this.searchOpt).done(function (ecs) {
                 _this.ecs = ecs;
                 _this.ecType = type;
                 _this.doTabRefresh();
@@ -115,6 +118,7 @@ var pages;
             var tableAssist = pages.JQGridAssistantFactory.createTableAssist("tbNotAssigned", type);
             var loans = [];
             var isLinked = {};
+            this.unassignedEcs = [];
             if (this.isOwner) {
                 for (var i = 0; i < this.ecs.length; ++i) {
                     if (!this.ecs[i].assignee) {
@@ -122,6 +126,7 @@ var pages;
                             if (this.isManager || this.ecs[i].owner == context.userName) {
                                 isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                                 loans.push(this.ecs[i].loan);
+                                this.unassignedEcs.push(this.ecs[i]);
                             }
                         }
                     }
@@ -134,9 +139,16 @@ var pages;
                         if (this.isManager || this.ecs[i].assignee == context.userName) {
                             isLinked[this.ecs[i].loan[0]] = this.ecs[i].loan[1];
                             loans.push(this.ecs[i].loan);
+                            this.unassignedEcs.push(this.ecs[i]);
                         }
                     }
                 }
+            }
+            if (this.unassignedEcs.length > 0) {
+                this.unassignedEcs[0] = $.extend({}, this.unassignedEcs[0]);
+                this.unassignedEcs[0].pageNum = 0;
+                this.unassignedEcs[0].pageCount = 1;
+                this.unassignedEcs[0].records = this.unassignedEcs.length;
             }
             $("#tbNotAssignedTable").jqGrid(tableAssist.decorate({
                 // url: "TestTable/WGDD_load.do",
@@ -237,17 +249,40 @@ var pages;
         Console.prototype.getEcByRid = function (rid) {
             for (var i = 0; i < this.ecs.length; ++i) {
                 if (this.ecs[i].loan[0] == rid) {
-                    return this.ecs[i];
+                    return i;
+                }
+            }
+            return undefined;
+        };
+        Console.prototype.getUnassignedEcByRid = function (rid) {
+            for (var i = 0; i < this.unassignedEcs.length; ++i) {
+                if (this.unassignedEcs[i].loan[0] == rid) {
+                    return i;
                 }
             }
             return undefined;
         };
         Console.prototype.onClickLink = function (rid) {
-            var ec = this.getEcByRid(rid);
-            route.router.to(pages.PageUtil.getPageId(pages.PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
-                ec: ec,
-                ecType: this.ecType
-            });
+            if ($("#notAssigned").hasClass("active")) {
+                var index = this.getUnassignedEcByRid(rid);
+                route.router.to(pages.PageUtil.getPageId(pages.PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
+                    ecs: this.unassignedEcs,
+                    index: index,
+                    ec: this.unassignedEcs[index],
+                    ecType: this.ecType,
+                    searchOpt: this.searchOpt,
+                });
+            }
+            else {
+                var index = this.getEcByRid(rid);
+                route.router.to(pages.PageUtil.getPageId(pages.PageType.loansDetail)).send(route.MSG.EC_DETAIL_ECINFO, {
+                    ecs: this.ecs,
+                    index: index,
+                    ec: this.ecs[index],
+                    ecType: this.ecType,
+                    searchOpt: this.searchOpt,
+                });
+            }
             sidebar.switchPage(pages.PageType.loansDetail);
         };
         Console.prototype.refreshAllLoans = function (type) {
