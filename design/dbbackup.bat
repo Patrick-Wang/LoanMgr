@@ -12,4 +12,3 @@ if "%day%"=="01" (rd /s/q "d:\%lastMonth%ÔÂ")
 md d:\%month%ÔÂ
 cd "C:\Program Files\MySQL\MySQL Server 5.7\bin"
 mysqldump -uroot -proot collection > d:\%month%ÔÂ\db_%dt%.sql
-pause

@@ -5,10 +5,6 @@ import com.bank.debt.model.entity.EntrustedCaseManagerEntity;
 import com.bank.debt.model.entity.UserEntity;
 import com.speed.frame.model.dao.AbstractReadWriteDaoImpl;
 
-import oracle.net.aso.e;
-
-import com.bank.debt.model.dao.entrustedcasemanager.EntrustedCaseManagerDao;
-
 import java.util.List;
 
 import javax.persistence.EntityManager;
