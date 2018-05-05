@@ -30,6 +30,6 @@ var pages;
                 //    "#bootbox-record-work-timeline").parent().show();
             };
             return Ask;
-        })();
+        }());
     })(detail = pages.detail || (pages.detail = {}));
 })(pages || (pages = {}));

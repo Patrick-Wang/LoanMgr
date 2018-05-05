@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="pages.ts"/>
 ///<reference path="../pageSidebar.ts"/>
 ///<reference path="../sdk/route/route.ts"/>
@@ -15,23 +20,22 @@ var pages;
     var Console = (function (_super) {
         __extends(Console, _super);
         function Console(page) {
-            var _this = this;
-            _super.call(this, page);
-            this.searchOpt = {
+            var _this = _super.call(this, page) || this;
+            _this.searchOpt = {
                 pageNum: 0,
                 pageSize: 200
             };
-            this.isAssigner = false;
-            this.isManager = false;
-            this.isOwner = false;
+            _this.isAssigner = false;
+            _this.isManager = false;
+            _this.isOwner = false;
             //  $("#" + PageUtil.getPageId(this.page) + " .dowebok input[checked='checked']").prop("checked", true);
-            this.find(".dowebok input").labelauty();
-            $("#" + pages.PageUtil.getPageId(this.page) + " #myTab11 a").click(function () {
+            _this.find(".dowebok input").labelauty();
+            $("#" + pages.PageUtil.getPageId(_this.page) + " #myTab11 a").click(function () {
                 setTimeout(function () {
                     _this.doTabRefresh();
                 }, 0);
             });
-            this.find(".dowebok input").click(function () {
+            _this.find(".dowebok input").click(function () {
                 if (_this.ecType != _this.find(".dowebok input:checked").attr("myid")) {
                     _this.refresh();
                 }
@@ -79,6 +83,7 @@ var pages;
                         break;
                 }
             }));
+            return _this;
         }
         Console.prototype.onRefresh = function () {
             var _this = this;
@@ -390,6 +395,6 @@ var pages;
         };
         Console.ins = new Console(pages.PageType.console);
         return Console;
-    })(pages.PageImpl);
+    }(pages.PageImpl));
     pages.Console = Console;
 })(pages || (pages = {}));

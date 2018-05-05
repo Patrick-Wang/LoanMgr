@@ -8,3 +8,6 @@ design/测试模板/A649FA87.tmp
 design/测试模板/62C282DC.tmp
 doc/bug1.xlsx
 design/测试模板/车贷 - 副本.xls
+target/
+*.class
+*.class

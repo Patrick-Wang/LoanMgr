@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="pages.ts"/>
 ///<reference path="../pageSidebar.ts"/>
 var pages;
@@ -12,16 +17,15 @@ var pages;
     var ImportLoans = (function (_super) {
         __extends(ImportLoans, _super);
         function ImportLoans(page) {
-            var _this = this;
-            _super.call(this, page);
-            this.find(".plan").hover(function (e) {
+            var _this = _super.call(this, page) || this;
+            _this.find(".plan").hover(function (e) {
                 _this.find(".plan").removeClass("popular-plan");
                 _this.find(".plan").removeClass("bounce");
                 _this.find(e.currentTarget).addClass("popular-plan");
                 _this.find(e.currentTarget).addClass("bounce");
             });
-            this.find('#il-WiredWizard').wizard();
-            this.find('#il-WiredWizard').on('changed', function (evt) {
+            _this.find('#il-WiredWizard').wizard();
+            _this.find('#il-WiredWizard').on('changed', function (evt) {
                 if (_this.find('#il-WiredWizard').wizard('selectedItem').step == 1) {
                     _this.find('#il-WiredWizard-actions').hide();
                 }
@@ -44,7 +48,7 @@ var pages;
             //        }
             //    }
             //});
-            this.find('#il-WiredWizard').on('finished.fu.wizard', function (evt, data) {
+            _this.find('#il-WiredWizard').on('finished.fu.wizard', function (evt, data) {
                 var queFiles = _this.dropz.getQueuedFiles();
                 var size = queFiles.length;
                 if (size == 0) {
@@ -59,18 +63,19 @@ var pages;
                 }
                 evt.preventDefault();
             });
-            this.find("#selcar").click(function () {
+            _this.find("#selcar").click(function () {
                 _this.onclickSelectCar();
                 return false;
             });
-            this.find("#selloan").click(function () {
+            _this.find("#selloan").click(function () {
                 _this.onclickSelectLoan();
                 return false;
             });
-            this.find("#selcard").click(function () {
+            _this.find("#selcard").click(function () {
                 _this.onclickSelectCard();
                 return false;
             });
+            return _this;
         }
         ImportLoans.prototype.goStep1 = function () {
             var step = this.find('#il-WiredWizard').wizard('selectedItem').step;
@@ -146,9 +151,11 @@ var pages;
                 this.dropz.on("error", function (file, message, xhr) {
                     if (message == _this.dropz.options.dictMaxFilesExceeded) {
                         pages.Toast.failed(message);
+                        //this.dropz.removeFile(file);
                     }
                     else if (message == _this.dropz.options.dictInvalidFileType) {
                         pages.Toast.failed(message);
+                        //this.dropz.removeFile(file);
                     }
                     else {
                         pages.Toast.failed(file.name + " 导入失败");
@@ -168,5 +175,5 @@ var pages;
         };
         ImportLoans.ins = new ImportLoans(pages.PageType.importLoans);
         return ImportLoans;
-    })(pages.PageImpl);
+    }(pages.PageImpl));
 })(pages || (pages = {}));

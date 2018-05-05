@@ -56,6 +56,6 @@ var collection;
             return JSON.stringify(ecr);
         };
         return EntrustedCaseReport;
-    })();
+    }());
     collection.EntrustedCaseReport = EntrustedCaseReport;
 })(collection || (collection = {}));

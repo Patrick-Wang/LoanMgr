@@ -35,7 +35,8 @@ var pages;
                         }
                         break;
                     case MSG_REFRESH:
-                        var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": "tab-palegreen"}, React.createElement("a", {"data-toggle": "tab", "id": "contacttab", "href": "#notRepliedMsg"}, " 未处理咨询 ")));
+                        var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", { className: "tab-palegreen" },
+                            React.createElement("a", { "data-toggle": "tab", id: "contacttab", href: "#notRepliedMsg" }, " \u672A\u5904\u7406\u54A8\u8BE2 ")));
                         PageUtil.jqPage(pages.PageType.console).find("#myTab11").append(html);
                         break;
                 }
@@ -67,6 +68,6 @@ var pages;
                 $("#console-status>div:eq(2)>div").eq(0).text(count).next().text("未处理咨询");
             };
             return Assigner;
-        })();
+        }());
     })(console = pages.console || (pages.console = {}));
 })(pages || (pages = {}));

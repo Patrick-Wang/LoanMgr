@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="pages.ts"/>
 ///<reference path="../pageSidebar.ts"/>
 var pages;
@@ -10,7 +15,7 @@ var pages;
     var Backup = (function (_super) {
         __extends(Backup, _super);
         function Backup(page) {
-            _super.call(this, page);
+            return _super.call(this, page) || this;
         }
         Backup.prototype.onShown = function () {
             var _this = this;
@@ -52,5 +57,5 @@ var pages;
         };
         Backup.ins = new Backup(pages.PageType.backup);
         return Backup;
-    })(pages.PageImpl);
+    }(pages.PageImpl));
 })(pages || (pages = {}));

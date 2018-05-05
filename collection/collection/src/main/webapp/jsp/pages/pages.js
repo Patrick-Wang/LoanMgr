@@ -34,8 +34,9 @@ var pages;
             return this.format((Date.now() - this.startTime) / 1000);
         };
         return Timer;
-    })();
+    }());
     pages.Timer = Timer;
+    var PageType;
     (function (PageType) {
         PageType[PageType["reportTask"] = 0] = "reportTask";
         PageType[PageType["askSth"] = 1] = "askSth";
@@ -50,8 +51,7 @@ var pages;
         PageType[PageType["rearangeOffice"] = 10] = "rearangeOffice";
         PageType[PageType["loansDetail"] = 11] = "loansDetail";
         PageType[PageType["end"] = 12] = "end";
-    })(pages.PageType || (pages.PageType = {}));
-    var PageType = pages.PageType;
+    })(PageType = pages.PageType || (pages.PageType = {}));
     var Toast = (function () {
         function Toast() {
         }
@@ -68,7 +68,7 @@ var pages;
             Notify(msg, 'top-right', '3000', 'danger', 'fa-bolt', closeAble);
         };
         return Toast;
-    })();
+    }());
     pages.Toast = Toast;
     var Loading = (function () {
         function Loading() {
@@ -99,7 +99,7 @@ var pages;
         };
         Loading.startTime = 0;
         return Loading;
-    })();
+    }());
     pages.Loading = Loading;
     var PageUtil = (function () {
         function PageUtil() {
@@ -124,7 +124,7 @@ var pages;
             }
         };
         return PageUtil;
-    })();
+    }());
     pages.PageUtil = PageUtil;
     var JQGridAssistantFactory = (function () {
         function JQGridAssistantFactory() {
@@ -161,7 +161,7 @@ var pages;
             return tableAssist;
         };
         return JQGridAssistantFactory;
-    })();
+    }());
     pages.JQGridAssistantFactory = JQGridAssistantFactory;
     var PageImpl = (function () {
         function PageImpl(page) {
@@ -204,6 +204,8 @@ var pages;
         PageImpl.prototype.hide = function () {
             if (this.isShown()) {
                 PageUtil.jqPage(this.page).css("display", "none");
+                //this.html = PageUtil.jqPage(this.page).html();
+                //PageUtil.jqPage(this.page).empty();
             }
         };
         PageImpl.prototype.isShown = function () {
@@ -212,6 +214,6 @@ var pages;
         PageImpl.prototype.onShown = function () {
         };
         return PageImpl;
-    })();
+    }());
     pages.PageImpl = PageImpl;
 })(pages || (pages = {}));

@@ -9,11 +9,13 @@ var authority;
             var EntrustedCase = collection.EntrustedCase;
             var ADDR = "/ec/export";
             authority.register(ADDR, function () {
-                var html = ReactDOMServer.renderToStaticMarkup(React.createElement("form", {"id": "lm-exportForm", "method": "post", "style": { display: "none" }}, React.createElement("input", {"id": "lm-type", "name": "type", "type": "text"}), React.createElement("input", {"id": "lm-query", "name": "query", "type": "text"})));
+                var html = ReactDOMServer.renderToStaticMarkup(React.createElement("form", { id: "lm-exportForm", method: "post", style: { display: "none" } },
+                    React.createElement("input", { id: "lm-type", name: "type", type: "text" }),
+                    React.createElement("input", { id: "lm-query", name: "query", type: "text" })));
                 pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(html);
-                html = ReactDOMServer.renderToStaticMarkup(React.createElement("a", {"id": "lm-export-Btn", "className": "btn btn-default", "style": { float: "right", marginRight: 5 }}, "导出"));
+                html = ReactDOMServer.renderToStaticMarkup(React.createElement("a", { id: "lm-export-Btn", className: "btn btn-default", style: { float: "right", marginRight: 5 } }, "\u5BFC\u51FA"));
                 pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(html);
-                html = ReactDOMServer.renderToStaticMarkup(React.createElement("a", {"id": "lm-delete-Btn", "className": "btn btn-default", "style": { float: "right", marginRight: 5 }}, "删除"));
+                html = ReactDOMServer.renderToStaticMarkup(React.createElement("a", { id: "lm-delete-Btn", className: "btn btn-default", style: { float: "right", marginRight: 5 } }, "\u5220\u9664"));
                 pages.PageUtil.jqPage(pages.PageType.loansMgr).find("#lm-export").append(html);
                 var exporter = new Export();
             });
@@ -60,7 +62,7 @@ var authority;
                     }
                 };
                 return Export;
-            })();
+            }());
             exporter_1.Export = Export;
         })(exporter = ec_1.exporter || (ec_1.exporter = {}));
     })(ec = authority.ec || (authority.ec = {}));

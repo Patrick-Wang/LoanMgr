@@ -249,7 +249,10 @@ module pages {
             let loans = [];
             for (let i = 0; i < this.ecs.length; ++i) {
                 if(!this.ecs[i].assignee){
-                    loans.push([this.ecs[i].loan[0], this.ecs[i].owner, this.ecs[i].assignee].concat(this.ecs[i].loan.slice(1)));
+                    loans.push({
+                        id:this.ecs[i].loan[0],
+                        cell : [this.ecs[i].owner, this.ecs[i].assignee].concat(this.ecs[i].loan.slice(1))}
+                    );
                 }
             }
 

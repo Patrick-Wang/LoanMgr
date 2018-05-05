@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="pages.ts"/>
 ///<reference path="../pageSidebar.ts"/>
 var pages;
@@ -13,10 +18,11 @@ var pages;
     var AssignLoans = (function (_super) {
         __extends(AssignLoans, _super);
         function AssignLoans(page) {
-            var _this = this;
-            _super.call(this, page);
-            this.selAll = false;
-            $("#" + pages.PageUtil.getPageId(this.page) + " .dowebok input").labelauty();
+            var _this = _super.call(this, page) || this;
+            _this.selAll = false;
+            _this.pageSize = 10;
+            _this.pageNum = 0;
+            $("#" + pages.PageUtil.getPageId(_this.page) + " .dowebok input").labelauty();
             $('#al-WiredWizard').wizard();
             $('#al-WiredWizard').on('change', function (evt, data) {
                 if (data.direction == 'next') {
@@ -36,7 +42,7 @@ var pages;
                     }
                 }
             });
-            this.find(".dowebok input").click(function () {
+            _this.find(".dowebok input").click(function () {
                 _this.refresh();
             });
             $('#al-WiredWizard').on('changed', function (evt) {
@@ -44,12 +50,13 @@ var pages;
                     _this.onStep3();
                 }
             });
-            this.find("#qYqts").on("change", function () {
+            _this.find("#qYqts").on("change", function () {
                 _this.refresh();
             });
             $('#al-WiredWizard').on('finished.fu.wizard', function (evt, data) {
                 _this.updateAssignee();
             });
+            return _this;
         }
         AssignLoans.prototype.onStep3 = function () {
             //PageUtil.jqPage(this.page).find(".btn-next").text("修改");
@@ -118,6 +125,8 @@ var pages;
             return tree;
         };
         AssignLoans.prototype.parseYqts = function (opt) {
+            opt.pageNum = this.pageNum;
+            opt.pageSize = this.pageSize;
             var val = this.find("#qYqts").val();
             if ("none" == val) {
                 return;
@@ -149,7 +158,7 @@ var pages;
             var _this = this;
             this.goStep1();
             var type = pages.PageUtil.jqPage(this.page).find(".dowebok input:checked").attr("myid");
-            var opt = { myOwn: true };
+            var opt = { myOwn: true, shuffle: true };
             this.parseYqts(opt);
             EntrustedCase.search(type, opt)
                 .done(function (ecs) {
@@ -216,13 +225,28 @@ var pages;
             var loans = [];
             for (var i = 0; i < this.ecs.length; ++i) {
                 if (!this.ecs[i].assignee) {
-                    loans.push([this.ecs[i].loan[0], this.ecs[i].owner, this.ecs[i].assignee].concat(this.ecs[i].loan.slice(1)));
+                    loans.push({
+                        id: this.ecs[i].loan[0],
+                        cell: [this.ecs[i].owner, this.ecs[i].assignee].concat(this.ecs[i].loan.slice(1))
+                    });
                 }
             }
-            pages.PageUtil.shuffle(loans);
+            var tbData = null;
+            if (this.ecs.length > 0) {
+                tbData = {
+                    records: this.ecs[0].records,
+                    page: this.ecs[0].pageNum + 1,
+                    total: this.ecs[0].pageCount,
+                    rows: loans
+                };
+            }
+            // PageUtil.shuffle(loans);
             $("#tbAllLoansTable").jqGrid(tableAssist.decorate({
-                data: tableAssist.getDataWithId(loans),
-                datatype: "local",
+                datatype: function (postdata) {
+                    _this.pageSize = postdata.rows;
+                    _this.pageNum = postdata.page - 1;
+                    _this.refresh();
+                },
                 drag: false,
                 resize: false,
                 autowidth: true,
@@ -239,6 +263,9 @@ var pages;
                 },
                 pager: '#tbAllLoansPager'
             }));
+            if (this.ecs.length > 0) {
+                tableAssist.addTableData(tbData);
+            }
             this.adjustStep1Width();
         };
         AssignLoans.prototype.updateAssignee = function () {
@@ -259,5 +286,5 @@ var pages;
         };
         AssignLoans.ins = new AssignLoans(pages.PageType.assignLoans);
         return AssignLoans;
-    })(pages.PageImpl);
+    }(pages.PageImpl));
 })(pages || (pages = {}));

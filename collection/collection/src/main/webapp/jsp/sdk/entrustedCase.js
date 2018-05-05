@@ -43,6 +43,6 @@ var collection;
             });
         };
         return EntrustedCase;
-    })();
+    }());
     collection.EntrustedCase = EntrustedCase;
 })(collection || (collection = {}));

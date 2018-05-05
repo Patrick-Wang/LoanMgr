@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="pages.ts"/>
 ///<reference path="importLoans.ts"/>
 var pages;
@@ -11,7 +16,7 @@ var pages;
     var AskSth = (function (_super) {
         __extends(AskSth, _super);
         function AskSth(page) {
-            _super.call(this, page);
+            return _super.call(this, page) || this;
         }
         AskSth.prototype.createTableAssist = function (pName) {
             var parent = this.find("#" + pName);
@@ -236,7 +241,13 @@ var pages;
                 for (var j = 0; j < data.length; ++j) {
                     if (data[j][0] == rids[i]) {
                         if (authority.ping("/ec/answer")) {
-                            var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", {"id": ""}, React.createElement("a", {"value": data[j][0], "className": "btn btn-default btn-xs purple"}, React.createElement("i", {"className": "fa fa-share"}), "回复"), React.createElement("a", {"value": data[j][0], "className": "btn btn-default btn-xs purple"}, React.createElement("i", {"className": "fa fa-share"}), "前往")));
+                            var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", { id: "" },
+                                React.createElement("a", { value: data[j][0], className: "btn btn-default btn-xs purple" },
+                                    React.createElement("i", { className: "fa fa-share" }),
+                                    "\u56DE\u590D"),
+                                React.createElement("a", { value: data[j][0], className: "btn btn-default btn-xs purple" },
+                                    React.createElement("i", { className: "fa fa-share" }),
+                                    "\u524D\u5F80")));
                             this.find("#as-msgsTable").setCell(rids[i], 6, html);
                             this.find("#as-msgsTable a[value=" + data[j][0] + "]:eq(0)").click(function (e) {
                                 _this.clickAnswer($(e.currentTarget).attr("value"));
@@ -246,7 +257,10 @@ var pages;
                             });
                         }
                         else {
-                            var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", null, React.createElement("a", {"id": data[j][0], "className": "btn btn-default btn-xs purple"}, React.createElement("i", {"className": "fa fa-share"}), "前往")));
+                            var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", null,
+                                React.createElement("a", { id: data[j][0], className: "btn btn-default btn-xs purple" },
+                                    React.createElement("i", { className: "fa fa-share" }),
+                                    "\u524D\u5F80")));
                             this.find("#as-msgsTable").setCell(rids[i], 6, html);
                             this.find("#as-msgsTable #" + data[j][0]).click(function (e) {
                                 _this.clickGo(e.currentTarget.id);
@@ -322,6 +336,6 @@ var pages;
         };
         AskSth.ins = new AskSth(pages.PageType.askSth);
         return AskSth;
-    })(pages.PageImpl);
+    }(pages.PageImpl));
     pages.AskSth = AskSth;
 })(pages || (pages = {}));

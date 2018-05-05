@@ -46,5 +46,5 @@ var authority;
         };
         Registry.ins = new Registry();
         return Registry;
-    })();
+    }());
 })(authority || (authority = {}));

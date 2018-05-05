@@ -299,6 +299,7 @@ module collection.protocol {
         yqtsStartOpen?:number;
         yqtsEndClose?:number;
         assignee?:number;
+        shuffle?:boolean;
     }
 
     export interface Promise<S> {

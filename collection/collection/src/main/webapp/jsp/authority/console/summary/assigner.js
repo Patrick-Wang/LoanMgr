@@ -37,7 +37,8 @@ var pages;
                         }
                         break;
                     case MSG_REFRESH:
-                        var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": "tab-palegreen"}, React.createElement("a", {"data-toggle": "tab", "id": "contacttab2", "href": "#waitRepliedMsg"}, " 待回复咨询 ")));
+                        var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", { className: "tab-palegreen" },
+                            React.createElement("a", { "data-toggle": "tab", id: "contacttab2", href: "#waitRepliedMsg" }, " \u5F85\u56DE\u590D\u54A8\u8BE2 ")));
                         PageUtil.jqPage(pages.PageType.console).find("#myTab11").append(html);
                         break;
                 }
@@ -70,6 +71,6 @@ var pages;
                     .text(count).next().text("待回复咨询");
             };
             return Accepter;
-        })();
+        }());
     })(console = pages.console || (pages.console = {}));
 })(pages || (pages = {}));

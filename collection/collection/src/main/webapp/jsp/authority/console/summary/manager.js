@@ -43,6 +43,6 @@ var pages;
                 });
             };
             return Manager;
-        })();
+        }());
     })(console = pages.console || (pages.console = {}));
 })(pages || (pages = {}));

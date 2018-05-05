@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="pages.ts"/>
 ///<reference path="../pageSidebar.ts"/>
 var pages;
@@ -10,17 +15,16 @@ var pages;
     var LoansMgr = (function (_super) {
         __extends(LoansMgr, _super);
         function LoansMgr(page) {
-            var _this = this;
-            _super.call(this, page);
-            this.isAssigner = false;
-            this.isOwner = false;
-            this.isManager = false;
-            this.wwjgs = [];
-            this.usrs = [];
-            this.pageSize = 10;
-            this.pageNum = 0;
-            this.find(".dowebok input").labelauty();
-            route.router.register(new route.Receiver(pages.PageUtil.getPageId(this.page), function (e) {
+            var _this = _super.call(this, page) || this;
+            _this.isAssigner = false;
+            _this.isOwner = false;
+            _this.isManager = false;
+            _this.wwjgs = [];
+            _this.usrs = [];
+            _this.pageSize = 10;
+            _this.pageNum = 0;
+            _this.find(".dowebok input").labelauty();
+            route.router.register(new route.Receiver(pages.PageUtil.getPageId(_this.page), function (e) {
                 switch (e.id) {
                     case route.MSG.CONSOLE_ASSIGNER_UNRESPMSGS:
                         _this.isAssigner = true;
@@ -46,7 +50,7 @@ var pages;
                         return _this.find(".dowebok:eq(0) input:checked").attr("myid");
                 }
             }));
-            this.find(".dowebok:eq(0) input").click(function () {
+            _this.find(".dowebok:eq(0) input").click(function () {
                 var ecType = _this.find(".dowebok:eq(0) input:checked").attr("myid");
                 switch (parseInt(ecType)) {
                     case collection.protocol.EntrustedCaseType.carLoan:
@@ -61,12 +65,13 @@ var pages;
                 }
                 _this.refresh();
             });
-            this.find("#lm-search-Btn").click(function () {
+            _this.find("#lm-search-Btn").click(function () {
                 _this.refresh();
             });
-            this.find(".dowebok:eq(1) input").click(function () {
+            _this.find(".dowebok:eq(1) input").click(function () {
                 _this.refresh();
             });
+            return _this;
             //this.find(".buttons-preview:eq(1) a:eq(0)").click(()=>{
             //    let ids = [].concat(this.find("#lm-tableTable").jqGrid('getGridParam', 'selarrrow'));
             //    if (ids.length == 0){
@@ -268,6 +273,6 @@ var pages;
         };
         LoansMgr.ins = new LoansMgr(pages.PageType.loansMgr);
         return LoansMgr;
-    })(pages.PageImpl);
+    }(pages.PageImpl));
     pages.LoansMgr = LoansMgr;
 })(pages || (pages = {}));

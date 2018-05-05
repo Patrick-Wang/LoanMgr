@@ -1,30 +1,35 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="pages.ts"/>
 var pages;
 (function (pages) {
     var UserMgr = (function (_super) {
         __extends(UserMgr, _super);
         function UserMgr(page) {
-            var _this = this;
-            _super.call(this, page);
-            this.find("#um-createUser").click(function () {
+            var _this = _super.call(this, page) || this;
+            _this.find("#um-createUser").click(function () {
                 _this.onclickCreateUser();
                 return false;
             });
-            this.find("#um-editUser").click(function () {
+            _this.find("#um-editUser").click(function () {
                 _this.onclickEditUser();
                 return false;
             });
-            this.find("#um-Orgs").append("<select id='um-org-sel' class='col-xs-12 col-md-12'></select>");
+            _this.find("#um-Orgs").append("<select id='um-org-sel' class='col-xs-12 col-md-12'></select>");
             collection.Account.getOrgs()
                 .done(function (orgs) {
                 _this.orgs = orgs;
                 _this.bindTree(_this.orgs);
             });
+            return _this;
         }
         UserMgr.prototype.bindTree = function (orgs) {
             if (orgs != undefined) {
@@ -234,5 +239,5 @@ var pages;
         };
         UserMgr.ins = new UserMgr(pages.PageType.userMgr);
         return UserMgr;
-    })(pages.PageImpl);
+    }(pages.PageImpl));
 })(pages || (pages = {}));

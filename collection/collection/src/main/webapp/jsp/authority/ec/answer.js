@@ -27,6 +27,6 @@ var pages;
                 //PageUtil.jqPage(PageType.loansDetail).find("#bootbox-record-work-timeline").text(txt.replace("+", ""));
             };
             return Answer;
-        })();
+        }());
     })(detail = pages.detail || (pages.detail = {}));
 })(pages || (pages = {}));

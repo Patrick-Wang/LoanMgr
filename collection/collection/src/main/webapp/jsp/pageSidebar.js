@@ -92,11 +92,11 @@ var sidebar;
         };
         SiderBar.ins = new SiderBar();
         return SiderBar;
-    })();
+    }());
     var SiderItemEvent = (function () {
         function SiderItemEvent(page, inited) {
-            var _this = this;
             if (inited === void 0) { inited = false; }
+            var _this = this;
             this.disabled = false;
             this.inited = inited;
             this.page = page;
@@ -122,5 +122,5 @@ var sidebar;
             this.disabled = false;
         };
         return SiderItemEvent;
-    })();
+    }());
 })(sidebar || (sidebar = {}));

@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="pages.ts"/>
 ///<reference path="../pageSidebar.ts"/>
 var pages;
@@ -12,8 +17,7 @@ var pages;
     var CallCenter = (function (_super) {
         __extends(CallCenter, _super);
         function CallCenter(page) {
-            var _this = this;
-            _super.call(this, page);
+            var _this = _super.call(this, page) || this;
             $(document).ready(function () {
                 if (collection.phone.isAvailable()) {
                     collection.phone.start(function (num) {
@@ -24,6 +28,7 @@ var pages;
                     $("#callCenter").hide();
                 }
             });
+            return _this;
         }
         CallCenter.prototype.onHangUp = function (fileName) {
             if (fileName) {
@@ -32,7 +37,11 @@ var pages;
         };
         CallCenter.prototype.onCallIn = function (num) {
             var _this = this;
-            var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", {"className": "row"}, React.createElement("div", {"className": "col-md-4"}, React.createElement("div", {"className": "form-group", "id": "cc-callInNum"}, "来电话了 : ", num))));
+            var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", { className: "row" },
+                React.createElement("div", { className: "col-md-4" },
+                    React.createElement("div", { className: "form-group", id: "cc-callInNum" },
+                        "\u6765\u7535\u8BDD\u4E86 : ",
+                        num))));
             var timer = new pages.Timer();
             var dialog = bootbox.dialog({
                 message: html,
@@ -392,6 +401,6 @@ var pages;
         };
         CallCenter.ins = new CallCenter(pages.PageType.callCenter);
         return CallCenter;
-    })(pages.PageImpl);
+    }(pages.PageImpl));
     pages.CallCenter = CallCenter;
 })(pages || (pages = {}));

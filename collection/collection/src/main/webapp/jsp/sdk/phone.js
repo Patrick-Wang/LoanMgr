@@ -19,7 +19,7 @@ var collection;
             });
         };
         return Phone;
-    })();
+    }());
     collection.Phone = Phone;
     var ActiveXPhone = (function () {
         function ActiveXPhone() {
@@ -90,7 +90,7 @@ var collection;
             return this.activeX && this.activeX.HangUp();
         };
         return ActiveXPhone;
-    })();
+    }());
     collection.ActiveXPhone = ActiveXPhone;
     collection.phone = new ActiveXPhone();
 })(collection || (collection = {}));

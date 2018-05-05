@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="pages.ts"/>
 ///<reference path="../pageSidebar.ts"/>
 var pages;
@@ -13,10 +18,9 @@ var pages;
     var RearangeOffice = (function (_super) {
         __extends(RearangeOffice, _super);
         function RearangeOffice(page) {
-            var _this = this;
-            _super.call(this, page);
-            this.selAll = false;
-            $("#" + pages.PageUtil.getPageId(this.page) + " .dowebok input").labelauty();
+            var _this = _super.call(this, page) || this;
+            _this.selAll = false;
+            $("#" + pages.PageUtil.getPageId(_this.page) + " .dowebok input").labelauty();
             $('#ro-WiredWizard').wizard();
             $('#ro-WiredWizard').on('change', function (evt, data) {
                 if (data.direction == 'next') {
@@ -36,7 +40,7 @@ var pages;
                     }
                 }
             });
-            this.find(".dowebok input").on("click", function () {
+            _this.find(".dowebok input").on("click", function () {
                 var type = _this.find(".dowebok input:checked").attr("myid");
                 if (type != _this.ecType) {
                     _this.refresh();
@@ -50,6 +54,7 @@ var pages;
             $('#ro-WiredWizard').on('finished.fu.wizard', function (evt, data) {
                 _this.updateOwner();
             });
+            return _this;
         }
         RearangeOffice.prototype.onStep3 = function () {
             var opt = this.find('#ro-treeOrg').tree("selectedItems")[0];
@@ -226,5 +231,5 @@ var pages;
         };
         RearangeOffice.ins = new RearangeOffice(pages.PageType.rearangeOffice);
         return RearangeOffice;
-    })(pages.PageImpl);
+    }(pages.PageImpl));
 })(pages || (pages = {}));

@@ -129,6 +129,6 @@ var navbar;
         };
         NavBar.ins = new NavBar();
         return NavBar;
-    })();
+    }());
     navbar.NavBar = NavBar;
 })(navbar || (navbar = {}));

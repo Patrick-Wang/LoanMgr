@@ -86,6 +86,6 @@ var collection;
             return msgPairs;
         };
         return Message;
-    })();
+    }());
     collection.Message = Message;
 })(collection || (collection = {}));

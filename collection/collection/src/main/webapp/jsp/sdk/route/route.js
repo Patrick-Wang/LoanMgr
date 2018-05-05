@@ -32,7 +32,7 @@ var route;
         MSG.EC_DETAIL_ECINFO = route.nextId();
         MSG.EC_DETAIL_REFRESH = route.nextId();
         return MSG;
-    })();
+    }());
     route.MSG = MSG;
     var Receiver = (function () {
         function Receiver(addr, fn) {
@@ -46,7 +46,7 @@ var route;
             return this.FN(e);
         };
         return Receiver;
-    })();
+    }());
     route.Receiver = Receiver;
     var AnonymousReceiver = (function () {
         function AnonymousReceiver(fn) {
@@ -59,7 +59,7 @@ var route;
             return this.receiverStub.onEvent(e);
         };
         return AnonymousReceiver;
-    })();
+    }());
     route.AnonymousReceiver = AnonymousReceiver;
     route.DELAY_READY = -1;
     var Router = (function () {
@@ -134,12 +134,12 @@ var route;
                 }
             }
             else {
-                var from = this.mCurEvent == undefined ? undefined : this.mCurEvent.from;
+                var from_1 = this.mCurEvent == undefined ? undefined : this.mCurEvent.from;
                 if (route.DELAY_READY == delay) {
                     $(document).ready(function () {
                         for (var i = 0; i < _this.mEplist.length; ++i) {
                             var event_2 = {
-                                from: from,
+                                from: from_1,
                                 to: undefined,
                                 id: evid,
                                 data: data,
@@ -153,7 +153,7 @@ var route;
                     setTimeout(function () {
                         for (var i = 0; i < _this.mEplist.length; ++i) {
                             var event_3 = {
-                                from: from,
+                                from: from_1,
                                 to: undefined,
                                 id: evid,
                                 data: data,
@@ -195,7 +195,7 @@ var route;
         Router.FAILED = "Route.FAILED";
         Router.UNKNOWNADDR = "Route.UNKNOWNADDR";
         return Router;
-    })();
+    }());
     route.Router = Router;
     route.router = new route.Router();
 })(route || (route = {}));

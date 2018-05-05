@@ -29,6 +29,6 @@ var collection;
             });
         };
         return Authority;
-    })();
+    }());
     collection.Authority = Authority;
 })(collection || (collection = {}));

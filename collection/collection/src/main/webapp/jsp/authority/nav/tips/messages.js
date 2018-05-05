@@ -12,7 +12,16 @@ var authority;
                 var Message = collection.Message;
                 var ADDR = "/nav/tips/messages";
                 authority.register(ADDR, function () {
-                    var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", null, React.createElement("a", {"className": "dropdown-toggle", "data-toggle": "dropdown", "title": "Tasks", "href": "#"}, React.createElement("i", {"className": "icon fa fa-tasks"}), React.createElement("span", {"id": "msgCount", "className": "badge"}, "0")), React.createElement("ul", {"className": "pull-right dropdown-menu dropdown-messages dropdown-arrow "}, React.createElement("li", {"id": "msgCountDetail", "className": "dropdown-header bordered-darkorange"}, React.createElement("i", {"className": "fa fa-tasks"}), "0 条待处理消息"), React.createElement("li", {"className": "dropdown-footer"}, React.createElement("a", {"id": "queryAllMsgs", "href": "#"}, "查看全部咨询信息")))));
+                    var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", null,
+                        React.createElement("a", { className: "dropdown-toggle", "data-toggle": "dropdown", title: "Tasks", href: "#" },
+                            React.createElement("i", { className: "icon fa fa-tasks" }),
+                            React.createElement("span", { id: "msgCount", className: "badge" }, "0")),
+                        React.createElement("ul", { className: "pull-right dropdown-menu dropdown-messages dropdown-arrow " },
+                            React.createElement("li", { id: "msgCountDetail", className: "dropdown-header bordered-darkorange" },
+                                React.createElement("i", { className: "fa fa-tasks" }),
+                                "0 \u6761\u5F85\u5904\u7406\u6D88\u606F"),
+                            React.createElement("li", { className: "dropdown-footer" },
+                                React.createElement("a", { id: "queryAllMsgs", href: "#" }, "\u67E5\u770B\u5168\u90E8\u54A8\u8BE2\u4FE1\u606F")))));
                     var msgTip = null;
                     route.router.register(new Receiver(ADDR, function (e) {
                         switch (e.id) {
@@ -85,7 +94,14 @@ var authority;
                         });
                     };
                     MsgTip.prototype.buildMessageDetail = function (um) {
-                        var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": "navMsgTmp"}, React.createElement("a", {"id": um.msgId, "href": '#'}, React.createElement("img", {"src": collection.Net.BASE_URL + "/jsp/assets/img/avatars/bing.png", "className": "message-avatar", "alt": "Microsoft Bing"}), React.createElement("div", {"className": "message"}, React.createElement("span", {"className": "message-sender"}, um.fromName), React.createElement("span", {"className": "message-time"}, this.getDateFromTime(um.sendTime)), React.createElement("span", {"className": "message-subject"}, um.title), React.createElement("span", {"className": "message-body"}, um.content)))));
+                        var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", { className: "navMsgTmp" },
+                            React.createElement("a", { id: um.msgId, href: '#' },
+                                React.createElement("img", { src: collection.Net.BASE_URL + "/jsp/assets/img/avatars/bing.png", className: "message-avatar", alt: "Microsoft Bing" }),
+                                React.createElement("div", { className: "message" },
+                                    React.createElement("span", { className: "message-sender" }, um.fromName),
+                                    React.createElement("span", { className: "message-time" }, this.getDateFromTime(um.sendTime)),
+                                    React.createElement("span", { className: "message-subject" }, um.title),
+                                    React.createElement("span", { className: "message-body" }, um.content)))));
                         return html;
                     };
                     MsgTip.prototype.onLoadMEC = function (ums) {
@@ -101,7 +117,7 @@ var authority;
                         });
                     };
                     return MsgTip;
-                })();
+                }());
                 messages.MsgTip = MsgTip;
             })(messages = tips.messages || (tips.messages = {}));
         })(tips = nav.tips || (nav.tips = {}));

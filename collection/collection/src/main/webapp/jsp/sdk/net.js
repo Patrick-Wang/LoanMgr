@@ -50,6 +50,6 @@ var collection;
         };
         Net.BASE_URL = window.document.location.pathname.substring(0, window.document.location.pathname.indexOf("/", 1));
         return Net;
-    })();
+    }());
     collection.Net = Net;
 })(collection || (collection = {}));

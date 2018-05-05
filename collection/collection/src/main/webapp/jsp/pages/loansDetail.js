@@ -1,8 +1,13 @@
-var __extends = (this && this.__extends) || function (d, b) {
-    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
-    function __() { this.constructor = d; }
-    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-};
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 ///<reference path="pages.ts"/>
 ///<reference path="../pageSidebar.ts"/>
 ///<reference path="askSth.tsx"/>
@@ -14,10 +19,9 @@ var pages;
     var LoansDetail = (function (_super) {
         __extends(LoansDetail, _super);
         function LoansDetail(page) {
-            var _this = this;
-            _super.call(this, page);
-            this.firstRefresh = true;
-            route.router.register(new route.Receiver(pages.PageUtil.getPageId(this.page), function (e) {
+            var _this = _super.call(this, page) || this;
+            _this.firstRefresh = true;
+            route.router.register(new route.Receiver(pages.PageUtil.getPageId(_this.page), function (e) {
                 switch (e.id) {
                     case route.MSG.EC_DETAIL_ECINFO:
                         _this.ec = e.data.ec;
@@ -341,7 +345,14 @@ var pages;
                 }
                 $("#template_modify_attachment_property").empty();
                 $(".attachement__").each(function (i, e) {
-                    var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", {"className": "row", "data-id": $(e).attr("value")}, React.createElement("div", {"className": "col-md-12"}, React.createElement("div", {"className": "form-group"}, React.createElement("label", {"className": "col-sm-4 control-label no-padding-right"}, $(e).text()), React.createElement("div", {"className": "col-sm-4"}, React.createElement("input", {"className": "form-control", "value": $(e).text(), "data-edit": "false"})), React.createElement("div", {"className": "col-sm-4"}, React.createElement("input", {"className": "form-control", "data-mask": "9999-99-99 99:99:99", "value": $(e).attr("data-time")}))))));
+                    var html = ReactDOMServer.renderToStaticMarkup(React.createElement("div", { className: "row", "data-id": $(e).attr("value") },
+                        React.createElement("div", { className: "col-md-12" },
+                            React.createElement("div", { className: "form-group" },
+                                React.createElement("label", { className: "col-sm-4 control-label no-padding-right" }, $(e).text()),
+                                React.createElement("div", { className: "col-sm-4" },
+                                    React.createElement("input", { className: "form-control", value: $(e).text(), "data-edit": "false" })),
+                                React.createElement("div", { className: "col-sm-4" },
+                                    React.createElement("input", { className: "form-control", "data-mask": "9999-99-99 99:99:99", value: $(e).attr("data-time") }))))));
                     $("#template_modify_attachment_property").append(html);
                 });
                 $("#template_modify_attachment_property").children().addClass("modify_attachment_property");
@@ -529,6 +540,7 @@ var pages;
                 });
                 $('#html5Form').bootstrapValidator();
             });
+            return _this;
         }
         LoansDetail.prototype.refreshLoan = function () {
             var _this = this;
@@ -651,9 +663,29 @@ var pages;
             var _this = this;
             //this.find("#bootbox-record-work-timeline").show();
             $(this.ec.reports).each(function (i, report) {
-                var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": i % 2 == 0 ? "" : "timeline-inverted"}, React.createElement("div", {"className": "timeline-datetime"}, React.createElement("span", {"className": "timeline-time"}, " ", report.date.substring(11), " "), React.createElement("span", {"className": "timeline-date"}, report.date.substring(0, 10))), React.createElement("div", {"className": "timeline-badge"}, React.createElement("i", {"className": "fa fa-tag sky font-120"})), React.createElement("div", {"className": "timeline-panel bordered-top-3 bordered-azure", "id": "report" + report.id}, React.createElement("div", {"className": "timeline-header bordered-bottom bordered-blue"}, React.createElement("span", {"className": "timeline-title"}, " ", report.title, " ")), React.createElement("div", {"className": "timeline-body"}, React.createElement("p", null, report.content), _this.check(report.attachements) ? (React.createElement("p", null, React.createElement("b", null, "附件："))) : "", _this.check(report.attachements) ? report.attachements.map(function (atta) {
-                    return React.createElement("p", null, React.createElement("a", {"href": "#", "className": "danger attachement__", "value": atta.id, "data-time": atta.uploadTime}, atta.display));
-                }) : ""))));
+                var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", { className: i % 2 == 0 ? "" : "timeline-inverted" },
+                    React.createElement("div", { className: "timeline-datetime" },
+                        React.createElement("span", { className: "timeline-time" },
+                            " ",
+                            report.date.substring(11),
+                            " "),
+                        React.createElement("span", { className: "timeline-date" }, report.date.substring(0, 10))),
+                    React.createElement("div", { className: "timeline-badge" },
+                        React.createElement("i", { className: "fa fa-tag sky font-120" })),
+                    React.createElement("div", { className: "timeline-panel bordered-top-3 bordered-azure", id: "report" + report.id },
+                        React.createElement("div", { className: "timeline-header bordered-bottom bordered-blue" },
+                            React.createElement("span", { className: "timeline-title" },
+                                " ",
+                                report.title,
+                                " ")),
+                        React.createElement("div", { className: "timeline-body" },
+                            React.createElement("p", null, report.content),
+                            _this.check(report.attachements) ? (React.createElement("p", null,
+                                React.createElement("b", null, "\u9644\u4EF6\uFF1A"))) : "",
+                            _this.check(report.attachements) ? report.attachements.map(function (atta) {
+                                return React.createElement("p", null,
+                                    React.createElement("a", { href: "#", className: "danger attachement__", value: atta.id, "data-time": atta.uploadTime }, atta.display));
+                            }) : ""))));
                 _this.find("#bootbox-loans-consulting-timeline").parent().before(html);
             });
             $(".attachement__").on("click", function (e, v1, v2, v3) {
@@ -667,15 +699,41 @@ var pages;
             //this.find("#bootbox-loans-consulting-timeline").show();
             var pairs = Message.pairs(this.ec.messages);
             $(pairs).each(function (i, pair) {
-                var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": i % 2 == 0 ? "" : "timeline-inverted"}, React.createElement("div", {"className": "timeline-datetime"}, React.createElement("span", {"className": "timeline-time"}, " ", pair.ask.sendTime.substring(11), " "), React.createElement("span", {"className": "timeline-date"}, pair.ask.sendTime.substring(0, 10))), React.createElement("div", {"className": "timeline-badge"}, React.createElement("i", {"className": "fa fa-question darkorange font-120"})), React.createElement("div", {"className": "timeline-panel"}, React.createElement("div", {"className": "timeline-header bordered-bottom bordered-blue"}, React.createElement("span", {"className": "timeline-title darkorange"}, " ", pair.ask.title, " ")), React.createElement("div", {"className": "timeline-body"}, React.createElement("p", null, pair.ask.content), pair.answer ? (React.createElement("p", null, React.createElement("b", null, "答复："))) : (React.createElement("p", null, React.createElement("b", null, "未答复"))), pair.answer ? (React.createElement("p", null, pair.answer.content)) : "", pair.ask && _this.check(pair.ask.attachements) || (pair.answer && _this.check(pair.answer.attachements)) ? (React.createElement("p", null, React.createElement("b", null, "附件："))) : "", pair.ask && _this.check(pair.ask.attachements) ? pair.ask.attachements.map(function (atta) {
-                    return React.createElement("p", null, React.createElement("a", {"href": "#", "className": "attachement__", "value": atta.id, "data-time": atta.uploadTime}, atta.display));
-                }) : "", pair.answer && _this.check(pair.answer.attachements) ? pair.answer.attachements.map(function (atta) {
-                    return React.createElement("p", null, React.createElement("a", {"href": "#", "className": "attachement__", "value": atta.id, "data-time": atta.uploadTime}, atta.display));
-                }) : ""))));
+                var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", { className: i % 2 == 0 ? "" : "timeline-inverted" },
+                    React.createElement("div", { className: "timeline-datetime" },
+                        React.createElement("span", { className: "timeline-time" },
+                            " ",
+                            pair.ask.sendTime.substring(11),
+                            " "),
+                        React.createElement("span", { className: "timeline-date" }, pair.ask.sendTime.substring(0, 10))),
+                    React.createElement("div", { className: "timeline-badge" },
+                        React.createElement("i", { className: "fa fa-question darkorange font-120" })),
+                    React.createElement("div", { className: "timeline-panel" },
+                        React.createElement("div", { className: "timeline-header bordered-bottom bordered-blue" },
+                            React.createElement("span", { className: "timeline-title darkorange" },
+                                " ",
+                                pair.ask.title,
+                                " ")),
+                        React.createElement("div", { className: "timeline-body" },
+                            React.createElement("p", null, pair.ask.content),
+                            pair.answer ? (React.createElement("p", null,
+                                React.createElement("b", null, "\u7B54\u590D\uFF1A"))) : (React.createElement("p", null,
+                                React.createElement("b", null, "\u672A\u7B54\u590D"))),
+                            pair.answer ? (React.createElement("p", null, pair.answer.content)) : "",
+                            pair.ask && _this.check(pair.ask.attachements) || (pair.answer && _this.check(pair.answer.attachements)) ? (React.createElement("p", null,
+                                React.createElement("b", null, "\u9644\u4EF6\uFF1A"))) : "",
+                            pair.ask && _this.check(pair.ask.attachements) ? pair.ask.attachements.map(function (atta) {
+                                return React.createElement("p", null,
+                                    React.createElement("a", { href: "#", className: "attachement__", value: atta.id, "data-time": atta.uploadTime }, atta.display));
+                            }) : "",
+                            pair.answer && _this.check(pair.answer.attachements) ? pair.answer.attachements.map(function (atta) {
+                                return React.createElement("p", null,
+                                    React.createElement("a", { href: "#", className: "attachement__", value: atta.id, "data-time": atta.uploadTime }, atta.display));
+                            }) : ""))));
                 _this.find("#bootbox-loans-consulting-timeline").parent().parent().append(html);
             });
         };
         LoansDetail.ins = new LoansDetail(pages.PageType.loansDetail);
         return LoansDetail;
-    })(pages.PageImpl);
+    }(pages.PageImpl));
 })(pages || (pages = {}));

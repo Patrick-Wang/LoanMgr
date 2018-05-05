@@ -24,6 +24,6 @@ var collection;
             });
         };
         return Account;
-    })();
+    }());
     collection.Account = Account;
 })(collection || (collection = {}));

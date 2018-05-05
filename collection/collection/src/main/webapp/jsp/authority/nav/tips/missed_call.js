@@ -13,7 +13,13 @@ var authority;
                 var CallStatus = collection.protocol.CallStatus;
                 var ADDR = "/nav/tips/missed_call";
                 authority.register(ADDR, function () {
-                    var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", null, React.createElement("a", {"className": " dropdown-toggle", "data-toggle": "dropdown", "title": "Notifications", "href": "#"}, React.createElement("i", {"className": "icon fa fa-warning red"}), React.createElement("span", {"id": "navCallCount", "className": "badge"}, "0")), React.createElement("ul", {"id": "navCallDetail", "className": "pull-right dropdown-menu dropdown-arrow dropdown-notifications"}, React.createElement("li", {"className": "dropdown-footer "}, React.createElement("div", {"id": "navCallCenter"}, "前往呼叫中心")))));
+                    var html = ReactDOMServer.renderToStaticMarkup(React.createElement("li", null,
+                        React.createElement("a", { className: " dropdown-toggle", "data-toggle": "dropdown", title: "Notifications", href: "#" },
+                            React.createElement("i", { className: "icon fa fa-warning red" }),
+                            React.createElement("span", { id: "navCallCount", className: "badge" }, "0")),
+                        React.createElement("ul", { id: "navCallDetail", className: "pull-right dropdown-menu dropdown-arrow dropdown-notifications" },
+                            React.createElement("li", { className: "dropdown-footer " },
+                                React.createElement("div", { id: "navCallCenter" }, "\u524D\u5F80\u547C\u53EB\u4E2D\u5FC3")))));
                     var missedCall;
                     route.router.register(new Receiver(ADDR, function (e) {
                         switch (e.id) {
@@ -69,7 +75,18 @@ var authority;
                     };
                     MissedCall.prototype.buildCallCenter = function (detailli, pr) {
                         var _this = this;
-                        detailli.before(ReactDOMServer.renderToStaticMarkup(React.createElement("li", {"className": "navMissedTmp"}, React.createElement("a", {"href": "#", "id": pr.recId}, React.createElement("div", {"className": "clearfix"}, React.createElement("div", {"className": "notification-icon"}, React.createElement("i", {"className": "fa fa-phone bg-themeprimary white"})), React.createElement("div", {"className": "notification-body"}, React.createElement("span", {"className": "title red"}, "未接来电 ", pr.phoneNum), React.createElement("span", {"className": "description"}, " ", pr.time)))))));
+                        detailli.before(ReactDOMServer.renderToStaticMarkup(React.createElement("li", { className: "navMissedTmp" },
+                            React.createElement("a", { href: "#", id: pr.recId },
+                                React.createElement("div", { className: "clearfix" },
+                                    React.createElement("div", { className: "notification-icon" },
+                                        React.createElement("i", { className: "fa fa-phone bg-themeprimary white" })),
+                                    React.createElement("div", { className: "notification-body" },
+                                        React.createElement("span", { className: "title red" },
+                                            "\u672A\u63A5\u6765\u7535 ",
+                                            pr.phoneNum),
+                                        React.createElement("span", { className: "description" },
+                                            " ",
+                                            pr.time)))))));
                         $(".navMissedTmp #" + pr.recId).click(function () {
                             _this.onClickMissedCall(pr.recId);
                         });
@@ -93,7 +110,7 @@ var authority;
                         });
                     };
                     return MissedCall;
-                })();
+                }());
             })(missedCall = tips.missedCall || (tips.missedCall = {}));
         })(tips = nav.tips || (nav.tips = {}));
     })(nav = authority.nav || (authority.nav = {}));
