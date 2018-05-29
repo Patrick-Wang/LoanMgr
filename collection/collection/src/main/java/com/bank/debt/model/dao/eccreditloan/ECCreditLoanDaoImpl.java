@@ -147,7 +147,11 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 		if (qOpt.getAssignee() != null){
 			where += " and ecme.assignee.id=:assignee ";
 		}
-		
+
+		if (qOpt.getPch() != null){
+            where += " and eccle.pch=:pch ";
+        }
+
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
 		if (qOpt.getName() != null){
@@ -198,7 +202,10 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 		if (qOpt.getAssignee() != null){
 			q.setParameter("assignee", qOpt.getAssignee());
 		}
-				
+
+        if (qOpt.getPch() != null){
+            q.setParameter("pch", qOpt.getPch());
+        }
 		return q;
 	}
 	
@@ -212,4 +219,12 @@ public class ECCreditLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCreditLoanEn
 		List ret = q.getResultList();
 		return ((Long)(ret.get(0))).intValue();
 	}
+
+    @Override
+    public List<String> getPch() {
+
+        Query q = this.getEntityManager().createQuery("select distinct pch from ECCreditLoanEntity ");
+        List ret = q.getResultList();
+        return ret;
+    }
 }

@@ -38,12 +38,12 @@ public class EntrustedCaseManagerDaoImpl extends AbstractReadWriteDaoImpl<Entrus
 		return (EntrustedCaseManagerEntity) ret.get(0);
 	}
 
-	@Override
-	public List<EntrustedCaseManagerEntity> getByOwner(Integer ownerId) {
-		Query q = this.getEntityManager().createQuery(" from EntrustedCaseManagerEntity where owner.id = :id");
-		q.setParameter("id", ownerId);
-		return q.getResultList();
-	}
+    @Override
+    public List<EntrustedCaseManagerEntity> getByOwner(Integer ownerId) {
+        Query q = this.getEntityManager().createQuery(" from EntrustedCaseManagerEntity where owner.id = :id");
+        q.setParameter("id", ownerId);
+        return q.getResultList();
+    }
 
 	@Override
 	public Integer getAssignedCount(UserEntity ue) {

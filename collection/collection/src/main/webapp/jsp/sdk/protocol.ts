@@ -299,6 +299,7 @@ module collection.protocol {
         yqtsStartOpen?:number;
         yqtsEndClose?:number;
         assignee?:number;
+        pch?:string;
     }
 
     export interface Promise<S> {

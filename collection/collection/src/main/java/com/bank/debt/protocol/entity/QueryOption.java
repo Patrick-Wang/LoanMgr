@@ -33,8 +33,17 @@ public class QueryOption extends ProtocolEntityImpl {
 	Double yqtsStartOpen;
 	Double yqtsEndClose;
 	Integer assignee;
-	
-	public String getName() {
+	String pch;
+
+    public String getPch() {
+        return pch;
+    }
+
+    public void setPch(String pch) {
+        this.pch = pch;
+    }
+
+    public String getName() {
 		return name;
 	}
 

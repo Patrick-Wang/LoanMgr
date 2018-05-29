@@ -79,8 +79,26 @@
 									<option value="6" >360天以上</option>
 							</select>
 						</div>
-								
-					</div>
+                        <div class="col-xs-2 col-md-2">
+                                <%----%>
+                                <%--<input id="qWwjg" type="text"--%>
+                                <%--class="form-control">--%>
+                                <select id="qWwjg" style="width:100%;" class="form-control">
+                                    <option value="none" selected="selected">----委外机构----</option>
+                                </select>
+                        </div>
+                        <div class="col-xs-2 col-md-2">
+                                <%----%>
+                                <%--<input id="qWwjg" type="text"--%>
+                                <%--class="form-control">--%>
+                                <select id="pch" style="width:100%;" class="form-control">
+                                    <option value="none" selected="selected">----批次号----</option>
+                                </select>
+                        </div>
+                        <div class="col-xs-2 col-md-2">
+                            <a id="assign-search-Btn" class="btn btn-default pull-right" >查询</a>
+                        </div>
+                    </div>
 					<div class="row">
 						<div class="col-xs-12 col-md-12">
 							<div class="tabbable">

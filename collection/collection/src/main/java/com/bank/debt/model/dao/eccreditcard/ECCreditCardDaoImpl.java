@@ -83,7 +83,11 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 		if (qOpt.getAssignee() != null){
 			where += " and ecme.assignee.id=:assignee ";
 		}
-		
+
+        if (qOpt.getPch() != null){
+            where += " and eccle.pch=:pch ";
+        }
+
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
 		if (qOpt.getName() != null){
@@ -132,7 +136,9 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 		if (qOpt.getAssignee() != null){
 			q.setParameter("assignee", qOpt.getAssignee());
 		}
-		
+        if (qOpt.getPch() != null){
+            q.setParameter("pch", qOpt.getPch());
+        }
 		return q;
 	}
 	
@@ -193,6 +199,14 @@ public class ECCreditCardDaoImpl extends AbstractReadWriteDaoImpl<ECCreditCardEn
 		List ret = q.getResultList();
 		return (Double) ret.get(0);
 	}
+
+    @Override
+    public List<String> getPch() {
+
+        Query q = this.getEntityManager().createQuery("select distinct pch from ECCreditCardEntity ");
+        List ret = q.getResultList();
+        return ret;
+    }
 	
 	@Override
 	public List<String> getWwjgs() {

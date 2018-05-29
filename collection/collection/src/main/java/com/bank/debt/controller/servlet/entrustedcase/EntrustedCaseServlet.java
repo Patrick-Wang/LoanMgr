@@ -159,7 +159,15 @@ public class EntrustedCaseServlet {
 		return JsonUtil.toUtf8Json(batchs);
 	}
 
-	@RequestMapping(value = "download.do")
+    @RequestMapping(value = "pch.do")
+    public @ResponseBody byte[] getPch(HttpServletRequest request,
+                                         HttpServletResponse response) throws IOException {
+        List<String> pchs = entrustedCaseService.getPch();
+        return JsonUtil.toUtf8Json(pchs);
+    }
+
+
+    @RequestMapping(value = "download.do")
 	public void download(HttpServletRequest request,
 			HttpServletResponse response, 
 			@RequestParam("type") Integer type,

@@ -24,4 +24,5 @@ public interface ECCreditLoanDao extends AbstractReadWriteDao<ECCreditLoanEntity
 
 	Integer count(UserEntity ue, QueryOption qOpt);
 
+	List<String> getPch();
 }

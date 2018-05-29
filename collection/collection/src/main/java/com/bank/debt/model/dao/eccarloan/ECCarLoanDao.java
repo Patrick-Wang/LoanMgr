@@ -24,4 +24,6 @@ public interface ECCarLoanDao extends AbstractReadWriteDao<ECCarLoanEntity> {
 
 	Integer count(UserEntity ue, QueryOption qOpt);
 
+	List<String> getPch();
+
 }

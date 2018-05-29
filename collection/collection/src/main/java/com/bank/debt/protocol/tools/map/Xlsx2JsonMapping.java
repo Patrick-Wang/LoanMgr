@@ -3,15 +3,12 @@ package com.bank.debt.protocol.tools.map;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -103,16 +100,16 @@ public class Xlsx2JsonMapping implements Mapping<InputStream, JSONArray> {
 				break;
 			}
 			
-			int unInportColumnsCount = 0;
+			int unImportColumnsCount = 0;
 			
-			for (int j = 0; j < fields.size() && (j - unInportColumnsCount) < row.getLastCellNum(); ++j){
+			for (int j = 0; j < fields.size() && (j - unImportColumnsCount) < row.getLastCellNum(); ++j){
 				
-				if (Xls2JsonMapping.unInportColumns.contains(fields.get(j).getName())){
-					++unInportColumnsCount;
+				if (Xls2JsonMapping.unImportColumns.contains(fields.get(j).getName())){
+					++unImportColumnsCount;
 					continue;
 				}		
 				
-				cell = row.getCell(j - unInportColumnsCount);
+				cell = row.getCell(j - unImportColumnsCount);
 				if (null == cell){
 					continue;
 				}

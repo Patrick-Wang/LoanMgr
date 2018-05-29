@@ -61,9 +61,27 @@ module pages {
                this.refresh();
             });
 
+            this.find("#assign-search-Btn").on("click", ()=>{
+                this.refresh();
+            });
+
+
             $('#al-WiredWizard').on('finished.fu.wizard', (evt, data) => {
                 this.updateAssignee();
             });
+
+
+            collection.EntrustedCase.getPch().done((pchs:string[])=>{
+
+                this.find("#pch").empty();
+                this.find("#pch").append('<option value="none" selected="selected">----批次号----</option>');
+
+                $(pchs).each((i,e)=>{
+                    this.find("#pch").append('<option value="' + e + '">' + e + '</option>');
+                });
+            });
+
+
         }
 
 
@@ -171,13 +189,26 @@ module pages {
             this.goStep1();
             let type = PageUtil.jqPage(this.page).find(".dowebok input:checked").attr("myid");
             let opt:QueryOption = {myOwn:true};
+
+            let val = this.find("#qWwjg").val();
+            if (val && val != 'none'){
+                opt.wwjg = val;
+            }
+
+            val = this.find("#pch").val();
+            if (val && val != 'none'){
+                opt.pch = val;
+            }
+
             this.parseYqts(opt);
+
             EntrustedCase.search(type, opt)
                 .done((ecs:EC[])=> {
                     this.ecs = ecs;
                     this.ecType = type;
                     this.doRefresh();
                 });
+
 
             $.when(Account.getUsers(["/ec/ask"]), Account.getOrgs())
                 .done((usrs:User[], orgs:Organization[])=> {
@@ -239,6 +270,24 @@ module pages {
         }
 
         private doRefresh():void {
+
+            collection.EntrustedCase.getWwjgs(this.ecType).done((wwjgs:string[])=>{
+
+                let val = this.find("#qWwjg").val();
+                this.find("#qWwjg").empty();
+                this.find("#qWwjg").append('<option value="none" selected="selected">----委外机构----</option>');
+
+                $(wwjgs).each((i, e)=>{
+                    if (val == e){
+                        this.find("#qWwjg").append('<option value="' + e + '" selected="selected">' + e + '</option>');
+                    }else{
+                        this.find("#qWwjg").append('<option value="' + e + '" >' + e + '</option>');
+                    }
+                });
+
+            });
+
+
             let tableAssist:JQTable.JQGridAssistant = pages.JQGridAssistantFactory.createTableAssist("tbAllLoans", this.ecType, ["内勤人员","业务员"]);
             let loans = [];
             for (let i = 0; i < this.ecs.length; ++i) {

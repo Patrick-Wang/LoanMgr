@@ -31,6 +31,11 @@ module collection{
             });
         }
 
+        static getPch():Promise<string[]>{
+            return Net.post(Net.BASE_URL + "/entrusted_case/pch.do", {
+            });
+        }
+
         static getAssignSummary():Promise<AssignSummary>{
             return Net.postLocal(Net.BASE_URL + "/entrusted_case/assign/summary.do");
         }

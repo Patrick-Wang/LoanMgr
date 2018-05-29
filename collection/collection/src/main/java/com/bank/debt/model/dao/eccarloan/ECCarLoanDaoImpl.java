@@ -83,7 +83,11 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 		if (qOpt.getAssignee() != null){
 			where += " and ecme.assignee.id=:assignee ";
 		}
-		
+
+        if (qOpt.getPch() != null){
+            where += " and eccle.pch=:pch ";
+        }
+
 		Query q = this.getEntityManager().createQuery(sql + where);
 		
 		if (qOpt.getName() != null){
@@ -132,6 +136,10 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 		if (qOpt.getAssignee() != null){
 			q.setParameter("assignee", qOpt.getAssignee());
 		}
+
+        if (qOpt.getPch() != null){
+            q.setParameter("pch", qOpt.getPch());
+        }
 		return q;
 	}
 	
@@ -189,6 +197,8 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 	public Double getYhje() {
 		Query q = this.getEntityManager().createQuery("select sum(yhje) "
 				+ "from ECCarLoanEntity");
+
+
 		List ret = q.getResultList();
 		return (Double) ret.get(0);
 	}
@@ -211,4 +221,12 @@ public class ECCarLoanDaoImpl extends AbstractReadWriteDaoImpl<ECCarLoanEntity> 
 		List ret = q.getResultList();
 		return ((Long)(ret.get(0))).intValue();
 	}
+
+    @Override
+    public List<String> getPch() {
+
+        Query q = this.getEntityManager().createQuery("select distinct pch from ECCarLoanEntity ");
+        List ret = q.getResultList();
+        return ret;
+    }
 }

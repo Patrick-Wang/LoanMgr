@@ -723,10 +723,14 @@ public class EntrustedCaseServiceImpl implements EntrustedCaseService{
 		return eCCreditLoanDao.getWwjgs();
 	}
 
-
-
-
-
+    @Override
+    public List<String> getPch() {
+	    List<String> pchs = new ArrayList<String>();
+	    pchs.addAll(this.eCCarLoanDao.getPch());
+        pchs.addAll(this.eCCreditCardDao.getPch());
+        pchs.addAll(this.eCCreditLoanDao.getPch());
+        return pchs;
+    }
 
 
 }

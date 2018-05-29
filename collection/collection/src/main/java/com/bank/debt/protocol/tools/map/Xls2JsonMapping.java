@@ -26,14 +26,14 @@ public class Xls2JsonMapping implements Mapping<InputStream, JSONArray> {
 
 	Class<?> beanClass;
 	
-	public final static Set<String> unInportColumns = new HashSet<String>();
+	public final static Set<String> unImportColumns = new HashSet<String>();
 	static {
-		unInportColumns.add("xh");
-		unInportColumns.add("code");
-		unInportColumns.add("pch");
-		unInportColumns.add("wwzt");
-		unInportColumns.add("bz");
-		unInportColumns.add("area");
+		unImportColumns.add("xh");
+		unImportColumns.add("code");
+		unImportColumns.add("pch");
+		unImportColumns.add("wwzt");
+		unImportColumns.add("bz");
+		unImportColumns.add("area");
 	}
 	
 	public Xls2JsonMapping(Class<?> beanClass) {
@@ -113,15 +113,15 @@ public class Xls2JsonMapping implements Mapping<InputStream, JSONArray> {
 			if (cell == null || cell.getCellType() == HSSFCell.CELL_TYPE_BLANK){
 				break;
 			}
-			int unInportColumnsCount = 0;
-			for (int j = 0; j < fields.size() && (j - unInportColumnsCount) < row.getLastCellNum(); ++j){
+			int unImportColumnsCount = 0;
+			for (int j = 0; j < fields.size() && (j - unImportColumnsCount) < row.getLastCellNum(); ++j){
 				
-				if (unInportColumns.contains(fields.get(j).getName())){
-					++unInportColumnsCount;
+				if (unImportColumns.contains(fields.get(j).getName())){
+					++unImportColumnsCount;
 					continue;
 				}				
 
-				cell = row.getCell(j - unInportColumnsCount);
+				cell = row.getCell(j - unImportColumnsCount);
 				if (null == cell){
 					continue;
 				}
