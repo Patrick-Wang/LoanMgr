@@ -24,6 +24,8 @@ module pages {
         orgs:Organization[];
         selectedEcs:EC[];
         selectedUser:User;
+        private pageSize:number = 10;
+        private pageNum:number = 0;
         constructor(page:pages.PageType) {
             super(page)
             $("#" + PageUtil.getPageId(this.page) + " .dowebok input").labelauty();
@@ -163,6 +165,10 @@ module pages {
         }
 
         parseYqts(opt:QueryOption){
+
+            opt.pageNum = this.pageNum;
+            opt.pageSize = this.pageSize;
+
             let val = this.find("#qYqts").val();
             if ("none" == val){
                 return;
@@ -188,7 +194,8 @@ module pages {
         protected onRefresh():void {
             this.goStep1();
             let type = PageUtil.jqPage(this.page).find(".dowebok input:checked").attr("myid");
-            let opt:QueryOption = {myOwn:true};
+
+            let opt:QueryOption = {myOwn:true, shuffle:true};
 
             let val = this.find("#qWwjg").val();
             if (val && val != 'none'){
@@ -292,16 +299,32 @@ module pages {
             let loans = [];
             for (let i = 0; i < this.ecs.length; ++i) {
                 if(!this.ecs[i].assignee){
-                    loans.push([this.ecs[i].loan[0], this.ecs[i].owner, this.ecs[i].assignee].concat(this.ecs[i].loan.slice(1)));
+                    loans.push({
+                        id:this.ecs[i].loan[0],
+                        cell : [this.ecs[i].owner, this.ecs[i].assignee].concat(this.ecs[i].loan.slice(1))}
+                    );
                 }
             }
 
-            PageUtil.shuffle(loans);
+            let tbData : JQTable.TableData = null;
+            if (this.ecs.length > 0) {
+                tbData = {
+                    records: this.ecs[0].records,
+                    page: this.ecs[0].pageNum + 1,
+                    total: this.ecs[0].pageCount,
+                    rows: loans
+                }
+            }
+
+           // PageUtil.shuffle(loans);
 
             $("#tbAllLoansTable").jqGrid(
                 tableAssist.decorate({
-                    data: tableAssist.getDataWithId(loans),
-                    datatype: "local",
+                    datatype: (postdata:JQTable.SortData) => {
+                        this.pageSize = postdata.rows;
+                        this.pageNum = postdata.page - 1;
+                        this.refresh();
+                    },
                     drag: false,
                     resize: false,
                     autowidth: true,
@@ -318,6 +341,10 @@ module pages {
                     },
                     pager: '#tbAllLoansPager'
                 }));
+            if (this.ecs.length > 0) {
+                tableAssist.addTableData(tbData);
+            }
+
             this.adjustStep1Width();
         }
 

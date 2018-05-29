@@ -300,6 +300,7 @@ module collection.protocol {
         yqtsEndClose?:number;
         assignee?:number;
         pch?:string;
+        shuffle?:boolean;
     }
 
     export interface Promise<S> {

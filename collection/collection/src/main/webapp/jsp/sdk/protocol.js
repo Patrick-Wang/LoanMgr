@@ -139,7 +139,7 @@ var collection;
             return nums;
         }
         protocol.getPhoneNums = getPhoneNums;
-        var PhoneRecordName = (function () {
+        var PhoneRecordName = /** @class */ (function () {
             function PhoneRecordName() {
             }
             PhoneRecordName.isPhoneAttach = function (attach) {
@@ -149,14 +149,15 @@ var collection;
                 return this.ecId + "_" + this.numb + "_" + this.time;
             };
             return PhoneRecordName;
-        })();
+        }());
         protocol.PhoneRecordName = PhoneRecordName;
+        var UseStatus;
         (function (UseStatus) {
             UseStatus[UseStatus["inuse"] = 0] = "inuse";
             UseStatus[UseStatus["stop"] = 1] = "stop";
-        })(protocol.UseStatus || (protocol.UseStatus = {}));
-        var UseStatus = protocol.UseStatus;
+        })(UseStatus = protocol.UseStatus || (protocol.UseStatus = {}));
         protocol.ROLE = ["none", "管理员", "内勤管理员", "业务管理员", "内勤", "业务员"];
+        var RoleEN;
         (function (RoleEN) {
             RoleEN[RoleEN["NONE"] = 0] = "NONE";
             RoleEN[RoleEN["ADMIN"] = 1] = "ADMIN";
@@ -164,32 +165,31 @@ var collection;
             RoleEN[RoleEN["OUTSIDE_MGR"] = 3] = "OUTSIDE_MGR";
             RoleEN[RoleEN["INSIDE"] = 4] = "INSIDE";
             RoleEN[RoleEN["OUTSIDE"] = 5] = "OUTSIDE";
-        })(protocol.RoleEN || (protocol.RoleEN = {}));
-        var RoleEN = protocol.RoleEN;
+        })(RoleEN = protocol.RoleEN || (protocol.RoleEN = {}));
+        var EntrustedCaseType;
         (function (EntrustedCaseType) {
             EntrustedCaseType[EntrustedCaseType["carLoan"] = 0] = "carLoan";
             EntrustedCaseType[EntrustedCaseType["creditLoan"] = 1] = "creditLoan";
             EntrustedCaseType[EntrustedCaseType["creditCard"] = 2] = "creditCard";
-        })(protocol.EntrustedCaseType || (protocol.EntrustedCaseType = {}));
-        var EntrustedCaseType = protocol.EntrustedCaseType;
+        })(EntrustedCaseType = protocol.EntrustedCaseType || (protocol.EntrustedCaseType = {}));
+        var ECStatus;
         (function (ECStatus) {
             ECStatus[ECStatus["unassign"] = 0] = "unassign";
             ECStatus[ECStatus["assign"] = 1] = "assign";
             ECStatus[ECStatus["complete"] = 2] = "complete";
-        })(protocol.ECStatus || (protocol.ECStatus = {}));
-        var ECStatus = protocol.ECStatus;
+        })(ECStatus = protocol.ECStatus || (protocol.ECStatus = {}));
+        var MessageStatus;
         (function (MessageStatus) {
             MessageStatus[MessageStatus["unread"] = 0] = "unread";
             MessageStatus[MessageStatus["read"] = 1] = "read";
-        })(protocol.MessageStatus || (protocol.MessageStatus = {}));
-        var MessageStatus = protocol.MessageStatus;
+        })(MessageStatus = protocol.MessageStatus || (protocol.MessageStatus = {}));
+        var CallStatus;
         (function (CallStatus) {
             CallStatus[CallStatus["callin"] = 0] = "callin";
             CallStatus[CallStatus["callout"] = 1] = "callout";
             CallStatus[CallStatus["missed"] = 2] = "missed";
             CallStatus[CallStatus["missedSkip"] = 3] = "missedSkip";
             CallStatus[CallStatus["missedNotifySkip"] = 4] = "missedNotifySkip";
-        })(protocol.CallStatus || (protocol.CallStatus = {}));
-        var CallStatus = protocol.CallStatus;
+        })(CallStatus = protocol.CallStatus || (protocol.CallStatus = {}));
     })(protocol = collection.protocol || (collection.protocol = {}));
 })(collection || (collection = {}));

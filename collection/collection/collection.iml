@@ -126,5 +126,6 @@
     <orderEntry type="library" name="Maven: io.netty:netty-codec:4.0.37.Final" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:17.0" level="project" />
     <orderEntry type="library" name="Maven: commons-net:commons-net:3.5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Tomcat 9.0.1" level="application_server_libraries" />
   </component>
 </module>
